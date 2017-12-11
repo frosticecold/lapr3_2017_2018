@@ -1,7 +1,6 @@
 package lapr.project.utils.graphbase;
 
 import java.lang.reflect.Array;
-import java.util.Objects;
 
 /**
  *
@@ -180,7 +179,7 @@ public class Edge<V, E> implements Comparable<Object> {
 
     @Override
     public String toString() {
-        String st = "";
+        String st;
         if (element != null) {
             st = "      (" + element + ") - ";
         } else {

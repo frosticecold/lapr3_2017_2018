@@ -15,6 +15,8 @@ public class GraphAlgorithms {
     /**
      * Performs breadth-first search of a Graph starting in a Vertex
      *
+     * @param <V>
+     * @param <E>
      * @param g Graph instance
      * @param vert information of the Vertex that will be the source of the
      * search
@@ -74,6 +76,8 @@ public class GraphAlgorithms {
     }
 
     /**
+     * @param <V>
+     * @param <E>
      * @param g Graph instance
      * @param vert information of the Vertex that will be the source of the
      * search
@@ -85,7 +89,7 @@ public class GraphAlgorithms {
             return null;
         }
         boolean[] knownVertices = new boolean[g.numVertices()];
-        LinkedList<V> resultQueue = new LinkedList<V>();
+        LinkedList<V> resultQueue = new LinkedList<>();
         resultQueue.add(vert);
 
         DepthFirstSearch(g, vert, knownVertices, resultQueue);
@@ -132,6 +136,8 @@ public class GraphAlgorithms {
     }
 
     /**
+     * @param <V>
+     * @param <E>
      * @param g Graph instance
      * @param vOrig information of the Vertex origin
      * @param vDest information of the Vertex destination

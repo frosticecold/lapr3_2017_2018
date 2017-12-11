@@ -4,7 +4,6 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  *
@@ -37,12 +36,7 @@ public class Graph<V, E> implements GraphInterface<V, E> {
     }
 
     public boolean validVertex(V vert) {
-
-        if (vertices.get(vert) == null) { //O(1)
-            return false;
-        }
-
-        return true;
+        return vertices.get(vert) != null;//O(1)
     }
 
     public int getKey(V vert) {
@@ -359,16 +353,16 @@ public class Graph<V, E> implements GraphInterface<V, E> {
     //string representation
     @Override
     public String toString() {
-        String s = "";
+        StringBuilder buf = new StringBuilder();
         if (numVert == 0) {
-            s = "\nGraph not defined!!";
+            buf.append("\nGraph not defined!!");
         } else {
-            s = "Graph: " + numVert + " vertices, " + numEdge + " edges\n";
+            buf.append("Graph: ").append(numVert).append(" vertices, ").append(numEdge).append(" edges\n");
             for (Vertex<V, E> vert : vertices.values()) {
-                s += vert + "\n";
+                buf.append(vert).append("\n");
             }
         }
-        return s;
+        return buf.toString();
     }
 
     @Override
