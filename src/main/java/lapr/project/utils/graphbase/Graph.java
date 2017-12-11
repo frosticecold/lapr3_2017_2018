@@ -4,6 +4,7 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  *
@@ -365,10 +366,20 @@ public class Graph<V, E> implements GraphInterface<V, E> {
         return buf.toString();
     }
 
+//    @Override
+//    public int hashCode() {
+//        int hash = (int) (Integer.MAX_VALUE * Math.random());
+//        return hash;
+//    }
+
     @Override
     public int hashCode() {
-        int hash = (int) (Integer.MAX_VALUE * Math.random());
+        int hash = 3;
+        hash = 59 * hash + this.numVert;
+        hash = 59 * hash + this.numEdge;
+        hash = 59 * hash + Objects.hashCode(this.vertices);
         return hash;
     }
+    
 
 }

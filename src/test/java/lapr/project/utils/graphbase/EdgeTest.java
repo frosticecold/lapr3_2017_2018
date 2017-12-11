@@ -151,7 +151,7 @@ public class EdgeTest {
     public void testEquals() {
         System.out.println("equals");
 
-        assertFalse("should not be equal to null", instance.equals(null));
+        assertFalse("should not be equal to null", instance == null);
 
         assertTrue("should be equal to itself", instance.equals(instance));
 
@@ -200,7 +200,7 @@ public class EdgeTest {
 
         Edge<String, String> instClone = otherEdge.clone();
 
-        assertTrue("element should be equal", otherEdge.getElement() == instClone.getElement());
+        assertTrue("element should be equal", (otherEdge.getElement() == null ? instClone.getElement() == null : otherEdge.getElement().equals(instClone.getElement())));
         assertTrue("weight should be equal", otherEdge.getWeight() == instClone.getWeight());
 
         String[] expResult = otherEdge.getEndpoints();

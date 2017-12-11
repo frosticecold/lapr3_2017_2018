@@ -1,6 +1,7 @@
 package lapr.project.utils.graphbase;
 
 import java.lang.reflect.Array;
+import java.util.Objects;
 
 /**
  *
@@ -100,11 +101,23 @@ public class Edge<V, E> implements Comparable<Object> {
         return endverts;
     }
 
+//    @Override
+//    public int hashCode() {
+//        int hash = (int) (Integer.MAX_VALUE * Math.random());
+//        return hash;
+//    }
+
     @Override
     public int hashCode() {
-        int hash = (int) (Integer.MAX_VALUE * Math.random());
+        int hash = 3;
+        hash = 97 * hash + Objects.hashCode(this.element);
+        hash = 97 * hash + (int) (Double.doubleToLongBits(this.weight) ^ (Double.doubleToLongBits(this.weight) >>> 32));
+        hash = 97 * hash + Objects.hashCode(this.vOrig);
+        hash = 97 * hash + Objects.hashCode(this.vDest);
         return hash;
     }
+    
+    
 
     @Override
     public boolean equals(Object otherObj) {
