@@ -108,7 +108,6 @@ public class Edge<V, E> implements Comparable<Object> {
 //        int hash = (int) (Integer.MAX_VALUE * Math.random());
 //        return hash;
 //    }
-
     @Override
     public int hashCode() {
         int hash = 3;
@@ -118,8 +117,6 @@ public class Edge<V, E> implements Comparable<Object> {
         hash = 97 * hash + Objects.hashCode(this.vDest);
         return hash;
     }
-    
-    
 
 //    @Override
 //    public boolean equals(Object otherObj) {
@@ -165,13 +162,14 @@ public class Edge<V, E> implements Comparable<Object> {
 //
 //        return true;
 //    }
-    
-    
-
     @Override
     public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if (obj == null) return false;
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
         if (getClass() != obj.getClass()) {
             return false;
         }
@@ -191,11 +189,11 @@ public class Edge<V, E> implements Comparable<Object> {
     @Override
     public int compareTo(Object otherObject) {
         @SuppressWarnings("unchecked")
-                Edge<V, E> other = (Edge<V, E>) otherObject;
+        Edge<V, E> other = (Edge<V, E>) otherObject;
         if (this.weight < other.weight) {
             return -1;
         }
-        if (this.weight - other.weight == 0) {
+        if (Math.abs(this.weight - other.weight) < 0.00000001) {
             return 0;
         }
         return 1;

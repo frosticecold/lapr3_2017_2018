@@ -46,7 +46,6 @@ public class Graph<V, E> implements GraphInterface<V, E> {
 
     public V[] allkeyVerts() {
 
-        //V[] keyverts = (V[]) new Object[numVert];
         V vertElem = null;
         for (Vertex<V, E> vert : vertices.values()) {
             vertElem = vert.getElement();            // To get type
@@ -368,11 +367,6 @@ public class Graph<V, E> implements GraphInterface<V, E> {
         return buf.toString();
     }
 
-//    @Override
-//    public int hashCode() {
-//        int hash = (int) (Integer.MAX_VALUE * Math.random());
-//        return hash;
-//    }
     @Override
     public int hashCode() {
         int hash = 3;
