@@ -10,7 +10,9 @@ package lapr.project.ui;
  * @author MarioDias
  */
 public class Mockup extends javax.swing.JFrame {
+
     private static final long serialVersionUID = 1;
+
     /**
      * Creates new form Mockup
      */
