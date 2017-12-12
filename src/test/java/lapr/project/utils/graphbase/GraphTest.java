@@ -542,7 +542,7 @@ public class GraphTest {
         instance.insertEdge("E","D","Edge7",1);
         instance.insertEdge("E","E","Edge8",1);
         
-        Graph<String,String> instClone = instance.clone();
+        Graph<String,String> instClone = instance.copyGraph();
 	
         assertTrue("number of vertices should be equal", instance.numVertices()==instClone.numVertices());
         assertTrue("number of edges should be equal", instance.numEdges()==instClone.numEdges());
@@ -571,9 +571,9 @@ public class GraphTest {
 		
 	assertTrue("should be equal to itself", instance.equals(instance));
 		
-	assertTrue("should be equal to a clone", instance.equals(instance.clone()));
+	assertTrue("should be equal to a clone", instance.equals(instance.copyGraph()));
         
-        Graph<String,String> other = instance.clone();
+        Graph<String,String> other = instance.copyGraph();
        
         other.removeEdge("E","E");
         assertFalse("instance should not be equal to other", instance.equals(other));

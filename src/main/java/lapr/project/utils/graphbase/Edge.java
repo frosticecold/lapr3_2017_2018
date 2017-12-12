@@ -119,55 +119,77 @@ public class Edge<V, E> implements Comparable<Object> {
     
     
 
+//    @Override
+//    public boolean equals(Object otherObj) {
+//
+//        if (this == otherObj) {
+//            return true;
+//        }
+//
+//        if (otherObj == null || this.getClass() != otherObj.getClass()) {
+//            return false;
+//        }
+//        @SuppressWarnings("unchecked")
+//        Edge<V, E> otherEdge = (Edge<V, E>) otherObj;
+//
+//        // if endpoints vertices are not equal
+//        if ((this.vOrig == null && otherEdge.vOrig != null)
+//                || (this.vOrig != null && otherEdge.vOrig == null)) {
+//            return false;
+//        }
+//
+//        if ((this.vDest == null && otherEdge.vDest != null)
+//                || (this.vDest != null && otherEdge.vDest == null)) {
+//            return false;
+//        }
+//
+//        if (this.vOrig != null && otherEdge.vOrig != null
+//                && !this.vOrig.equals(otherEdge.vOrig)) {
+//            return false;
+//        }
+//
+//        if (this.vDest != null && otherEdge.vDest != null
+//                && !this.vDest.equals(otherEdge.vDest)) {
+//            return false;
+//        }
+//
+//        if (this.weight != otherEdge.weight) {
+//            return false;
+//        }
+//
+//        if (this.element != null && otherEdge.element != null) {
+//            return this.element.equals(otherEdge.element);
+//        }
+//
+//        return true;
+//    }
+    
+    
+
     @Override
-    public boolean equals(Object otherObj) {
-
-        if (this == otherObj) {
-            return true;
-        }
-
-        if (otherObj == null || this.getClass() != otherObj.getClass()) {
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null) return false;
+        if (getClass() != obj.getClass()) {
             return false;
         }
-        @SuppressWarnings("unchecked")
-        Edge<V, E> otherEdge = (Edge<V, E>) otherObj;
-
-        // if endpoints vertices are not equal
-        if ((this.vOrig == null && otherEdge.vOrig != null)
-                || (this.vOrig != null && otherEdge.vOrig == null)) {
+        final Edge<?, ?> other = (Edge<?, ?>) obj;
+        if (Double.doubleToLongBits(this.weight) != Double.doubleToLongBits(other.weight)) {
             return false;
         }
-
-        if ((this.vDest == null && otherEdge.vDest != null)
-                || (this.vDest != null && otherEdge.vDest == null)) {
+        if (!Objects.equals(this.element, other.element)) {
             return false;
         }
-
-        if (this.vOrig != null && otherEdge.vOrig != null
-                && !this.vOrig.equals(otherEdge.vOrig)) {
+        if (!Objects.equals(this.vOrig, other.vOrig)) {
             return false;
         }
-
-        if (this.vDest != null && otherEdge.vDest != null
-                && !this.vDest.equals(otherEdge.vDest)) {
-            return false;
-        }
-
-        if (this.weight != otherEdge.weight) {
-            return false;
-        }
-
-        if (this.element != null && otherEdge.element != null) {
-            return this.element.equals(otherEdge.element);
-        }
-
-        return true;
+        return Objects.equals(this.vDest, other.vDest);
     }
 
     @Override
     public int compareTo(Object otherObject) {
         @SuppressWarnings("unchecked")
-        Edge<V, E> other = (Edge<V, E>) otherObject;
+                Edge<V, E> other = (Edge<V, E>) otherObject;
         if (this.weight < other.weight) {
             return -1;
         }
@@ -177,9 +199,7 @@ public class Edge<V, E> implements Comparable<Object> {
         return 1;
     }
 
-    @Override
-    public Edge<V, E> clone() {
-
+    public Edge<V, E> copyEdge() {
         Edge<V, E> newEdge = new Edge<>();
 
         newEdge.element = element;

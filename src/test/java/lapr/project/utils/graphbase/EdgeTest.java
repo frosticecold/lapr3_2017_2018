@@ -155,7 +155,7 @@ public class EdgeTest {
 
         assertTrue("should be equal to itself", instance.equals(instance));
 
-        assertTrue("should be equal to a clone", instance.equals(instance.clone()));
+        assertTrue("should be equal to a clone", instance.equals(instance.copyEdge()));
 
         Vertex<String, String> vertex1 = new Vertex<>(1, "Vertex1");
         Edge<String, String> otherEdge = new Edge<>("edge1", 1.0, vertex1, vertex1);
@@ -198,7 +198,7 @@ public class EdgeTest {
         Vertex<String, String> vertex1 = new Vertex<>(1, "Vertex1");
         Edge<String, String> otherEdge = new Edge<>("edge1", 1.0, vertex1, vertex1);
 
-        Edge<String, String> instClone = otherEdge.clone();
+        Edge<String, String> instClone = otherEdge.copyEdge();
 
         assertTrue("element should be equal", (otherEdge.getElement() == null ? instClone.getElement() == null : otherEdge.getElement().equals(instClone.getElement())));
         assertTrue("weight should be equal", otherEdge.getWeight() == instClone.getWeight());

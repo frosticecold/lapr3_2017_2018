@@ -220,13 +220,12 @@ public class Graph<V, E> implements GraphInterface<V, E> {
         numEdge++;
 
         //if graph is not direct insert other edge in the opposite direction 
-        if (!isDirected) // if vDest different vOrig
+        if (!isDirected && getEdge(vDest, vOrig) == null) // if vDest different vOrig
         {
-            if (getEdge(vDest, vOrig) == null) {
-                Edge<V, E> otherEdge = new Edge<>(eInf, eWeight, vdest, vorig);
-                vdest.addAdjVert(vOrig, otherEdge);
-                numEdge++;
-            }
+            Edge<V, E> otherEdge = new Edge<>(eInf, eWeight, vdest, vorig);
+            vdest.addAdjVert(vOrig, otherEdge);
+            numEdge++;
+
         }
 
         return true;
@@ -292,7 +291,7 @@ public class Graph<V, E> implements GraphInterface<V, E> {
     }
 
     //Returns a clone of the graph 
-    public Graph<V, E> clone() {
+    public Graph<V, E> copyGraph() {
 
         Graph<V, E> newObject = new Graph<>(this.isDirected);
 
@@ -371,7 +370,6 @@ public class Graph<V, E> implements GraphInterface<V, E> {
 //        int hash = (int) (Integer.MAX_VALUE * Math.random());
 //        return hash;
 //    }
-
     @Override
     public int hashCode() {
         int hash = 3;
@@ -380,6 +378,5 @@ public class Graph<V, E> implements GraphInterface<V, E> {
         hash = 59 * hash + Objects.hashCode(this.vertices);
         return hash;
     }
-    
 
 }
