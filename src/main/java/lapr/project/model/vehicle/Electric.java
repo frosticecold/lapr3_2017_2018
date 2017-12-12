@@ -1,4 +1,6 @@
-package lapr.project.model;
+package lapr.project.model.vehicle;
+
+import lapr.project.model.vehicle.Motorization;
 
 public class Electric extends Motorization {
 

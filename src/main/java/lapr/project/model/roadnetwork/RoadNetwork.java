@@ -1,4 +1,4 @@
-package lapr.project.model;
+package lapr.project.model.roadnetwork;
 
 import lapr.project.utils.graphbase.Graph;
 

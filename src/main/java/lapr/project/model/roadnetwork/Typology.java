@@ -1,4 +1,4 @@
-package lapr.project.model;
+package lapr.project.model.roadnetwork;
 
 public enum Typology {
     REGULAR_ROAD("REGULAR_ROAD"),

@@ -1,4 +1,4 @@
-package lapr.project.model;
+package lapr.project.model.vehicle;
 
 public class CombustionVehicle extends Vehicle {
 
