@@ -27,7 +27,6 @@ public class Mockup extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jMenuItem1 = new javax.swing.JMenuItem();
         btnClose = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         itemProject = new javax.swing.JMenu();
@@ -42,12 +41,10 @@ public class Mockup extends javax.swing.JFrame {
         menuItemExportShow = new javax.swing.JMenu();
         subMenuItemExport = new javax.swing.JMenu();
         subMenuItemExportCSV = new javax.swing.JMenu();
-        jMenu3 = new javax.swing.JMenu();
-        jMenu1 = new javax.swing.JMenu();
-        jMenuItem2 = new javax.swing.JMenuItem();
-        jMenu2 = new javax.swing.JMenu();
-
-        jMenuItem1.setText("jMenuItem1");
+        subItemMenuShow = new javax.swing.JMenu();
+        menuItemFile = new javax.swing.JMenu();
+        menuItemSaveFile = new javax.swing.JMenuItem();
+        menuHelp = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -89,22 +86,22 @@ public class Mockup extends javax.swing.JFrame {
         subMenuItemExportCSV.setText("Export CSV");
         menuItemExportShow.add(subMenuItemExportCSV);
 
-        jMenu3.setText("Show results");
-        menuItemExportShow.add(jMenu3);
+        subItemMenuShow.setText("Show results");
+        menuItemExportShow.add(subItemMenuShow);
 
         menuResults.add(menuItemExportShow);
 
         jMenuBar1.add(menuResults);
 
-        jMenu1.setText("File");
+        menuItemFile.setText("File");
 
-        jMenuItem2.setText("Save current project");
-        jMenu1.add(jMenuItem2);
+        menuItemSaveFile.setText("Save current project");
+        menuItemFile.add(menuItemSaveFile);
 
-        jMenuBar1.add(jMenu1);
+        jMenuBar1.add(menuItemFile);
 
-        jMenu2.setText("Help");
-        jMenuBar1.add(jMenu2);
+        menuHelp.setText("Help");
+        jMenuBar1.add(menuHelp);
 
         setJMenuBar(jMenuBar1);
 
@@ -168,19 +165,18 @@ public class Mockup extends javax.swing.JFrame {
     private javax.swing.JMenu itemProject;
     private javax.swing.JMenuItem itemProjectCopyProject;
     private javax.swing.JMenuItem itemProjectEditProject;
-    private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
-    private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenu menuHelp;
     private javax.swing.JMenu menuItemBestPath;
     private javax.swing.JMenuItem menuItemCreateProject;
     private javax.swing.JMenu menuItemExportShow;
+    private javax.swing.JMenu menuItemFile;
     private javax.swing.JMenuItem menuItemOpenProject;
     private javax.swing.JMenu menuItemSave;
+    private javax.swing.JMenuItem menuItemSaveFile;
     private javax.swing.JMenu menuNetworkAnalysis;
     private javax.swing.JMenu menuResults;
+    private javax.swing.JMenu subItemMenuShow;
     private javax.swing.JMenu subMenuItemExport;
     private javax.swing.JMenu subMenuItemExportCSV;
     // End of variables declaration//GEN-END:variables
