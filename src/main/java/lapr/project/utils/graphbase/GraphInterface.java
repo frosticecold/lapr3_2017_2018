@@ -46,19 +46,19 @@ public interface GraphInterface<V,E> {
    
   /**
    * Returns the number of edges leaving vertex v
-   * For an undirected graph, this is the same result returned by inDegree
-   * @param v 
+   * For an undirected graph, this is the same result returned by inDegree 
+     * @param vert
    * @return number of edges leaving vertex v, -1 if vertex doesn't exist  
    */
-  int outDegree(V vert) ;
+  int outDegree(V vert);
   
   /**
    * Returns the number of edges for which vertex v is the destination 
-   * For an undirected graph, this is the same result returned by outDegree
-   * @param v 
+   * For an undirected graph, this is the same result returned by outDegree 
+     * @param vert
    * @return number of edges leaving vertex v, -1 if vertex doesn't exist  
    */
-  int inDegree(V vert) ;
+  int inDegree(V vert);
   
   /* Returns an iterable collection of edges for which vertex v is the origin 
   * for an undirected graph, this is the same result returned by incomingEdges

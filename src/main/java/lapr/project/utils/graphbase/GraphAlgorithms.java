@@ -15,12 +15,14 @@ public class GraphAlgorithms {
     /**
      * Performs breadth-first search of a Graph starting in a Vertex
      *
+     * @param <V>
+     * @param <E>
      * @param g Graph instance
      * @param vert information of the Vertex that will be the source of the
      * search
      * @return qbfs a queue with the vertices of breadth-first search
      */
-    public static <V, E> LinkedList<V> BreadthFirstSearch(Graph<V, E> g, V vert) {
+    public static <V, E> LinkedList<V> breadthFirstSearch(Graph<V, E> g, V vert) {
 
         if (!g.validVertex(vert)) {
             return null;
@@ -58,7 +60,7 @@ public class GraphAlgorithms {
      * @param visited set of discovered vertices
      * @param qdfs queue with vertices of depth-first search
      */
-    private static <V, E> void DepthFirstSearch(Graph<V, E> graph, V vOrig, boolean[] visited, LinkedList<V> qdfs) {
+    private static <V, E> void depthFirstSearch(Graph<V, E> graph, V vOrig, boolean[] visited, LinkedList<V> qdfs) {
 
         visited[graph.getKey(vOrig)] = true;
         int i = -1;
@@ -67,28 +69,30 @@ public class GraphAlgorithms {
             if (vOrig != vAdj) {
                 if (graph.getEdge(vOrig, vAdj) != null && visited[i] == false) {
                     qdfs.add(vAdj);
-                    DepthFirstSearch(graph, vAdj, visited, qdfs);
+                    depthFirstSearch(graph, vAdj, visited, qdfs);
                 }
             }
         }
     }
 
     /**
+     * @param <V>
+     * @param <E>
      * @param g Graph instance
      * @param vert information of the Vertex that will be the source of the
      * search
      * @return qdfs a queue with the vertices of depth-first search
      */
-    public static <V, E> LinkedList<V> DepthFirstSearch(Graph<V, E> g, V vert) {
+    public static <V, E> LinkedList<V> depthFirstSearch(Graph<V, E> g, V vert) {
 
         if (!g.validVertex(vert)) {
             return null;
         }
         boolean[] knownVertices = new boolean[g.numVertices()];
-        LinkedList<V> resultQueue = new LinkedList<V>();
+        LinkedList<V> resultQueue = new LinkedList<>();
         resultQueue.add(vert);
 
-        DepthFirstSearch(g, vert, knownVertices, resultQueue);
+        depthFirstSearch(g, vert, knownVertices, resultQueue);
         return resultQueue;
     }
 
@@ -132,6 +136,8 @@ public class GraphAlgorithms {
     }
 
     /**
+     * @param <V>
+     * @param <E>
      * @param g Graph instance
      * @param vOrig information of the Vertex origin
      * @param vDest information of the Vertex destination
@@ -243,7 +249,7 @@ public class GraphAlgorithms {
      * Reverses the path
      *
      * @param path stack with path
-     */
+     
     private static <V, E> LinkedList<V> revPath(LinkedList<V> path) {
 
         LinkedList<V> pathcopy = new LinkedList<>(path);
@@ -254,7 +260,7 @@ public class GraphAlgorithms {
         }
 
         return pathrev;
-    }
+    }*/
 
     private static int getVertMinDist(double[] dist, boolean[] visited) {
         double min = Double.MAX_VALUE;

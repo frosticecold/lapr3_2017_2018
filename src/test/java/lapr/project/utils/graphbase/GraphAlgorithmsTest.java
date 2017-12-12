@@ -57,29 +57,29 @@ public class GraphAlgorithmsTest {
     }
 
     /**
-     * Test of BreadthFirstSearch method, of class GraphAlgorithms.
+     * Test of breadthFirstSearch method, of class GraphAlgorithms.
      */
     @Test
     public void testBreadthFirstSearch() {
         System.out.println("Test BreadthFirstSearch");
 
-        assertTrue("Should be null if vertex does not exist", GraphAlgorithms.BreadthFirstSearch(completeMap, "LX") == null);
+        assertTrue("Should be null if vertex does not exist", GraphAlgorithms.breadthFirstSearch(completeMap, "LX") == null);
 
-        LinkedList<String> path = GraphAlgorithms.BreadthFirstSearch(completeMap, "Faro");
+        LinkedList<String> path = GraphAlgorithms.breadthFirstSearch(completeMap, "Faro");
         assertTrue("Should be just one", path.size() == 1);
 
         Iterator<String> it = path.iterator();
         assertTrue("it should be Faro", it.next().compareTo("Faro") == 0);
 
-        path = GraphAlgorithms.BreadthFirstSearch(completeMap, "Porto");
+        path = GraphAlgorithms.breadthFirstSearch(completeMap, "Porto");
         assertTrue("Should give seven vertices ", path.size() == 7);
 
-        path = GraphAlgorithms.BreadthFirstSearch(completeMap, "Viseu");
+        path = GraphAlgorithms.breadthFirstSearch(completeMap, "Viseu");
         assertTrue("Should give 3 vertices", path.size() == 3);
     }
 
     /**
-     * Test of DepthFirstSearch method, of class GraphAlgorithms.
+     * Test of depthFirstSearch method, of class GraphAlgorithms.
      */
     @Test
     public void testDepthFirstSearch() {
@@ -87,18 +87,18 @@ public class GraphAlgorithmsTest {
 
         LinkedList<String> path;
 
-        assertTrue("Should be null if vertex does not exist", GraphAlgorithms.DepthFirstSearch(completeMap, "LX") == null);
+        assertTrue("Should be null if vertex does not exist", GraphAlgorithms.depthFirstSearch(completeMap, "LX") == null);
 
-        path = GraphAlgorithms.DepthFirstSearch(completeMap, "Faro");
+        path = GraphAlgorithms.depthFirstSearch(completeMap, "Faro");
         assertTrue("Should be just one", path.size() == 1);
 
         Iterator<String> it = path.iterator();
         assertTrue("it should be Faro", it.next().compareTo("Faro") == 0);
 
-        path = GraphAlgorithms.DepthFirstSearch(completeMap, "Porto");
+        path = GraphAlgorithms.depthFirstSearch(completeMap, "Porto");
         assertTrue("Should give seven vertices ", path.size() == 7);
 
-        path = GraphAlgorithms.DepthFirstSearch(completeMap, "Viseu");
+        path = GraphAlgorithms.depthFirstSearch(completeMap, "Viseu");
         assertTrue("Should give 3 vertices", path.size() == 3);
 
         it = path.iterator();
