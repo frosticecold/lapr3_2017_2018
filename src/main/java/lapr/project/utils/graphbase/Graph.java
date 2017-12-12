@@ -51,6 +51,9 @@ public class Graph<V, E> implements GraphInterface<V, E> {
         for (Vertex<V, E> vert : vertices.values()) {
             vertElem = vert.getElement();            // To get type
         }
+        if (vertElem == null) {
+            return null;
+        }
         @SuppressWarnings("unchecked")
         V[] keyverts = (V[]) Array.newInstance(vertElem.getClass(), numVert);
 
@@ -80,8 +83,8 @@ public class Graph<V, E> implements GraphInterface<V, E> {
 
         ArrayList<Edge<V, E>> setEdges = new ArrayList<>();
 
-        for (V vertex : vertices.keySet()) {
-            Vertex<V, E> vx = vertices.get(vertex);
+        for (Map.Entry<V, Vertex<V, E>> vertex : vertices.entrySet()) {
+            Vertex<V, E> vx = vertex.getValue();
             for (V vtx : vx.getAllAdjVerts()) {
                 setEdges.add(vx.getEdge(vtx));
             }

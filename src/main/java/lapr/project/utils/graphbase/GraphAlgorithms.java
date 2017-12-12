@@ -36,11 +36,13 @@ public class GraphAlgorithms {
         qaux.add(vert);
         int vKey = g.getKey(vert);
         visited[vKey] = true;
+        
+        V vertex;
 
         while (!qaux.isEmpty()) {
-            vert = qaux.remove();
-            for (Edge<V, E> edge : g.outgoingEdges(vert)) {
-                V vAdj = g.opposite(vert, edge);
+            vertex = qaux.remove();
+            for (Edge<V, E> edge : g.outgoingEdges(vertex)) {
+                V vAdj = g.opposite(vertex, edge);
                 vKey = g.getKey(vAdj);
                 if (!visited[vKey]) {
                     qbfs.add(vAdj);
@@ -66,11 +68,10 @@ public class GraphAlgorithms {
         int i = -1;
         for (V vAdj : graph.vertices()) {
             i++;
-            if (vOrig != vAdj) {
-                if (graph.getEdge(vOrig, vAdj) != null && visited[i] == false) {
-                    qdfs.add(vAdj);
-                    depthFirstSearch(graph, vAdj, visited, qdfs);
-                }
+            if (vOrig != vAdj && graph.getEdge(vOrig, vAdj) != null && !visited[i]) {
+                qdfs.add(vAdj);
+                depthFirstSearch(graph, vAdj, visited, qdfs);
+
             }
         }
     }
@@ -148,7 +149,7 @@ public class GraphAlgorithms {
         if (!g.validVertex(vOrig) || !g.validVertex(vDest)) {
             return null;
         }
-        boolean visited[] = new boolean[g.numVertices()];
+        boolean[] visited = new boolean[g.numVertices()];
         LinkedList<V> path = new LinkedList<>();
         ArrayList<LinkedList<V>> paths = new ArrayList<>();
 
@@ -173,14 +174,15 @@ public class GraphAlgorithms {
 
         int i = g.getKey(vOrig);
         dist[i] = 0;
+        V vOrigin;
         while (i != -1) {
 
-            vOrig = vertices[i];
-            int kOrg = g.getKey(vOrig);
+            vOrigin = vertices[i];
+            int kOrg = g.getKey(vOrigin);
             visited[kOrg] = true;
 
-            for (Edge<V, E> edg : g.outgoingEdges(vOrig)) {
-                V vAdj = g.opposite(vOrig, edg);
+            for (Edge<V, E> edg : g.outgoingEdges(vOrigin)) {
+                V vAdj = g.opposite(vOrigin, edg);
                 int kAdj = g.getKey(vAdj);
                 if (!visited[kAdj] && dist[kAdj] > (dist[kOrg] + edg.getWeight())) {
                     dist[kAdj] = dist[kOrg] + edg.getWeight();
@@ -208,9 +210,10 @@ public class GraphAlgorithms {
 
             int vKey = g.getKey(vDest);
             int prevVKey = pathKeys[vKey];
-            vDest = verts[prevVKey];
+            V vDestin;
+            vDestin = verts[prevVKey];
 
-            getPath(g, vOrig, vDest, verts, pathKeys, path);
+            getPath(g, vOrig, vDestin, verts, pathKeys, path);
         } else {
             path.push(vOrig);
         }
@@ -225,7 +228,7 @@ public class GraphAlgorithms {
         boolean[] visited = new boolean[g.numVertices()];
         int[] pathKeys = new int[g.numVertices()];
         double[] dist = new double[g.numVertices()];
-        V vertices[] = g.allkeyVerts();
+        V[] vertices = g.allkeyVerts();
         shortPath.clear();
 
         for (V v : g.vertices()) {
@@ -249,19 +252,17 @@ public class GraphAlgorithms {
      * Reverses the path
      *
      * @param path stack with path
-     
-    private static <V, E> LinkedList<V> revPath(LinkedList<V> path) {
-
-        LinkedList<V> pathcopy = new LinkedList<>(path);
-        LinkedList<V> pathrev = new LinkedList<>();
-
-        while (!pathcopy.isEmpty()) {
-            pathrev.push(pathcopy.pop());
-        }
-
-        return pathrev;
-    }*/
-
+     *
+     * private static <V, E> LinkedList<V> revPath(LinkedList<V> path) {
+     *
+     * LinkedList<V> pathcopy = new LinkedList<>(path); LinkedList<V> pathrev =
+     * new LinkedList<>();
+     *
+     * while (!pathcopy.isEmpty()) { pathrev.push(pathcopy.pop()); }
+     *
+     * return pathrev;
+    }
+     */
     private static int getVertMinDist(double[] dist, boolean[] visited) {
         double min = Double.MAX_VALUE;
         int indice = -1;

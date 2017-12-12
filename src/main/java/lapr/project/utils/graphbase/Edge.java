@@ -70,7 +70,9 @@ public class Edge<V, E> implements Comparable<Object> {
 
     public V[] getEndpoints() {
 
-        V oElem = null, dElem = null, typeElem = null;
+        V oElem = null;
+        V dElem = null;
+        V typeElem = null;
 
         if (this.vOrig != null) {
             oElem = vOrig.getElement();
