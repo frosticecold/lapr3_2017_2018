@@ -49,6 +49,11 @@ public class Mockup extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         btnClose.setText("Close");
+        btnClose.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCloseActionPerformed(evt);
+            }
+        });
 
         itemProject.setText("Project");
 
@@ -56,9 +61,19 @@ public class Mockup extends javax.swing.JFrame {
         itemProject.add(menuItemCreateProject);
 
         menuItemOpenProject.setText("Open project");
+        menuItemOpenProject.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuItemOpenProjectActionPerformed(evt);
+            }
+        });
         itemProject.add(menuItemOpenProject);
 
         itemProjectEditProject.setText("Edit project");
+        itemProjectEditProject.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemProjectEditProjectActionPerformed(evt);
+            }
+        });
         itemProject.add(itemProjectEditProject);
 
         itemProjectCopyProject.setText("Copy project");
@@ -124,6 +139,18 @@ public class Mockup extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void menuItemOpenProjectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemOpenProjectActionPerformed
+        new OpenProjectUI().setVisible(true);
+    }//GEN-LAST:event_menuItemOpenProjectActionPerformed
+
+    private void btnCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCloseActionPerformed
+        System.exit(0);
+    }//GEN-LAST:event_btnCloseActionPerformed
+
+    private void itemProjectEditProjectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemProjectEditProjectActionPerformed
+        new EditProjectUI().setVisible(true);
+    }//GEN-LAST:event_itemProjectEditProjectActionPerformed
 
     /**
      * @param args the command line arguments
