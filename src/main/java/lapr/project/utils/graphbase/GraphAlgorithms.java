@@ -241,7 +241,7 @@ public class GraphAlgorithms {
 
         double lengthPath = dist[g.getKey(vDest)];
 
-        if (lengthPath != Double.MAX_VALUE) {
+        if (Double.MAX_VALUE - lengthPath > 0) {
             getPath(g, vOrig, vDest, vertices, pathKeys, shortPath);
             return lengthPath;
         }
