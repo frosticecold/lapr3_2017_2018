@@ -13,7 +13,7 @@ public class Project {
      * @param roadNetwork
      * @param vehiclesList
      */
-    public Project(Graph roadNetwork, List<Vehicle> vehiclesList) {
+    public Project(Graph<Junction, Road> roadNetwork, List<Vehicle> vehiclesList) {
         m_road_network = roadNetwork;
         m_list_vehicles = vehiclesList;
     }
