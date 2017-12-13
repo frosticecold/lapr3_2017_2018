@@ -39,19 +39,22 @@ public class CreateProjectUI extends javax.swing.JFrame {
         jTextArea1 = new javax.swing.JTextArea();
         labelTitle1 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Create new project");
 
         labelTitle.setText("Project title:");
 
         btnClose.setText("Close");
+        btnClose.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCloseActionPerformed(evt);
+            }
+        });
 
         btnCreateProject.setText("Create project");
 
-        btnImportRoadNetwork.setIcon(new javax.swing.ImageIcon(getClass().getResource("/if_13_2135926.png"))); // NOI18N
         btnImportRoadNetwork.setText("Import Road Network");
 
-        btnImportVehicle.setIcon(new javax.swing.ImageIcon(getClass().getResource("/if_BT_c3angle_905667.png"))); // NOI18N
         btnImportVehicle.setText("Import Vehicle");
         btnImportVehicle.setToolTipText("");
 
@@ -114,6 +117,10 @@ public class CreateProjectUI extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCloseActionPerformed
+        dispose();
+    }//GEN-LAST:event_btnCloseActionPerformed
 
     /**
      * @param args the command line arguments
