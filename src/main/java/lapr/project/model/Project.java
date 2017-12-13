@@ -18,6 +18,25 @@ public class Project {
         m_list_vehicles = vehiclesList;
     }
 
+    public void setM_road_network(Graph<Junction, Road> m_road_network) {
+        this.m_road_network = m_road_network;
+    }
+
+    public void setM_list_vehicles(List<Vehicle> m_list_vehicles) {
+        this.m_list_vehicles = m_list_vehicles;
+    }
+    
+    public Graph<Junction, Road> getM_road_network() {
+        return m_road_network;
+    }
+
+    public List<Vehicle> getM_list_vehicles() {
+        return m_list_vehicles;
+    }
+
+    public Project() {
+    }
+
     /**
      *
      * @param roadNetwork
@@ -35,5 +54,6 @@ public class Project {
             m_road_network.insertEdge(junction1, junction2, road, weight);
         }
     }
+
     
 }

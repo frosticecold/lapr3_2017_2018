@@ -12,15 +12,31 @@ public class Vehicle {
     private float m_drag_coefficient;
     private float m_rolling_resistance_coefficient;
     private float m_wheel_size;
+    private String name;
+    private String description;
+    private String type;
+
+    public Vehicle(String type) {
+        this.type = type;
+    }
 
     public Vehicle() {
-        // TODO - implement Vehicle.Vehicle
-        throw new UnsupportedOperationException();
     }
+    
+    
 
     public void energy() {
-        // TODO - implement Vehicle.energy
         throw new UnsupportedOperationException();
     }
 
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    @Override
+    public String toString() {
+        return "Vehicle{" + "type=" + type + '}';
+    }
+
+  
 }

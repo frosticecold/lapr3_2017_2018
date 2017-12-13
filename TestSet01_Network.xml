@@ -14,7 +14,7 @@
 		</road>
 		<road id="A01">
 			<road_name>A1</road_name>
-			<togy>toll highway</typology>
+			<typology>toll highway</typology>
 			<toll_fare>
 				<class id="1">0.15</class>
 				<class id="2">0.25</class>
