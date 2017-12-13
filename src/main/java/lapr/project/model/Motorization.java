@@ -1,27 +1,24 @@
 package lapr.project.model;
 
-public abstract class Motorization {
+public class Motorization {
 
-	private String type;
-	private int torque;
+    private String type;
+    private int torque;
 
-	/**
-	 * 
-	 * @param name
-	 */
-	public Motorization(String name) {
-		// TODO - implement Motorization.Motorization
-		throw new UnsupportedOperationException();
-	}
+    /**
+     *
+     * @param name
+     */
+    public Motorization(String type) {
+        this.type = type;
+    }
 
-	public String getMotorType() {
-		// TODO - implement Motorization.getMotorType
-		throw new UnsupportedOperationException();
-	}
+    public String getMotorType() {
+        return type;
+    }
 
-	public void getTorque() {
-		// TODO - implement Motorization.getTorque
-		throw new UnsupportedOperationException();
-	}
+    public int getTorque() {
+        return torque;
+    }
 
 }
