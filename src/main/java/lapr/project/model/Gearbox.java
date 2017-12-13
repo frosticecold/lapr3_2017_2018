@@ -1,40 +1,38 @@
 package lapr.project.model;
 
-
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class Gearbox {
+public class Gearbox {
 
-	private List<Gear> gears;
-	private float m_final_drive_ration;
+    private List<Gear> m_gears;
 
-	public Gearbox() {
-		gears = new ArrayList<>();
-		throw new UnsupportedOperationException();
-	}
+    public Gearbox(List<Gear> m_gears) {
+        this.m_gears = m_gears;
+    }
 
-	/**
-	 * 
-	 * @param g
-	 */
-	public void addGear(Gear g) {
-		// TODO - implement Gearbox.addGear
-		throw new UnsupportedOperationException();
-	}
+    public Gearbox() {
+    }
 
-	/**
-	 * 
-	 * @param nameOfGear
-	 */
-	public Gear getGear(String nameOfGear) {
-		// TODO - implement Gearbox.getGear
-		throw new UnsupportedOperationException();
-	}
+    /**
+     *
+     * @param g
+     */
+    public void addGear(Gear g) {
+        m_gears.add(g);
+    }
 
-	public void getRerveseGear() {
-		// TODO - implement Gearbox.getRerveseGear
-		throw new UnsupportedOperationException();
-	}
+    /**
+     *
+     * @param nameOfGear
+     */
+    public Gear getGear(String nameOfGear) {
+        for (Gear gear : m_gears) {
+            if(gear.toString().equalsIgnoreCase(nameOfGear)){
+                return gear;
+            }
+        }
+        return null;
+        }
 
 }

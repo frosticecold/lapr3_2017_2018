@@ -99,6 +99,16 @@ public class VehicleXML implements FileFormat {
                 createVehicle();
                 break;
             }
+            
+            case "energy":{
+                createEnergy();
+                break;
+            }
+            
+//            case "velocity_limit_list":{
+//                createVelocityList();
+//                break;
+//            }
         }
     }
 
@@ -168,7 +178,11 @@ public class VehicleXML implements FileFormat {
         this.vehicle.setName(name);
         this.vehicle.setDescription(description);
     }
-
+    
+    private void createEnergy() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
     private void addVehicleToList() {
         this.vehiclesList.add(this.vehicle);
         this.vehicle = null;
@@ -210,4 +224,5 @@ public class VehicleXML implements FileFormat {
         int toll_class = Integer.parseInt(elementContent);
         vehicle.setVehicleClass(toll_class);
     }
+
 }
