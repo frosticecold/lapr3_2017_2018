@@ -118,12 +118,14 @@ public class GraphAlgorithmsTest {
 
         assertTrue("There should not be paths if vertex does not exist",
                 GraphAlgorithms.allPaths(completeMap, "Porto", "LX") == null);
+        assertTrue("There should not be paths if vertex does not exist",
+                GraphAlgorithms.allPaths(completeMap, "LX", "Porto") == null);
 
         paths = GraphAlgorithms.allPaths(completeMap, "Porto", "Lisboa");
         assertTrue("There should be 4 paths", paths.size() == 4);
 
         paths = GraphAlgorithms.allPaths(completeMap, "Porto", "Faro");
-        assertTrue("There should not be paths between Porto and Faro in the incomplete map", paths.size() == 0);
+        assertTrue("There should not be paths between Porto and Faro in the incomplete map", paths.isEmpty());
     }
 
     /**
@@ -136,10 +138,13 @@ public class GraphAlgorithmsTest {
         LinkedList<String> shortPath = new LinkedList<String>();
         double lenpath = 0;
         lenpath = GraphAlgorithms.shortestPath(completeMap, "Porto", "LX", shortPath);
-        assertTrue("Length path should be 0 if vertex does not exist", shortPath.size() == 0);
+        assertTrue("Length path should be 0 if vertex does not exist", shortPath.isEmpty());
+
+        lenpath = GraphAlgorithms.shortestPath(completeMap, "LX", "Porto", shortPath);
+        assertTrue("Length path should be 0 if vertex does not exist", shortPath.isEmpty());
 
         lenpath = GraphAlgorithms.shortestPath(completeMap, "Porto", "Faro", shortPath);
-        assertTrue("Length path should be 0 if there is no path", shortPath.size() == 0);
+        assertTrue("Length path should be 0 if there is no path", shortPath.isEmpty());
 
         lenpath = GraphAlgorithms.shortestPath(completeMap, "Porto", "Porto", shortPath);
         assertTrue("Length path should be 1 if source and vertex are the same", shortPath.size() == 1);

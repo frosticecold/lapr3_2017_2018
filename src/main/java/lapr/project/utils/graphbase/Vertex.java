@@ -3,6 +3,7 @@ package lapr.project.utils.graphbase;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  *
@@ -166,7 +167,9 @@ public class Vertex<V, E> {
 
     @Override
     public int hashCode() {
-        int hash = (int) (Integer.MAX_VALUE * Math.random());
+        int hash = 7;
+        hash = 31 * hash + this.key;
+        hash = 31 * hash + Objects.hashCode(this.element);
         return hash;
     }
 }

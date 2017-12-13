@@ -150,6 +150,13 @@ public class EdgeTest {
     @Test
     public void testEquals() {
         System.out.println("equals");
+        
+        Object nullInstance = null;
+        Object object = new Object();
+        
+        assertFalse("should be null", instance.equals(nullInstance));
+        
+        assertFalse("should be different", instance.equals(object));
 
         assertFalse("should not be equal to null", instance == null);
 
@@ -158,6 +165,11 @@ public class EdgeTest {
         assertTrue("should be equal to a clone", instance.equals(instance.copyEdge()));
 
         Vertex<String, String> vertex1 = new Vertex<>(1, "Vertex1");
+        Vertex<String, String> vertex2 = new Vertex<>(2, "Vertex2");
+        
+        Edge<String, String> otherEdgeOrig = new Edge<>("edge1", 1.0, vertex2, vertex1);
+        assertFalse("should not be equal to otherEdgeOrig", instance.equals(otherEdgeOrig));
+        
         Edge<String, String> otherEdge = new Edge<>("edge1", 1.0, vertex1, vertex1);
 
         assertFalse("should not be equal to otherEdge", instance.equals(otherEdge));
@@ -228,4 +240,15 @@ public class EdgeTest {
 
     }
 
+    /**
+     * Test of hashCode method, of class Edge.
+     */
+    @Test
+    public void testHashCode() {
+        System.out.println("hashCode");
+        Edge<String,String> expResult = instance.copyEdge();
+        
+        assertTrue(instance.equals(expResult) && expResult.equals(instance));
+        assertTrue(instance.hashCode() == expResult.hashCode());
+    }
 }

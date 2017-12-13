@@ -103,11 +103,6 @@ public class Edge<V, E> implements Comparable<Object> {
         return endverts;
     }
 
-//    @Override
-//    public int hashCode() {
-//        int hash = (int) (Integer.MAX_VALUE * Math.random());
-//        return hash;
-//    }
     @Override
     public int hashCode() {
         int hash = 3;
