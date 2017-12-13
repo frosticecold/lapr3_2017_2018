@@ -9,6 +9,8 @@ public class Project {
     private Graph<Junction, Section> m_road_network;
     private List<Vehicle> m_list_vehicles;
     private List<Road> m_list_roads;
+    private String name;
+    private String description;
 
     /**
      *
@@ -41,6 +43,14 @@ public class Project {
 
     public List<Vehicle> getListVehicles() {
         return m_list_vehicles;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getDescription() {
+        return description;
     }
 
     /**
