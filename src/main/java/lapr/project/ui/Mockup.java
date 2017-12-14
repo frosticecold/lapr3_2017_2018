@@ -29,6 +29,10 @@ public class Mockup extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jCheckBox1 = new javax.swing.JCheckBox();
+        jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuItem2 = new javax.swing.JMenuItem();
+        jMenuItem3 = new javax.swing.JMenuItem();
         btnClose = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         itemProject = new javax.swing.JMenu();
@@ -38,6 +42,7 @@ public class Mockup extends javax.swing.JFrame {
         itemProjectCopyProject = new javax.swing.JMenuItem();
         menuNetworkAnalysis = new javax.swing.JMenu();
         menuItemBestPath = new javax.swing.JMenu();
+        jMenuItem4 = new javax.swing.JMenuItem();
         menuResults = new javax.swing.JMenu();
         menuItemSave = new javax.swing.JMenu();
         menuItemExportShow = new javax.swing.JMenu();
@@ -47,6 +52,14 @@ public class Mockup extends javax.swing.JFrame {
         menuItemFile = new javax.swing.JMenu();
         menuItemSaveFile = new javax.swing.JMenuItem();
         menuHelp = new javax.swing.JMenu();
+
+        jCheckBox1.setText("jCheckBox1");
+
+        jMenuItem1.setText("jMenuItem1");
+
+        jMenuItem2.setText("jMenuItem2");
+
+        jMenuItem3.setText("jMenuItem3");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -60,6 +73,11 @@ public class Mockup extends javax.swing.JFrame {
         itemProject.setText("Project");
 
         menuItemCreateProject.setText("Create new project");
+        menuItemCreateProject.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuItemCreateProjectActionPerformed(evt);
+            }
+        });
         itemProject.add(menuItemCreateProject);
 
         menuItemOpenProject.setText("Open project");
@@ -92,6 +110,14 @@ public class Mockup extends javax.swing.JFrame {
 
         menuItemBestPath.setText("Shortest/Best path");
         menuNetworkAnalysis.add(menuItemBestPath);
+
+        jMenuItem4.setText("Fastest Path");
+        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem4ActionPerformed(evt);
+            }
+        });
+        menuNetworkAnalysis.add(jMenuItem4);
 
         jMenuBar1.add(menuNetworkAnalysis);
 
@@ -131,8 +157,8 @@ public class Mockup extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(504, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap(385, Short.MAX_VALUE)
                 .addComponent(btnClose)
                 .addContainerGap())
         );
@@ -146,7 +172,8 @@ public class Mockup extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+  
+    
     private void menuItemOpenProjectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemOpenProjectActionPerformed
         new OpenProjectUI().setVisible(true);
     }//GEN-LAST:event_menuItemOpenProjectActionPerformed
@@ -162,6 +189,14 @@ public class Mockup extends javax.swing.JFrame {
     private void itemProjectCopyProjectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemProjectCopyProjectActionPerformed
         new CopyProjectUI().setVisible(true);
     }//GEN-LAST:event_itemProjectCopyProjectActionPerformed
+
+    private void menuItemCreateProjectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemCreateProjectActionPerformed
+        new CreateProjectUI().setVisible(true);
+    }//GEN-LAST:event_menuItemCreateProjectActionPerformed
+
+    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+        new FastestPathUI().setVisible(true);
+    }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -203,7 +238,12 @@ public class Mockup extends javax.swing.JFrame {
     private javax.swing.JMenu itemProject;
     private javax.swing.JMenuItem itemProjectCopyProject;
     private javax.swing.JMenuItem itemProjectEditProject;
+    private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenu menuHelp;
     private javax.swing.JMenu menuItemBestPath;
     private javax.swing.JMenuItem menuItemCreateProject;

@@ -34,6 +34,11 @@ public class OpenProjectUI extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jcb_projects.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jcb_projects.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcb_projectsActionPerformed(evt);
+            }
+        });
 
         jb_open.setText("Open");
         jb_open.addActionListener(new java.awt.event.ActionListener() {
@@ -56,18 +61,19 @@ public class OpenProjectUI extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(34, 34, 34)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jb_open)
-                        .addGap(18, 18, 18)
-                        .addComponent(jb_cancel))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(34, 34, 34)
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jb_cancel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jb_open)
+                        .addContainerGap())
+                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jl_projects)
-                            .addComponent(jcb_projects, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(0, 44, Short.MAX_VALUE))
+                            .addComponent(jcb_projects, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 44, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -76,11 +82,11 @@ public class OpenProjectUI extends javax.swing.JFrame {
                 .addComponent(jl_projects)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jcb_projects, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jb_open)
-                    .addComponent(jb_cancel))
-                .addContainerGap(28, Short.MAX_VALUE))
+                    .addComponent(jb_cancel)
+                    .addComponent(jb_open))
+                .addContainerGap())
         );
 
         pack();
@@ -93,6 +99,10 @@ public class OpenProjectUI extends javax.swing.JFrame {
     private void jb_cancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_cancelActionPerformed
         dispose();
     }//GEN-LAST:event_jb_cancelActionPerformed
+
+    private void jcb_projectsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcb_projectsActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jcb_projectsActionPerformed
 
     /**
      * @param args the command line arguments
