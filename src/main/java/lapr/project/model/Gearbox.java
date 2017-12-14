@@ -1,6 +1,5 @@
 package lapr.project.model;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Gearbox {

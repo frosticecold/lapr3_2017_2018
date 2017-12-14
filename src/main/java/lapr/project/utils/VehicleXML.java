@@ -9,6 +9,10 @@ import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamConstants;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
+import lapr.project.model.Energy;
+import lapr.project.model.Gearbox;
+import lapr.project.model.Regime;
+import lapr.project.model.Throttle;
 import lapr.project.model.Vehicle;
 
 public class VehicleXML implements FileFormat {
@@ -19,6 +23,10 @@ public class VehicleXML implements FileFormat {
 
     private List<Vehicle> vehiclesList;
     private Vehicle vehicle;
+    private Energy energy;
+    private Throttle throttle;
+    private Regime regime;
+    private Gearbox gearbox;
 
     public VehicleXML() {
 
@@ -168,6 +176,28 @@ public class VehicleXML implements FileFormat {
                 vehicle.setWheelSize(Double.parseDouble(this.elementContent));
                 break;
             }
+            
+            case "energy":{
+                addEnergyToVehicle();
+                break;
+            }
+            
+//            case "min_rpm":{
+//                System.out.println(vehicle.getEnergy());
+//                vehicle.getEnergy().setMinRpm(Double.parseDouble(this.elementContent));
+//                break;
+//            }
+//            
+//            case "max_rpm":{
+//                vehicle.getEnergy().setMaxRpm(Double.parseDouble(this.elementContent));
+//                break;
+//            }
+//            
+//            case "final_drive_ratio":{
+//                vehicle.getEnergy().setFinalDriveRatio(Double.parseDouble(this.elementContent));
+//                break;
+//            }
+            
         }
     }
 
@@ -180,12 +210,17 @@ public class VehicleXML implements FileFormat {
     }
     
     private void createEnergy() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        this.energy = new Energy();
     }
     
     private void addVehicleToList() {
         this.vehiclesList.add(this.vehicle);
         this.vehicle = null;
+    }
+    
+    private void addEnergyToVehicle(){
+        this.vehicle.setEnergy(energy);
+        this.energy = null;
     }
 
     public List<Vehicle> getVehiclesList() {
