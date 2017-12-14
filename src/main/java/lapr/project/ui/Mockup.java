@@ -175,7 +175,9 @@ public class Mockup extends javax.swing.JFrame {
   
     
     private void menuItemOpenProjectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemOpenProjectActionPerformed
-        new OpenProjectUI().setVisible(true);
+        OpenProjectUI ui = new OpenProjectUI(this, rootPaneCheckingEnabled);
+        ui.setLocationRelativeTo(this);
+        ui.setVisible(true);
     }//GEN-LAST:event_menuItemOpenProjectActionPerformed
 
     private void btnCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCloseActionPerformed

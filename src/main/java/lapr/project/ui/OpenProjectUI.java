@@ -2,18 +2,46 @@
  */
 package lapr.project.ui;
 
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
+import lapr.project.controller.OpenProjectController;
+import lapr.project.model.Project;
+
 /**
  *
  * @author pc asus
  */
-public class OpenProjectUI extends javax.swing.JFrame {
-
+public class OpenProjectUI extends javax.swing.JDialog {
+    
     private static final long serialVersionUID = 1;
 
+    private final OpenProjectController controller;
+    private DefaultComboBoxModel<String> projectComboBox;
+
     /**
-     * Creates new form SelectProjectUI
+     * Creates new form OpenProjectUI
+     * @param parent
+     * @param modal
      */
-    public OpenProjectUI() {
+    public OpenProjectUI(java.awt.Frame parent, boolean modal) {
+        super(parent, modal);
+        controller = new OpenProjectController();
+
+        ArrayList<String> projectsList = new ArrayList<>();
+        try {
+            projectsList = controller.getProjects();
+        } catch (SQLException ex) {
+            Logger.getLogger(OpenProjectUI.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(this, "Oops, something went wrong!\n\nVerify the project is functional.", "Loading Error", JOptionPane.ERROR_MESSAGE);
+        }
+        
+        for(String p : projectsList) {
+            projectComboBox.addElement(p);
+        }
         initComponents();
     }
 
@@ -26,24 +54,21 @@ public class OpenProjectUI extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel1 = new javax.swing.JLabel();
         jcb_projects = new javax.swing.JComboBox<>();
-        jb_open = new javax.swing.JButton();
+        jb_save = new javax.swing.JButton();
         jb_cancel = new javax.swing.JButton();
-        jl_projects = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jcb_projects.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jcb_projects.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jcb_projectsActionPerformed(evt);
-            }
-        });
+        jLabel1.setText("Projects:");
 
-        jb_open.setText("Open");
-        jb_open.addActionListener(new java.awt.event.ActionListener() {
+        jcb_projects.setModel(projectComboBox);
+
+        jb_save.setText("Save");
+        jb_save.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jb_openActionPerformed(evt);
+                jb_saveActionPerformed(evt);
             }
         });
 
@@ -54,96 +79,61 @@ public class OpenProjectUI extends javax.swing.JFrame {
             }
         });
 
-        jl_projects.setText("Projects:");
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(34, 34, 34)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jcb_projects, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                            .addGap(32, 32, 32)
+                            .addComponent(jLabel1))
+                        .addGroup(layout.createSequentialGroup()
+                            .addGap(130, 130, 130)
+                            .addComponent(jb_cancel)))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jb_cancel)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jb_open)
-                        .addContainerGap())
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jl_projects)
-                            .addComponent(jcb_projects, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 44, Short.MAX_VALUE))))
+                        .addComponent(jb_save)
+                        .addGap(109, 109, 109)))
+                .addContainerGap(55, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(34, 34, 34)
-                .addComponent(jl_projects)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(39, 39, 39)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jcb_projects, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jb_cancel)
-                    .addComponent(jb_open))
-                .addContainerGap())
+                    .addComponent(jb_save)
+                    .addComponent(jb_cancel))
+                .addContainerGap(42, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jb_openActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_openActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jb_openActionPerformed
+    private void jb_saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_saveActionPerformed
+//        try {
+            Project proj = (Project) projectComboBox.getSelectedItem();
+            controller.setActiveProject(proj);
+            this.dispose();
+//        } catch (SQLException ex) {
+//            Logger.getLogger(OpenProjectUI.class.getName()).log(Level.SEVERE, null, ex);
+//            JOptionPane.showMessageDialog(this, "Couldn't load the selected project.","Error",JOptionPane.ERROR_MESSAGE);
+//        }
+    }//GEN-LAST:event_jb_saveActionPerformed
 
     private void jb_cancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_cancelActionPerformed
-        dispose();
+        this.dispose();
     }//GEN-LAST:event_jb_cancelActionPerformed
 
-    private void jcb_projectsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcb_projectsActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jcb_projectsActionPerformed
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(OpenProjectUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(OpenProjectUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(OpenProjectUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(OpenProjectUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new OpenProjectUI().setVisible(true);
-            }
-        });
-    }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JButton jb_cancel;
-    private javax.swing.JButton jb_open;
+    private javax.swing.JButton jb_save;
     private javax.swing.JComboBox<String> jcb_projects;
-    private javax.swing.JLabel jl_projects;
     // End of variables declaration//GEN-END:variables
 }
