@@ -15,6 +15,8 @@ import lapr.project.model.Gear;
 import lapr.project.model.Gearbox;
 import lapr.project.model.Junction;
 import lapr.project.model.Regime;
+import lapr.project.model.Road;
+import lapr.project.model.RoadNetwork;
 import lapr.project.model.Section;
 import lapr.project.model.Throttle;
 import lapr.project.model.Vehicle;
@@ -262,8 +264,8 @@ public class VehicleXML implements FileFormat {
                 regime.setSFC(Double.parseDouble(this.elementContent));
                 break;
             }
-            
-            case "throttle":{
+
+            case "throttle": {
                 addThrottleToVehicle();
                 break;
             }
@@ -330,11 +332,11 @@ public class VehicleXML implements FileFormat {
         this.gear = null;
     }
 
-    private void addThrottleToVehicle(){
+    private void addThrottleToVehicle() {
         vehicle.getEnergy().getThrottleList().add(throttle);
         this.throttle = null;
     }
-    
+
     public List<Vehicle> getVehiclesList() {
         return vehiclesList;
     }
@@ -373,7 +375,7 @@ public class VehicleXML implements FileFormat {
     }
 
     @Override
-    public Graph<Junction, Section> importNetwork(File file) throws FileNotFoundException, ImportException {
+    public RoadNetwork importNetwork(File file) throws FileNotFoundException, ImportException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

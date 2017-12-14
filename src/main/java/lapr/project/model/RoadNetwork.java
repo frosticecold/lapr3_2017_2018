@@ -5,6 +5,7 @@
  */
 package lapr.project.model;
 
+import java.util.ArrayList;
 import java.util.List;
 import lapr.project.utils.graphbase.Edge;
 import lapr.project.utils.graphbase.Graph;
@@ -30,6 +31,8 @@ public class RoadNetwork {
     public RoadNetwork(String id, String description) {
         m_id = id;
         m_description = description;
+        m_graph = new Graph<>(true);
+        m_listOfRoads = new ArrayList<>();
 
     }
 
@@ -75,5 +78,21 @@ public class RoadNetwork {
         return m_graph.insertEdge(orig, dest, s, s.getSectionLength());
 
     }
+
+    public Junction getJunction(String junction_id) {
+        for (Junction j : m_graph.vertices()) {
+            if (j.getID().equalsIgnoreCase(junction_id)) {
+                return j;
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public String toString() {
+        return "RoadNetwork{" + "m_id=" + m_id + ", m_description=" + m_description + ", m_graph=" + m_graph + ", m_listOfRoads=" + m_listOfRoads + '}';
+    }
+    
+    
 
 }

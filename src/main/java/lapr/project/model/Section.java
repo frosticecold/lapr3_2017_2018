@@ -10,11 +10,12 @@ public class Section {
     private Junction m_ending_junction;
     private String m_typology;
     private Direction m_direction;
-    private List<Segment> sequenceOfSegments;
+    private List<Segment> m_sequenceOfSegments;
+    private String m_road_id;
 
     public enum Direction {
         DIRECT("DIRECT"), REVERSE("REVERSE"), BIDIRECTIONAL("BIDIRECTIONAL");
-        private String d_name;
+        private final String d_name;
 
         Direction(String s) {
             d_name = s;
@@ -22,7 +23,7 @@ public class Section {
     }
 
     public Section() {
-        sequenceOfSegments = new ArrayList<>();
+        m_sequenceOfSegments = new ArrayList<>();
     }
 
     public Junction getBeginningJunction() {
@@ -42,12 +43,12 @@ public class Section {
     }
 
     public List<Segment> getSequenceOfSegments() {
-        return sequenceOfSegments;
+        return m_sequenceOfSegments;
     }
 
     public double getSectionLength() {
         double length = 0;
-        for (Segment s : sequenceOfSegments) {
+        for (Segment s : m_sequenceOfSegments) {
             length += s.getLength();
 
         }
@@ -66,7 +67,7 @@ public class Section {
         hash = 53 * hash + Objects.hashCode(this.m_ending_junction);
         hash = 53 * hash + Objects.hashCode(this.m_typology);
         hash = 53 * hash + Objects.hashCode(this.m_direction);
-        hash = 53 * hash + Objects.hashCode(this.sequenceOfSegments);
+        hash = 53 * hash + Objects.hashCode(this.m_sequenceOfSegments);
         return hash;
     }
 
@@ -94,8 +95,23 @@ public class Section {
         if (this.m_direction != other.m_direction) {
             return false;
         }
-        return Objects.equals(this.sequenceOfSegments, other.sequenceOfSegments);
+        return Objects.equals(this.m_sequenceOfSegments, other.m_sequenceOfSegments);
     }
 
-    
+    public void setBeginJunction(Junction begin) {
+        this.m_beginning_junction = begin;
+    }
+
+    public void setEndJunction(Junction end) {
+        this.m_ending_junction = end;
+    }
+
+    public void setRoadID(String r_id) {
+        this.m_road_id = r_id;
+    }
+
+    public void setSegmentList(List<Segment> listOfSegments) {
+        m_sequenceOfSegments = listOfSegments;
+    }
+
 }

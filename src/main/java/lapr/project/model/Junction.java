@@ -6,16 +6,16 @@ import java.util.Set;
 
 public class Junction {
 
-    private String m_name;
+    private String m_id;
     private Set<Road> m_listOfRoads;
 
-    public Junction(String name) {
-        m_name = name;
+    public Junction(String id) {
+        m_id = id;
         m_listOfRoads = new HashSet<>();
     }
 
-    public String getName() {
-        return m_name;
+    public String getID() {
+        return m_id;
     }
 
     public void addRoad(Road r) {
@@ -25,7 +25,7 @@ public class Junction {
     @Override
     public int hashCode() {
         int hash = 5;
-        hash = 53 * hash + Objects.hashCode(this.m_name);
+        hash = 53 * hash + Objects.hashCode(this.m_id);
         return hash;
     }
 
@@ -41,7 +41,7 @@ public class Junction {
             return false;
         }
         final Junction other = (Junction) obj;
-        if (!Objects.equals(this.m_name, other.m_name)) {
+        if (!Objects.equals(this.m_id, other.m_id)) {
             return false;
         }
         return true;
