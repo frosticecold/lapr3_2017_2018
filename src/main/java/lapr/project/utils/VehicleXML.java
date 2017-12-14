@@ -4,12 +4,14 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamConstants;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
 import lapr.project.model.Energy;
+import lapr.project.model.Gear;
 import lapr.project.model.Gearbox;
 import lapr.project.model.Junction;
 import lapr.project.model.Regime;
@@ -25,11 +27,13 @@ public class VehicleXML implements FileFormat {
     private String elementContent;
 
     private List<Vehicle> vehiclesList;
+    private List<Throttle> throttleList;
     private Vehicle vehicle;
     private Energy energy;
     private Throttle throttle;
     private Regime regime;
     private Gearbox gearbox;
+    private Gear gear;
 
     public VehicleXML() {
 
@@ -116,6 +120,30 @@ public class VehicleXML implements FileFormat {
                 break;
             }
 
+            case "gear_list": {
+                createGearbox();
+                break;
+            }
+
+            case "gear": {
+                createGear();
+                break;
+            }
+
+            case "throttle_list": {
+                createThrottleList();
+                break;
+            }
+
+            case "throttle": {
+                createThrottle();
+                break;
+            }
+
+            case "regime": {
+                createRegime();
+                break;
+            }
 //            case "velocity_limit_list":{
 //                createVelocityList();
 //                break;
@@ -185,21 +213,60 @@ public class VehicleXML implements FileFormat {
                 break;
             }
 
-//            case "min_rpm":{
-//                System.out.println(vehicle.getEnergy());
-//                vehicle.getEnergy().setMinRpm(Double.parseDouble(this.elementContent));
-//                break;
-//            }
-//            
-//            case "max_rpm":{
-//                vehicle.getEnergy().setMaxRpm(Double.parseDouble(this.elementContent));
-//                break;
-//            }
-//            
-//            case "final_drive_ratio":{
-//                vehicle.getEnergy().setFinalDriveRatio(Double.parseDouble(this.elementContent));
-//                break;
-//            }
+            case "min_rpm": {
+                vehicle.getEnergy().setMinRpm(Double.parseDouble(this.elementContent));
+                break;
+            }
+
+            case "max_rpm": {
+                vehicle.getEnergy().setMaxRpm(Double.parseDouble(this.elementContent));
+                break;
+            }
+
+            case "final_drive_ratio": {
+                vehicle.getEnergy().setFinalDriveRatio(Double.parseDouble(this.elementContent));
+                break;
+            }
+
+            case "gears_list": {
+                addGearboxToVehicle();
+                break;
+            }
+
+            case "gear": {
+                addGearToVehicle();
+                break;
+            }
+
+            case "ratio": {
+                gear.setRatio(Double.parseDouble(this.elementContent));
+                break;
+            }
+
+            case "torque": {
+                regime.setTorque(Double.parseDouble(this.elementContent));
+                break;
+            }
+
+            case "rpm_low": {
+                regime.setRpmLow(Double.parseDouble(this.elementContent));
+                break;
+            }
+
+            case "rpm_high": {
+                regime.setRpmHigh(Double.parseDouble(this.elementContent));
+                break;
+            }
+
+            case "SFC": {
+                regime.setSFC(Double.parseDouble(this.elementContent));
+                break;
+            }
+            
+            case "throttle":{
+                addThrottleToVehicle();
+                break;
+            }
         }
     }
 
@@ -213,6 +280,36 @@ public class VehicleXML implements FileFormat {
 
     private void createEnergy() {
         this.energy = new Energy();
+        vehicle.setEnergy(energy);
+    }
+
+    private void createGearbox() {
+        this.gearbox = new Gearbox();
+        vehicle.getEnergy().setGearsList(gearbox);
+    }
+
+    private void createGear() {
+        String read = reader.getAttributeValue(null, "id");
+        int id = Integer.parseInt(read);
+        this.gear = new Gear();
+        gear.setGearID(id);
+    }
+
+    private void createThrottleList() {
+        this.throttleList = new LinkedList<>();
+        vehicle.getEnergy().setThrottleList(throttleList);
+    }
+
+    private void createThrottle() {
+        String read = reader.getAttributeValue(null, "id");
+        int id = Integer.parseInt(read);
+        this.throttle = new Throttle();
+        throttle.setThrottleId(id);
+    }
+
+    private void createRegime() {
+        this.regime = new Regime();
+        throttle.getRegimeList().add(regime);
     }
 
     private void addVehicleToList() {
@@ -221,10 +318,23 @@ public class VehicleXML implements FileFormat {
     }
 
     private void addEnergyToVehicle() {
-        this.vehicle.setEnergy(energy);
         this.energy = null;
     }
 
+    private void addGearboxToVehicle() {
+        this.gearbox = null;
+    }
+
+    private void addGearToVehicle() {
+        vehicle.getEnergy().getGearList().addGear(gear);
+        this.gear = null;
+    }
+
+    private void addThrottleToVehicle(){
+        vehicle.getEnergy().getThrottleList().add(throttle);
+        this.throttle = null;
+    }
+    
     public List<Vehicle> getVehiclesList() {
         return vehiclesList;
     }
@@ -234,7 +344,7 @@ public class VehicleXML implements FileFormat {
         this.elementContent = split[0];
         double mass = Double.parseDouble(elementContent);
         elementContent = split[1];
-        mass = unityConversion(mass, elementContent);
+        mass = unitConversion(mass, elementContent);
         vehicle.setMass(mass);
     }
 
@@ -243,11 +353,11 @@ public class VehicleXML implements FileFormat {
         this.elementContent = split[0];
         double load = Double.parseDouble(elementContent);
         elementContent = split[1];
-        load = unityConversion(load, elementContent);
+        load = unitConversion(load, elementContent);
         vehicle.setLoad(load);
     }
 
-    private double unityConversion(double value, String unity) {
+    private double unitConversion(double value, String unity) {
         unity.toLowerCase();
         switch (unity) {
             case "g": {

@@ -19,9 +19,16 @@ public class Energy {
     }
 
     public Energy() {
-        m_min_rpm = 0;
     }
 
+    public Gearbox getGearList() {
+        return m_gears_list;
+    }
+
+    public List<Throttle> getThrottleList() {
+        return m_throttle_list;
+    }
+    
     public void setMinRpm(double m_min_rpm) {
         this.m_min_rpm = m_min_rpm;
     }

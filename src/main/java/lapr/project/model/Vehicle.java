@@ -1,7 +1,5 @@
 package lapr.project.model;
 
-import lapr.project.model.TollClass;
-
 public class Vehicle {
 
     private String m_name;

@@ -1,5 +1,6 @@
 package lapr.project.model;
 
+import java.util.LinkedList;
 import java.util.List;
 
 public class Gearbox {
@@ -11,6 +12,7 @@ public class Gearbox {
     }
 
     public Gearbox() {
+        this.m_gears = new LinkedList<>();
     }
 
     /**
@@ -33,5 +35,10 @@ public class Gearbox {
         }
         return null;
         }
+
+    @Override
+    public String toString() {
+        return "Gearbox{" + "m_gears=" + m_gears + '}';
+    }
 
 }

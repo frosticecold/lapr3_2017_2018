@@ -1,5 +1,6 @@
 package lapr.project.model;
 
+import java.util.LinkedList;
 import java.util.List;
 
 public class Throttle {
@@ -13,13 +14,18 @@ public class Throttle {
     }
 
     public Throttle() {
+        m_regime_list = new LinkedList<>();
     }
 
-    public void setM_throttle_id(int m_throttle_id) {
+    public List<Regime> getRegimeList() {
+        return m_regime_list;
+    }
+
+    public void setThrottleId(int m_throttle_id) {
         this.m_throttle_id = m_throttle_id;
     }
 
-    public void setM_regime_list(List<Regime> m_regime_list) {
+    public void setRegimeList(List<Regime> m_regime_list) {
         this.m_regime_list = m_regime_list;
     }
 

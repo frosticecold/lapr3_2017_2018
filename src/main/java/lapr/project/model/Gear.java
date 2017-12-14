@@ -2,7 +2,7 @@ package lapr.project.model;
 
 public class Gear {
 
-    private String m_gearID;
+    private int m_gearID;
     private double m_ratio;
 
     /**
@@ -10,12 +10,15 @@ public class Gear {
      * @param name_of_gear
      * @param m_ratio
      */
-    public Gear(String id_of_gear, double m_ratio) {
+    public Gear(int id_of_gear, double m_ratio) {
         this.m_gearID = id_of_gear;
         this.m_ratio = m_ratio;
     }
 
-    public void setGearID(String m_gearID) {
+    public Gear() {
+    }
+    
+    public void setGearID(int m_gearID) {
         this.m_gearID = m_gearID;
     }
 
