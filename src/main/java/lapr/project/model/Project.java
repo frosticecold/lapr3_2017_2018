@@ -36,6 +36,9 @@ public class Project {
     public void setListVehicles(List<Vehicle> m_list_vehicles) {
         this.m_list_vehicles = m_list_vehicles;
     }
+    
+    public void setListRoads(List<Road> listOfRoads){
+    this.m_list_roads = listOfRoads;}
 
     public Graph<Junction, Section> getRoadNetwork() {
         return m_road_network;

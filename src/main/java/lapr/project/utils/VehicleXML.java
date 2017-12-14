@@ -11,9 +11,12 @@ import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
 import lapr.project.model.Energy;
 import lapr.project.model.Gearbox;
+import lapr.project.model.Junction;
 import lapr.project.model.Regime;
+import lapr.project.model.Section;
 import lapr.project.model.Throttle;
 import lapr.project.model.Vehicle;
+import lapr.project.utils.graphbase.Graph;
 
 public class VehicleXML implements FileFormat {
 
@@ -107,12 +110,12 @@ public class VehicleXML implements FileFormat {
                 createVehicle();
                 break;
             }
-            
-            case "energy":{
+
+            case "energy": {
                 createEnergy();
                 break;
             }
-            
+
 //            case "velocity_limit_list":{
 //                createVelocityList();
 //                break;
@@ -176,12 +179,12 @@ public class VehicleXML implements FileFormat {
                 vehicle.setWheelSize(Double.parseDouble(this.elementContent));
                 break;
             }
-            
-            case "energy":{
+
+            case "energy": {
                 addEnergyToVehicle();
                 break;
             }
-            
+
 //            case "min_rpm":{
 //                System.out.println(vehicle.getEnergy());
 //                vehicle.getEnergy().setMinRpm(Double.parseDouble(this.elementContent));
@@ -197,7 +200,6 @@ public class VehicleXML implements FileFormat {
 //                vehicle.getEnergy().setFinalDriveRatio(Double.parseDouble(this.elementContent));
 //                break;
 //            }
-            
         }
     }
 
@@ -208,17 +210,17 @@ public class VehicleXML implements FileFormat {
         this.vehicle.setName(name);
         this.vehicle.setDescription(description);
     }
-    
+
     private void createEnergy() {
         this.energy = new Energy();
     }
-    
+
     private void addVehicleToList() {
         this.vehiclesList.add(this.vehicle);
         this.vehicle = null;
     }
-    
-    private void addEnergyToVehicle(){
+
+    private void addEnergyToVehicle() {
         this.vehicle.setEnergy(energy);
         this.energy = null;
     }
@@ -258,6 +260,11 @@ public class VehicleXML implements FileFormat {
     private void addTollClass() {
         int toll_class = Integer.parseInt(elementContent);
         vehicle.setVehicleClass(toll_class);
+    }
+
+    @Override
+    public Graph<Junction, Section> importNetwork(File file) throws FileNotFoundException, ImportException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }
