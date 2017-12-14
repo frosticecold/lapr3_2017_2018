@@ -33,7 +33,7 @@ public class EditProjectUI extends javax.swing.JFrame {
         jb_save = new javax.swing.JButton();
         jb_cancel = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jl_name.setText("Name:");
 
@@ -95,7 +95,7 @@ public class EditProjectUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jb_cancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_cancelActionPerformed
-        this.setVisible(false);
+        dispose();
     }//GEN-LAST:event_jb_cancelActionPerformed
 
     /**

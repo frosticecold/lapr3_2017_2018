@@ -31,7 +31,7 @@ public class OpenProjectUI extends javax.swing.JFrame {
         jb_cancel = new javax.swing.JButton();
         jl_projects = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jcb_projects.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
@@ -91,7 +91,7 @@ public class OpenProjectUI extends javax.swing.JFrame {
     }//GEN-LAST:event_jb_openActionPerformed
 
     private void jb_cancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_cancelActionPerformed
-        this.setVisible(false);
+        dispose();
     }//GEN-LAST:event_jb_cancelActionPerformed
 
     /**

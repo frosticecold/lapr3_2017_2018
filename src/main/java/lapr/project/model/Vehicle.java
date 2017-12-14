@@ -16,8 +16,9 @@ public class Vehicle {
     private double m_wheel_size;
     private double m_frontal_area;
     private double m_rcc;
+    private Energy m_energy;
 
-    public Vehicle(String m_name, String m_description, String m_type, String m_fuel, int m_vehicle_class, String m_motorization, double m_mass, double m_load, double m_drag_coefficient, double m_wheel_size, double m_frontal_area, double m_rcc) {
+    public Vehicle(String m_name, String m_description, String m_type, String m_fuel, int m_vehicle_class, String m_motorization, double m_mass, double m_load, double m_drag_coefficient, double m_wheel_size, double m_frontal_area, double m_rcc, Energy m_energy) {
         this.m_name = m_name;
         this.m_description = m_description;
         this.m_type = m_type;
@@ -30,11 +31,18 @@ public class Vehicle {
         this.m_wheel_size = m_wheel_size;
         this.m_frontal_area = m_frontal_area;
         this.m_rcc = m_rcc;
+        this.m_energy = m_energy;
     }
 
-    
-
     public Vehicle() {
+    }
+
+    public Energy getEnergy() {
+        return m_energy;
+    }
+    
+    public void setEnergy(Energy m_energy) {
+        this.m_energy = m_energy;
     }
 
     public void setRcc(double m_rcc) {
@@ -81,23 +89,13 @@ public class Vehicle {
         this.m_vehicle_class = m_vehicle_class;
     }
 
-    public void energy() {
-        throw new UnsupportedOperationException();
-    }
-
     public void setType(String m_type) {
         this.m_type = m_type;
     }
 
     @Override
     public String toString() {
-        return "Vehicle{" + "m_name=" + m_name + ", m_description=" + m_description + ", m_type=" + m_type + ", m_fuel=" + m_fuel + ", m_vehicle_class=" + m_vehicle_class + ", m_motorization=" + m_motorization + ", m_mass=" + m_mass + ", m_load=" + m_load + ", m_drag_coefficient=" + m_drag_coefficient + ", m_wheel_size=" + m_wheel_size + ", m_frontal_area=" + m_frontal_area + ", m_rcc=" + m_rcc + '}';
+        return "Vehicle{" + "m_name=" + m_name + ", m_description=" + m_description + ", m_type=" + m_type + ", m_fuel=" + m_fuel + ", m_vehicle_class=" + m_vehicle_class + ", m_motorization=" + m_motorization + ", m_mass=" + m_mass + ", m_load=" + m_load + ", m_drag_coefficient=" + m_drag_coefficient + ", m_wheel_size=" + m_wheel_size + ", m_frontal_area=" + m_frontal_area + ", m_rcc=" + m_rcc + ", m_energy=" + m_energy + '}';
     }
 
-    
-
-    
-
-
-  
 }

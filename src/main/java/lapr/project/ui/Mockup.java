@@ -79,6 +79,11 @@ public class Mockup extends javax.swing.JFrame {
         itemProject.add(itemProjectEditProject);
 
         itemProjectCopyProject.setText("Copy project");
+        itemProjectCopyProject.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemProjectCopyProjectActionPerformed(evt);
+            }
+        });
         itemProject.add(itemProjectCopyProject);
 
         jMenuBar1.add(itemProject);
@@ -147,12 +152,16 @@ public class Mockup extends javax.swing.JFrame {
     }//GEN-LAST:event_menuItemOpenProjectActionPerformed
 
     private void btnCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCloseActionPerformed
-        System.exit(0);
+        dispose();
     }//GEN-LAST:event_btnCloseActionPerformed
 
     private void itemProjectEditProjectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemProjectEditProjectActionPerformed
         new EditProjectUI().setVisible(true);
     }//GEN-LAST:event_itemProjectEditProjectActionPerformed
+
+    private void itemProjectCopyProjectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemProjectCopyProjectActionPerformed
+        new CopyProjectUI().setVisible(true);
+    }//GEN-LAST:event_itemProjectCopyProjectActionPerformed
 
     /**
      * @param args the command line arguments

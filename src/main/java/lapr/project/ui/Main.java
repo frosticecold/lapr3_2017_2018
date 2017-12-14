@@ -20,10 +20,7 @@ public class Main {
         File file = new File("TestSet01_Vehicles.xml");
         xmlFile.importVehicles(file);
         
-        project.setListVehicles(xmlFile.getVehiclesList());
-        for (Vehicle vehicle : project.getListVehicles()) {
-            System.out.println(vehicle);
-        }
+        
     }
     
 }
