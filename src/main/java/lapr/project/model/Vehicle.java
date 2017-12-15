@@ -51,6 +51,19 @@ public class Vehicle {
         this.m_rcc = v.m_rcc;
         this.m_energy = v.m_energy;
     }
+
+    public double getMass() {
+        return m_mass;
+    }
+
+    public double getDragCoefficient() {
+        return m_drag_coefficient;
+    }
+
+    public double getWheelSize() {
+        return m_wheel_size;
+    }
+    
     public Energy getEnergy() {
         return m_energy;
     }

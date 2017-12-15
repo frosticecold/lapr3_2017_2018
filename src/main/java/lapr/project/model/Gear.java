@@ -17,6 +17,12 @@ public class Gear {
 
     public Gear() {
     }
+
+    public int getGearID() {
+        return m_gearID;
+    }
+    
+    
     
     public void setGearID(int m_gearID) {
         this.m_gearID = m_gearID;

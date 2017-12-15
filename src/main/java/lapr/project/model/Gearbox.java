@@ -27,14 +27,14 @@ public class Gearbox {
      *
      * @param nameOfGear
      */
-    public Gear getGear(String nameOfGear) {
+    public Gear getGear(int gearID) {
         for (Gear gear : m_gears) {
-            if(gear.toString().equalsIgnoreCase(nameOfGear)){
+            if (gear.getGearID() == gearID) {
                 return gear;
             }
         }
         return null;
-        }
+    }
 
     @Override
     public String toString() {
