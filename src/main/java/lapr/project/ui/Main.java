@@ -19,18 +19,19 @@ public class Main {
     public static void main(String[] args) throws ParseException, FileNotFoundException, ImportException {
         Project project = new Project();
 
-//        VehicleXML xmlFile = new VehicleXML();
-//        File file = new File("TestSet01_Vehicles.xml");
-//        xmlFile.importVehicles(file);
-//
-//        for (Vehicle vehicle : xmlFile.getVehiclesList()) {
-//            System.out.println(vehicle.getEnergy());
-//        }
-        NetworkXML xmlnetwork = new NetworkXML();
-        File file = new File("TestSet01_Network.xml");
-        RoadNetwork r = xmlnetwork.importNetwork(file);
+        VehicleXML xmlFile = new VehicleXML();
+        File file = new File("TestSet01_Vehicles.xml");
+        xmlFile.importVehicles(file);
+
+        for (Vehicle vehicle : xmlFile.getVehiclesList()) {
+            System.out.println(vehicle.getEnergy());
+        }
         
-        System.out.println(r);
+//        NetworkXML xmlnetwork = new NetworkXML();
+//        File file = new File("TestSet01_Network.xml");
+//        RoadNetwork r = xmlnetwork.importNetwork(file);
+//        
+//        System.out.println(r);
     }
 
 }

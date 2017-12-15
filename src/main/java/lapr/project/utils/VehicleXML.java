@@ -13,16 +13,38 @@ import javax.xml.stream.XMLStreamReader;
 import lapr.project.model.Energy;
 import lapr.project.model.Gear;
 import lapr.project.model.Gearbox;
-import lapr.project.model.Junction;
 import lapr.project.model.Regime;
-import lapr.project.model.Road;
 import lapr.project.model.RoadNetwork;
-import lapr.project.model.Section;
 import lapr.project.model.Throttle;
 import lapr.project.model.Vehicle;
-import lapr.project.utils.graphbase.Graph;
 
 public class VehicleXML implements FileFormat {
+
+    private final String VEHICLE_TAG = "vehicle";
+    private final String ENERGY_TAG = "energy";
+    private final String GEARBOX_TAG = "gear_list";
+    private final String GEAR_TAG = "gear";
+    private final String THROTTLE_LIST_TAG = "throttle_list";
+    private final String THROTTLE_TAG = "throttle";
+    private final String REGIME_TAG = "regime";
+    private final String TYPE_TAG = "type";
+    private final String TOLL_CLASS_TAG = "toll_class";
+    private final String MOTORIZATION_TAG = "motorization";
+    private final String FUEL_TAG = "fuel";
+    private final String MASS_TAG = "mass";
+    private final String LOAD_TAG = "load";
+    private final String DRAG_TAG = "drag";
+    private final String FRONTAL_AREA_TAG = "frontal_area";
+    private final String RCC_TAG = "rcc";
+    private final String WHEEL_SIZE_TAG = "wheel_size";
+    private final String MIN_RPM_TAG = "min_rpm";
+    private final String MAX_RPM_TAG = "max_rpm";
+    private final String FINAL_DRIVE_RATIO_TAG = "final_drive_ratio";
+    private final String RATIO_TAG = "ratio";
+    private final String TORQUE_TAG = "torque";
+    private final String RPM_LOW_TAG = "rpm_low";
+    private final String RPM_HIGH_TAG = "rpm_high";
+    private final String SFC_TAG = "SFC";
 
     private File file;
     private XMLStreamReader reader;
@@ -112,160 +134,156 @@ public class VehicleXML implements FileFormat {
 
     private void checkVehicleStartElement() {
         switch (reader.getLocalName()) {
-            case "vehicle": {
+            case VEHICLE_TAG: {
                 createVehicle();
                 break;
             }
 
-            case "energy": {
+            case ENERGY_TAG: {
                 createEnergy();
                 break;
             }
 
-            case "gear_list": {
+            case GEARBOX_TAG: {
                 createGearbox();
                 break;
             }
 
-            case "gear": {
+            case GEAR_TAG: {
                 createGear();
                 break;
             }
 
-            case "throttle_list": {
+            case THROTTLE_LIST_TAG: {
                 createThrottleList();
                 break;
             }
 
-            case "throttle": {
+            case THROTTLE_TAG: {
                 createThrottle();
                 break;
             }
 
-            case "regime": {
+            case REGIME_TAG: {
                 createRegime();
                 break;
             }
-//            case "velocity_limit_list":{
-//                createVelocityList();
-//                break;
-//            }
         }
     }
 
     private void checkVehicleEndElement() {
         switch (reader.getLocalName()) {
-            case "vehicle": {
+            case VEHICLE_TAG: {
                 addVehicleToList();
                 break;
             }
 
-            case "type": {
+            case TYPE_TAG: {
                 vehicle.setType(this.elementContent);
                 break;
             }
 
-            case "toll_class": {
+            case TOLL_CLASS_TAG: {
                 addTollClass();
                 break;
             }
 
-            case "motorization": {
+            case MOTORIZATION_TAG: {
                 vehicle.setMotorization(this.elementContent);
                 break;
             }
 
-            case "fuel": {
+            case FUEL_TAG: {
                 vehicle.setFuel(this.elementContent);
                 break;
             }
 
-            case "mass": {
+            case MASS_TAG: {
                 addMass();
                 break;
             }
 
-            case "load": {
+            case LOAD_TAG: {
                 addLoad();
                 break;
             }
 
-            case "drag": {
+            case DRAG_TAG: {
                 vehicle.setDragCoefficient(Double.parseDouble(this.elementContent));
                 break;
             }
 
-            case "frontal_area": {
+            case FRONTAL_AREA_TAG: {
                 vehicle.setFrontalArea(Double.parseDouble(this.elementContent));
                 break;
             }
 
-            case "rcc": {
+            case RCC_TAG: {
                 vehicle.setRcc(Double.parseDouble(this.elementContent));
                 break;
             }
 
-            case "wheel_size": {
+            case WHEEL_SIZE_TAG: {
                 vehicle.setWheelSize(Double.parseDouble(this.elementContent));
                 break;
             }
 
-            case "energy": {
+            case ENERGY_TAG: {
                 addEnergyToVehicle();
                 break;
             }
 
-            case "min_rpm": {
+            case MIN_RPM_TAG: {
                 vehicle.getEnergy().setMinRpm(Double.parseDouble(this.elementContent));
                 break;
             }
 
-            case "max_rpm": {
+            case MAX_RPM_TAG: {
                 vehicle.getEnergy().setMaxRpm(Double.parseDouble(this.elementContent));
                 break;
             }
 
-            case "final_drive_ratio": {
+            case FINAL_DRIVE_RATIO_TAG: {
                 vehicle.getEnergy().setFinalDriveRatio(Double.parseDouble(this.elementContent));
                 break;
             }
 
-            case "gears_list": {
+            case GEARBOX_TAG: {
                 addGearboxToVehicle();
                 break;
             }
 
-            case "gear": {
+            case GEAR_TAG: {
                 addGearToVehicle();
                 break;
             }
 
-            case "ratio": {
+            case RATIO_TAG: {
                 gear.setRatio(Double.parseDouble(this.elementContent));
                 break;
             }
 
-            case "torque": {
+            case TORQUE_TAG: {
                 regime.setTorque(Double.parseDouble(this.elementContent));
                 break;
             }
 
-            case "rpm_low": {
+            case RPM_LOW_TAG: {
                 regime.setRpmLow(Double.parseDouble(this.elementContent));
                 break;
             }
 
-            case "rpm_high": {
+            case RPM_HIGH_TAG: {
                 regime.setRpmHigh(Double.parseDouble(this.elementContent));
                 break;
             }
 
-            case "SFC": {
+            case SFC_TAG: {
                 regime.setSFC(Double.parseDouble(this.elementContent));
                 break;
             }
 
-            case "throttle": {
+            case THROTTLE_TAG: {
                 addThrottleToVehicle();
                 break;
             }
