@@ -2,6 +2,8 @@ package lapr.project.utils;
 
 import java.sql.*;
 import java.util.ArrayList;
+import lapr.project.database.ProjectData;
+import lapr.project.model.Project;
 import oracle.jdbc.pool.OracleDataSource;
 
 public class SQLConnection {
@@ -43,7 +45,18 @@ public class SQLConnection {
         if (connection == null) {
             openConnection();
         }
-        return new ArrayList<>();
+        ProjectData pd = new ProjectData(connection);
+        
+        return pd.getAllProjectsNames();
+    }
+    
+    public Project getProjectByName(String name) throws SQLException {
+        if (connection == null) {
+            openConnection();
+        }
+        ProjectData p = new ProjectData(connection);
+
+        return p.get(name);
     }
 
 }

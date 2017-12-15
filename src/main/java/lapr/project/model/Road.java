@@ -27,6 +27,13 @@ public class Road {
         m_listOfSections = new ArrayList<>();
     }
 
+    public Road(Road r) {
+        m_road_id = r.m_road_id;
+        m_name = r.m_name;
+        m_typology = r.m_typology;
+        m_listOfSections = r.m_listOfSections;
+    }
+
     public boolean addSection(Section s) {
         boolean added = false;
         if (!m_listOfSections.contains(s)) {

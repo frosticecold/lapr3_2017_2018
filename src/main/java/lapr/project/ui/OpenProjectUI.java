@@ -116,14 +116,14 @@ public class OpenProjectUI extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jb_saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_saveActionPerformed
-//        try {
-            Project proj = (Project) projectComboBox.getSelectedItem();
+        try {
+            String proj = projectComboBox.getSelectedItem().toString();
             controller.setActiveProject(proj);
             this.dispose();
-//        } catch (SQLException ex) {
-//            Logger.getLogger(OpenProjectUI.class.getName()).log(Level.SEVERE, null, ex);
-//            JOptionPane.showMessageDialog(this, "Couldn't load the selected project.","Error",JOptionPane.ERROR_MESSAGE);
-//        }
+        } catch (SQLException ex) {
+            Logger.getLogger(OpenProjectUI.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(this, "Couldn't load the selected project.","Error",JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_jb_saveActionPerformed
 
     private void jb_cancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_cancelActionPerformed

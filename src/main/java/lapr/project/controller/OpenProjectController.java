@@ -23,8 +23,9 @@ public class OpenProjectController {
         return this.getSQLConnection().getProjects();
     }
 
-    public void setActiveProject(Project proj) {
-        Session.setActiveProject(proj);
+    public void setActiveProject(String proj) throws SQLException {
+        Project project = this.getSQLConnection().getProjectByName(proj);
+        Session.setActiveProject(project);
     }
 
 }
