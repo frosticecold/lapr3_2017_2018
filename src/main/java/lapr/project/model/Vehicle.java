@@ -2,22 +2,85 @@ package lapr.project.model;
 
 public class Vehicle {
 
+    //Car attributes
+    /**
+     * Name of the vehicle.
+     */
     private String m_name;
+    /**
+     * Description of the vehicle.
+     */
     private String m_description;
+
+    /**
+     * Type of the vehicle
+     */
     private String m_type;
+
+    /**
+     * Fuel of the vehicle
+     */
     private String m_fuel;
+
+    /**
+     * Vehicle Class
+     */
     private int m_vehicle_class;
+
+    /**
+     * Motorization of Vehicle
+     */
     private String m_motorization;
-    private double m_mass;
-    private double m_load;
-    private double m_drag_coefficient;
+
+    /**
+     * Wheel size of the vehicle
+     */
     private double m_wheel_size;
+
+    //Car Physics
+    /**
+     * Mass of a vehicle
+     */
+    private double m_mass;
+
+    /**
+     * Load of the vehicle
+     */
+    private double m_load;
+
+    /**
+     * Drag Coefficient of the vehicle
+     */
+    private double m_drag_coefficient;
+
+    /**
+     * Frontal area of the vehicle
+     */
     private double m_frontal_area;
+
+    /**
+     * Rolling resistance coefficient of the vehicle.
+     */
     private double m_rcc;
+
+    /**
+     * Energy of the vehicle
+     */
     private Energy m_energy;
 
     public Vehicle() {
-
+        m_name = "";
+        m_description = "";
+        m_type = "";
+        m_fuel = "";
+        m_vehicle_class = 0;
+        m_motorization = "";
+        m_wheel_size = 0.0;
+        m_mass = 0.0;
+        m_load = 0.0;
+        m_drag_coefficient = 0.0;
+        m_frontal_area = 0.0;
+        m_rcc = 0.0;
     }
 
     public Vehicle(String m_name, String m_description, String m_type, String m_fuel, int m_vehicle_class, String m_motorization, double m_mass, double m_load, double m_drag_coefficient, double m_wheel_size, double m_frontal_area, double m_rcc, Energy m_energy) {
@@ -63,61 +126,100 @@ public class Vehicle {
     public double getWheelSize() {
         return m_wheel_size;
     }
-    
+
     public Energy getEnergy() {
         return m_energy;
     }
 
-    public void setEnergy(Energy m_energy) {
-        this.m_energy = m_energy;
+    public void setEnergy(Energy energy) {
+        if (energy == null) {
+            throw new IllegalArgumentException("Energy cannot be empty.");
+        }
+        this.m_energy = energy;
     }
 
-    public void setRcc(double m_rcc) {
-        this.m_rcc = m_rcc;
+    public void setRcc(double rcc) {
+        if (rcc < 0) {
+            throw new IllegalArgumentException("The rolling resistance coefficient of the vehicle must be positive.");
+        }
+        this.m_rcc = rcc;
     }
 
-    public void setWheelSize(double m_wheel_size) {
-        this.m_wheel_size = m_wheel_size;
+    public void setWheelSize(double wheel_size) {
+        if (wheel_size <= 0) {
+            throw new IllegalArgumentException("The wheel size of the vehicle must be greater than 0");
+        }
+        this.m_wheel_size = wheel_size;
     }
 
-    public void setFrontalArea(double m_frontal_area) {
-        this.m_frontal_area = m_frontal_area;
+    public void setFrontalArea(double frontal_area) {
+        if (frontal_area <= 0) {
+            throw new IllegalArgumentException("The frontal area of the vehicle must be greater than 0");
+        }
+        this.m_frontal_area = frontal_area;
     }
 
-    public void setFuel(String m_fuel) {
-        this.m_fuel = m_fuel;
+    public void setFuel(String fuel) {
+        if (fuel == null || fuel.trim().isEmpty()) {
+            throw new IllegalArgumentException("The fuel of the vehicle cannot be empty.");
+        }
+        this.m_fuel = fuel;
     }
 
-    public void setDragCoefficient(double m_drag_coefficient) {
-        this.m_drag_coefficient = m_drag_coefficient;
+    public void setDragCoefficient(double drag_coefficient) {
+        if (drag_coefficient <= 0) {
+            throw new IllegalArgumentException("The drag coefficient of the vehicle must be greater than 0");
+        }
+        this.m_drag_coefficient = drag_coefficient;
     }
 
-    public void setLoad(double m_load) {
-        this.m_load = m_load;
+    public void setLoad(double load) {
+        if (load < 0) {
+            throw new IllegalArgumentException("The load of the vehicle must be positive");
+        }
+        this.m_load = load;
     }
 
-    public void setMass(double m_mass) {
-        this.m_mass = m_mass;
+    public void setMass(double mass) {
+        if (mass <= 0) {
+            throw new IllegalArgumentException("The mass of the vehicle must be greater than 0");
+        }
+        this.m_mass = mass;
     }
 
-    public void setMotorization(String m_motorization) {
-        this.m_motorization = m_motorization;
+    public void setMotorization(String motorization) {
+        if (motorization == null || motorization.trim().isEmpty()) {
+            throw new IllegalArgumentException("The motorization of the vehicle cannot be empty.");
+        }
+        this.m_motorization = motorization;
     }
 
-    public void setName(String m_name) {
-        this.m_name = m_name;
+    public void setName(String name) {
+        if (name == null || name.trim().isEmpty()) {
+            throw new IllegalArgumentException("The name of the vehicle cannot be empty.");
+        }
+        this.m_name = name;
     }
 
     public void setDescription(String description) {
+        if (description == null || description.trim().isEmpty()) {
+            throw new IllegalArgumentException("The description of the vehicle cannot be empty.");
+        }
         this.m_description = description;
     }
 
-    public void setVehicleClass(int m_vehicle_class) {
-        this.m_vehicle_class = m_vehicle_class;
+    public void setVehicleClass(int vehicle_class) {
+        if (vehicle_class < 0) {
+            throw new IllegalArgumentException("The vehicle_class of the vehicle must positive");
+        }
+        this.m_vehicle_class = vehicle_class;
     }
 
-    public void setType(String m_type) {
-        this.m_type = m_type;
+    public void setType(String type) {
+        if (type == null || type.trim().isEmpty()) {
+            throw new IllegalArgumentException("The type of the vehicle cannot be empty.");
+        }
+        this.m_type = type;
     }
 
     @Override
