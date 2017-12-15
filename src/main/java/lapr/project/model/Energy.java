@@ -21,6 +21,18 @@ public class Energy {
     public Energy() {
     }
 
+    public double getMinRpm() {
+        return m_min_rpm;
+    }
+
+    public double getMaxRpm() {
+        return m_max_rpm;
+    }
+
+    public double getFinalDriveRatio() {
+        return m_final_drive_ratio;
+    }
+
     public Gearbox getGearList() {
         return m_gears_list;
     }

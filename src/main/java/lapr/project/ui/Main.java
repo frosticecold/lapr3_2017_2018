@@ -4,11 +4,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.text.ParseException;
 import lapr.project.model.Project;
-import lapr.project.model.RoadNetwork;
-import lapr.project.model.Throttle;
 import lapr.project.model.Vehicle;
 import lapr.project.utils.ImportException;
-import lapr.project.utils.NetworkXML;
 import lapr.project.utils.VehicleXML;
 
 public class Main {

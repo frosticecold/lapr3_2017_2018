@@ -35,6 +35,18 @@ public class Vehicle {
     public Vehicle() {
     }
 
+    public double getMass() {
+        return m_mass;
+    }
+
+    public double getDragCoefficient() {
+        return m_drag_coefficient;
+    }
+
+    public double getWheelSize() {
+        return m_wheel_size;
+    }
+    
     public Energy getEnergy() {
         return m_energy;
     }
