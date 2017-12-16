@@ -5,7 +5,6 @@ public class Segment {
     private int m_segment_index;
     private double m_initial_height;
     private double m_final_height;
-    private double m_slope;
     private double m_length;
     private double m_wind_direction;
     private double m_wind_speed;
@@ -15,11 +14,10 @@ public class Segment {
     public Segment() {
     }
 
-    public Segment(int m_segment_index, double m_initial_height, double m_final_height, double m_slope, double m_length, double m_wind_direction, double m_wind_speed, double m_maximum_velocity, double m_minimum_velocity) {
+    public Segment(int m_segment_index, double m_initial_height, double m_final_height, double m_length, double m_wind_direction, double m_wind_speed, double m_maximum_velocity, double m_minimum_velocity) {
         this.m_segment_index = m_segment_index;
         this.m_initial_height = m_initial_height;
         this.m_final_height = m_final_height;
-        this.m_slope = m_slope;
         this.m_length = m_length;
         this.m_wind_direction = m_wind_direction;
         this.m_wind_speed = m_wind_speed;
@@ -43,13 +41,6 @@ public class Segment {
      */
     public double getM_initial_height() {
         return m_initial_height;
-    }
-
-    /**
-     * @return the m_slope
-     */
-    public double getM_slope() {
-        return m_slope;
     }
 
     /**
@@ -102,13 +93,6 @@ public class Segment {
     }
 
     /**
-     * @param m_slope the m_slope to set
-     */
-    public void setM_slope(double m_slope) {
-        this.m_slope = m_slope;
-    }
-
-    /**
      * @param m_length the m_length to set
      */
     public void setM_length(double m_length) {
@@ -123,10 +107,13 @@ public class Segment {
     }
 
     /**
-     * @param m_wind_speed the m_wind_speed to set
+     * @param wind_speed the m_wind_speed to set
      */
-    public void setM_wind_speed(double m_wind_speed) {
-        this.m_wind_speed = m_wind_speed;
+    public void setWindSpeed(double wind_speed) {
+        if (wind_speed < 0) {
+            throw new IllegalArgumentException("Wind speed must be equal or greater than zero.");
+        }
+        this.m_wind_speed = wind_speed;
     }
 
     /**
@@ -145,6 +132,28 @@ public class Segment {
 
     public void setM_final_height(double final_height) {
         this.m_final_height = final_height;
+    }
+
+    /**
+     * M = Delta Y / Delta X
+     *
+     * @return
+     */
+    public double calculateSlope() {
+        double deltaY = m_final_height - m_initial_height;
+        double M = deltaY / m_length;
+        double angle = Math.cos(m_length / M);
+        return angle;
+
+    }
+
+    public boolean validate() {
+        if (m_segment_index <= 0 || m_initial_height < 0 || m_final_height < 0
+                || m_length <= 0 || m_wind_direction < -180 || m_wind_direction > 180
+                || m_wind_speed < 0 || m_maximum_velocity < 0 || m_minimum_velocity < 0) {
+            throw new IllegalArgumentException("Segment is not valid.");
+        }
+        return true;
     }
 
 }

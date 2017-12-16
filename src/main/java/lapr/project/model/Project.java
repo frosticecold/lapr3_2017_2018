@@ -1,8 +1,11 @@
 package lapr.project.model;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import lapr.project.utils.graphbase.Edge;
 import lapr.project.utils.graphbase.Graph;
+import lapr.project.utils.graphbase.GraphAlgorithms;
 
 public class Project {
 
@@ -82,15 +85,73 @@ public class Project {
     public void setDescription(String description) {
         this.description = description;
     }
-    
-    
 
-    /**
-     *
-     * @param junction
-     */
-    public void addRoad(Junction junction) {
-        m_road_network.insertVertex(junction);
+    public Junction getJunction(String junction_id) {
+        if (junction_id == null || junction_id.trim().isEmpty()) {
+            throw new IllegalArgumentException("Junction name is invalid");
+        }
+        for (Junction j : m_road_network.vertices()) {
+            if (j.getID().equalsIgnoreCase(junction_id)) {
+                return j;
+            }
+        }
+        return null;
+    }
+
+    public Road getRoadByRoadID(String road_id) {
+        for (Road r : m_list_roads) {
+            if (r.getRoadID().equals(road_id)) {
+                return r;
+            }
+        }
+        return null;
+    }
+
+    public boolean addRoad(Road r) {
+        boolean added = false;
+        if (!m_list_roads.contains(r)) {
+            added = m_list_roads.add(r);
+        }
+        return added;
+    }
+
+    public boolean addJunction(Junction j) {
+        return m_road_network.insertVertex(j);
+    }
+
+    public boolean addSection(Section s) {
+        Junction orig = s.getBeginningJunction();
+        Junction dest = s.getEndingJunction();
+        if (orig == null || dest == null) {
+            return false;
+        }
+        if (!m_road_network.validVertex(orig) || !m_road_network.validVertex(dest)) {
+            return false;
+        }
+
+        for (Edge<Junction, Section> edge : m_road_network.edges()) {
+            if (edge.getElement().equals(s)) {
+                return false;
+            }
+        }
+
+        if (s.getDirection() == Section.Direction.REVERSE) {
+            orig = s.getEndingJunction();
+            dest = s.getBeginningJunction();
+            return m_road_network.insertEdge(orig, dest, s, s.getSectionLength());
+        }
+        if (s.getDirection() == Section.Direction.BIDIRECTIONAL) {
+            m_road_network.insertEdge(orig, dest, s, s.getSectionLength());
+            m_road_network.insertEdge(dest, orig, s, s.getSectionLength());
+            return true;
+        }
+
+        return m_road_network.insertEdge(orig, dest, s, s.getSectionLength());
+
+    }
+
+    public ArrayList<LinkedList<Junction>> allPaths(Junction source, Junction target) {
+        return GraphAlgorithms.allPaths(m_road_network, source, target);
     }
 
 }

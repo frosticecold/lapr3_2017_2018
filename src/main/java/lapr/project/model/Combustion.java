@@ -2,7 +2,6 @@ package lapr.project.model;
 
 import lapr.project.model.Motorization;
 
-
 public class Combustion extends Motorization {
 
     private int m_lower_rpm_limit;

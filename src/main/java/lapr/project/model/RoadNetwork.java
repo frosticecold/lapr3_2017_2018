@@ -6,9 +6,11 @@
 package lapr.project.model;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import lapr.project.utils.graphbase.Edge;
 import lapr.project.utils.graphbase.Graph;
+import lapr.project.utils.graphbase.GraphAlgorithms;
 
 /**
  *
@@ -88,11 +90,30 @@ public class RoadNetwork {
         return null;
     }
 
+    public Road getRoadByRoadID(String road_id) {
+        for (Road r : m_listOfRoads) {
+            if (r.getRoadID().equals(road_id)) {
+                return r;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Method that returns all paths from one junction source to another
+     * junction destiny
+     *
+     * @param source Junction source
+     * @param target Junction target
+     * @return
+     */
+    public ArrayList<LinkedList<Junction>> allPaths(Junction source, Junction target) {
+        return GraphAlgorithms.allPaths(m_graph, source, target);
+    }
+
     @Override
     public String toString() {
         return "RoadNetwork{" + "m_id=" + m_id + ", m_description=" + m_description + ", m_graph=" + m_graph + ", m_listOfRoads=" + m_listOfRoads + '}';
     }
-    
-    
 
 }

@@ -9,9 +9,9 @@ public class Section {
     private Junction m_beginning_junction;
     private Junction m_ending_junction;
     private String m_typology;
+    private String m_road_id;
     private Direction m_direction;
     private List<Segment> m_sequenceOfSegments;
-    private String m_road_id;
 
     public enum Direction {
         DIRECT("DIRECT"), REVERSE("REVERSE"), BIDIRECTIONAL("BIDIRECTIONAL");
@@ -56,8 +56,8 @@ public class Section {
 
     }
 
-    public void setDirection(Direction d) {
-        this.m_direction = d;
+    public String getRoadID() {
+        return m_road_id;
     }
 
     @Override
@@ -114,4 +114,26 @@ public class Section {
         m_sequenceOfSegments = listOfSegments;
     }
 
+    public void setTypology(String typology) {
+        this.m_typology = typology;
+    }
+
+    public void setDirection(Direction d) {
+        if (d == null) {
+            throw new IllegalArgumentException("Invalid Direction");
+        }
+        this.m_direction = d;
+    }
+
+    public boolean validate() {
+        if (!m_beginning_junction.validate() || !m_ending_junction.validate() || m_typology.trim().isEmpty() || m_road_id.trim().isEmpty() || m_direction == null || m_sequenceOfSegments.isEmpty()) {
+            throw new IllegalArgumentException(("Section is invalid."));
+        }
+        for (Segment seg : m_sequenceOfSegments) {
+            if (!seg.validate()) {
+                return false;
+            }
+        }
+        return true;
+    }
 }

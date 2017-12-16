@@ -13,8 +13,8 @@ import javax.xml.stream.XMLStreamReader;
 import lapr.project.model.Energy;
 import lapr.project.model.Gear;
 import lapr.project.model.Gearbox;
+import lapr.project.model.Project;
 import lapr.project.model.Regime;
-import lapr.project.model.RoadNetwork;
 import lapr.project.model.Throttle;
 import lapr.project.model.Vehicle;
 
@@ -393,7 +393,7 @@ public class VehicleXML implements FileFormat {
     }
 
     @Override
-    public RoadNetwork importNetwork(File file) throws FileNotFoundException, ImportException {
+    public boolean importNetwork(Project project, File file) throws FileNotFoundException, ImportException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

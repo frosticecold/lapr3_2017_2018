@@ -10,6 +10,6 @@ public interface FileFormat {
 
     public List<Vehicle> importVehicles(File file) throws FileNotFoundException, ImportException;
 
-    public RoadNetwork importNetwork(File file) throws FileNotFoundException, ImportException;
+    public boolean importNetwork(Project project, File file) throws FileNotFoundException, ImportException;
 
 }

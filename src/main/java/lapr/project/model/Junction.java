@@ -47,4 +47,14 @@ public class Junction {
         return true;
     }
 
+    public boolean validate() {
+        if (this.m_id == null || this.m_id.trim().isEmpty()) {
+            throw new IllegalArgumentException("The junction's name cannot be"
+                    + "empty.");
+        }
+
+        return true;
+
+    }
+
 }
