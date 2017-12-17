@@ -10,7 +10,9 @@ import java.io.FileNotFoundException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JDialog;
 import javax.swing.JFileChooser;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import lapr.project.model.Project;
@@ -23,11 +25,12 @@ import lapr.project.utils.VehicleXML;
  *
  * @author MarioDias
  */
-public class CreateProjectUI extends javax.swing.JFrame {
+public class CreateProjectUI extends JDialog {
 
     private JFileChooser m_jfc;
 
     protected Project m_project;
+    boolean validProject;
     private static final long serialVersionUID = 1;
     private static final String IMPORT_NETWORK_TITLE = "Import RoadNetwork";
     private static final String IMPORT_VEHICLE_TITLE = "Import Vehicles";
@@ -35,10 +38,12 @@ public class CreateProjectUI extends javax.swing.JFrame {
     /**
      * Creates new form CreateProjectUI
      */
-    public CreateProjectUI() {
+    public CreateProjectUI(JFrame parent) {
+        super(parent, true);
         initComponents();
         m_project = new Project();
         initFileChooser();
+        validProject = false;
 
     }
 
@@ -162,7 +167,11 @@ public class CreateProjectUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCloseActionPerformed
+        if(validProject){
+           ((Mockup)this.getParent()).setProject(m_project);
+        }
         dispose();
+        
     }//GEN-LAST:event_btnCloseActionPerformed
 
     private void btnCreateProjectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateProjectActionPerformed
@@ -173,6 +182,8 @@ public class CreateProjectUI extends javax.swing.JFrame {
         try {
             if (m_project.validate()) {
                 JOptionPane.showMessageDialog(this, "Project was created successfully", "Created a project", JOptionPane.INFORMATION_MESSAGE);
+                validProject=true;
+
             }
         } catch (IllegalArgumentException ex) {
             JOptionPane.showMessageDialog(this, "The project is invalid, it wasn't created, so it was reseted", "Error!", JOptionPane.ERROR_MESSAGE);
@@ -217,41 +228,6 @@ public class CreateProjectUI extends javax.swing.JFrame {
         }
 
     }//GEN-LAST:event_btnImportRoadNetworkActionPerformed
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(CreateProjectUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(CreateProjectUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(CreateProjectUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(CreateProjectUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new CreateProjectUI().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnClose;

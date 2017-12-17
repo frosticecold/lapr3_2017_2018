@@ -5,6 +5,8 @@
  */
 package lapr.project.ui;
 
+import lapr.project.model.Project;
+
 /**
  *
  * @author MarioDias
@@ -12,6 +14,8 @@ package lapr.project.ui;
 public class Mockup extends javax.swing.JFrame {
 
     private static final long serialVersionUID = 1;
+
+    protected Project m_project;
 
     /**
      * Creates new form Mockup
@@ -192,13 +196,18 @@ public class Mockup extends javax.swing.JFrame {
     }//GEN-LAST:event_itemProjectCopyProjectActionPerformed
 
     private void menuItemCreateProjectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemCreateProjectActionPerformed
-        new CreateProjectUI().setVisible(true);
+        new CreateProjectUI(this).setVisible(true);
+        System.out.println(m_project);
     }//GEN-LAST:event_menuItemCreateProjectActionPerformed
 
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
         new FastestPathUI().setVisible(true);
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
+    protected void setProject(Project p) {
+        this.m_project = p;
+
+    }
     /**
      * @param args the command line arguments
      */

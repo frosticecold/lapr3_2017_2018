@@ -80,8 +80,7 @@ public class NetworkXML implements FileFormat {
         try {
             this.importXML();
         } catch (XMLStreamException ex) {
-            //throw new ImportException(ex);
-            return false;
+            throw new ImportException(ex);
         }
         return true;
     }

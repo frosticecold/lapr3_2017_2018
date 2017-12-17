@@ -185,4 +185,10 @@ public class Project {
 
         return true;
     }
+
+    @Override
+    public String toString() {
+        return "Project{" + "m_road_network=" + m_road_network + ", m_list_vehicles=" + m_list_vehicles + ", m_list_roads=" + m_list_roads + ", m_name=" + m_name + ", m_description=" + m_description + '}';
+    }
+
 }
