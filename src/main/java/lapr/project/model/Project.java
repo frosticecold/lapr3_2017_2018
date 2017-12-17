@@ -40,9 +40,9 @@ public class Project {
         description = p.description;
         m_road_network = p.getRoadNetwork().copyGraph();
         m_list_vehicles = new ArrayList<>();
-        for (Vehicle v : p.getListVehicles()) {
-            m_list_vehicles.add(new Vehicle(v));
-        }
+//        for (Vehicle v : p.getListVehicles()) {
+//            m_list_vehicles.add(new Vehicle(v));
+//        }
         m_list_roads = new ArrayList<>();
         for (Road r : p.m_list_roads) {
             m_list_roads.add(new Road(r));

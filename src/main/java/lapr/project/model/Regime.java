@@ -16,6 +16,10 @@ public class Regime {
     }
     
     public Regime() {
+        m_torque = 0.0;
+        m_rpm_low = 0.0;
+        m_rpm_high = 0.0;
+        m_SFC = 0.0;
     }
 
     public void setTorque(double m_torque) {
@@ -32,6 +36,36 @@ public class Regime {
 
     public void setSFC(double m_SFC) {
         this.m_SFC = m_SFC;
+    }
+    
+    /**
+     * Validate the regime.
+     *
+     * @return True if regime is valid else returns false.
+     */
+    public boolean validateRegime() {
+
+        if (m_torque <= 0) {
+            throw new IllegalArgumentException("Torque must be positive.");
+        }
+
+        if (m_rpm_low < 0) {
+            throw new IllegalArgumentException("RPM low must be positive.");
+        }
+
+        if (m_rpm_high <= 0) {
+            throw new IllegalArgumentException("RPM high must be positive.");
+        }
+
+        if (m_rpm_low > m_rpm_high) {
+            throw new IllegalArgumentException("RPM low should be less than RPM high.");
+        }
+
+        if (m_SFC < 0) {
+            throw new IllegalArgumentException("SFC must be positive.");
+        }
+
+        return true;
     }
 
     @Override

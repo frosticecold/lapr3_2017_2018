@@ -21,7 +21,7 @@ public class Main {
         xmlFile.importVehicles(file);
 
         for (Vehicle vehicle : xmlFile.getVehiclesList()) {
-            System.out.println(vehicle.getEnergy());
+            System.out.println(vehicle);
         }
         
 //        NetworkXML xmlnetwork = new NetworkXML();

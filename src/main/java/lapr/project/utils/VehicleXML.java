@@ -4,13 +4,15 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
-import java.util.LinkedList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamConstants;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
-import lapr.project.model.Energy;
+import lapr.project.model.CombustionVehicle;
+import lapr.project.model.ElectricVehicle;
 import lapr.project.model.Gear;
 import lapr.project.model.Gearbox;
 import lapr.project.model.Project;
@@ -21,6 +23,8 @@ import lapr.project.model.Vehicle;
 public class VehicleXML implements FileFormat {
 
     private static final String VEHICLE_TAG = "vehicle";
+    private static final String ELETRIC_VEHICLE_TAG = "electric";
+    private static final String COMBUSTION_VEHICLE_TAG = "combustion";  
     private static final String ENERGY_TAG = "energy";
     private static final String GEARBOX_TAG = "gear_list";
     private static final String GEAR_TAG = "gear";
@@ -45,20 +49,32 @@ public class VehicleXML implements FileFormat {
     private static final String RPM_LOW_TAG = "rpm_low";
     private static final String RPM_HIGH_TAG = "rpm_high";
     private static final String SFC_TAG = "SFC";
+    private static final String VELOCITY_LIMIT_LIST_TAG = "velocity_limit_list";
+    private static final String VELOCITY_LIMIT_TAG = "velocity_limit";
+    private static final String SEGMENT_TYPE_TAG = "segment_type";
+    private static final String LIMIT_TAG = "limit";
+    
 
     private File file;
     private XMLStreamReader reader;
     private String elementContent;
 
     private List<Vehicle> vehiclesList;
-    private List<Throttle> throttleList;
+    private Map<Integer, Throttle> throttleList;
     private Vehicle vehicle;
-    private Energy energy;
     private Throttle throttle;
     private Regime regime;
     private Gearbox gearbox;
     private Gear gear;
-
+    private int throttleID; 
+    private String name;
+    private String description;
+    private String type;
+    private int tollClass;
+    private Map<String, Double> velocityLimitList;
+    private String segmentType;
+    private Double velocityLimit;
+    
     public VehicleXML() {
 
     }
@@ -135,12 +151,11 @@ public class VehicleXML implements FileFormat {
     private void checkVehicleStartElement() {
         switch (reader.getLocalName()) {
             case VEHICLE_TAG: {
-                createVehicle();
+                saveNameAndDescription();
                 break;
             }
 
             case ENERGY_TAG: {
-                createEnergy();
                 break;
             }
 
@@ -168,6 +183,11 @@ public class VehicleXML implements FileFormat {
                 createRegime();
                 break;
             }
+            
+            case VELOCITY_LIMIT_LIST_TAG:{
+                this.velocityLimitList = new HashMap<>();
+                break;
+            }
         }
     }
 
@@ -179,7 +199,7 @@ public class VehicleXML implements FileFormat {
             }
 
             case TYPE_TAG: {
-                vehicle.setType(this.elementContent);
+                type = this.elementContent;
                 break;
             }
 
@@ -189,7 +209,7 @@ public class VehicleXML implements FileFormat {
             }
 
             case MOTORIZATION_TAG: {
-                vehicle.setMotorization(this.elementContent);
+                createVehicle();
                 break;
             }
 
@@ -228,23 +248,22 @@ public class VehicleXML implements FileFormat {
                 break;
             }
 
-            case ENERGY_TAG: {
-                addEnergyToVehicle();
+            case ENERGY_TAG: {              
                 break;
             }
 
             case MIN_RPM_TAG: {
-                vehicle.getEnergy().setMinRpm(Double.parseDouble(this.elementContent));
+                vehicle.setMinRpm(Double.parseDouble(this.elementContent));
                 break;
             }
 
             case MAX_RPM_TAG: {
-                vehicle.getEnergy().setMaxRpm(Double.parseDouble(this.elementContent));
+                vehicle.setMaxRpm(Double.parseDouble(this.elementContent));
                 break;
             }
 
             case FINAL_DRIVE_RATIO_TAG: {
-                vehicle.getEnergy().setFinalDriveRatio(Double.parseDouble(this.elementContent));
+                vehicle.setFinalDriveRatio(Double.parseDouble(this.elementContent));
                 break;
             }
 
@@ -287,25 +306,54 @@ public class VehicleXML implements FileFormat {
                 addThrottleToVehicle();
                 break;
             }
+            
+            case SEGMENT_TYPE_TAG:{
+                segmentType = this.elementContent;
+                break;
+            }
+            
+            case LIMIT_TAG:{
+                velocityLimit = Double.parseDouble(this.elementContent);
+                break;
+            }
+            
+            case VELOCITY_LIMIT_TAG:{
+                velocityLimitList.put(segmentType, velocityLimit);
+                break;
+            }
+            
+            case VELOCITY_LIMIT_LIST_TAG:{
+                vehicle.setRoadVelocityLimit(velocityLimitList);
+                break;
+            }
         }
     }
-
+    
+    private void saveNameAndDescription(){
+        name = reader.getAttributeValue(null, "name");
+        description = reader.getAttributeValue(null, "description");
+    }
+    
     private void createVehicle() {
-        String name = reader.getAttributeValue(null, "name");
-        String description = reader.getAttributeValue(null, "description");
-        this.vehicle = new Vehicle();
+        switch(this.elementContent){
+            case ELETRIC_VEHICLE_TAG:{
+                this.vehicle = new ElectricVehicle();
+                break;
+            }
+            case COMBUSTION_VEHICLE_TAG:{
+                this.vehicle = new CombustionVehicle();
+                break;
+            }
+        }
         this.vehicle.setName(name);
         this.vehicle.setDescription(description);
-    }
-
-    private void createEnergy() {
-        this.energy = new Energy();
-        vehicle.setEnergy(energy);
+        this.vehicle.setType(type);
+        this.vehicle.setVehicleClass(tollClass);
     }
 
     private void createGearbox() {
         this.gearbox = new Gearbox();
-        vehicle.getEnergy().setGearsList(gearbox);
+        vehicle.setGearbox(gearbox);
     }
 
     private void createGear() {
@@ -316,15 +364,15 @@ public class VehicleXML implements FileFormat {
     }
 
     private void createThrottleList() {
-        this.throttleList = new LinkedList<>();
-        vehicle.getEnergy().setThrottleList(throttleList);
+        this.throttleList = new HashMap<>();
+        vehicle.getAccelerator().setThrottleList(throttleList);
     }
 
     private void createThrottle() {
         String read = reader.getAttributeValue(null, "id");
         int id = Integer.parseInt(read);
         this.throttle = new Throttle();
-        throttle.setThrottleId(id);
+        throttleID = id;
     }
 
     private void createRegime() {
@@ -337,21 +385,17 @@ public class VehicleXML implements FileFormat {
         this.vehicle = null;
     }
 
-    private void addEnergyToVehicle() {
-        this.energy = null;
-    }
-
     private void addGearboxToVehicle() {
         this.gearbox = null;
     }
 
     private void addGearToVehicle() {
-        vehicle.getEnergy().getGearList().addGear(gear);
+        vehicle.getGearbox().addGear(gear);
         this.gear = null;
     }
 
     private void addThrottleToVehicle() {
-        vehicle.getEnergy().getThrottleList().add(throttle);
+        throttleList.put(throttleID, throttle);
         this.throttle = null;
     }
 
@@ -389,7 +433,7 @@ public class VehicleXML implements FileFormat {
 
     private void addTollClass() {
         int toll_class = Integer.parseInt(elementContent);
-        vehicle.setVehicleClass(toll_class);
+        tollClass = toll_class;
     }
 
     @Override

@@ -1,6 +1,9 @@
 package lapr.project.model;
 
-public class Vehicle {
+import java.util.HashMap;
+import java.util.Map;
+
+public abstract class Vehicle {
 
     //Car attributes
     /**
@@ -63,10 +66,7 @@ public class Vehicle {
      */
     private double m_rcc;
 
-    /**
-     * Energy of the vehicle
-     */
-    private Energy m_energy;
+    private Map<String, Double> m_road_velocity_limit;
 
     public Vehicle() {
         m_name = "";
@@ -81,9 +81,10 @@ public class Vehicle {
         m_drag_coefficient = 0.0;
         m_frontal_area = 0.0;
         m_rcc = 0.0;
+        m_road_velocity_limit = new HashMap<>();
     }
 
-    public Vehicle(String m_name, String m_description, String m_type, String m_fuel, int m_vehicle_class, String m_motorization, double m_mass, double m_load, double m_drag_coefficient, double m_wheel_size, double m_frontal_area, double m_rcc, Energy m_energy) {
+    public Vehicle(String m_name, String m_description, String m_type, String m_fuel, int m_vehicle_class, String m_motorization, double m_mass, double m_load, double m_drag_coefficient, double m_wheel_size, double m_frontal_area, double m_rcc, Map<String,Double> velocityLimits) {
         this.m_name = m_name;
         this.m_description = m_description;
         this.m_type = m_type;
@@ -96,7 +97,7 @@ public class Vehicle {
         this.m_wheel_size = m_wheel_size;
         this.m_frontal_area = m_frontal_area;
         this.m_rcc = m_rcc;
-        this.m_energy = m_energy;
+        this.m_road_velocity_limit = velocityLimits;
     }
 
     public Vehicle(Vehicle v) {
@@ -112,9 +113,33 @@ public class Vehicle {
         this.m_wheel_size = v.m_wheel_size;
         this.m_frontal_area = v.m_frontal_area;
         this.m_rcc = v.m_rcc;
-        this.m_energy = v.m_energy;
+        this.m_road_velocity_limit = v.m_road_velocity_limit;
     }
+    
+    public abstract double getMinRpm();
+    
+    public abstract void setMinRpm(double m_min_rpm);
+    
+    public abstract double getMaxRpm();
+    
+    public abstract void setMaxRpm(double m_max_rpm);
+    
+    public abstract double getFinalDriveRatio();
+    
+    public abstract void setFinalDriveRatio(double m_final_drive_ratio);
+    
+    public abstract Gearbox getGearbox();
+    
+    public abstract void setGearbox(Gearbox m_gearbox);
+    
+    public abstract Accelerator getAccelerator();
+    
+    public abstract void setAccelerator(Accelerator m_accelerator);
 
+    public void setRoadVelocityLimit(Map<String, Double> m_road_velocity_limit) {
+        this.m_road_velocity_limit = m_road_velocity_limit;
+    }
+    
     public double getMass() {
         return m_mass;
     }
@@ -125,17 +150,6 @@ public class Vehicle {
 
     public double getWheelSize() {
         return m_wheel_size;
-    }
-
-    public Energy getEnergy() {
-        return m_energy;
-    }
-
-    public void setEnergy(Energy energy) {
-        if (energy == null) {
-            throw new IllegalArgumentException("Energy cannot be empty.");
-        }
-        this.m_energy = energy;
     }
 
     public void setRcc(double rcc) {
@@ -224,7 +238,9 @@ public class Vehicle {
 
     @Override
     public String toString() {
-        return "Vehicle{" + "m_name=" + m_name + ", m_description=" + m_description + ", m_type=" + m_type + ", m_fuel=" + m_fuel + ", m_vehicle_class=" + m_vehicle_class + ", m_motorization=" + m_motorization + ", m_mass=" + m_mass + ", m_load=" + m_load + ", m_drag_coefficient=" + m_drag_coefficient + ", m_wheel_size=" + m_wheel_size + ", m_frontal_area=" + m_frontal_area + ", m_rcc=" + m_rcc + ", m_energy=" + m_energy + '}';
+        return "Vehicle{" + "m_name=" + m_name + ", m_description=" + m_description + ", m_type=" + m_type + ", m_fuel=" + m_fuel + ", m_vehicle_class=" + m_vehicle_class + ", m_motorization=" + m_motorization + ", m_wheel_size=" + m_wheel_size + ", m_mass=" + m_mass + ", m_load=" + m_load + ", m_drag_coefficient=" + m_drag_coefficient + ", m_frontal_area=" + m_frontal_area + ", m_rcc=" + m_rcc + ", m_road_velocity_limit=" + m_road_velocity_limit + '}';
     }
+
+    
 
 }
