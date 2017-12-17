@@ -1,7 +1,6 @@
 package lapr.project.model;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -66,23 +65,38 @@ public class Road {
         return m_typology;
     }
 
-    public void setRoadID(String m_road_id) {
-        this.m_road_id = m_road_id;
+    public void setRoadID(String road_id) {
+        if (road_id == null || road_id.trim().isEmpty()) {
+            throw new IllegalArgumentException("Invalid road id.");
+        }
+        this.m_road_id = road_id;
     }
 
-    public void setName(String m_name) {
-        this.m_name = m_name;
+    public void setName(String name) {
+        if (name == null || name.trim().isEmpty()) {
+            throw new IllegalArgumentException("Invalid road name.");
+        }
+        this.m_name = name;
     }
 
     public void setTypology(String typology) {
+        if (typology == null || typology.trim().isEmpty()) {
+            throw new IllegalArgumentException("Invalid typology.");
+        }
         m_typology = typology;
     }
 
-    public void setListOfSections(List<Section> m_listOfSections) {
-        this.m_listOfSections = m_listOfSections;
+    public void setListOfSections(List<Section> listofsections) {
+        if (listofsections == null) {
+            throw new IllegalArgumentException("Invalid list of sections");
+        }
+        this.m_listOfSections = listofsections;
     }
 
     public void setTollFare(Map<Integer, Double> map) {
+        if (map == null) {
+            throw new IllegalArgumentException("Invalid map of toll fares");
+        }
         m_toll_fare = map;
     }
 
@@ -93,6 +107,17 @@ public class Road {
                     + "toll_value greater than zero");
         }
         m_toll_fare.put(vehicle_id, toll_value);
+    }
+
+    public Double getTollValue(int vehicle_id) {
+        if (vehicle_id <= 0) {
+            throw new IllegalArgumentException("Vehicle id must be greater than zero");
+        }
+        if (m_toll_fare.containsKey(vehicle_id)) {
+            return m_toll_fare.get(vehicle_id);
+        }
+
+        return null;
     }
 
     public boolean validate() {
