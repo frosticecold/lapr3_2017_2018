@@ -42,11 +42,10 @@ public class ProjectData extends DataAccess<Project> {
         while (rs.next()) {
             String description = rs.getString("description");
             p = new Project();
-            
+
             p.setName(name);
             p.setDescription(description);
-            
-            
+
         }
         return p;
     }

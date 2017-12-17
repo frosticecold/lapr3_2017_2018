@@ -16,8 +16,9 @@ public class Pair<V, E> {
     private V v;
     private E e;
 
-    public Pair(){
+    public Pair() {
     }
+
     public Pair(V firstElement, E secondElement) {
         v = firstElement;
         e = secondElement;
@@ -59,7 +60,7 @@ public class Pair<V, E> {
             return false;
         }
         @SuppressWarnings("unchecked")
-        Pair<V,E> p = (Pair<V,E>) obj;
+        Pair<V, E> p = (Pair<V, E>) obj;
 
         return this.getFirstElement().equals(p.getFirstElement()) && this.getSecondElement().equals(p.getSecondElement());
     }

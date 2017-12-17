@@ -10,19 +10,20 @@ import javax.sql.rowset.RowSetProvider;
 import oracle.jdbc.OracleTypes;
 
 public abstract class DataAccess<T> {
+
     protected Connection connection;
 
     protected DataAccess(Connection connection) {
         this.connection = connection;
     }
-    
+
     protected CachedRowSet callFunction(String function) throws SQLException {
         return this.callFunction(function, new ArrayList<>());
     }
 
     protected CachedRowSet callFunction(String function, Iterable<SQLArgument> args) throws SQLException {
         String arg = "";
-        
+
         boolean first = true;
         for (SQLArgument s : args) {
             if (!first) {

@@ -1,25 +1,17 @@
 package lapr.project.model;
 
-import java.util.HashSet;
 import java.util.Objects;
-import java.util.Set;
 
 public class Junction {
 
     private String m_id;
-    private Set<Road> m_listOfRoads;
 
     public Junction(String id) {
         m_id = id;
-        m_listOfRoads = new HashSet<>();
     }
 
     public String getID() {
         return m_id;
-    }
-
-    public void addRoad(Road r) {
-        m_listOfRoads.add(r);
     }
 
     @Override

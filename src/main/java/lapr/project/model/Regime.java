@@ -1,12 +1,11 @@
 package lapr.project.model;
 
 public class Regime {
-    
+
     private double m_torque;
     private double m_rpm_low;
     private double m_rpm_high;
     private double m_SFC;
-
 
     public Regime(double m_torque, double m_rpm_low, double m_rpm_high, double m_SFC) {
         this.m_torque = m_torque;
@@ -14,7 +13,7 @@ public class Regime {
         this.m_rpm_high = m_rpm_high;
         this.m_SFC = m_SFC;
     }
-    
+
     public Regime() {
         m_torque = 0.0;
         m_rpm_low = 0.0;
@@ -37,7 +36,7 @@ public class Regime {
     public void setSFC(double m_SFC) {
         this.m_SFC = m_SFC;
     }
-    
+
     /**
      * Validate the regime.
      *
@@ -72,7 +71,5 @@ public class Regime {
     public String toString() {
         return "Regime{" + "m_torque=" + m_torque + ", m_rpm_low=" + m_rpm_low + ", m_rpm_high=" + m_rpm_high + ", m_SFC=" + m_SFC + '}';
     }
-    
-    
-    
+
 }

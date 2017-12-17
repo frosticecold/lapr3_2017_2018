@@ -36,7 +36,7 @@ public class GraphAlgorithms {
         qaux.add(vert);
         int vKey = g.getKey(vert);
         visited[vKey] = true;
-        
+
         V vertex;
 
         while (!qaux.isEmpty()) {
@@ -260,8 +260,7 @@ public class GraphAlgorithms {
      *
      * while (!pathcopy.isEmpty()) { pathrev.push(pathcopy.pop()); }
      *
-     * return pathrev;
-    }
+     * return pathrev; }
      */
     private static int getVertMinDist(double[] dist, boolean[] visited) {
         double min = Double.MAX_VALUE;

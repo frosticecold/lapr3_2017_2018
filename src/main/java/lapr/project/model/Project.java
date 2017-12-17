@@ -23,6 +23,11 @@ public class Project {
         m_list_roads = new ArrayList<>();
     }
 
+    public Project(String name, String description) {
+        this.m_name = name;
+        this.m_description = description;
+    }
+
     /**
      *
      * @param roadNetwork

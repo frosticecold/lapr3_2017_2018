@@ -620,15 +620,15 @@ public class GraphTest {
                 + "";
         assertEquals(expResult, instance.toString());
     }
-    
+
     /**
      * Test of hashCode method, of class Graph.
      */
     @Test
     public void testHashCode() {
         System.out.println("hashCode");
-        Graph<String,String> expResult = instance.copyGraph();
-        
+        Graph<String, String> expResult = instance.copyGraph();
+
         assertTrue(instance.equals(expResult) && expResult.equals(instance));
         assertTrue(instance.hashCode() == expResult.hashCode());
     }

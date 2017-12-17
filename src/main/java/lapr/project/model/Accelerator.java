@@ -4,10 +4,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Accelerator {
-    
+
     private Map<Integer, Throttle> m_throttle_list;
-    
-    public Accelerator(){
+
+    public Accelerator() {
         this.m_throttle_list = new HashMap<>();
     }
 
@@ -18,7 +18,7 @@ public class Accelerator {
     public void setThrottleList(Map<Integer, Throttle> m_throttle_list) {
         this.m_throttle_list = m_throttle_list;
     }
-    
+
     /**
      * Validate the accelerator pedal.
      *
@@ -38,6 +38,5 @@ public class Accelerator {
     public String toString() {
         return "Accelerator{" + "m_throttle_list=" + m_throttle_list + '}';
     }
-    
-    
+
 }

@@ -12,7 +12,7 @@ package lapr.project.ui;
 public class CopyProjectUI extends javax.swing.JFrame {
 
     private static final long serialVersionUID = 1;
-    
+
     /**
      * Creates new form CopyProjectUI
      */

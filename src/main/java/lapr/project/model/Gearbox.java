@@ -25,7 +25,9 @@ public class Gearbox {
 
     /**
      *
-     * @param nameOfGear
+     *
+     * @param gearID
+     * @return
      */
     public Gear getGear(int gearID) {
         for (Gear gear : m_gears) {

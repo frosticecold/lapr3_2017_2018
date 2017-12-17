@@ -96,7 +96,7 @@ public class VehicleList {
      * @return (List&lt;String&gt;) The list with the name.
      */
     public List<String> getVehicleList() {
-        List<String> vehicleList = new ArrayList();
+        List<String> vehicleList = new ArrayList<>();
 
         for (Vehicle vehicle : this.m_list_of_vehicles) {
             vehicleList.add(vehicle.getName());

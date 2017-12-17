@@ -16,7 +16,7 @@ import lapr.project.model.Project;
  * @author pc asus
  */
 public class OpenProjectUI extends javax.swing.JDialog {
-    
+
     private static final long serialVersionUID = 1;
 
     private final OpenProjectController controller;
@@ -24,6 +24,7 @@ public class OpenProjectUI extends javax.swing.JDialog {
 
     /**
      * Creates new form OpenProjectUI
+     *
      * @param parent
      * @param modal
      */
@@ -38,8 +39,8 @@ public class OpenProjectUI extends javax.swing.JDialog {
             Logger.getLogger(OpenProjectUI.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(this, "Oops, something went wrong!\n\nVerify the project is functional.", "Loading Error", JOptionPane.ERROR_MESSAGE);
         }
-        
-        for(String p : projectsList) {
+
+        for (String p : projectsList) {
             projectComboBox.addElement(p);
         }
         initComponents();
@@ -122,7 +123,7 @@ public class OpenProjectUI extends javax.swing.JDialog {
             this.dispose();
         } catch (SQLException ex) {
             Logger.getLogger(OpenProjectUI.class.getName()).log(Level.SEVERE, null, ex);
-            JOptionPane.showMessageDialog(this, "Couldn't load the selected project.","Error",JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Couldn't load the selected project.", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jb_saveActionPerformed
 

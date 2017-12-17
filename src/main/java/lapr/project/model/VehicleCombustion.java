@@ -1,8 +1,8 @@
 package lapr.project.model;
 
-public class ElectricVehicle extends Vehicle {
+public class VehicleCombustion extends Vehicle {
 
-	/**
+    /**
      * Minimum RPM of the engine of the vehicle.
      */
     private double m_min_rpm;
@@ -26,23 +26,17 @@ public class ElectricVehicle extends Vehicle {
      * List of possible throtlles of the vehicle.
      */
     private Accelerator m_accelerator;
-    /**
-     * The energy regeneration ratio when braking.
-     */
-    private double m_energy_regeneration_ratio;
 
     /**
      * Creates an instance of an electric vehicle.
      */
-    public ElectricVehicle() {
+    public VehicleCombustion() {
         super();
         this.m_min_rpm = 0;
         this.m_max_rpm = 0;
         this.m_final_drive_ratio = 0.0;
         this.m_gearbox = new Gearbox();
         this.m_accelerator = new Accelerator();
-        this.m_energy_regeneration_ratio = 0;
-
     }
 
     /**
@@ -86,24 +80,13 @@ public class ElectricVehicle extends Vehicle {
     }
 
     /**
-     * Returns the accelerator pedal of the vehicle.
+     * Returns the accelerator of the vehicle.
      *
-     * @return The accelerator pedal list of the vehicle.
+     * @return The accelerator list of the vehicle.
      */
     @Override
     public Accelerator getAccelerator() {
         return this.m_accelerator;
-    }
-
-    
-
-    /**
-     * Returns the energy regeneration ratio of this electric vehicle.
-     *
-     * @return (double) The energy regeneration ratio.
-     */
-    public double getEnergyRegenerationRatio() {
-        return this.m_energy_regeneration_ratio;
     }
 
     /**
@@ -115,7 +98,7 @@ public class ElectricVehicle extends Vehicle {
     public void setMinRpm(double m_min_rpm) {
         if (m_min_rpm < 0) {
             throw new IllegalArgumentException("The mimimum rounds per minute "
-                                + "of the vehicle should be positive.");
+                    + "of the vehicle should be positive.");
         }
 
         this.m_min_rpm = m_min_rpm;
@@ -130,64 +113,48 @@ public class ElectricVehicle extends Vehicle {
     public void setMaxRpm(double m_max_rpm) {
         if (m_max_rpm <= 0) {
             throw new IllegalArgumentException("The maximum rounds per minute "
-                                + "of the vehicle should be positive.");
+                    + "of the vehicle should be positive.");
         }
 
         this.m_max_rpm = m_max_rpm;
     }
 
     /**
-     * Sets the final drive ratio of the vehicle.
+     * Sets the final drive of the vehicle.
      *
-     * @param m_final_drive_ratio The new final drive ratio of the vehicle.
+     * @param m_final_drive_ratio The new final drive of the vehicle.
      */
     @Override
     public void setFinalDriveRatio(double m_final_drive_ratio) {
         if (m_final_drive_ratio <= 0) {
             throw new IllegalArgumentException("The final drive of the vehicle "
-                                + "should be positive.");
+                    + "should be positive.");
         }
 
         this.m_final_drive_ratio = m_final_drive_ratio;
     }
-    
+
     @Override
-    public void setGearbox(Gearbox m_gearbox){
-        if(m_gearbox == null){
-             throw new IllegalArgumentException("The vehicle should have a gearbox. ");
+    public void setGearbox(Gearbox m_gearbox) {
+        if (m_gearbox == null) {
+            throw new IllegalArgumentException("The vehicle should have a gearbox. ");
         }
-        
+
         this.m_gearbox = m_gearbox;
     }
-    
-    public void setAccelerator(Accelerator m_accelerator){
-        if(m_accelerator == null){
-             throw new IllegalArgumentException("The vehicle should have a gearbox. ");
+
+    public void setAccelerator(Accelerator m_accelerator) {
+        if (m_accelerator == null) {
+            throw new IllegalArgumentException("The vehicle should have a gearbox. ");
         }
-        
+
         this.m_accelerator = m_accelerator;
     }
 
     /**
-     * Sets the energy regeneration ratio of this vehicle.
-     * <p>
-     * The ratio must lie between 0 and 1.
-     *
-     * @param m_energy_regeneration_ratio (double) The new value for the energy
-     * regeneration ratio.
-     */
-    public void setEnergyRegenerationRatio(double m_energy_regeneration_ratio) {
-        if (m_energy_regeneration_ratio < 0 || m_energy_regeneration_ratio > 1) {
-            throw new IllegalArgumentException("Energy regeneration ratio must lie between 0 and 1!");
-        }
-        this.m_energy_regeneration_ratio = m_energy_regeneration_ratio;
-    }
-
-    /**
      * Returns the textual description of the object in the following format:
- super.toString() RPM Minimum: 1000 RPM Maximum: 5500 Final Drive: 2.6
- Energy Regeneration Ratio: 0.9 m_gearbox.toString()
- acceleratorPedal.toString()
+     * super.toString() RPM Minimum: 1000 RPM Maximum: 5500 Final Drive: 2.6
+     * m_gearbox.toString() acceleratorPedal.toString()
      *
      * @return Textual description of the object.
      */
@@ -199,30 +166,27 @@ public class ElectricVehicle extends Vehicle {
         sb.append("\tRPM Minimum: ").append(this.m_min_rpm).append("\n");
         sb.append("\tRPM Maximum: ").append(this.m_max_rpm).append("\n");
         sb.append("\tFinal Drive: ").append(this.m_final_drive_ratio).append(" m\n");
-        sb.append("\tEnergy Regeneration Ratio: ").append(this.m_energy_regeneration_ratio).append(" \n");
         sb.append(this.m_gearbox.toString());
         sb.append(this.m_accelerator.toString());
 
         return sb.toString();
     }
 
-    
-
     /**
-     * Validate the electric vehicle.
+     * Validate the combustion vehicle.
      *
-     * @return True if vehicle electric is valid else returns false.
+     * @return True if vehicle combustion is valid else returns false.
      */
-    public boolean validateElectricVehicle() {
+    public boolean validateCombustionVehicle() {
 
         if (this.m_min_rpm <= 0) {
             throw new IllegalArgumentException("The mimimum rounds per minute "
-                                + "of the vehicle should be positive.");
+                    + "of the vehicle should be positive.");
         }
 
         if (this.m_max_rpm <= 0) {
             throw new IllegalArgumentException("The maximum rounds per minute "
-                                + "of the vehicle should be positive.");
+                    + "of the vehicle should be positive.");
         }
 
         if (this.m_min_rpm > m_max_rpm) {
@@ -231,13 +195,8 @@ public class ElectricVehicle extends Vehicle {
 
         if (this.m_final_drive_ratio <= 0) {
             throw new IllegalArgumentException("The final drive of the vehicle "
-                                + "should be positive.");
+                    + "should be positive.");
         }
-        if (this.m_energy_regeneration_ratio < 0 || this.m_energy_regeneration_ratio > 1) {
-            throw new IllegalArgumentException("The energy regeneration ratio "
-                                + "of the vehicle should be ]0-1[.");
-        }
-
         return true;
     }
 

@@ -10,5 +10,5 @@ package lapr.project.model;
  * @author Raúl Correia <1090657@isep.ipp.pt>
  */
 public class Toll {
-    
+
 }

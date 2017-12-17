@@ -3,7 +3,7 @@ package lapr.project.model;
 import java.util.List;
 
 public class Energy {
-    
+
     private double m_min_rpm;
     private double m_max_rpm;
     private double m_final_drive_ratio;
@@ -40,7 +40,7 @@ public class Energy {
     public List<Throttle> getThrottleList() {
         return m_throttle_list;
     }
-    
+
     public void setMinRpm(double m_min_rpm) {
         this.m_min_rpm = m_min_rpm;
     }

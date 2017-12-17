@@ -11,8 +11,8 @@ import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamConstants;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
-import lapr.project.model.CombustionVehicle;
-import lapr.project.model.ElectricVehicle;
+import lapr.project.model.VehicleCombustion;
+import lapr.project.model.VehicleElectric;
 import lapr.project.model.Gear;
 import lapr.project.model.Gearbox;
 import lapr.project.model.Project;
@@ -342,11 +342,11 @@ public class VehicleXML implements FileFormat {
     private void createVehicle() {
         switch (this.elementContent) {
             case ELETRIC_VEHICLE_TAG: {
-                this.vehicle = new ElectricVehicle();
+                this.vehicle = new VehicleElectric();
                 break;
             }
             case COMBUSTION_VEHICLE_TAG: {
-                this.vehicle = new CombustionVehicle();
+                this.vehicle = new VehicleCombustion();
                 break;
             }
             default:

@@ -4,7 +4,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class Throttle {
-    
+
     private List<Regime> m_regime_list;
 
     public Throttle(List<Regime> m_regime_list) {
@@ -28,7 +28,4 @@ public class Throttle {
         return "Throttle{" + "m_regime_list=" + m_regime_list + '}';
     }
 
-    
-    
-    
 }

@@ -6,20 +6,20 @@ import java.util.logging.Logger;
 import lapr.project.model.Project;
 
 public abstract class Session {
-    
+
     private static Project activeProject;
     private static SQLConnection sql;
 
     public static Project getActiveProject() {
         return activeProject;
     }
-    
+
     public static void setActiveProject(Project project) {
         activeProject = project;
     }
 
     public static SQLConnection getConnection() {
-        if(sql == null) {
+        if (sql == null) {
             DatabaseConnection dbc = new DatabaseConnection();
             sql = dbc.getDatabase();
             try {
@@ -31,6 +31,5 @@ public abstract class Session {
         }
         return sql;
     }
-    
-    
+
 }

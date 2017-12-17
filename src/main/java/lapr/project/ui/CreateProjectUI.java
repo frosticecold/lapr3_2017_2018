@@ -5,19 +5,40 @@
  */
 package lapr.project.ui;
 
+import java.io.File;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import lapr.project.model.Project;
+
 /**
  *
  * @author MarioDias
  */
 public class CreateProjectUI extends javax.swing.JFrame {
 
+    private JFileChooser m_jfc;
+
+    protected Project m_project;
     private static final long serialVersionUID = 1;
+    private static final String IMPORT_NETWORK_TITLE = "Import RoadNetwork";
+    private static final String IMPORT_VEHICLE_TITLE = "Import Vehicles";
 
     /**
      * Creates new form CreateProjectUI
      */
     public CreateProjectUI() {
         initComponents();
+        m_project = new Project();
+        initFileChooser();
+
+    }
+
+    public void initFileChooser() {
+        m_jfc = new JFileChooser();
+        FileNameExtensionFilter xmlfilter = new FileNameExtensionFilter("XML files (*.xml)", "xml");
+        m_jfc.setFileFilter(xmlfilter);
+        m_jfc.setCurrentDirectory(new File(System.getProperty("user.dir")));
     }
 
     /**
@@ -29,14 +50,14 @@ public class CreateProjectUI extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        textTitle = new javax.swing.JTextField();
+        txtfield_project_title = new javax.swing.JTextField();
         labelTitle = new javax.swing.JLabel();
         btnClose = new javax.swing.JButton();
         btnCreateProject = new javax.swing.JButton();
         btnImportRoadNetwork = new javax.swing.JButton();
         btnImportVehicle = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        txtfld_description = new javax.swing.JTextArea();
         labelTitle1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -52,15 +73,30 @@ public class CreateProjectUI extends javax.swing.JFrame {
         });
 
         btnCreateProject.setText("Create project");
+        btnCreateProject.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCreateProjectActionPerformed(evt);
+            }
+        });
 
         btnImportRoadNetwork.setText("Import Road Network");
+        btnImportRoadNetwork.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnImportRoadNetworkActionPerformed(evt);
+            }
+        });
 
         btnImportVehicle.setText("Import Vehicle");
         btnImportVehicle.setToolTipText("");
+        btnImportVehicle.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnImportVehicleActionPerformed(evt);
+            }
+        });
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
+        txtfld_description.setColumns(20);
+        txtfld_description.setRows(5);
+        jScrollPane1.setViewportView(txtfld_description);
 
         labelTitle1.setText("Description:");
 
@@ -74,7 +110,6 @@ public class CreateProjectUI extends javax.swing.JFrame {
                         .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(btnClose)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btnCreateProject))
@@ -85,7 +120,7 @@ public class CreateProjectUI extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jScrollPane1)
-                                    .addComponent(textTitle)))))
+                                    .addComponent(txtfield_project_title)))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(11, 11, 11)
                         .addComponent(btnImportVehicle, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -98,7 +133,7 @@ public class CreateProjectUI extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(17, 17, 17)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(textTitle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtfield_project_title, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(labelTitle))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -121,6 +156,31 @@ public class CreateProjectUI extends javax.swing.JFrame {
     private void btnCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCloseActionPerformed
         dispose();
     }//GEN-LAST:event_btnCloseActionPerformed
+
+    private void btnCreateProjectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateProjectActionPerformed
+        String title = txtfield_project_title.getText().trim();
+        String description = txtfld_description.getText().trim();
+        m_project.setName(title);
+        m_project.setDescription(description);
+        try {
+            if (m_project.validate()) {
+
+            }
+        } catch (IllegalArgumentException ex) {
+            JOptionPane.showMessageDialog(this, "The project is invalid, it wasn't created, so it was reseted", "Error!", JOptionPane.ERROR_MESSAGE);
+            m_project = new Project();
+        }
+    }//GEN-LAST:event_btnCreateProjectActionPerformed
+
+    private void btnImportVehicleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImportVehicleActionPerformed
+        m_jfc.setDialogTitle(IMPORT_VEHICLE_TITLE);
+        m_jfc.showOpenDialog(this);
+    }//GEN-LAST:event_btnImportVehicleActionPerformed
+
+    private void btnImportRoadNetworkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImportRoadNetworkActionPerformed
+        m_jfc.setDialogTitle(IMPORT_NETWORK_TITLE);
+        m_jfc.showOpenDialog(this);
+    }//GEN-LAST:event_btnImportRoadNetworkActionPerformed
 
     /**
      * @param args the command line arguments
@@ -163,9 +223,9 @@ public class CreateProjectUI extends javax.swing.JFrame {
     private javax.swing.JButton btnImportRoadNetwork;
     private javax.swing.JButton btnImportVehicle;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JLabel labelTitle;
     private javax.swing.JLabel labelTitle1;
-    private javax.swing.JTextField textTitle;
+    private javax.swing.JTextField txtfield_project_title;
+    private javax.swing.JTextArea txtfld_description;
     // End of variables declaration//GEN-END:variables
 }

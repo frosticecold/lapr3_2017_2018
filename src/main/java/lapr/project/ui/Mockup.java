@@ -172,8 +172,7 @@ public class Mockup extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-  
-    
+
     private void menuItemOpenProjectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemOpenProjectActionPerformed
         OpenProjectUI ui = new OpenProjectUI(this, rootPaneCheckingEnabled);
         ui.setLocationRelativeTo(this);
@@ -234,7 +233,6 @@ public class Mockup extends javax.swing.JFrame {
 //            }
 //        });
 //    }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnClose;
     private javax.swing.JMenu itemProject;

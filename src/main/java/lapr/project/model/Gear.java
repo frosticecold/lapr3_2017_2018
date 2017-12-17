@@ -7,7 +7,7 @@ public class Gear {
 
     /**
      *
-     * @param name_of_gear
+     * @param id_of_gear
      * @param m_ratio
      */
     public Gear(int id_of_gear, double m_ratio) {
@@ -21,9 +21,7 @@ public class Gear {
     public int getGearID() {
         return m_gearID;
     }
-    
-    
-    
+
     public void setGearID(int m_gearID) {
         this.m_gearID = m_gearID;
     }
@@ -32,8 +30,6 @@ public class Gear {
         this.m_ratio = m_ratio;
     }
 
-    
-    
     @Override
     public String toString() {
         return "Gear{" + "m_gearID=" + m_gearID + ", m_ratio=" + m_ratio + '}';

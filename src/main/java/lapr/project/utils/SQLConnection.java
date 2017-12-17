@@ -46,10 +46,10 @@ public class SQLConnection {
             openConnection();
         }
         ProjectData pd = new ProjectData(connection);
-        
+
         return pd.getAllProjectsNames();
     }
-    
+
     public Project getProjectByName(String name) throws SQLException {
         if (connection == null) {
             openConnection();
