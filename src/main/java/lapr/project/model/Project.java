@@ -120,6 +120,10 @@ public class Project {
         return added;
     }
 
+    public boolean addVehicle(Vehicle v) {
+        return m_list_vehicles.addVehicle(v);
+    }
+
     public boolean addJunction(Junction j) {
         return m_road_network.insertVertex(j);
     }

@@ -6,10 +6,18 @@
 package lapr.project.ui;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import lapr.project.model.Project;
+import lapr.project.model.Vehicle;
+import lapr.project.utils.ImportException;
+import lapr.project.utils.NetworkXML;
+import lapr.project.utils.VehicleXML;
 
 /**
  *
@@ -164,7 +172,7 @@ public class CreateProjectUI extends javax.swing.JFrame {
         m_project.setDescription(description);
         try {
             if (m_project.validate()) {
-
+                JOptionPane.showMessageDialog(this, "Project was created successfully", "Created a project", JOptionPane.INFORMATION_MESSAGE);
             }
         } catch (IllegalArgumentException ex) {
             JOptionPane.showMessageDialog(this, "The project is invalid, it wasn't created, so it was reseted", "Error!", JOptionPane.ERROR_MESSAGE);
@@ -174,12 +182,40 @@ public class CreateProjectUI extends javax.swing.JFrame {
 
     private void btnImportVehicleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImportVehicleActionPerformed
         m_jfc.setDialogTitle(IMPORT_VEHICLE_TITLE);
-        m_jfc.showOpenDialog(this);
+        int returnvalue = m_jfc.showOpenDialog(this);
+        if (returnvalue == JFileChooser.APPROVE_OPTION) {
+            try {
+                VehicleXML xml = new VehicleXML();
+                File file = m_jfc.getSelectedFile();
+                List<Vehicle> lista = xml.importVehicles(file);
+                for (Vehicle v : lista) {
+                    m_project.addVehicle(v);
+
+                }
+            } catch (FileNotFoundException ex) {
+                Logger.getLogger(CreateProjectUI.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ImportException ex) {
+                Logger.getLogger(CreateProjectUI.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+
     }//GEN-LAST:event_btnImportVehicleActionPerformed
 
     private void btnImportRoadNetworkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImportRoadNetworkActionPerformed
         m_jfc.setDialogTitle(IMPORT_NETWORK_TITLE);
-        m_jfc.showOpenDialog(this);
+        int returnvalue = m_jfc.showOpenDialog(this);
+        if (returnvalue == JFileChooser.APPROVE_OPTION) {
+            try {
+                NetworkXML xml = new NetworkXML();
+                File file = m_jfc.getSelectedFile();
+                xml.importNetwork(m_project, file);
+            } catch (FileNotFoundException ex) {
+                Logger.getLogger(CreateProjectUI.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ImportException ex) {
+                Logger.getLogger(CreateProjectUI.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+
     }//GEN-LAST:event_btnImportRoadNetworkActionPerformed
 
     /**
