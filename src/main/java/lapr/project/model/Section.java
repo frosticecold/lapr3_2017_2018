@@ -1,17 +1,19 @@
 package lapr.project.model;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 public class Section {
 
     private Junction m_beginning_junction;
     private Junction m_ending_junction;
-    private String m_typology;
     private String m_road_id;
     private Direction m_direction;
     private List<Segment> m_sequenceOfSegments;
+    private Map<Integer, Double> m_toll;
 
     public enum Direction {
         DIRECT("DIRECT"), REVERSE("REVERSE"), BIDIRECTIONAL("BIDIRECTIONAL");
@@ -24,6 +26,19 @@ public class Section {
 
     public Section() {
         m_sequenceOfSegments = new ArrayList<>();
+        m_direction = Direction.DIRECT;
+        m_toll = new HashMap<>();
+    }
+
+    public boolean addToll(int vehic_id, double value) {
+        if (vehic_id <= 0 || value < 0) {
+            throw new IllegalArgumentException("Invalida values for toll");
+        }
+        if (!m_toll.containsKey(vehic_id)) {
+            m_toll.put(vehic_id, value);
+            return true;
+        }
+        return false;
     }
 
     public Junction getBeginningJunction() {
@@ -32,10 +47,6 @@ public class Section {
 
     public Junction getEndingJunction() {
         return m_ending_junction;
-    }
-
-    public String getTypology() {
-        return m_typology;
     }
 
     public Direction getDirection() {
@@ -65,7 +76,6 @@ public class Section {
         int hash = 5;
         hash = 53 * hash + Objects.hashCode(this.m_beginning_junction);
         hash = 53 * hash + Objects.hashCode(this.m_ending_junction);
-        hash = 53 * hash + Objects.hashCode(this.m_typology);
         hash = 53 * hash + Objects.hashCode(this.m_direction);
         hash = 53 * hash + Objects.hashCode(this.m_sequenceOfSegments);
         return hash;
@@ -83,9 +93,7 @@ public class Section {
             return false;
         }
         final Section other = (Section) obj;
-        if (!Objects.equals(this.m_typology, other.m_typology)) {
-            return false;
-        }
+
         if (!Objects.equals(this.m_beginning_junction, other.m_beginning_junction)) {
             return false;
         }
@@ -114,10 +122,6 @@ public class Section {
         m_sequenceOfSegments = listOfSegments;
     }
 
-    public void setTypology(String typology) {
-        this.m_typology = typology;
-    }
-
     public void setDirection(Direction d) {
         if (d == null) {
             throw new IllegalArgumentException("Invalid Direction");
@@ -126,7 +130,7 @@ public class Section {
     }
 
     public boolean validate() {
-        if (!m_beginning_junction.validate() || !m_ending_junction.validate() || m_typology.trim().isEmpty() || m_road_id.trim().isEmpty() || m_direction == null || m_sequenceOfSegments.isEmpty()) {
+        if (!m_beginning_junction.validate() || !m_ending_junction.validate() || m_road_id.trim().isEmpty() || m_direction == null || m_sequenceOfSegments.isEmpty()) {
             throw new IllegalArgumentException(("Section is invalid."));
         }
         for (Segment seg : m_sequenceOfSegments) {

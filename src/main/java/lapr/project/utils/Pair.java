@@ -16,6 +16,8 @@ public class Pair<V, E> {
     private V v;
     private E e;
 
+    public Pair(){
+    }
     public Pair(V firstElement, E secondElement) {
         v = firstElement;
         e = secondElement;

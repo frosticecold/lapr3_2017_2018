@@ -12,12 +12,12 @@ public class Project {
     private Graph<Junction, Section> m_road_network;
     private List<Vehicle> m_list_vehicles;
     private List<Road> m_list_roads;
-    private String name;
-    private String description;
+    private String m_name;
+    private String m_description;
 
     public Project() {
-        name = "";
-        description = "";
+        m_name = "";
+        m_description = "";
         m_road_network = new Graph<>(true);
         m_list_vehicles = new ArrayList<>();
         m_list_roads = new ArrayList<>();
@@ -36,8 +36,8 @@ public class Project {
     }
 
     public Project(Project p) {
-        name = p.name;
-        description = p.description;
+        m_name = p.m_name;
+        m_description = p.m_description;
         m_road_network = p.getRoadNetwork().copyGraph();
         m_list_vehicles = new ArrayList<>();
 //        for (Vehicle v : p.getListVehicles()) {
@@ -71,19 +71,19 @@ public class Project {
     }
 
     public String getName() {
-        return name;
+        return m_name;
     }
 
     public String getDescription() {
-        return description;
+        return m_description;
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.m_name = name;
     }
 
     public void setDescription(String description) {
-        this.description = description;
+        this.m_description = description;
     }
 
     public Junction getJunction(String junction_id) {
@@ -154,4 +154,14 @@ public class Project {
         return GraphAlgorithms.allPaths(m_road_network, source, target);
     }
 
+    public boolean validate() {
+        if (this.m_name == null || m_name.trim().isEmpty()) {
+            throw new IllegalArgumentException("The project is invalid.");
+        }
+        if (m_road_network.numVertices() == 0 || m_road_network.numEdges() == 0) {
+            throw new IllegalArgumentException("The project is invalid.");
+        }
+    
+        return true;
+    }
 }

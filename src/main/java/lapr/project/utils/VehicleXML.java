@@ -24,7 +24,7 @@ public class VehicleXML implements FileFormat {
 
     private static final String VEHICLE_TAG = "vehicle";
     private static final String ELETRIC_VEHICLE_TAG = "electric";
-    private static final String COMBUSTION_VEHICLE_TAG = "combustion";  
+    private static final String COMBUSTION_VEHICLE_TAG = "combustion";
     private static final String ENERGY_TAG = "energy";
     private static final String GEARBOX_TAG = "gear_list";
     private static final String GEAR_TAG = "gear";
@@ -53,7 +53,6 @@ public class VehicleXML implements FileFormat {
     private static final String VELOCITY_LIMIT_TAG = "velocity_limit";
     private static final String SEGMENT_TYPE_TAG = "segment_type";
     private static final String LIMIT_TAG = "limit";
-    
 
     private File file;
     private XMLStreamReader reader;
@@ -66,7 +65,7 @@ public class VehicleXML implements FileFormat {
     private Regime regime;
     private Gearbox gearbox;
     private Gear gear;
-    private int throttleID; 
+    private int throttleID;
     private String name;
     private String description;
     private String type;
@@ -74,7 +73,7 @@ public class VehicleXML implements FileFormat {
     private Map<String, Double> velocityLimitList;
     private String segmentType;
     private Double velocityLimit;
-    
+
     public VehicleXML() {
 
     }
@@ -112,6 +111,8 @@ public class VehicleXML implements FileFormat {
                         readVehicleElements();
                         break;
                     }
+                    default:
+                        break;
                 }
             }
         }
@@ -141,6 +142,8 @@ public class VehicleXML implements FileFormat {
                 }
                 break;
             }
+            default:
+                break;
         }
     }
 
@@ -183,11 +186,13 @@ public class VehicleXML implements FileFormat {
                 createRegime();
                 break;
             }
-            
-            case VELOCITY_LIMIT_LIST_TAG:{
+
+            case VELOCITY_LIMIT_LIST_TAG: {
                 this.velocityLimitList = new HashMap<>();
                 break;
             }
+            default:
+                break;
         }
     }
 
@@ -248,7 +253,7 @@ public class VehicleXML implements FileFormat {
                 break;
             }
 
-            case ENERGY_TAG: {              
+            case ENERGY_TAG: {
                 break;
             }
 
@@ -306,44 +311,46 @@ public class VehicleXML implements FileFormat {
                 addThrottleToVehicle();
                 break;
             }
-            
-            case SEGMENT_TYPE_TAG:{
+
+            case SEGMENT_TYPE_TAG: {
                 segmentType = this.elementContent;
                 break;
             }
-            
-            case LIMIT_TAG:{
+
+            case LIMIT_TAG: {
                 velocityLimit = Double.parseDouble(this.elementContent);
                 break;
             }
-            
-            case VELOCITY_LIMIT_TAG:{
+
+            case VELOCITY_LIMIT_TAG: {
                 velocityLimitList.put(segmentType, velocityLimit);
                 break;
             }
-            
-            case VELOCITY_LIMIT_LIST_TAG:{
+
+            case VELOCITY_LIMIT_LIST_TAG: {
                 vehicle.setRoadVelocityLimit(velocityLimitList);
                 break;
             }
         }
     }
-    
-    private void saveNameAndDescription(){
+
+    private void saveNameAndDescription() {
         name = reader.getAttributeValue(null, "name");
         description = reader.getAttributeValue(null, "description");
     }
-    
+
     private void createVehicle() {
-        switch(this.elementContent){
-            case ELETRIC_VEHICLE_TAG:{
+        switch (this.elementContent) {
+            case ELETRIC_VEHICLE_TAG: {
                 this.vehicle = new ElectricVehicle();
                 break;
             }
-            case COMBUSTION_VEHICLE_TAG:{
+            case COMBUSTION_VEHICLE_TAG: {
                 this.vehicle = new CombustionVehicle();
                 break;
             }
+            default:
+                break;
         }
         this.vehicle.setName(name);
         this.vehicle.setDescription(description);
@@ -422,8 +429,8 @@ public class VehicleXML implements FileFormat {
     }
 
     private double unitConversion(double value, String unity) {
-        unity.toLowerCase();
-        switch (unity) {
+        String temp = unity.toLowerCase();
+        switch (temp) {
             case "g": {
                 value = value * 1000;
             }
