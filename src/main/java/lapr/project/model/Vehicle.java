@@ -84,7 +84,7 @@ public abstract class Vehicle {
         m_road_velocity_limit = new HashMap<>();
     }
 
-    public Vehicle(String m_name, String m_description, String m_type, String m_fuel, int m_vehicle_class, String m_motorization, double m_mass, double m_load, double m_drag_coefficient, double m_wheel_size, double m_frontal_area, double m_rcc, Map<String,Double> velocityLimits) {
+    public Vehicle(String m_name, String m_description, String m_type, String m_fuel, int m_vehicle_class, String m_motorization, double m_mass, double m_load, double m_drag_coefficient, double m_wheel_size, double m_frontal_area, double m_rcc, Map<String, Double> velocityLimits) {
         this.m_name = m_name;
         this.m_description = m_description;
         this.m_type = m_type;
@@ -115,31 +115,35 @@ public abstract class Vehicle {
         this.m_rcc = v.m_rcc;
         this.m_road_velocity_limit = v.m_road_velocity_limit;
     }
-    
+
+    public String getName() {
+        return m_name;
+    }
+
     public abstract double getMinRpm();
-    
+
     public abstract void setMinRpm(double m_min_rpm);
-    
+
     public abstract double getMaxRpm();
-    
+
     public abstract void setMaxRpm(double m_max_rpm);
-    
+
     public abstract double getFinalDriveRatio();
-    
+
     public abstract void setFinalDriveRatio(double m_final_drive_ratio);
-    
+
     public abstract Gearbox getGearbox();
-    
+
     public abstract void setGearbox(Gearbox m_gearbox);
-    
+
     public abstract Accelerator getAccelerator();
-    
+
     public abstract void setAccelerator(Accelerator m_accelerator);
 
     public void setRoadVelocityLimit(Map<String, Double> m_road_velocity_limit) {
         this.m_road_velocity_limit = m_road_velocity_limit;
     }
-    
+
     public double getMass() {
         return m_mass;
     }
@@ -240,7 +244,5 @@ public abstract class Vehicle {
     public String toString() {
         return "Vehicle{" + "m_name=" + m_name + ", m_description=" + m_description + ", m_type=" + m_type + ", m_fuel=" + m_fuel + ", m_vehicle_class=" + m_vehicle_class + ", m_motorization=" + m_motorization + ", m_wheel_size=" + m_wheel_size + ", m_mass=" + m_mass + ", m_load=" + m_load + ", m_drag_coefficient=" + m_drag_coefficient + ", m_frontal_area=" + m_frontal_area + ", m_rcc=" + m_rcc + ", m_road_velocity_limit=" + m_road_velocity_limit + '}';
     }
-
-    
 
 }
