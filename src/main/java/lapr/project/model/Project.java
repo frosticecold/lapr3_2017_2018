@@ -10,7 +10,7 @@ import lapr.project.utils.graphbase.GraphAlgorithms;
 public class Project {
 
     private Graph<Junction, Section> m_road_network;
-    private List<Vehicle> m_list_vehicles;
+    private VehicleList m_list_vehicles;
     private List<Road> m_list_roads;
     private String m_name;
     private String m_description;
@@ -19,7 +19,7 @@ public class Project {
         m_name = "";
         m_description = "";
         m_road_network = new Graph<>(true);
-        m_list_vehicles = new ArrayList<>();
+        m_list_vehicles = new VehicleList();
         m_list_roads = new ArrayList<>();
     }
 
@@ -31,7 +31,7 @@ public class Project {
      */
     public Project(Graph<Junction, Section> roadNetwork, List<Vehicle> vehiclesList, List<Road> roadList) {
         m_road_network = roadNetwork;
-        m_list_vehicles = vehiclesList;
+        m_list_vehicles = new VehicleList();
         m_list_roads = roadList;
     }
 
@@ -39,7 +39,7 @@ public class Project {
         m_name = p.m_name;
         m_description = p.m_description;
         m_road_network = p.getRoadNetwork().copyGraph();
-        m_list_vehicles = new ArrayList<>();
+        m_list_vehicles = new VehicleList();
 //        for (Vehicle v : p.getListVehicles()) {
 //            m_list_vehicles.add(new Vehicle(v));
 //        }
@@ -54,8 +54,8 @@ public class Project {
         this.m_road_network = m_road_network;
     }
 
-    public void setListVehicles(List<Vehicle> m_list_vehicles) {
-        this.m_list_vehicles = m_list_vehicles;
+    public void setListVehicles(VehicleList vehicle_list) {
+        this.m_list_vehicles = vehicle_list;
     }
 
     public void setListRoads(List<Road> listOfRoads) {
@@ -66,7 +66,7 @@ public class Project {
         return m_road_network;
     }
 
-    public List<Vehicle> getListVehicles() {
+    public VehicleList getListVehicles() {
         return m_list_vehicles;
     }
 
@@ -151,17 +151,29 @@ public class Project {
     }
 
     public ArrayList<LinkedList<Junction>> allPaths(Junction source, Junction target) {
+        if (!m_road_network.validVertex(source)) {
+            throw new IllegalArgumentException(("Source junction is invalid"));
+        }
+        if (!m_road_network.validVertex(target)) {
+            throw new IllegalArgumentException(("Target junction is invalid"));
+        }
         return GraphAlgorithms.allPaths(m_road_network, source, target);
     }
 
     public boolean validate() {
         if (this.m_name == null || m_name.trim().isEmpty()) {
-            throw new IllegalArgumentException("The project is invalid.");
+            throw new IllegalArgumentException("The project name is invalid.");
         }
-        if (m_road_network.numVertices() == 0 || m_road_network.numEdges() == 0) {
-            throw new IllegalArgumentException("The project is invalid.");
+        if (this.m_description == null || m_name.trim().isEmpty()) {
+            throw new IllegalArgumentException(("The project description is invalid."));
         }
-    
+        if (m_road_network.numVertices() < 2 || m_road_network.numEdges() == 0) {
+            throw new IllegalArgumentException("The project number of vertices are invalid.");
+        }
+        if (m_road_network.numEdges() == 0) {
+            throw new IllegalArgumentException("There must be atleast one road");
+        }
+
         return true;
     }
 }
