@@ -195,7 +195,7 @@ public class CreateProjectUI extends javax.swing.JFrame {
             } catch (FileNotFoundException ex) {
                 Logger.getLogger(CreateProjectUI.class.getName()).log(Level.SEVERE, null, ex);
             } catch (ImportException ex) {
-                Logger.getLogger(CreateProjectUI.class.getName()).log(Level.SEVERE, null, ex);
+                JOptionPane.showMessageDialog(this, "There was an error importing the file", "Error", JOptionPane.ERROR_MESSAGE);
             }
         }
 
@@ -212,7 +212,7 @@ public class CreateProjectUI extends javax.swing.JFrame {
             } catch (FileNotFoundException ex) {
                 Logger.getLogger(CreateProjectUI.class.getName()).log(Level.SEVERE, null, ex);
             } catch (ImportException ex) {
-                Logger.getLogger(CreateProjectUI.class.getName()).log(Level.SEVERE, null, ex);
+                JOptionPane.showMessageDialog(this, "There was an error importing the file", "Error", JOptionPane.ERROR_MESSAGE);
             }
         }
 
