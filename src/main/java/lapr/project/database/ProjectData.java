@@ -5,7 +5,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import lapr.project.model.Junction;
 import lapr.project.model.Project;
+import lapr.project.model.Section;
+import lapr.project.utils.graphbase.Graph;
 import oracle.jdbc.OracleTypes;
 
 public class ProjectData extends DataAccess<Project> {
@@ -21,11 +24,11 @@ public class ProjectData extends DataAccess<Project> {
 
         ArrayList<String> list = new ArrayList<>();
 
-        ResultSet rs = super.callFunction("getAllProjects");
-        while (rs.next()) {
-            String name = rs.getString("name");
-
-            list.add(name);
+        try (ResultSet rs = super.callFunction("getAllProjects")) {
+            while (rs.next()) {
+                String name = rs.getString("name");
+                list.add(name);
+            }
         }
         return list;
     }
@@ -46,6 +49,31 @@ public class ProjectData extends DataAccess<Project> {
             p.setName(name);
             p.setDescription(description);
 
+            SectionData s = new SectionData(connection);
+            List<Section> sections = s.get(name);
+
+            Graph<Junction, Section> g = new Graph<>(true);
+            for (Section section : sections) {
+                Junction j1 = section.getBeginningJunction();
+                Junction j2 = section.getEndingJunction();
+
+                double distance = section.getSectionLength();
+                switch (section.getDirection()) {
+                    case DIRECT:
+                        g.insertEdge(j1, j2, section, distance);
+                        break;
+                    case REVERSE:
+                        g.insertEdge(j2, j1, section, distance);
+                        break;
+                    case BIDIRECTIONAL:
+                        g.insertEdge(j1, j2, section, distance);
+                        g.insertEdge(j2, j1, section, distance);
+                        break;
+                }
+            }
+            p.setRoadNetwork(g);
+            
+            
         }
         return p;
     }

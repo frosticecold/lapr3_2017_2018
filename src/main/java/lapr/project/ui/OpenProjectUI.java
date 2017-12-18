@@ -9,7 +9,6 @@ import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import lapr.project.controller.OpenProjectController;
-import lapr.project.model.Project;
 
 /**
  *
@@ -20,7 +19,7 @@ public class OpenProjectUI extends javax.swing.JDialog {
     private static final long serialVersionUID = 1;
 
     private final OpenProjectController controller;
-    private DefaultComboBoxModel<String> projectComboBox;
+    private DefaultComboBoxModel<String> projectComboBox = new DefaultComboBoxModel<>();
 
     /**
      * Creates new form OpenProjectUI
