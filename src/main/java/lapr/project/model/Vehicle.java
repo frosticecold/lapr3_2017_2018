@@ -141,6 +141,9 @@ public abstract class Vehicle {
     public abstract void setAccelerator(Accelerator m_accelerator);
 
     public void setRoadVelocityLimit(Map<String, Double> m_road_velocity_limit) {
+        if (m_road_velocity_limit == null) {
+            throw new IllegalArgumentException("The road velocity limit map inserted cannot be null.");
+        }
         this.m_road_velocity_limit = m_road_velocity_limit;
     }
 

@@ -56,6 +56,7 @@ public class Mockup extends javax.swing.JFrame {
         menuItemFile = new javax.swing.JMenu();
         menuItemSaveFile = new javax.swing.JMenuItem();
         menuHelp = new javax.swing.JMenu();
+        googleMenuItem = new javax.swing.JMenuItem();
 
         jCheckBox1.setText("jCheckBox1");
 
@@ -153,6 +154,15 @@ public class Mockup extends javax.swing.JFrame {
         jMenuBar1.add(menuItemFile);
 
         menuHelp.setText("Help");
+
+        googleMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/google_icon.png"))); // NOI18N
+        googleMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                googleMenuItemActionPerformed(evt);
+            }
+        });
+        menuHelp.add(googleMenuItem);
+
         jMenuBar1.add(menuHelp);
 
         setJMenuBar(jMenuBar1);
@@ -204,9 +214,20 @@ public class Mockup extends javax.swing.JFrame {
         new FastestPathUI().setVisible(true);
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
+    private void googleMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_googleMenuItemActionPerformed
+        openWebPage("https://www.google.pt/");
+    }//GEN-LAST:event_googleMenuItemActionPerformed
+      
+    private void openWebPage(String url) {
+        try {
+            java.awt.Desktop.getDesktop().browse(java.net.URI.create(url));
+        } catch (java.io.IOException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+    
     protected void setProject(Project p) {
         this.m_project = p;
-
     }
     /**
      * @param args the command line arguments
@@ -244,6 +265,7 @@ public class Mockup extends javax.swing.JFrame {
 //    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnClose;
+    private javax.swing.JMenuItem googleMenuItem;
     private javax.swing.JMenu itemProject;
     private javax.swing.JMenuItem itemProjectCopyProject;
     private javax.swing.JMenuItem itemProjectEditProject;
