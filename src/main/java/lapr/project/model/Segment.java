@@ -1,16 +1,42 @@
 package lapr.project.model;
 
-import lapr.project.calculations.UnitConverstion;
+import lapr.project.calculations.UnitConversion;
 
 public class Segment {
 
+    /**
+     * Segment index
+     */
     private int m_segment_index;
+    /**
+     * Initial Height in meters
+     */
     private double m_initial_height;
+    /**
+     * Final height in meters
+     */
     private double m_final_height;
+    /**
+     * Length in km
+     */
     private double m_length;
+
+    /**
+     * Wind direction in degrees
+     */
     private double m_wind_direction;
+    /**
+     * Wind speed in m/s
+     */
     private double m_wind_speed;
+    /**
+     * Maximum velocity Km/h
+     */
     private double m_maximum_velocity;
+
+    /**
+     * Minimum velocity km/h
+     */
     private double m_minimum_velocity;
 
     public Segment() {
@@ -28,84 +54,89 @@ public class Segment {
     }
 
     public double getLength() {
-        return getM_length();
+        return m_length;
     }
 
     /**
      * @return the m_segment_index
      */
-    public int getM_segment_index() {
+    public int getSegmentIndex() {
         return m_segment_index;
     }
 
     /**
      * @return the m_initial_height
      */
-    public double getM_initial_height() {
+    public double getInitialHeight() {
         return m_initial_height;
     }
 
-    /**
-     * @return the m_length
-     */
-    public double getM_length() {
-        return m_length;
+    public double getFinalHeight() {
+        return m_final_height;
     }
 
     /**
      * @return the m_wind_direction
      */
-    public double getM_wind_direction() {
+    public double getWindDirection() {
         return m_wind_direction;
     }
 
     /**
      * @return the m_wind_speed
      */
-    public double getM_wind_speed() {
+    public double getWindSpeed() {
         return m_wind_speed;
     }
 
     /**
      * @return the m_maximum_velocity
      */
-    public double getM_maximum_velocity() {
+    public double getMaximumVelocity() {
         return m_maximum_velocity;
     }
 
     /**
      * @return the m_minimum_velocity
      */
-    public double getM_minimum_velocity() {
+    public double getMinimumVelocity() {
         return m_minimum_velocity;
     }
 
     /**
-     * @param m_segment_index the m_segment_index to set
+     * @param segment_index the m_segment_index to set
      */
-    public void setM_segment_index(int m_segment_index) {
-        this.m_segment_index = m_segment_index;
+    public void setSegmentIndex(int segment_index) {
+        this.m_segment_index = segment_index;
     }
 
     /**
-     * @param m_initial_height the m_initial_height to set
+     * @param initial_height the m_initial_height to set
      */
-    public void setM_initial_height(double m_initial_height) {
-        this.m_initial_height = m_initial_height;
+    public void setInitialHeight(double initial_height) {
+        this.m_initial_height = initial_height;
     }
 
     /**
-     * @param m_length the m_length to set
+     *
+     * @param final_height
      */
-    public void setM_length(double m_length) {
-        this.m_length = m_length;
+    public void setFinalHeight(double final_height) {
+        this.m_final_height = final_height;
     }
 
     /**
-     * @param m_wind_direction the m_wind_direction to set
+     * @param length the m_length to set
      */
-    public void setM_wind_direction(double m_wind_direction) {
-        this.m_wind_direction = m_wind_direction;
+    public void setLength(double length) {
+        this.m_length = length;
+    }
+
+    /**
+     * @param wind_direction the m_wind_direction to set
+     */
+    public void setWindDirection(double wind_direction) {
+        this.m_wind_direction = wind_direction;
     }
 
     /**
@@ -121,19 +152,15 @@ public class Segment {
     /**
      * @param m_maximum_velocity the m_maximum_velocity to set
      */
-    public void setM_maximum_velocity(double m_maximum_velocity) {
+    public void setMaximumVelocity(double m_maximum_velocity) {
         this.m_maximum_velocity = m_maximum_velocity;
     }
 
     /**
      * @param m_minimum_velocity the m_minimum_velocity to set
      */
-    public void setM_minimum_velocity(double m_minimum_velocity) {
+    public void setMinimumVelocity(double m_minimum_velocity) {
         this.m_minimum_velocity = m_minimum_velocity;
-    }
-
-    public void setM_final_height(double final_height) {
-        this.m_final_height = final_height;
     }
 
     /**
@@ -143,8 +170,8 @@ public class Segment {
      */
     public double calculateSlope() {
         double deltaY = m_final_height - m_initial_height;
-        double M = deltaY / UnitConverstion.convertKmToMeters(m_length);
-        double angle = Math.asin(M);
+        double M = deltaY / UnitConversion.convertKmToMeters(m_length);
+        double angle = Math.toDegrees(Math.asin(M));
         return angle;
 
     }
