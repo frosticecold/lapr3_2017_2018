@@ -7,6 +7,7 @@ package lapr.project.networkanalysis;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 import lapr.project.calculations.UnitConversion;
 import lapr.project.model.Junction;
 import lapr.project.model.Project;
@@ -39,34 +40,26 @@ public class NetworkAnalysis {
         }
     }
 
-    private void calculateFastestPath(Vehicle vh) {
-        if (vh == null) {
-            throw new IllegalArgumentException("Invalid car.");
-        }
-        ArrayList<LinkedList<Junction>> paths = m_project.allPaths(m_begin, m_end);
-        LinkedList<Junction> fastestPath = null;
-        double fastesttime = 0;
-        for (LinkedList<Junction> listOfJunction : paths) {
-            if (fastestPath == null) {
-                fastestPath = listOfJunction;
-            }
-            double time = 0;
-            if (listOfJunction.size() >= 2) {
-                for (int i = 0; i < listOfJunction.size() - 1; i++) {
-                    Junction j1 = listOfJunction.get(i);
-                    Junction j2 = listOfJunction.get(i + 1);
-                    Section section = m_project.getSection(j1, j2);
-                    for (Segment seg : section.getSequenceOfSegments()) {
-                        time += getMaximumVelocityIn(seg, vh, section) / UnitConversion.convertKmToMeters(seg.getLength());
-                    }
+    private void calculateFastestPath(Vehicle vehicle) {
+        List<LinkedList<Section>> paths = this.m_project.allPaths(this.m_begin, this.m_end);
+        double lowest = Double.POSITIVE_INFINITY;
+        LinkedList<Section> fastestPath = new LinkedList<>();
+        for (LinkedList<Section> path : paths) {
+            double result = 0;
+            for (Section section : path) {
+                for(Segment segment : section.getSequenceOfSegments()){
+                    double vel = getMaximumVelocityIn(segment, vehicle, section);
+
+                    result += segment.getLength() / vel;
                 }
             }
-            if(time <fastesttime ){
-                
-            }
-        }
 
-    }
+            if (lowest > result) {
+                lowest = result;
+                fastestPath = path;
+            }
+        }}
+    
 
     private void setBeginJunction(Junction begin) {
         this.m_begin = begin;
@@ -77,13 +70,13 @@ public class NetworkAnalysis {
     }
 
     protected static final double getMaximumVelocityIn(Segment segment, Vehicle vehicle, Section section) {
-        double vel = vehicle.getRoadVelocityLimit(section.getTypology());
+        double velocity = vehicle.getRoadVelocityLimit(section.getTypology());
         double windSpeed = segment.getWindSpeed() * Math.cos(Math.toRadians(segment.getWindDirection()));
 
-        vel -= windSpeed;
-        double maxVel = segment.getMaximumVelocity();
-        vel = Math.min(vel, (maxVel > 0) ? maxVel : vel);
-        return vel;
+        velocity -= windSpeed;
+        double maxVelocity = segment.getMaximumVelocity();
+        velocity = Math.min(velocity, (maxVelocity > 0) ? maxVelocity : velocity);
+        return velocity;
     }
 
 }

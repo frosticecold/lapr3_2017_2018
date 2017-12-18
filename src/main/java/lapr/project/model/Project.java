@@ -164,11 +164,13 @@ public class Project {
             return true;
         }
 
+        s.setKey(m_road_network.numEdges());
+
         return m_road_network.insertEdge(orig, dest, s, s.getSectionLength());
 
     }
 
-    public ArrayList<LinkedList<Junction>> allPaths(Junction source, Junction target) {
+    public ArrayList<LinkedList<Section>> allPaths(Junction source, Junction target) {
         if (!m_road_network.validVertex(source)) {
             throw new IllegalArgumentException(("Source junction is invalid"));
         }
@@ -176,36 +178,55 @@ public class Project {
             throw new IllegalArgumentException(("Target junction is invalid"));
         }
 
-        return GraphAlgorithms.allPaths(m_road_network, source, target);
+        Vertex<Junction, Section> vSource = m_road_network.getVertex(source);
+        Vertex<Junction, Section> vTarget = m_road_network.getVertex(target);
+        ArrayList<LinkedList<Section>> paths = new ArrayList<>();
+        allPaths(vSource, vTarget, new boolean[m_road_network.numEdges()], new LinkedList<>(), paths);
+
+        return paths;
 
     }
 
-    private static void allPaths(Graph<Junction, Section> g, Junction vOrig, Junction vDest, boolean[] visited,
-            LinkedList<Junction> path, ArrayList<LinkedList<Junction>> paths) {
+    private  void allPaths(Vertex<Junction, Section> vOrig, Vertex<Junction, Section> vDest, boolean[] visited,
+            LinkedList<Section> path, ArrayList<LinkedList<Section>> paths) {
+        for (Edge<Junction, Section> edge : vOrig.getAllOutEdges()) {
+            if (!visited[edge.getElement().getKey()] && verifySection(path, edge)) {
+                visited[edge.getElement().getKey()] = true;
+                path.add(edge.getElement());
 
-        int v1 = g.getKey(vOrig);
-
-        visited[v1] = true;
-
-        path.push(vOrig);
-
-        for (Edge<Junction, Section> e : g.outgoingEdges(vOrig)) {
-            Junction vAdj = e.getVDest();
-            if (vAdj.equals(vDest)) {
-                path.push(vDest);
-                @SuppressWarnings("unchecked")
-                LinkedList<Junction> listaAdicionar = (LinkedList<Junction>) path.clone();
-                paths.add(listaAdicionar);
-                path.pop();
-            } else {
-                if (!visited[g.getKey(vAdj)]) {
-                    allPaths(g, vAdj, vDest, visited, path, paths);
+                if (edge.getVDest().equals(vDest)) {
+                    paths.add(new LinkedList<>(path));
+                    path.removeLast();
+                } else {
+                    allPaths(edge.getVDestVertex(), vDest, visited, path, paths);
                 }
+            }
+
+            if (visited[edge.getElement().getKey()] && !edge.getVDest().equals(vDest)) {
+                path.removeLast();
+            }
+            visited[edge.getElement().getKey()] = false;
+        }
+    }
+
+    public boolean verifySection(LinkedList<Section> path, Edge<Junction, Section> edge) {
+        for (Section section : path) {
+            if (edge.getVDest().equals(getCorrespondentEdge(section).getVOrig())) {
+                return false;
             }
         }
 
-        visited[v1] = false;
-        path.pop();
+        return true;
+    }
+
+    public Edge<Junction, Section> getCorrespondentEdge(Section section) {
+        for (Edge<Junction, Section> edge : this.m_road_network.edges()) {
+            if (edge.getElement().equals(section)) {
+                return edge;
+            }
+        }
+
+        return null;
     }
 
     public boolean validate() {

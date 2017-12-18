@@ -8,6 +8,7 @@ import java.util.Objects;
 
 public class Section {
 
+    private int key;
     private Junction m_beginning_junction;
     private Junction m_ending_junction;
     private String m_road_id;
@@ -74,6 +75,17 @@ public class Section {
 
     public String getTypology() {
         return m_typology;
+    }
+
+    public int getKey() {
+        return this.key;
+    }
+
+    public void setKey(int key) {
+        if (key < 0) {
+            throw new IllegalArgumentException("Invalid key.");
+        }
+       this.key=key;
     }
 
     public void setTypology(String typ) {
