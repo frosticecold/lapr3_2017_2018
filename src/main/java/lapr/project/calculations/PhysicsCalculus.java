@@ -30,7 +30,7 @@ public class PhysicsCalculus {
     }
 
     public double velocityRelativeAirCalculation(double rpm, double finalDriveRatio, double kGear, double tireRatio, double windSpeed) {
-        double velocityRelativeAir = (2 * Math.PI * rpm) / 60 / finalDriveRatio / (kGear * tireRatio + windSpeed) / 3.6;
+        double velocityRelativeAir = 2 * Math.PI * rpm / 60 / finalDriveRatio / kGear * tireRatio + windSpeed / 3.6;
         return velocityRelativeAir;
     }
 
