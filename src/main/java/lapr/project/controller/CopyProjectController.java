@@ -11,7 +11,7 @@ public class CopyProjectController {
 
     private Project proj;
 
-    public void copyProject(String name) {
+    public boolean copyProject(String name) {
 
         Project p = new Project(proj);
 
@@ -23,9 +23,10 @@ public class CopyProjectController {
             pd.insertProject(p);
         } catch (SQLException ex) {
             Logger.getLogger(CopyProjectController.class.getName()).log(Level.SEVERE, null, ex);
-            return;
+            return false;
         }
         Session.setActiveProject(p);
+        return true;
     }
 
 }

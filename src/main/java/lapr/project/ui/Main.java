@@ -12,7 +12,7 @@ public class Main {
         /*Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Mockup(s).setVisible(true);
+                new Mockup().setVisible(true);
             }
         });
     }
