@@ -42,6 +42,9 @@ public class UnitConverstion {
     public static double convertGramsToKiloGrams(String weight) {
         double grams = Double.parseDouble(weight.replaceAll("[^0-9.]", ""));
         return grams * 1000;
-
+    }
+    
+    public static double convertKmToMeters(double km) {
+        return km * 1000;
     }
 }

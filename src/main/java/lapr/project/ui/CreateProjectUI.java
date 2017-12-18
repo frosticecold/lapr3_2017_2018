@@ -76,6 +76,12 @@ public class CreateProjectUI extends JDialog {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Create new project");
 
+        txtfield_project_title.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtfield_project_titleActionPerformed(evt);
+            }
+        });
+
         labelTitle.setText("Project title:");
 
         btnClose.setText("Close");
@@ -229,6 +235,10 @@ public class CreateProjectUI extends JDialog {
         }
 
     }//GEN-LAST:event_btnImportRoadNetworkActionPerformed
+
+    private void txtfield_project_titleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtfield_project_titleActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtfield_project_titleActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnClose;

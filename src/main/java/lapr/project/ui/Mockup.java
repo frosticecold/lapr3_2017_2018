@@ -208,7 +208,9 @@ public class Mockup extends javax.swing.JFrame {
     }//GEN-LAST:event_itemProjectEditProjectActionPerformed
 
     private void itemProjectCopyProjectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemProjectCopyProjectActionPerformed
-        new CopyProjectUI().setVisible(true);
+        CopyProjectUI ui = new CopyProjectUI(this, rootPaneCheckingEnabled);
+        ui.setLocationRelativeTo(this);
+        ui.setVisible(true);
     }//GEN-LAST:event_itemProjectCopyProjectActionPerformed
 
     private void menuItemCreateProjectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemCreateProjectActionPerformed

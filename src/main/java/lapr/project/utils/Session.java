@@ -5,7 +5,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import lapr.project.model.Project;
 
-public abstract class Session {
+public class Session {
 
     private static Project activeProject;
     private static SQLConnection sql;

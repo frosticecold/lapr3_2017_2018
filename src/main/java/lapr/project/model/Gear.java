@@ -30,6 +30,10 @@ public class Gear {
         this.m_ratio = m_ratio;
     }
 
+    public double getM_ratio() {
+        return m_ratio;
+    }
+
     @Override
     public String toString() {
         return "Gear{" + "m_gearID=" + m_gearID + ", m_ratio=" + m_ratio + '}';

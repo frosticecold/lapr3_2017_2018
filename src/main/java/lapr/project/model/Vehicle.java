@@ -159,6 +159,10 @@ public abstract class Vehicle {
         return m_wheel_size;
     }
 
+    public double getM_frontal_area() {
+        return m_frontal_area;
+    }
+
     public void setRcc(double rcc) {
         if (rcc < 0) {
             throw new IllegalArgumentException("The rolling resistance coefficient of the vehicle must be positive.");

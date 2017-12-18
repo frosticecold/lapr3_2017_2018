@@ -1,5 +1,7 @@
 package lapr.project.model;
 
+import lapr.project.calculations.UnitConverstion;
+
 public class Segment {
 
     private int m_segment_index;
@@ -141,8 +143,8 @@ public class Segment {
      */
     public double calculateSlope() {
         double deltaY = m_final_height - m_initial_height;
-        double M = deltaY / m_length;
-        double angle = Math.cos(m_length / M);
+        double M = deltaY / UnitConverstion.convertKmToMeters(m_length);
+        double angle = Math.asin(M);
         return angle;
 
     }
