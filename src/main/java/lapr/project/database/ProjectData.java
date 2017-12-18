@@ -50,4 +50,8 @@ public class ProjectData extends DataAccess<Project> {
         return p;
     }
 
+    public void insertProject(Project p) throws SQLException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
 }
