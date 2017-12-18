@@ -6,6 +6,7 @@ import java.util.List;
 import lapr.project.utils.graphbase.Edge;
 import lapr.project.utils.graphbase.Graph;
 import lapr.project.utils.graphbase.GraphAlgorithms;
+import lapr.project.utils.graphbase.Vertex;
 
 public class Project {
 
@@ -120,6 +121,13 @@ public class Project {
         return added;
     }
 
+    public Section getSection(Junction j1, Junction j2) {
+        if (!m_road_network.validVertex(j1) || !m_road_network.validVertex(j2)) {
+            throw new IllegalArgumentException("Invalid junction");
+        }
+        return m_road_network.getEdge(j1, j2).getElement();
+    }
+
     public boolean addVehicle(Vehicle v) {
         return m_list_vehicles.addVehicle(v);
     }
@@ -151,7 +159,8 @@ public class Project {
         }
         if (s.getDirection() == Section.Direction.BIDIRECTIONAL) {
             m_road_network.insertEdge(orig, dest, s, s.getSectionLength());
-            m_road_network.insertEdge(dest, orig, s, s.getSectionLength());
+            Section sec = s.reverseSegment();
+            m_road_network.insertEdge(dest, orig, sec, s.getSectionLength());
             return true;
         }
 
@@ -166,7 +175,37 @@ public class Project {
         if (!m_road_network.validVertex(target)) {
             throw new IllegalArgumentException(("Target junction is invalid"));
         }
+
         return GraphAlgorithms.allPaths(m_road_network, source, target);
+
+    }
+
+    private static void allPaths(Graph<Junction, Section> g, Junction vOrig, Junction vDest, boolean[] visited,
+            LinkedList<Junction> path, ArrayList<LinkedList<Junction>> paths) {
+
+        int v1 = g.getKey(vOrig);
+
+        visited[v1] = true;
+
+        path.push(vOrig);
+
+        for (Edge<Junction, Section> e : g.outgoingEdges(vOrig)) {
+            Junction vAdj = e.getVDest();
+            if (vAdj.equals(vDest)) {
+                path.push(vDest);
+                @SuppressWarnings("unchecked")
+                LinkedList<Junction> listaAdicionar = (LinkedList<Junction>) path.clone();
+                paths.add(listaAdicionar);
+                path.pop();
+            } else {
+                if (!visited[g.getKey(vAdj)]) {
+                    allPaths(g, vAdj, vDest, visited, path, paths);
+                }
+            }
+        }
+
+        visited[v1] = false;
+        path.pop();
     }
 
     public boolean validate() {
