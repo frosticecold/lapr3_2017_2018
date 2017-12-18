@@ -88,6 +88,9 @@
   </Layout>
   <SubComponents>
     <Component class="javax.swing.JTextField" name="txtfield_project_title">
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtfield_project_titleActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="labelTitle">
       <Properties>
