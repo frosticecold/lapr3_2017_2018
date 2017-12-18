@@ -31,7 +31,10 @@
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="menuItemCreateProject">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Create new project"/>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/new_icon.png"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Create project"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuItemCreateProjectActionPerformed"/>
@@ -39,6 +42,9 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="menuItemOpenProject">
               <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/open_icon.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Open project"/>
               </Properties>
               <Events>
@@ -47,6 +53,9 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="itemProjectEditProject">
               <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/edit_icon.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Edit project"/>
               </Properties>
               <Events>
@@ -55,6 +64,9 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="itemProjectCopyProject">
               <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/copy_icon.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Copy project"/>
               </Properties>
               <Events>
@@ -75,6 +87,9 @@
             </Menu>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItem4">
               <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/fastest_icon.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Fastest Path"/>
               </Properties>
               <Events>
@@ -155,7 +170,7 @@
   <SyntheticProperties>
     <SyntheticProperty name="menuBar" type="java.lang.String" value="jMenuBar1"/>
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
-    <SyntheticProperty name="generateCenter" type="boolean" value="false"/>
+    <SyntheticProperty name="generateCenter" type="boolean" value="true"/>
   </SyntheticProperties>
   <AuxValues>
     <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
