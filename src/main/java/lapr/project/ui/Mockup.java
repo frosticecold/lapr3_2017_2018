@@ -77,7 +77,8 @@ public class Mockup extends javax.swing.JFrame {
 
         itemProject.setText("Project");
 
-        menuItemCreateProject.setText("Create new project");
+        menuItemCreateProject.setIcon(new javax.swing.ImageIcon(getClass().getResource("/new_icon.png"))); // NOI18N
+        menuItemCreateProject.setText("Create project");
         menuItemCreateProject.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 menuItemCreateProjectActionPerformed(evt);
@@ -85,6 +86,7 @@ public class Mockup extends javax.swing.JFrame {
         });
         itemProject.add(menuItemCreateProject);
 
+        menuItemOpenProject.setIcon(new javax.swing.ImageIcon(getClass().getResource("/open_icon.png"))); // NOI18N
         menuItemOpenProject.setText("Open project");
         menuItemOpenProject.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -93,6 +95,7 @@ public class Mockup extends javax.swing.JFrame {
         });
         itemProject.add(menuItemOpenProject);
 
+        itemProjectEditProject.setIcon(new javax.swing.ImageIcon(getClass().getResource("/edit_icon.png"))); // NOI18N
         itemProjectEditProject.setText("Edit project");
         itemProjectEditProject.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -101,6 +104,7 @@ public class Mockup extends javax.swing.JFrame {
         });
         itemProject.add(itemProjectEditProject);
 
+        itemProjectCopyProject.setIcon(new javax.swing.ImageIcon(getClass().getResource("/copy_icon.png"))); // NOI18N
         itemProjectCopyProject.setText("Copy project");
         itemProjectCopyProject.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -116,6 +120,7 @@ public class Mockup extends javax.swing.JFrame {
         menuItemBestPath.setText("Shortest/Best path");
         menuNetworkAnalysis.add(menuItemBestPath);
 
+        jMenuItem4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/fastest_icon.png"))); // NOI18N
         jMenuItem4.setText("Fastest Path");
         jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -185,6 +190,7 @@ public class Mockup extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void menuItemOpenProjectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemOpenProjectActionPerformed
@@ -202,7 +208,9 @@ public class Mockup extends javax.swing.JFrame {
     }//GEN-LAST:event_itemProjectEditProjectActionPerformed
 
     private void itemProjectCopyProjectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemProjectCopyProjectActionPerformed
-        new CopyProjectUI().setVisible(true);
+        CopyProjectUI ui = new CopyProjectUI(this, rootPaneCheckingEnabled);
+        ui.setLocationRelativeTo(this);
+        ui.setVisible(true);
     }//GEN-LAST:event_itemProjectCopyProjectActionPerformed
 
     private void menuItemCreateProjectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemCreateProjectActionPerformed

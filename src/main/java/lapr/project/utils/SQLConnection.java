@@ -59,4 +59,8 @@ public class SQLConnection {
         return p.get(name);
     }
 
+    public Connection getConnection() {
+        return connection;
+    }
+        
 }
