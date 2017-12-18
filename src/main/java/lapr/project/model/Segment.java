@@ -156,4 +156,21 @@ public class Segment {
         return true;
     }
 
+    public Segment reverseSegment(int index) {
+        Segment seg = new Segment();
+        seg.m_segment_index = index;
+        seg.m_initial_height = this.m_final_height;
+        seg.m_final_height = this.m_initial_height;
+        seg.m_length = this.m_length;
+        if (this.m_wind_direction + 180 > 180) {
+            seg.m_wind_direction = this.m_wind_direction - 180;
+        } else {
+            seg.m_wind_direction = this.m_wind_direction + 180;
+        }
+        seg.m_wind_speed = m_wind_speed;
+        seg.m_maximum_velocity = m_maximum_velocity;
+        seg.m_minimum_velocity = m_minimum_velocity;
+        return seg;
+
+    }
 }
