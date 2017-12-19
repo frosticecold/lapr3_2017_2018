@@ -44,6 +44,10 @@ public class Section {
         return false;
     }
 
+    public Map<Integer, Double> getToll() {
+        return m_toll;
+    }
+    
     public Junction getBeginningJunction() {
         return m_beginning_junction;
     }

@@ -6,10 +6,8 @@
 package lapr.project.networkanalysis;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-import lapr.project.calculations.UnitConversion;
 import lapr.project.model.Junction;
 import lapr.project.model.Project;
 import lapr.project.model.Section;
@@ -22,6 +20,7 @@ public class NetworkAnalysis {
     private Junction m_end;
     private Project m_project;
     private ArrayList<Vehicle> listOfVehicles;
+    private AlgorithmResults fastestResults;
 
     public NetworkAnalysis(Project project) {
         m_project = project;
@@ -56,6 +55,8 @@ public class NetworkAnalysis {
                 fastestPath = path;
             }
         }
+        fastestResults = new AlgorithmResults(fastestPath, vehicle, lowest);
+        fastestResults.calculateTripCost();
     }
 
     private void setBeginJunction(Junction begin) {
@@ -83,6 +84,24 @@ public class NetworkAnalysis {
         sb.append("<br/>");
         sb.append("<h3>Fastest Path Algorithm Results</h3>\n");
 
+        if (!(this.fastestResults == null)) {
+            sb.append("<table>\n");
+            sb.append("\t<tr><th>Vehicle Name</th><th>Vehicle Path</th><th>Workload Energy</th><th>Time Spent</th></tr>\n");
+
+            for (String vehicleName : vehicles) {
+                if (fastestResults.getVehicle().getName().equalsIgnoreCase(vehicleName)) {
+                    sb.append("\t<tr>"
+                            + "<td>").append(vehicleName).append("</td>"
+                            + "<td>").append(fastestResults.getPath().toString()).append("</td>"
+                            + "<td>").append(fastestResults.getEnergy()).append(" J</td>"
+                            + "<td>").append(fastestResults.getTravelTime()).append(" s</td>"
+                            + "</tr>\n");
+                }
+            }
+            sb.append("</table>\n");
+        } else {
+            sb.append("<ul><li>No vehicle was analised under the fastest path algorithm.</li></ul>\n");
+        }
         return sb.toString();
     }
 }
