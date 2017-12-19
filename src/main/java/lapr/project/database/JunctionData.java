@@ -15,6 +15,9 @@ public class JunctionData extends DataAccess<Junction>{
     }
     
     public Junction get(String junctionId) throws SQLException {
+        if(connection == null) {
+            return null;
+        }
         List<SQLArgument> args = new ArrayList<>();
         args.add(new SQLArgument(junctionId, OracleTypes.NUMBER));
         ResultSet rs = super.callFunction("getJunction", args);

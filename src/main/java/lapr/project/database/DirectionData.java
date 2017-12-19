@@ -15,6 +15,9 @@ public class DirectionData extends DataAccess<Section.Direction> {
     }
 
     public Section.Direction get(int directionID) throws SQLException {
+        if(connection == null) {
+            return null;
+        }
         List<SQLArgument> args = new ArrayList<>();
         args.add(new SQLArgument(Integer.toString(directionID), OracleTypes.NUMBER));
         ResultSet rs = super.callFunction("getDirection", args);

@@ -4,7 +4,6 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import lapr.project.model.Junction;
 import lapr.project.model.Project;
@@ -23,7 +22,7 @@ public class ProjectData extends DataAccess<Project> {
 
     public List<String> getAllProjectsNames() throws SQLException {
         if (connection == null) {
-            return Collections.EMPTY_LIST;
+            return new ArrayList<>();
         }
 
         List<String> list = new ArrayList<>();
