@@ -125,7 +125,7 @@ public class Road {
         m_toll_fare.put(vehicle_id, toll_value);
     }
 
-    public Double getTollValue(int vehicle_id) {
+    public double getTollValue(int vehicle_id) {
         if (vehicle_id <= 0) {
             throw new IllegalArgumentException("Vehicle id must be greater than zero");
         }
@@ -133,7 +133,7 @@ public class Road {
             return m_toll_fare.get(vehicle_id);
         }
 
-        return null;
+        return -1;
     }
 
     public boolean validate() {

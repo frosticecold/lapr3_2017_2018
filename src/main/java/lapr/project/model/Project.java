@@ -1,11 +1,11 @@
 package lapr.project.model;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import lapr.project.utils.graphbase.Edge;
 import lapr.project.utils.graphbase.Graph;
-import lapr.project.utils.graphbase.GraphAlgorithms;
 import lapr.project.utils.graphbase.Vertex;
 
 public class Project {
@@ -46,8 +46,10 @@ public class Project {
         m_description = p.m_description;
         m_road_network = p.getRoadNetwork().copyGraph();
         m_list_vehicles = new VehicleList();
-//        for (Vehicle v : p.getListVehicles()) {
-//            m_list_vehicles.add(new Vehicle(v));
+//        Iterator<Vehicle> it = p.m_list_vehicles.iterator();
+//        while(it.hasNext())
+//        {
+//            m_list_vehicles.add(new Vehicle(it.next()));
 //        }
         m_list_roads = new ArrayList<>();
         for (Road r : p.m_list_roads) {
@@ -187,7 +189,7 @@ public class Project {
 
     }
 
-    private  void allPaths(Vertex<Junction, Section> vOrig, Vertex<Junction, Section> vDest, boolean[] visited,
+    private void allPaths(Vertex<Junction, Section> vOrig, Vertex<Junction, Section> vDest, boolean[] visited,
             LinkedList<Section> path, ArrayList<LinkedList<Section>> paths) {
         for (Edge<Junction, Section> edge : vOrig.getAllOutEdges()) {
             if (!visited[edge.getElement().getKey()] && verifySection(path, edge)) {
@@ -251,4 +253,9 @@ public class Project {
         return "Project{" + "m_road_network=" + m_road_network + ", m_list_vehicles=" + m_list_vehicles + ", m_list_roads=" + m_list_roads + ", m_name=" + m_name + ", m_description=" + m_description + '}';
     }
 
+//    @Override
+//    public Project clone() {
+//        Project p = new Project();
+//        
+//    }
 }

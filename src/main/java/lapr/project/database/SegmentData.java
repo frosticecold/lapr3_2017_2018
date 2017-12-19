@@ -4,7 +4,6 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import lapr.project.model.Segment;
@@ -18,7 +17,7 @@ public class SegmentData extends DataAccess<Segment>{
     
     public List<Segment> get(String sectionID) throws SQLException {
         if (connection == null) {
-            return Collections.EMPTY_LIST;
+            return new ArrayList<>();
         }
         List<Segment> list = new LinkedList<>();
         List<SQLArgument> args = new ArrayList<>();

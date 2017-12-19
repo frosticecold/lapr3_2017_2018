@@ -19,6 +19,7 @@ import lapr.project.model.Project;
 import lapr.project.model.Vehicle;
 import lapr.project.utils.ImportException;
 import lapr.project.utils.NetworkXML;
+import lapr.project.utils.Session;
 import lapr.project.utils.VehicleXML;
 
 /**
@@ -174,11 +175,8 @@ public class CreateProjectUI extends JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCloseActionPerformed
-        if(validProject){
-           ((Mockup)this.getParent()).setProject(m_project);
-        }
         dispose();
-        
+
     }//GEN-LAST:event_btnCloseActionPerformed
 
     private void btnCreateProjectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateProjectActionPerformed
@@ -189,8 +187,7 @@ public class CreateProjectUI extends JDialog {
         try {
             if (m_project.validate()) {
                 JOptionPane.showMessageDialog(this, "Project was created successfully", "Created a project", JOptionPane.INFORMATION_MESSAGE);
-                validProject=true;
-
+                Session.setActiveProject(m_project);
             }
         } catch (IllegalArgumentException ex) {
             JOptionPane.showMessageDialog(this, "The project is invalid, it wasn't created, so it was reseted", "Error!", JOptionPane.ERROR_MESSAGE);

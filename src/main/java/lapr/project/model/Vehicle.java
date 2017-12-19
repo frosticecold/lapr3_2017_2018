@@ -2,8 +2,9 @@ package lapr.project.model;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 
-public abstract class Vehicle {
+public abstract class Vehicle{
 
     //Car attributes
     /**
@@ -168,10 +169,14 @@ public abstract class Vehicle {
         return m_wheel_size;
     }
 
-    public double getM_frontal_area() {
+    public double getFrontalArea() {
         return m_frontal_area;
     }
 
+    public int getVehicleClass() {
+        return m_vehicle_class;
+    }
+    
     public void setRcc(double rcc) {
         if (rcc < 0) {
             throw new IllegalArgumentException("The rolling resistance coefficient of the vehicle must be positive.");
@@ -259,6 +264,36 @@ public abstract class Vehicle {
     @Override
     public String toString() {
         return "Vehicle{" + "m_name=" + m_name + ", m_description=" + m_description + ", m_type=" + m_type + ", m_fuel=" + m_fuel + ", m_vehicle_class=" + m_vehicle_class + ", m_motorization=" + m_motorization + ", m_wheel_size=" + m_wheel_size + ", m_mass=" + m_mass + ", m_load=" + m_load + ", m_drag_coefficient=" + m_drag_coefficient + ", m_frontal_area=" + m_frontal_area + ", m_rcc=" + m_rcc + ", m_road_velocity_limit=" + m_road_velocity_limit + '}';
+    }
+    
+    /**
+     * Returns the textual description of the object in html format.
+     *
+     * @return Textual description of the object.
+     */
+    public String toStringHTML() {
+        StringBuilder sb = new StringBuilder();
+
+        sb.append("\t<li>Name: ").append(this.m_name).append("</li>\n");
+        sb.append("\t<li>Description: ").append(this.m_description).append("</li>\n");
+        sb.append("\t<li>Type: ").append(this.m_type).append("</li>\n");
+        sb.append("\t<li>Fuel: ").append(this.m_fuel).append("</li>\n");
+        sb.append("\t<li>Mass: ").append(this.m_mass).append(" Kg</li>\n");
+        sb.append("\t<li>Load: ").append(this.m_load).append(" Kg</li>\n");
+        sb.append("\t<li>Drag Coefficient: ").append(this.m_drag_coefficient).append("</li>\n");
+        sb.append("\t<li>Frontal Area: ").append(this.m_frontal_area).append(" m</li>\n");
+        sb.append("\t<li>RRC: ").append(this.m_rcc).append("</li>\n");
+        sb.append("\t<li>Wheel Size: ").append(this.m_wheel_size).append(" m</li>\n");
+        
+        if (!this.m_road_velocity_limit.isEmpty()) {
+            sb.append("\t<li>Velocity Limits:<ul>\n");
+            for (Entry<String, Double> entry : this.m_road_velocity_limit.entrySet()) {
+                sb.append("\t\t<li>").append(entry.getKey()).append(": ")
+                        .append(entry.getValue()).append(" m/s</li>\n");
+            }
+            sb.append("\t</ul></li>\n");
+        }
+        return sb.toString();
     }
 
 }

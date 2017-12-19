@@ -54,8 +54,10 @@ public class Junction {
     }
 
     @Override
-    protected Junction clone() {
-        return new Junction(this);
+    public String toString() {
+        return "Junction " + m_id;
     }
+    
+    
 
 }

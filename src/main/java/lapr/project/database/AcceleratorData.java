@@ -19,6 +19,9 @@ public class AcceleratorData extends DataAccess<Accelerator>{
     }
 
     public Accelerator get(String v_name) throws SQLException {
+        if(connection == null) {
+            return null;
+        }
         Accelerator a = new Accelerator();
         Map<Integer, Throttle> m_throttle_list = new HashMap<>();
         List<SQLArgument> args = new ArrayList<>();
