@@ -269,7 +269,7 @@ public class NetworkXML implements FileFormat {
             }
             case TOLL_TAG: {
                 if (m_readingtoll) {
-                    m_readingtollfare = false;
+                    m_readingtoll = false;
                 }
                 break;
             }
@@ -300,6 +300,7 @@ public class NetworkXML implements FileFormat {
                 String road_id = this.elementContent.trim().replaceAll("\"", "");
                 m_section.setRoadID(road_id);
                 Road r = m_project.getRoadByRoadID(m_section.getRoadID());
+                m_section.setTypology(r.getTypology());
                 break;
             }
             case DIRECTION_TAG: {
