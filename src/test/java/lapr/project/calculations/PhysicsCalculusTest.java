@@ -67,8 +67,35 @@ public class PhysicsCalculusTest {
         PhysicsCalculus instance = new PhysicsCalculus();
         double expResult = 2070;
         double result = instance.motorForceCalculation(torqueFunction, finalDriveRatio, gearRatio, tireRatio);
-        result = (result * 100.00) / 100.00;
         assertEquals(expResult, result, 0.0001);
+        torqueFunction = -230.000;
+        finalDriveRatio = 3.6;
+        gearRatio = 0.75;
+        tireRatio = 0.3;
+        instance = new PhysicsCalculus();
+        result = instance.motorForceCalculation(torqueFunction, finalDriveRatio, gearRatio, tireRatio);
+        assertTrue("Expected -1", result == -1);
+        torqueFunction = 230.000;
+        finalDriveRatio = -3.6;
+        gearRatio = 0.75;
+        tireRatio = 0.3;
+        instance = new PhysicsCalculus();
+        result = instance.motorForceCalculation(torqueFunction, finalDriveRatio, gearRatio, tireRatio);
+        assertTrue("Expected -1", result == -1);
+        torqueFunction = 230.000;
+        finalDriveRatio = 3.6;
+        gearRatio = -0.75;
+        tireRatio = 0.3;
+        instance = new PhysicsCalculus();
+        result = instance.motorForceCalculation(torqueFunction, finalDriveRatio, gearRatio, tireRatio);
+        assertTrue("Expected -1", result == -1);
+        torqueFunction = 230.000;
+        finalDriveRatio = 3.6;
+        gearRatio = 0.75;
+        tireRatio = -0.3;
+        instance = new PhysicsCalculus();
+        result = instance.motorForceCalculation(torqueFunction, finalDriveRatio, gearRatio, tireRatio);
+        assertTrue("Expected -1", result == -1);
     }
 
     /**
@@ -84,6 +111,21 @@ public class PhysicsCalculusTest {
         double expResult = 198.00519750272485;
         double result = instance.rollingResistanceCalculation(rollingResistanceCoeficient, mass, angle);
         assertEquals(expResult, result, 0.0001);
+        rollingResistanceCoeficient = -0.01;
+        mass = 2020.0;
+        angle = 0.030;
+        result = instance.rollingResistanceCalculation(rollingResistanceCoeficient, mass, angle);
+        assertTrue("Expected -1", result == -1);
+        rollingResistanceCoeficient = 0.01;
+        mass = -2020.0;
+        angle = 0.030;
+        result = instance.rollingResistanceCalculation(rollingResistanceCoeficient, mass, angle);
+        assertTrue("Expected -1", result == -1);
+        rollingResistanceCoeficient = 0.01;
+        mass = 2020.0;
+        angle = -0.030;
+        result = instance.rollingResistanceCalculation(rollingResistanceCoeficient, mass, angle);
+        assertTrue("Expected -1", result == -1);
     }
 
     /**
@@ -98,6 +140,14 @@ public class PhysicsCalculusTest {
         double expResult = 594.1938613629898;
         double result = instance.gravitationalForceCalculation(mass, angle);
         assertEquals(expResult, result, 0.0001);
+        mass = -2020.0;
+        angle = 0.030;
+        result = instance.gravitationalForceCalculation(mass, angle);
+        assertTrue("Expected -1", result == -1);
+        mass = 2020.0;
+        angle = -0.030;
+        result = instance.gravitationalForceCalculation(mass, angle);
+        assertTrue("Expected -1", result == -1);
     }
 
     /**
@@ -114,7 +164,30 @@ public class PhysicsCalculusTest {
         double expResult = 315.1136785804;
         double result = instance.airDragCalculation(velocityRelativeAir, airDragCoeficient, frontalArea, airDensity);
         assertEquals(expResult, result, 0.0000000000001);
-
+        velocityRelativeAir = -29.089;
+        airDragCoeficient = 0.320;
+        frontalArea = 1.9;
+        airDensity = 1.225;
+        result = instance.airDragCalculation(velocityRelativeAir, airDragCoeficient, frontalArea, airDensity);
+        assertTrue("Expected -1", result == -1);
+        velocityRelativeAir = 29.089;
+        airDragCoeficient = -0.320;
+        frontalArea = 1.9;
+        airDensity = 1.225;
+        result = instance.airDragCalculation(velocityRelativeAir, airDragCoeficient, frontalArea, airDensity);
+        assertTrue("Expected -1", result == -1);
+        velocityRelativeAir = 29.089;
+        airDragCoeficient = 0.320;
+        frontalArea = -2;
+        airDensity = 1.225;
+        result = instance.airDragCalculation(velocityRelativeAir, airDragCoeficient, frontalArea, airDensity);
+        assertTrue("Expected -1", result == -1);
+        velocityRelativeAir = 29.089;
+        airDragCoeficient = 0.320;
+        frontalArea = 1.9;
+        airDensity = -0.5;
+        result = instance.airDragCalculation(velocityRelativeAir, airDragCoeficient, frontalArea, airDensity);
+        assertTrue("Expected -1", result == -1);
     }
 
     /**
@@ -141,6 +214,42 @@ public class PhysicsCalculusTest {
         expResult = 36.033265311016600;
         result = instance.velocityRelativeAirCalculation(rpm, finalDriveRatio, kGear, tireRatio, windSpeed);
         assertEquals(expResult, result, 0.0001);
+
+        rpm = -2500;
+        finalDriveRatio = 3.6;
+        kGear = 0.75;
+        tireRatio = 0.3;
+        windSpeed = 25.0;
+        result = instance.velocityRelativeAirCalculation(rpm, finalDriveRatio, kGear, tireRatio, windSpeed);
+        assertTrue("Expected -1", result == -1);
+        rpm = 2500;
+        finalDriveRatio = -3.6;
+        kGear = 0.75;
+        tireRatio = 0.3;
+        windSpeed = 25.0;
+        result = instance.velocityRelativeAirCalculation(rpm, finalDriveRatio, kGear, tireRatio, windSpeed);
+        assertTrue("Expected -1", result == -1);
+        rpm = 2500;
+        finalDriveRatio = 3.6;
+        kGear = -0.75;
+        tireRatio = 0.3;
+        windSpeed = 25.0;
+        result = instance.velocityRelativeAirCalculation(rpm, finalDriveRatio, kGear, tireRatio, windSpeed);
+        assertTrue("Expected -1", result == -1);
+        rpm = 2500;
+        finalDriveRatio = 3.6;
+        kGear = 0.75;
+        tireRatio = -0.3;
+        windSpeed = 25.0;
+        result = instance.velocityRelativeAirCalculation(rpm, finalDriveRatio, kGear, tireRatio, windSpeed);
+        assertTrue("Expected -1", result == -1);
+        rpm = 2500;
+        finalDriveRatio = 3.6;
+        kGear = 0.75;
+        tireRatio = 0.3;
+        windSpeed = -50.0;
+        result = instance.velocityRelativeAirCalculation(rpm, finalDriveRatio, kGear, tireRatio, windSpeed);
+        assertTrue("Expected -1", result == -1);
     }
 
     /**
@@ -158,6 +267,31 @@ public class PhysicsCalculusTest {
         double expResult = 104.71975511965978;
         double result = instance.velocityRelativeGroundCalculation(rpm, finalDriveRatio, kGear, tireRatio);
         assertEquals(expResult, result, 0.0001);
+
+        rpm = -2500;
+        finalDriveRatio = 3.6;
+        kGear = 0.75;
+        tireRatio = 0.3;
+        result = instance.velocityRelativeGroundCalculation(rpm, finalDriveRatio, kGear, tireRatio);
+        assertTrue("Expected -1", result == -1);
+        rpm = 2500;
+        finalDriveRatio = -3.6;
+        kGear = 0.75;
+        tireRatio = 0.3;
+        result = instance.velocityRelativeGroundCalculation(rpm, finalDriveRatio, kGear, tireRatio);
+        assertTrue("Expected -1", result == -1);
+        rpm = 2500;
+        finalDriveRatio = 3.6;
+        kGear = -0.75;
+        tireRatio = 0.3;
+        result = instance.velocityRelativeGroundCalculation(rpm, finalDriveRatio, kGear, tireRatio);
+        assertTrue("Expected -1", result == -1);
+        rpm = 2500;
+        finalDriveRatio = 3.6;
+        kGear = 0.75;
+        tireRatio = -0.3;
+        result = instance.velocityRelativeGroundCalculation(rpm, finalDriveRatio, kGear, tireRatio);
+        assertTrue("Expected -1", result == -1);
     }
 
 }
