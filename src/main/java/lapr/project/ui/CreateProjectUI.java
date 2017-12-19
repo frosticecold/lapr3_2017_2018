@@ -210,6 +210,7 @@ public class CreateProjectUI extends JDialog {
                     m_project.addVehicle(v);
 
                 }
+                JOptionPane.showMessageDialog(this, "Vehicle were imported with success.", "Vehicle import", JOptionPane.INFORMATION_MESSAGE);
             } catch (FileNotFoundException ex) {
                 Logger.getLogger(CreateProjectUI.class.getName()).log(Level.SEVERE, null, ex);
             } catch (ImportException ex) {
@@ -227,6 +228,7 @@ public class CreateProjectUI extends JDialog {
                 NetworkXML xml = new NetworkXML();
                 File file = m_jfc.getSelectedFile();
                 xml.importNetwork(m_project, file);
+                JOptionPane.showMessageDialog(this, "Roadnetwork was imported with success.", "Roadnetwork import", JOptionPane.INFORMATION_MESSAGE);
             } catch (FileNotFoundException ex) {
                 Logger.getLogger(CreateProjectUI.class.getName()).log(Level.SEVERE, null, ex);
             } catch (ImportException ex) {

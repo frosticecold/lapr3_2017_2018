@@ -200,7 +200,6 @@ public class Mockup extends javax.swing.JFrame {
 
     private void menuItemCreateProjectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemCreateProjectActionPerformed
         new CreateProjectUI(this).setVisible(true);
-        System.out.println(m_project);
     }//GEN-LAST:event_menuItemCreateProjectActionPerformed
 
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
