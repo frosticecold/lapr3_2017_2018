@@ -222,7 +222,7 @@ public class NetworkXML implements FileFormat {
 
             case SEGMENT_TAG: {
                 m_segment = new Segment();
-                m_segment.setM_segment_index(Integer.parseInt(this.reader.getAttributeValue(null, "id")));
+                m_segment.setSegmentIndex(Integer.parseInt(this.reader.getAttributeValue(null, "id")));
                 break;
             }
             default: {
@@ -334,29 +334,29 @@ public class NetworkXML implements FileFormat {
             }
 
             case INITIAL_HEIGHT_TAG: {
-                m_segment.setM_initial_height(Double.parseDouble(this.elementContent));
+                m_segment.setInitialHeight(Double.parseDouble(this.elementContent));
                 break;
             }
             case FINAL_HEIGHT_TAG: {
-                m_segment.setM_final_height(Double.parseDouble(this.elementContent));
+                m_segment.setFinalHeight(Double.parseDouble(this.elementContent));
                 break;
             }
             case LENGTH_TAG: {
-                m_segment.setM_length(Double.parseDouble(this.elementContent.split(" ")[0]));
+                m_segment.setLength(Double.parseDouble(this.elementContent.split(" ")[0]));
                 break;
             }
             case MAX_VELOCITY_TAG: {
                 Double max_vel = Double.parseDouble(this.elementContent.split(" ")[0]);
-                m_segment.setM_maximum_velocity(max_vel);
+                m_segment.setMaximumVelocity(max_vel);
                 break;
             }
             case MIN_VELOCITY_TAG: {
                 Double min_vel = Double.parseDouble(this.elementContent.split(" ")[0]);
-                m_segment.setM_maximum_velocity(min_vel);
+                m_segment.setMaximumVelocity(min_vel);
                 break;
             }
             case WIND_DIRECTION_TAG: {
-                m_segment.setM_wind_direction(Double.parseDouble(this.elementContent));
+                m_segment.setWindDirection(Double.parseDouble(this.elementContent));
                 break;
             }
             case WIND_SPEED_TAG: {

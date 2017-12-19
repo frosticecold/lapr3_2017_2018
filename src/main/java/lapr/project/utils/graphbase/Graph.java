@@ -44,6 +44,15 @@ public class Graph<V, E> implements GraphInterface<V, E> {
         return vertices.get(vert).getKey();
     }
 
+    public Vertex<V, E> getVertex(V vert) {
+        if (!validVertex(vert)) {
+            return null;
+        }
+
+        return vertices.get(vert);
+
+    }
+
     public V[] allkeyVerts() {
 
         V vertElem = null;

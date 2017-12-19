@@ -53,6 +53,20 @@ public class Edge<V, E> implements Comparable<Object> {
         return null;
     }
 
+    public Vertex<V, E> getVOrigVertex() {
+        if (this.vOrig != null) {
+            return vOrig;
+        }
+        return null;
+    }
+
+    public Vertex<V, E> getVDestVertex() {
+        if (this.vDest != null) {
+            return vDest;
+        }
+        return null;
+    }
+
     public void setVOrig(Vertex<V, E> vo) {
         vOrig = vo;
     }

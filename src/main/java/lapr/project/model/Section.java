@@ -8,9 +8,11 @@ import java.util.Objects;
 
 public class Section {
 
+    private int key;
     private Junction m_beginning_junction;
     private Junction m_ending_junction;
     private String m_road_id;
+    private String m_typology;
     private Direction m_direction;
     private List<Segment> m_sequenceOfSegments;
     private Map<Integer, Double> m_toll;
@@ -71,6 +73,28 @@ public class Section {
         return m_road_id;
     }
 
+    public String getTypology() {
+        return m_typology;
+    }
+
+    public int getKey() {
+        return this.key;
+    }
+
+    public void setKey(int key) {
+        if (key < 0) {
+            throw new IllegalArgumentException("Invalid key.");
+        }
+       this.key=key;
+    }
+
+    public void setTypology(String typ) {
+        if (typ == null || typ.trim().isEmpty()) {
+            throw new IllegalArgumentException("Invalid typology");
+        }
+        m_typology = typ;
+    }
+
     @Override
     public int hashCode() {
         int hash = 5;
@@ -93,7 +117,12 @@ public class Section {
             return false;
         }
         final Section other = (Section) obj;
-
+        if (!Objects.equals(this.m_road_id, other.m_road_id)) {
+            return false;
+        }
+        if (!Objects.equals(this.m_typology, other.m_typology)) {
+            return false;
+        }
         if (!Objects.equals(this.m_beginning_junction, other.m_beginning_junction)) {
             return false;
         }
@@ -103,7 +132,10 @@ public class Section {
         if (this.m_direction != other.m_direction) {
             return false;
         }
-        return Objects.equals(this.m_sequenceOfSegments, other.m_sequenceOfSegments);
+        if (!Objects.equals(this.m_sequenceOfSegments, other.m_sequenceOfSegments)) {
+            return false;
+        }
+        return true;
     }
 
     public void setBeginJunction(Junction begin) {
@@ -130,7 +162,7 @@ public class Section {
     }
 
     public boolean validate() {
-        if (!m_beginning_junction.validate() || !m_ending_junction.validate() || m_road_id.trim().isEmpty() || m_direction == null || m_sequenceOfSegments.isEmpty()) {
+        if (!m_beginning_junction.validate() || !m_ending_junction.validate() || m_road_id.trim().isEmpty() || m_direction == null || m_sequenceOfSegments.isEmpty() || m_typology == null || m_typology.trim().isEmpty()) {
             throw new IllegalArgumentException(("Section is invalid."));
         }
         for (Segment seg : m_sequenceOfSegments) {
@@ -139,5 +171,25 @@ public class Section {
             }
         }
         return true;
+    }
+
+    public Section reverseSegment() {
+        Section section = new Section();
+        section.m_beginning_junction = this.m_beginning_junction;
+        section.m_ending_junction = this.m_ending_junction;
+        section.m_direction = this.m_direction;
+        section.m_road_id = this.m_road_id;
+        section.m_toll = this.m_toll;
+
+        List<Segment> newlist = new ArrayList<>();
+        int index = 0;
+        for (int i = m_sequenceOfSegments.size() - 1; i <= 0; i++) {
+            Segment seg = m_sequenceOfSegments.get(i).reverseSegment(index);
+            index++;
+            newlist.add(seg);
+        }
+        section.setSegmentList(newlist);
+        return section;
+
     }
 }
