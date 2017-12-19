@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import lapr.project.model.Road;
 import oracle.jdbc.OracleTypes;
@@ -14,20 +15,20 @@ public class RoadData extends DataAccess<Road> {
         super(connection);
     }
 
-    public Road get(String roadID) throws SQLException {
+    public List<Road> get(String roadID) throws SQLException {
         if (connection == null) {
             return null;
         }
+        List<Road> list = new LinkedList<>();
         List<SQLArgument> args = new ArrayList<>();
         args.add(new SQLArgument(roadID, OracleTypes.VARCHAR));
         ResultSet rs = super.callFunction("getRoad", args);
         while (rs.next()) {
             String roadName = rs.getString("name");
             String roadType = rs.getString("Tipology");
-            rs.close();
-            return new Road(roadID, roadName, roadType);
+            list.add(new Road(roadID, roadName, roadType));
         }
-        return null;
+        rs.close();
+        return list;
     }
-
 }

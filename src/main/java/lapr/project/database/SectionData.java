@@ -40,18 +40,12 @@ public class SectionData extends DataAccess<Section> {
             DirectionData d = new DirectionData(connection);
             Section.Direction direction = d.get(directionID);
             
-            RoadData r = new RoadData(connection);
-            Road road = r.get(Integer.toString(roadID));
-            
-//            SegmentData s = new SegmentData(connection);
-//            List<Segment> listOfSegments = s.get();
-            
+          
             Section s = new Section();
             s.setBeginJunction(beginJunction);
             s.setEndJunction(endJunction);
             s.setDirection(direction);
-            s.setRoadID(road.getName());
-            //s.setSegmentList(listOfSegments);
+            s.setRoadID(String.valueOf(roadID));
             list.add(s);
 
         }

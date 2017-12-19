@@ -7,7 +7,11 @@ import java.util.ArrayList;
 import java.util.List;
 import lapr.project.model.Junction;
 import lapr.project.model.Project;
+import lapr.project.model.Road;
 import lapr.project.model.Section;
+import lapr.project.model.Segment;
+import lapr.project.model.Vehicle;
+import lapr.project.model.VehicleList;
 import lapr.project.utils.graphbase.Graph;
 import oracle.jdbc.OracleTypes;
 
@@ -58,6 +62,10 @@ public class ProjectData extends DataAccess<Project> {
                 Junction j2 = section.getEndingJunction();
 
                 double distance = section.getSectionLength();
+                SegmentData sd = new SegmentData(connection);
+                List<Segment> segments = sd.get(String.valueOf(section.getID()));
+                section.setSegmentList(segments);
+                
                 switch (section.getDirection()) {
                     case DIRECT:
                         g.insertEdge(j1, j2, section, distance);
@@ -73,7 +81,16 @@ public class ProjectData extends DataAccess<Project> {
             }
             p.setRoadNetwork(g);
             
+            RoadData r = new RoadData(connection);
+            List<Road> roads = r.get(name);
             
+            p.setListRoads(roads);
+            
+            VehicleData v = new VehicleData(connection);
+            VehicleList vehicles = v.get(name);
+            
+            p.setListVehicles(vehicles);
+
         }
         return p;
     }
