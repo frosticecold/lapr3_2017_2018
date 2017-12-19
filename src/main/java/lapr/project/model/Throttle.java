@@ -1,5 +1,6 @@
 package lapr.project.model;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -9,6 +10,14 @@ public class Throttle {
 
     public Throttle(List<Regime> m_regime_list) {
         this.m_regime_list = m_regime_list;
+    }
+
+    public Throttle(Throttle t) {
+
+        m_regime_list = new ArrayList<>();
+        for (Regime regime : t.m_regime_list) {
+            m_regime_list.add(regime.clone());
+        }
     }
 
     public Throttle() {
@@ -28,4 +37,8 @@ public class Throttle {
         return "Throttle{" + "m_regime_list=" + m_regime_list + '}';
     }
 
+    @Override
+    protected Throttle clone() {
+        return new Throttle(this);
+    }
 }

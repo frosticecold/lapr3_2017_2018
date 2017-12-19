@@ -1,6 +1,7 @@
 package lapr.project.model;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -33,11 +34,21 @@ public class Road {
     }
 
     public Road(Road r) {
-        setRoadID(r.m_road_id);
-        setName(r.m_name);
-        setTypology(r.m_typology);
-        m_listOfSections = r.m_listOfSections;
-        m_toll_fare = r.m_toll_fare;
+        this.m_road_id = r.m_road_id;
+        this.m_name = r.m_name;
+        this.m_typology = r.m_typology;
+
+        m_listOfSections = new ArrayList<>();
+        for (Section section : r.m_listOfSections) {
+            r.m_listOfSections.add(section.clone());
+        }
+
+        Map<Integer, Double> map = new LinkedHashMap<>();
+        for (Integer i : map.keySet()) {
+            map.put(i, m_toll_fare.get(i));
+        }
+
+        this.m_num_of_section = r.m_num_of_section;
     }
 
     public boolean addSection(Section s) {
@@ -132,4 +143,10 @@ public class Road {
         }
         return true;
     }
+
+    @Override
+    protected Object clone() {
+        return new Road(this);
+    }
+
 }

@@ -14,6 +14,10 @@ public class Junction {
         return m_id;
     }
 
+    public Junction(Junction j) {
+        this.m_id = j.m_id;
+    }
+
     @Override
     public int hashCode() {
         int hash = 5;
@@ -47,6 +51,11 @@ public class Junction {
 
         return true;
 
+    }
+
+    @Override
+    protected Junction clone() {
+        return new Junction(this);
     }
 
 }

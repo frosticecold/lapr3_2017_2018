@@ -21,6 +21,13 @@ public class Regime {
         m_SFC = 0.0;
     }
 
+    public Regime(Regime r) {
+        this.m_torque = r.m_torque;
+        this.m_rpm_low = r.m_rpm_low;
+        this.m_rpm_high = r.m_rpm_high;
+        this.m_SFC = r.m_SFC;
+    }
+
     public void setTorque(double m_torque) {
         this.m_torque = m_torque;
     }
@@ -70,6 +77,11 @@ public class Regime {
     @Override
     public String toString() {
         return "Regime{" + "m_torque=" + m_torque + ", m_rpm_low=" + m_rpm_low + ", m_rpm_high=" + m_rpm_high + ", m_SFC=" + m_SFC + '}';
+    }
+
+    @Override
+    protected Regime clone() {
+        return new Regime(this);
     }
 
 }

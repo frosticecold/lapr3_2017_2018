@@ -11,6 +11,13 @@ public class Accelerator {
         this.m_throttle_list = new HashMap<>();
     }
 
+    public Accelerator(Accelerator a) {
+        Map<Integer, Throttle> map = new HashMap<>();
+        for (Integer i : map.keySet()) {
+            map.put(i, m_throttle_list.get(i).clone());
+        }
+    }
+
     public Map<Integer, Throttle> getThrottleList() {
         return m_throttle_list;
     }
@@ -39,4 +46,8 @@ public class Accelerator {
         return "Accelerator{" + "m_throttle_list=" + m_throttle_list + '}';
     }
 
+    @Override
+    protected Accelerator clone() {
+        return new Accelerator(this);
+    }
 }

@@ -4,39 +4,13 @@ import lapr.project.calculations.UnitConversion;
 
 public class Segment {
 
-    /**
-     * Segment index
-     */
     private int m_segment_index;
-    /**
-     * Initial Height in meters
-     */
     private double m_initial_height;
-    /**
-     * Final height in meters
-     */
     private double m_final_height;
-    /**
-     * Length in km
-     */
     private double m_length;
-
-    /**
-     * Wind direction in degrees
-     */
     private double m_wind_direction;
-    /**
-     * Wind speed in m/s
-     */
     private double m_wind_speed;
-    /**
-     * Maximum velocity Km/h
-     */
     private double m_maximum_velocity;
-
-    /**
-     * Minimum velocity km/h
-     */
     private double m_minimum_velocity;
 
     public Segment() {
@@ -51,6 +25,17 @@ public class Segment {
         this.m_wind_speed = m_wind_speed;
         this.m_maximum_velocity = m_maximum_velocity;
         this.m_minimum_velocity = m_minimum_velocity;
+    }
+
+    public Segment(Segment s) {
+        this.m_segment_index = s.m_segment_index;
+        this.m_initial_height = s.m_initial_height;
+        this.m_final_height = s.m_final_height;
+        this.m_length = s.m_length;
+        this.m_wind_direction = s.m_wind_direction;
+        this.m_wind_speed = s.m_wind_speed;
+        this.m_maximum_velocity = s.m_maximum_velocity;
+        this.m_minimum_velocity = s.m_minimum_velocity;
     }
 
     public double getLength() {
@@ -201,5 +186,10 @@ public class Segment {
         seg.m_minimum_velocity = m_minimum_velocity;
         return seg;
 
+    }
+
+    @Override
+    protected Segment clone() {
+        return new Segment(this);
     }
 }
