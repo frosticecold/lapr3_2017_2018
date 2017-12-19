@@ -38,6 +38,11 @@ public class Gearbox {
         return null;
     }
 
+    public List<Gear> getGearList() {
+
+        return m_gears;
+    }
+
     @Override
     public String toString() {
         return "Gearbox{" + "m_gears=" + m_gears + '}';

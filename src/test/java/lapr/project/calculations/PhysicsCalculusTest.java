@@ -5,6 +5,15 @@
  */
 package lapr.project.calculations;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Iterator;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import lapr.project.model.Project;
+import lapr.project.model.Vehicle;
+import lapr.project.utils.ImportException;
+import lapr.project.utils.VehicleXML;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -294,4 +303,7 @@ public class PhysicsCalculusTest {
         assertTrue("Expected -1", result == -1);
     }
 
+    @Test
+    public void testCalculateRPM() {
+    }
 }

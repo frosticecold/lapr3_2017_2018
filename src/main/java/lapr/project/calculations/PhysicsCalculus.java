@@ -1,5 +1,8 @@
 package lapr.project.calculations;
 
+import lapr.project.model.Gear;
+import lapr.project.model.Vehicle;
+
 public class PhysicsCalculus {
 
     public static double GRAVITY = Constants.GRAVITY;
@@ -54,13 +57,32 @@ public class PhysicsCalculus {
     }
 
     public double velocityRelativeGroundCalculation(double rpm, double finalDriveRatio, double kGear, double tireRatio) {
-        if (rpm <0 || finalDriveRatio<0  ) {
-            return -1 ;
+        if (rpm < 0 || finalDriveRatio < 0) {
+            return -1;
         }
-        if (kGear <0 || tireRatio  < 0 ) {
+        if (kGear < 0 || tireRatio < 0) {
             return -1;
         }
         return (2 * Math.PI * rpm) / 60 / finalDriveRatio / kGear * tireRatio * 3.6;
     }
 
+    public static double[] calculateRPM(Vehicle vehicle, double velocity) {
+        double results[] = new double[2];
+        double rpm = Double.POSITIVE_INFINITY;
+        double gear_ratio = 0;
+        double first_part = (velocity * 60 * vehicle.getFinalDriveRatio()) / (Math.PI * vehicle.getWheelSize());
+        for (Gear g : vehicle.getGearbox().getGearList()) {
+            double copy = first_part;
+            copy = copy * g.getM_ratio();
+            if (copy > vehicle.getMinRpm() && copy < vehicle.getMaxRpm()) {
+                if (copy < rpm) {
+                    rpm = copy;
+                    gear_ratio = g.getM_ratio();
+                }
+            }
+        }
+        results[0] = rpm;
+        results[1] = gear_ratio;
+        return results;
+    }
 }
