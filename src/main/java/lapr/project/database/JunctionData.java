@@ -14,14 +14,14 @@ public class JunctionData extends DataAccess<Junction>{
         super(connection);
     }
     
-    public Junction get(String junctionID) throws SQLException {
+    public Junction get(String junctionId) throws SQLException {
         List<SQLArgument> args = new ArrayList<>();
-        args.add(new SQLArgument(junctionID, OracleTypes.NUMBER));
+        args.add(new SQLArgument(junctionId, OracleTypes.NUMBER));
         ResultSet rs = super.callFunction("getJunction", args);
         
         if(rs.next()) {
-            String junction_ID = rs.getString("id_Junction");
-            return new Junction(junction_ID);
+            String junctionID = rs.getString("id_Junction");
+            return new Junction(junctionID);
         }
         return null;
     }

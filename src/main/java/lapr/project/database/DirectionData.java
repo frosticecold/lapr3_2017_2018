@@ -20,9 +20,7 @@ public class DirectionData extends DataAccess<Section.Direction> {
         ResultSet rs = super.callFunction("getDirection", args);
 
         if (rs.next()) {
-            String direction = rs.getString("description");
-            Section.Direction de = Section.Direction.valueOf(direction);
-            return de;
+            return Section.Direction.valueOf(rs.getString("description"));
         }
         rs.close();
         return null;

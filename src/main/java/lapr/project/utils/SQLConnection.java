@@ -1,7 +1,7 @@
 package lapr.project.utils;
 
 import java.sql.*;
-import java.util.ArrayList;
+import java.util.List;
 import lapr.project.database.ProjectData;
 import lapr.project.model.Project;
 import oracle.jdbc.pool.OracleDataSource;
@@ -41,7 +41,7 @@ public class SQLConnection {
         }
     }
 
-    public ArrayList<String> getProjects() throws SQLException {
+    public List<String> getProjects() throws SQLException {
         if (connection == null) {
             openConnection();
         }

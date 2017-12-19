@@ -4,13 +4,13 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import lapr.project.model.Junction;
 import lapr.project.model.Project;
 import lapr.project.model.Road;
 import lapr.project.model.Section;
 import lapr.project.model.Segment;
-import lapr.project.model.Vehicle;
 import lapr.project.model.VehicleList;
 import lapr.project.utils.graphbase.Graph;
 import oracle.jdbc.OracleTypes;
@@ -21,12 +21,12 @@ public class ProjectData extends DataAccess<Project> {
         super(connection);
     }
 
-    public ArrayList<String> getAllProjectsNames() throws SQLException {
+    public List<String> getAllProjectsNames() throws SQLException {
         if (connection == null) {
-            return null;
+            return Collections.EMPTY_LIST;
         }
 
-        ArrayList<String> list = new ArrayList<>();
+        List<String> list = new ArrayList<>();
 
         try (ResultSet rs = super.callFunction("getAllProjects")) {
             while (rs.next()) {

@@ -22,22 +22,22 @@ public abstract class DataAccess<T> {
     }
 
     protected CachedRowSet callFunction(String function, Iterable<SQLArgument> args) throws SQLException {
-        String arg = "";
+        StringBuilder arg = new StringBuilder();
 
         boolean first = true;
         for (SQLArgument s : args) {
             if (!first) {
-                arg += ",'";
+                arg.append(",'");
             } else {
-                arg += "'";
+                arg.append("'");
             }
             first = false;
             String value = s.getType() == OracleTypes.VARCHAR ? s.getValue() : s.getValue().replace('.', ',');
             value = s.getType() == OracleTypes.VARCHAR ? value.replace("'", "''") : value;
-            arg += value + "'";
+            arg.append(value).append("'");
         }
 
-        String sql = "{? = call %s(" + arg + ")}";
+        String sql = new StringBuilder().append("{? = call %s(").append(arg).append(")}").toString();
         CachedRowSet c;
         try (CallableStatement cstmt = connection.prepareCall(String.format(sql, function))) {
             cstmt.registerOutParameter(1, OracleTypes.CURSOR);

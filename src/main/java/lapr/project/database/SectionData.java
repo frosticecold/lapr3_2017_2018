@@ -4,12 +4,11 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import lapr.project.model.Junction;
-import lapr.project.model.Road;
 import lapr.project.model.Section;
-import lapr.project.model.Segment;
 import oracle.jdbc.OracleTypes;
 
 public class SectionData extends DataAccess<Section> {
@@ -20,7 +19,7 @@ public class SectionData extends DataAccess<Section> {
 
     public List<Section> get(String projectName) throws SQLException {
         if (connection == null) {
-            return null;
+            return Collections.EMPTY_LIST;
         }
         List<Section> list = new LinkedList<>();
 

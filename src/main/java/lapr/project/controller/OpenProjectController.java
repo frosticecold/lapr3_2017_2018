@@ -1,7 +1,7 @@
 package lapr.project.controller;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
+import java.util.List;
 import lapr.project.model.Project;
 import lapr.project.utils.DatabaseConnection;
 import lapr.project.utils.SQLConnection;
@@ -19,7 +19,7 @@ public class OpenProjectController {
         return sql == null ? sql = new DatabaseConnection().getDatabase() : sql;
     }
 
-    public ArrayList<String> getProjects() throws SQLException {
+    public List<String> getProjects() throws SQLException {
         return this.getSQLConnection().getProjects();
     }
 

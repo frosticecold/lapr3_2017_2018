@@ -4,6 +4,7 @@ package lapr.project.ui;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
@@ -31,7 +32,7 @@ public class OpenProjectUI extends javax.swing.JDialog {
         super(parent, modal);
         controller = new OpenProjectController();
 
-        ArrayList<String> projectsList = new ArrayList<>();
+        List<String> projectsList = new ArrayList<>();
         try {
             projectsList = controller.getProjects();
         } catch (SQLException ex) {

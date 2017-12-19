@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import lapr.project.model.Segment;
@@ -17,7 +18,7 @@ public class SegmentData extends DataAccess<Segment>{
     
     public List<Segment> get(String sectionID) throws SQLException {
         if (connection == null) {
-            return null;
+            return Collections.EMPTY_LIST;
         }
         List<Segment> list = new LinkedList<>();
         List<SQLArgument> args = new ArrayList<>();
@@ -28,12 +29,12 @@ public class SegmentData extends DataAccess<Segment>{
             double initialHeight = rs.getFloat("initial_height");
             double finalHeight = rs.getFloat("final_height");
             double length = rs.getFloat("length");
-            double wind_direction = rs.getFloat("wind_direction");
-            double wind_speed = rs.getFloat("wind_speed");
-            double maximum_velocity = rs.getFloat("max_v");
-            double minimum_velocity = rs.getFloat("min_v");
+            double windDirection = rs.getFloat("wind_direction");
+            double windSpeed = rs.getFloat("wind_speed");
+            double maximumVelocity = rs.getFloat("max_v");
+            double minimumVelocity = rs.getFloat("min_v");
             
-            Segment s = new Segment(segmentID, initialHeight, finalHeight, length, wind_direction, wind_speed, maximum_velocity, minimum_velocity);
+            Segment s = new Segment(segmentID, initialHeight, finalHeight, length, windDirection, windSpeed, maximumVelocity, minimumVelocity);
             
             list.add(s);
         }

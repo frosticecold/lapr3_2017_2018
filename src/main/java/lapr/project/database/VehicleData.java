@@ -13,8 +13,8 @@ import lapr.project.model.VehicleElectric;
 import lapr.project.model.VehicleList;
 import oracle.jdbc.OracleTypes;
 
-public class VehicleData extends DataAccess<Vehicle>{
-    
+public class VehicleData extends DataAccess<Vehicle> {
+
     public VehicleData(Connection connection) {
         super(connection);
     }
@@ -27,77 +27,72 @@ public class VehicleData extends DataAccess<Vehicle>{
         List<SQLArgument> args = new ArrayList<>();
         args.add(new SQLArgument(name, OracleTypes.VARCHAR));
         ResultSet rs = super.callFunction("getVehicle", args);
-        while(rs.next()) {
-            String v_name = rs.getString("v_name");
-            String v_description = rs.getString("v_description");
-            String v_type = rs.getString("v_type");
-            String v_fuel = rs.getString("v_fuel");
-            int v_class = rs.getInt("v_class");
-            String v_motorization = rs.getString("v_motorization");
-            double v_wheelsize = rs.getDouble("v_wheelSize");
-            double v_drag_coefficient = rs.getDouble("v_dragCoefficient");
-            double v_frontalArea = rs.getDouble("v_frontalArea");
-            double v_rollingRes = rs.getDouble("v_rollingResistanceCoef");
-            double v_minRpm = rs.getDouble("v_minRpm");
-            double v_maxRpm = rs.getDouble("v_maxRpm");
-            double v_finalDriveRatio = rs.getDouble("v_finalDriveRatio");
-            double v_energyRegenerationRatio = rs.getDouble("v_energyRegenerationRatio");
-            
+        while (rs.next()) {
+            String vName = rs.getString("v_name");
+            String vDescription = rs.getString("v_description");
+            String vType = rs.getString("v_type");
+            String vFuel = rs.getString("v_fuel");
+            int vClass = rs.getInt("v_class");
+            String vMotorization = rs.getString("v_motorization");
+            double vWheelsize = rs.getDouble("v_wheelSize");
+            double vDragCoefficient = rs.getDouble("v_dragCoefficient");
+            double vFrontalArea = rs.getDouble("v_frontalArea");
+            double vRollingRes = rs.getDouble("v_rollingResistanceCoef");
+            double vMinRpm = rs.getDouble("v_minRpm");
+            double vMaxRpm = rs.getDouble("v_maxRpm");
+            double vFinalDriveRatio = rs.getDouble("v_finalDriveRatio");
+            double vEnergyRegenerationRatio = rs.getDouble("v_energyRegenerationRatio");
+
             GearboxData g = new GearboxData(connection);
-            Gearbox v_gearbox = g.get(v_name);
-            
+            Gearbox vGearbox = g.get(vName);
+
             AcceleratorData a = new AcceleratorData(connection);
-            Accelerator v_accelerator = a.get(v_name);
-            
-            switch(v_motorization) {
-                case "combustion":
-                    VehicleCombustion v = new VehicleCombustion();
-                    v.setName(v_name);
-                    v.setDescription(v_description);
-                    v.setType(v_type);
-                    v.setFuel(v_fuel);
-                    v.setVehicleClass(v_class);
-                    v.setMotorization(v_motorization);
-                    v.setWheelSize(v_wheelsize);
-                    v.setDragCoefficient(v_drag_coefficient);
-                    v.setFrontalArea(v_frontalArea);
-                    v.setRcc(v_rollingRes);
-                    v.setMinRpm(v_minRpm);
-                    v.setMaxRpm(v_maxRpm);
-                    v.setFinalDriveRatio(v_finalDriveRatio);
-                    v.setGearbox(v_gearbox);
-                    v.setAccelerator(v_accelerator);
-                    
-                    list.addVehicle(v);
-                    break;
-                    
-                case "electric":
-                    VehicleElectric ve = new VehicleElectric();
-                    ve.setName(v_name);
-                    ve.setDescription(v_description);
-                    ve.setType(v_type);
-                    ve.setFuel(v_fuel);
-                    ve.setVehicleClass(v_class);
-                    ve.setMotorization(v_motorization);
-                    ve.setWheelSize(v_wheelsize);
-                    ve.setDragCoefficient(v_drag_coefficient);
-                    ve.setFrontalArea(v_frontalArea);
-                    ve.setRcc(v_rollingRes);
-                    ve.setMinRpm(v_minRpm);
-                    ve.setMaxRpm(v_maxRpm);
-                    ve.setFinalDriveRatio(v_finalDriveRatio);
-                    ve.setGearbox(v_gearbox);
-                    ve.setAccelerator(v_accelerator);
-                    ve.setEnergyRegenerationRatio(v_energyRegenerationRatio);
-                    
-                    list.addVehicle(ve);
-                    break;
-            }            
+            Accelerator vAccelerator = a.get(vName);
+
+            if (vMotorization.equalsIgnoreCase("combustion")) {
+                VehicleCombustion v = new VehicleCombustion();
+                v.setName(vName);
+                v.setDescription(vDescription);
+                v.setType(vType);
+                v.setFuel(vFuel);
+                v.setVehicleClass(vClass);
+                v.setMotorization(vMotorization);
+                v.setWheelSize(vWheelsize);
+                v.setDragCoefficient(vDragCoefficient);
+                v.setFrontalArea(vFrontalArea);
+                v.setRcc(vRollingRes);
+                v.setMinRpm(vMinRpm);
+                v.setMaxRpm(vMaxRpm);
+                v.setFinalDriveRatio(vFinalDriveRatio);
+                v.setGearbox(vGearbox);
+                v.setAccelerator(vAccelerator);
+
+                list.addVehicle(v);
+            } else if (vMotorization.equalsIgnoreCase("electric")) {
+                VehicleElectric ve = new VehicleElectric();
+                ve.setName(vName);
+                ve.setDescription(vDescription);
+                ve.setType(vType);
+                ve.setFuel(vFuel);
+                ve.setVehicleClass(vClass);
+                ve.setMotorization(vMotorization);
+                ve.setWheelSize(vWheelsize);
+                ve.setDragCoefficient(vDragCoefficient);
+                ve.setFrontalArea(vFrontalArea);
+                ve.setRcc(vRollingRes);
+                ve.setMinRpm(vMinRpm);
+                ve.setMaxRpm(vMaxRpm);
+                ve.setFinalDriveRatio(vFinalDriveRatio);
+                ve.setGearbox(vGearbox);
+                ve.setAccelerator(vAccelerator);
+                ve.setEnergyRegenerationRatio(vEnergyRegenerationRatio);
+
+                list.addVehicle(ve);
+            }
+
         }
-        
+
         return list;
     }
-    
-    
 
 }
