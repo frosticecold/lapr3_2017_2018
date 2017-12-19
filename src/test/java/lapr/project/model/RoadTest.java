@@ -270,7 +270,7 @@ public class RoadTest {
         instance.addTollFare(4, 4.0);
         assertEquals(4.0, instance.getTollValue(4), 0.05);
         
-        assertNull(instance.getTollValue(5));
+        assertEquals(-1,instance.getTollValue(5),0.05);
     }
 
     /**

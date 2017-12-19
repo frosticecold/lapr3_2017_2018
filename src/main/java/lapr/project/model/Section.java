@@ -47,7 +47,7 @@ public class Section {
     public Map<Integer, Double> getToll() {
         return m_toll;
     }
-    
+
     public Junction getBeginningJunction() {
         return m_beginning_junction;
     }
@@ -88,6 +88,17 @@ public class Section {
 
     public int getKey() {
         return this.key;
+    }
+
+    public double getTollValue(int toll_key) {
+        if (toll_key <= 0) {
+            throw new IllegalArgumentException("Invalid toll key");
+        }
+        if (m_toll.containsKey(toll_key)) {
+            return m_toll.get(key);
+        }
+
+        return -1;
     }
 
     public void setKey(int key) {

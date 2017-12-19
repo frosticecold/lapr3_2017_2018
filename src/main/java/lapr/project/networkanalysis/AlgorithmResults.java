@@ -5,7 +5,6 @@ import lapr.project.model.Project;
 import lapr.project.model.Road;
 import lapr.project.model.Section;
 import lapr.project.model.Vehicle;
-import lapr.project.utils.Session;
 
 public class AlgorithmResults {
 
@@ -37,20 +36,26 @@ public class AlgorithmResults {
 
     }
 
-    public double calculateTripCost() {
+    public void calculateTripCost() {
         double temp_cost = 0;
         double toll_value = 0;
         for (Section section : path) {
-            if (section.getRoadID().equalsIgnoreCase("toll highway")) {
-                Road rd = project.getRoadByRoadID(section.getRoadID());
-                if (rd.getTollValue(vehicle.getVehicleClass()) != null) {
+            String sectionID = section.getRoadID();
+            Road rd = project.getRoadByRoadID(sectionID);
+            if (rd.getTypology().equalsIgnoreCase("toll highway")) {
+                if (rd.getTollValue(vehicle.getVehicleClass()) != -1) {
                     toll_value = rd.getTollValue(vehicle.getVehicleClass());
-                    temp_cost+= toll_value * distance;
+                    temp_cost += toll_value * distance;
                 }
 
             }
+            if (rd.getTypology().equalsIgnoreCase("gantry toll highway")) {
+                if (section.getTollValue(vehicle.getVehicleClass()) != -1) {
+                    temp_cost += section.getTollValue(vehicle.getVehicleClass());
+                }
+            }
         }
-        return cost;
+        cost = temp_cost;
     }
 
     public double getEnergy() {
