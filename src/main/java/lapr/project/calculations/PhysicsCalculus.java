@@ -7,12 +7,12 @@ public class PhysicsCalculus {
 
     public static double GRAVITY = Constants.GRAVITY;
 
-    public double forceActingOnVehicle(double motorForce, double rollingResistance, double gravitationalForce, double airDrag) {
+    public static double forceActingOnVehicle(double motorForce, double rollingResistance, double gravitationalForce, double airDrag) {
         double F = motorForce - rollingResistance - gravitationalForce - airDrag;
         return F;
     }
 
-    public double motorForceCalculation(double torqueFunction, double finalDriveRatio, double gearRatio, double tireRatio) {
+    public static double motorForceCalculation(double torqueFunction, double finalDriveRatio, double gearRatio, double tireRatio) {
         if (torqueFunction < 0 || finalDriveRatio < 0 || gearRatio < 0) {
             return -1;
         }
@@ -22,21 +22,21 @@ public class PhysicsCalculus {
         return (torqueFunction * finalDriveRatio * gearRatio) / tireRatio;
     }
 
-    public double rollingResistanceCalculation(double rollingResistanceCoeficient, double mass, double angle) {
+    public static double rollingResistanceCalculation(double rollingResistanceCoeficient, double mass, double angle) {
         if (rollingResistanceCoeficient < 0 || mass < 0 || angle < 0) {
             return -1;
         }
         return rollingResistanceCoeficient * mass * GRAVITY * Math.cos(angle);
     }
 
-    public double gravitationalForceCalculation(double mass, double angle) {
+    public static double gravitationalForceCalculation(double mass, double angle) {
         if (mass < 0 || angle < 0) {
             return -1;
         }
         return mass * GRAVITY * Math.sin(angle);
     }
 
-    public double airDragCalculation(double velocityRelativeAir, double airDragCoeficient, double frontalArea, double airDensity) {
+    public static double airDragCalculation(double velocityRelativeAir, double airDragCoeficient, double frontalArea, double airDensity) {
         if (velocityRelativeAir < 0 || airDragCoeficient < 0 || frontalArea < 0) {
             return -1;
         }
@@ -46,7 +46,7 @@ public class PhysicsCalculus {
         return 0.5 * airDragCoeficient * frontalArea * airDensity * Math.pow(velocityRelativeAir, 2);
     }
 
-    public double velocityRelativeAirCalculation(double rpm, double finalDriveRatio, double kGear, double tireRatio, double windSpeed) {
+    public static double velocityRelativeAirCalculation(double rpm, double finalDriveRatio, double kGear, double tireRatio, double windSpeed) {
         if (rpm < 0 || finalDriveRatio < 0 || kGear < 0) {
             return -1;
         }
@@ -56,7 +56,7 @@ public class PhysicsCalculus {
         return 2 * Math.PI * rpm / 60 / finalDriveRatio / kGear * tireRatio + windSpeed / 3.6;
     }
 
-    public double velocityRelativeGroundCalculation(double rpm, double finalDriveRatio, double kGear, double tireRatio) {
+    public static double velocityRelativeGroundCalculation(double rpm, double finalDriveRatio, double kGear, double tireRatio) {
         if (rpm < 0 || finalDriveRatio < 0) {
             return -1;
         }
@@ -66,7 +66,7 @@ public class PhysicsCalculus {
         return (2 * Math.PI * rpm) / 60 / finalDriveRatio / kGear * tireRatio * 3.6;
     }
 
-    public static double[] calculateRPM(Vehicle vehicle, double velocity) {
+    public static double[] calculateRPMandGearRatio(Vehicle vehicle, double velocity) {
         double results[] = new double[2];
         double rpm = Double.POSITIVE_INFINITY;
         double gear_ratio = 0;
