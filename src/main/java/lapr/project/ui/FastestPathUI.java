@@ -5,6 +5,7 @@
  */
 package lapr.project.ui;
 
+import javax.swing.JOptionPane;
 import lapr.project.controller.FastestPathController;
 import lapr.project.model.Junction;
 
@@ -206,6 +207,10 @@ public class FastestPathUI extends javax.swing.JFrame {
     }//GEN-LAST:event_jCheckBox1ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        if(junctionBeginComboBox.getSelectedItem().equals(junctionEndComboBox.getSelectedItem())){
+            JOptionPane.showMessageDialog(this, "Please select different junctions", "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
+        
         if(fastestPathCheckbox.isSelected()){
             Junction begin = (Junction) junctionBeginComboBox.getSelectedItem();
             Junction end = (Junction) junctionEndComboBox.getSelectedItem();
