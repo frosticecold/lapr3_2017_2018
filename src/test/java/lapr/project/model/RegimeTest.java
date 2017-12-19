@@ -115,6 +115,23 @@ public class RegimeTest {
     }
 
     /**
+     * Test of copy method, of class Regime.
+     */
+    @Test
+    public void testCopy() {
+        System.out.println("toString");
+        Regime result = new Regime(1200, 2500, 3100, 250);
+        Regime expResult = result.copy();
+
+        assertTrue(expResult.toString().equals(result.toString()));
+        expResult.setRpmHigh(8060);
+        expResult.setRpmLow(1060);
+        expResult.setTorque(460);
+        assertFalse(expResult.toString().equals(result.toString()));
+
+    }
+
+    /**
      * Test of toString method, of class Regime.
      */
     @Test

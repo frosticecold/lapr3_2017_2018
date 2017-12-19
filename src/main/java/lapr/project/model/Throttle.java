@@ -12,14 +12,6 @@ public class Throttle {
         this.m_regime_list = m_regime_list;
     }
 
-    public Throttle(Throttle t) {
-
-        m_regime_list = new ArrayList<>();
-        for (Regime regime : t.m_regime_list) {
-            m_regime_list.add(regime.clone());
-        }
-    }
-
     public Throttle() {
         m_regime_list = new LinkedList<>();
     }
@@ -37,8 +29,7 @@ public class Throttle {
         return "Throttle{" + "m_regime_list=" + m_regime_list + '}';
     }
 
-    @Override
-    protected Throttle clone() {
-        return new Throttle(this);
+    public Throttle copy() {
+        return new Throttle(m_regime_list);
     }
 }

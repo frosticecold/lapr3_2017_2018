@@ -14,12 +14,6 @@ public class Gear {
         this.m_gearID = id_of_gear;
         this.m_ratio = m_ratio;
     }
-    
-    public Gear(Gear g){
-    this.m_gearID=g.m_gearID;
-    this.m_ratio=g.m_ratio;
-    
-    }
 
     public Gear() {
     }
@@ -46,9 +40,7 @@ public class Gear {
     }
 
     public Gear copy() {
-        return new Gear(this);
+        return new Gear(m_gearID, m_ratio);
     }
 
-    
-    
 }

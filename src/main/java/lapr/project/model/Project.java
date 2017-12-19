@@ -41,22 +41,6 @@ public class Project {
         m_list_roads = roadList;
     }
 
-    public Project(Project p) {
-        m_name = p.m_name;
-        m_description = p.m_description;
-        m_road_network = p.getRoadNetwork().copyGraph();
-        m_list_vehicles = new VehicleList();
-//        Iterator<Vehicle> it = p.m_list_vehicles.iterator();
-//        while(it.hasNext())
-//        {
-//            m_list_vehicles.add(new Vehicle(it.next()));
-//        }
-        m_list_roads = new ArrayList<>();
-        for (Road r : p.m_list_roads) {
-            m_list_roads.add(new Road(r));
-        }
-
-    }
 
     public void setRoadNetwork(Graph<Junction, Section> m_road_network) {
         this.m_road_network = m_road_network;
@@ -253,9 +237,5 @@ public class Project {
         return "Project{" + "m_road_network=" + m_road_network + ", m_list_vehicles=" + m_list_vehicles + ", m_list_roads=" + m_list_roads + ", m_name=" + m_name + ", m_description=" + m_description + '}';
     }
 
-//    @Override
-//    public Project clone() {
-//        Project p = new Project();
-//        
-//    }
+
 }

@@ -33,24 +33,6 @@ public class Section {
         m_toll = new HashMap<>();
     }
 
-    public Section(Section s) {
-        this.m_beginning_junction = m_beginning_junction.copy();
-        this.m_ending_junction = m_ending_junction.copy();
-        this.m_road_id = s.m_road_id;
-        this.m_section_id = s.m_section_id;
-        this.m_typology = s.m_typology;
-        this.m_direction = s.m_direction;
-
-        m_sequenceOfSegments = new ArrayList<>();
-        for (Segment segment : s.m_sequenceOfSegments) {
-            m_sequenceOfSegments.add(segment.clone());
-        }
-        Map<Integer, Double> map = new HashMap<>();
-        for (Integer i : map.keySet()) {
-            map.put(i, m_toll.get(i));
-        }
-    }
-
     public boolean addToll(int vehic_id, double value) {
         if (vehic_id <= 0 || value < 0) {
             throw new IllegalArgumentException("Invalida values for toll");
@@ -233,10 +215,6 @@ public class Section {
         }
         section.setSegmentList(newlist);
         return section;
-    }
-
-    public Section copy() {
-        return new Section(this);
     }
 
 }

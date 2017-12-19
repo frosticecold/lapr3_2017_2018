@@ -16,14 +16,6 @@ public class Gearbox {
         this.m_gears = new LinkedList<>();
     }
 
-    public Gearbox(Gearbox g) {
-
-        m_gears = new ArrayList<>();
-        for (Gear gear : g.m_gears) {
-            m_gears.add(gear.copy());
-        }
-    }
-
     /**
      *
      * @param g
@@ -48,7 +40,6 @@ public class Gearbox {
     }
 
     public List<Gear> getGearList() {
-
         return m_gears;
     }
 
@@ -58,8 +49,7 @@ public class Gearbox {
     }
 
     public Gearbox copy() {
-
-        return new Gearbox(this);
+        return new Gearbox(m_gears);
     }
 
 }

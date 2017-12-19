@@ -21,7 +21,6 @@ public class Road {
         m_listOfSections = new ArrayList<>();
         m_toll_fare = new LinkedHashMap<>();
         m_num_of_section = 0;
-
     }
 
     public Road(String road_id, String name, String typology) {
@@ -30,24 +29,6 @@ public class Road {
         setTypology(typology);
         m_listOfSections = new ArrayList<>();
         m_toll_fare = new LinkedHashMap<>();
-    }
-
-    public Road(Road r) {
-        this.m_road_id = r.m_road_id;
-        this.m_name = r.m_name;
-        this.m_typology = r.m_typology;
-
-        m_listOfSections = new ArrayList<>();
-        for (Section section : r.m_listOfSections) {
-            r.m_listOfSections.add(section.copy());
-        }
-
-        Map<Integer, Double> map = new LinkedHashMap<>();
-        for (Integer i : map.keySet()) {
-            map.put(i, m_toll_fare.get(i));
-        }
-
-        this.m_num_of_section = r.m_num_of_section;
     }
 
     public boolean addSection(Section s) {
@@ -143,9 +124,11 @@ public class Road {
         return true;
     }
 
-    @Override
-    protected Object clone() {
-        return new Road(this);
+    public Road copy() {
+        Road copy = new Road(m_road_id, m_name, m_typology);
+        copy.setListOfSections(m_listOfSections);
+        copy.setTollFare(m_toll_fare);
+        return copy ;
     }
 
 }

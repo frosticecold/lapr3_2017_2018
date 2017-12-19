@@ -44,7 +44,6 @@ public class Junction {
             throw new IllegalArgumentException("The junction's name cannot be"
                     + "empty.");
         }
-
         return true;
 
     }

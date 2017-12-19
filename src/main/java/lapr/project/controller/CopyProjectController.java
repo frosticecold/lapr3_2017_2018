@@ -13,7 +13,7 @@ public class CopyProjectController {
 
     public boolean copyProject(String name) {
 
-        Project p = new Project(proj);
+        Project p = Session.getActiveProject();
 
         p.setName(name);
 
