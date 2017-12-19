@@ -12,6 +12,7 @@ public class Road {
     private String m_typology;
     private List<Section> m_listOfSections;
     private Map<Integer, Double> m_toll_fare;
+    private int m_num_of_section;
 
     public Road() {
         m_road_id = "";
@@ -19,6 +20,8 @@ public class Road {
         m_typology = "";
         m_listOfSections = new ArrayList<>();
         m_toll_fare = new LinkedHashMap<>();
+        m_num_of_section = 0;
+
     }
 
     public Road(String road_id, String name, String typology) {
@@ -43,6 +46,8 @@ public class Road {
         }
         boolean added = false;
         if (!m_listOfSections.contains(s)) {
+            s.setID(m_num_of_section);
+            m_num_of_section++;
             m_listOfSections.add(s);
             added = true;
         }

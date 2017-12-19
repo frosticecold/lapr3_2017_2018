@@ -12,6 +12,7 @@ public class Section {
     private Junction m_beginning_junction;
     private Junction m_ending_junction;
     private String m_road_id;
+    private int m_section_id;
     private String m_typology;
     private Direction m_direction;
     private List<Segment> m_sequenceOfSegments;
@@ -55,6 +56,10 @@ public class Section {
         return m_direction;
     }
 
+    public int getID() {
+        return m_section_id;
+    }
+
     public List<Segment> getSequenceOfSegments() {
         return m_sequenceOfSegments;
     }
@@ -85,7 +90,12 @@ public class Section {
         if (key < 0) {
             throw new IllegalArgumentException("Invalid key.");
         }
-       this.key=key;
+        this.key = key;
+    }
+
+    public void setID(int id) {
+        this.m_section_id = id;
+
     }
 
     public void setTypology(String typ) {
