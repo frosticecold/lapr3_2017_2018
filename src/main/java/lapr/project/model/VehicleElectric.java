@@ -96,6 +96,16 @@ public class VehicleElectric extends Vehicle {
     }
 
     /**
+     * Returns the maximum velocity in km/h
+     * @return 
+     */
+    @Override
+    public double getMaximumVelocity() {
+        double velocity = (Math.PI * this.getWheelSize() * m_max_rpm) / (60 * m_final_drive_ratio * this.getGearbox().getLowestGear());
+        return velocity * 3.6;
+    }
+
+    /**
      * Returns the energy regeneration ratio of this electric vehicle.
      *
      * @return (double) The energy regeneration ratio.

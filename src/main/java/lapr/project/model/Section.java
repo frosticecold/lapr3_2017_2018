@@ -205,10 +205,11 @@ public class Section {
         section.m_direction = this.m_direction;
         section.m_road_id = this.m_road_id;
         section.m_toll = this.m_toll;
+        section.m_typology=this.m_typology;
 
         List<Segment> newlist = new ArrayList<>();
         int index = 0;
-        for (int i = m_sequenceOfSegments.size() - 1; i <= 0; i++) {
+        for (int i = m_sequenceOfSegments.size() - 1; i >= 0; i--) {
             Segment seg = m_sequenceOfSegments.get(i).reverseSegment(index);
             index++;
             newlist.add(seg);

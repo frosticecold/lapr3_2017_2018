@@ -199,4 +199,15 @@ public class VehicleCombustion extends Vehicle {
         }
         return true;
     }
+
+    /**
+     * Returns the maximum velocity in km/h
+     * @return 
+     */
+    @Override
+    public double getMaximumVelocity() {
+        double velocity = (Math.PI * this.getWheelSize() * m_max_rpm) / (60 * m_final_drive_ratio * this.getGearbox().getLowestGear());
+        
+        return velocity * 3.6;
+    }
 }

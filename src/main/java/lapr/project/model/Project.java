@@ -61,6 +61,7 @@ public class Project {
     public VehicleList getListVehicles() {
         return m_list_vehicles;
     }
+   
 
     public String getName() {
         return m_name;
@@ -143,6 +144,7 @@ public class Project {
             dest = s.getBeginningJunction();
             return m_road_network.insertEdge(orig, dest, s, s.getSectionLength());
         }
+
         if (s.getDirection() == Section.Direction.BIDIRECTIONAL) {
             m_road_network.insertEdge(orig, dest, s, s.getSectionLength());
             Section sec = s.reverseSegment();
@@ -156,44 +158,44 @@ public class Project {
 
     }
 
-    public ArrayList<LinkedList<Section>> allPaths(Junction source, Junction target) {
-        if (!m_road_network.validVertex(source)) {
-            throw new IllegalArgumentException(("Source junction is invalid"));
-        }
-        if (!m_road_network.validVertex(target)) {
-            throw new IllegalArgumentException(("Target junction is invalid"));
-        }
-
-        Vertex<Junction, Section> vSource = m_road_network.getVertex(source);
-        Vertex<Junction, Section> vTarget = m_road_network.getVertex(target);
-        ArrayList<LinkedList<Section>> paths = new ArrayList<>();
-        allPaths(vSource, vTarget, new boolean[m_road_network.numEdges()], new LinkedList<>(), paths);
-
-        return paths;
-
-    }
-
-    private void allPaths(Vertex<Junction, Section> vOrig, Vertex<Junction, Section> vDest, boolean[] visited,
-            LinkedList<Section> path, ArrayList<LinkedList<Section>> paths) {
-        for (Edge<Junction, Section> edge : vOrig.getAllOutEdges()) {
-            if (!visited[edge.getElement().getKey()] && verifySection(path, edge)) {
-                visited[edge.getElement().getKey()] = true;
-                path.add(edge.getElement());
-
-                if (edge.getVDest().equals(vDest.getElement())) {
-                    paths.add(new LinkedList<>(path));
-                    path.removeLast();
-                } else {
-                    allPaths(edge.getVDestVertex(), vDest, visited, path, paths);
-                }
-            }
-
-            if (visited[edge.getElement().getKey()] && !edge.getVDest().equals(vDest.getElement())) {
-                path.removeLast();
-            }
-            visited[edge.getElement().getKey()] = false;
-        }
-    }
+//    public ArrayList<LinkedList<Section>> allPaths(Junction source, Junction target) {
+//        if (!m_road_network.validVertex(source)) {
+//            throw new IllegalArgumentException(("Source junction is invalid"));
+//        }
+//        if (!m_road_network.validVertex(target)) {
+//            throw new IllegalArgumentException(("Target junction is invalid"));
+//        }
+//
+//        Vertex<Junction, Section> vSource = m_road_network.getVertex(source);
+//        Vertex<Junction, Section> vTarget = m_road_network.getVertex(target);
+//        ArrayList<LinkedList<Section>> paths = new ArrayList<>();
+//        allPaths(vSource, vTarget, new boolean[m_road_network.numEdges()], new LinkedList<>(), paths);
+//
+//        return paths;
+//
+//    }
+//
+//    private void allPaths(Vertex<Junction, Section> vOrig, Vertex<Junction, Section> vDest, boolean[] visited,
+//            LinkedList<Section> path, ArrayList<LinkedList<Section>> paths) {
+//        for (Edge<Junction, Section> edge : vOrig.getAllOutEdges()) {
+//            if (!visited[edge.getElement().getKey()] && verifySection(path, edge)) {
+//                visited[edge.getElement().getKey()] = true;
+//                path.add(edge.getElement());
+//
+//                if (edge.getVDest().equals(vDest)) {
+//                    paths.add(new LinkedList<>(path));
+//                    path.removeLast();
+//                } else {
+//                    allPaths(edge.getVDestVertex(), vDest, visited, path, paths);
+//                }
+//            }
+//
+//            if (visited[edge.getElement().getKey()] && !edge.getVDest().equals(vDest)) {
+//                path.removeLast();
+//            }
+//            visited[edge.getElement().getKey()] = false;
+//        }
+//    }
 
     public boolean verifySection(LinkedList<Section> path, Edge<Junction, Section> edge) {
         for (Section section : path) {

@@ -95,7 +95,7 @@ public class VehicleList {
      *
      * @return (List&lt;String&gt;) The list with the name.
      */
-    public List<String> getVehicleList() {
+    public List<String> getVehicleNameList() {
         List<String> vehicleList = new ArrayList<>();
 
         for (Vehicle vehicle : this.m_list_of_vehicles) {
@@ -103,6 +103,10 @@ public class VehicleList {
         }
 
         return vehicleList;
+    }
+
+    public List<Vehicle> getVehicleList() {
+        return this.m_list_of_vehicles;
     }
 
     /**

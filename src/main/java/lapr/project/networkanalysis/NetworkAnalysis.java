@@ -36,48 +36,37 @@ public class NetworkAnalysis {
         }
     }
 
-    private void calculateFastestPath(Vehicle vehicle) {
-        List<LinkedList<Section>> paths = this.m_project.allPaths(this.m_begin, this.m_end);
-        double lowest = Double.POSITIVE_INFINITY;
-        double final_distance = 0;
-        LinkedList<Section> fastestPath = new LinkedList<>();
-        for (LinkedList<Section> path : paths) {
-            double result = 0;
-            double distance = 0;
-            for (Section section : path) {
-                for (Segment segment : section.getSequenceOfSegments()) {
-                    double vel = getMaximumVelocityIn(segment, vehicle, section);
-                    distance += segment.getLength();
-                    result += segment.getLength() / vel;
-                }
-            }
-
-            if (lowest > result) {
-                lowest = result;
-                fastestPath = path;
-                final_distance = distance;
-            }
-        }
-        fastestResults = new AlgorithmResults(m_project,fastestPath, vehicle, final_distance, lowest);
-        fastestResults.calculate();
-    }
-
+//    private void calculateFastestPath(Vehicle vehicle) {
+//        List<LinkedList<Section>> paths = this.m_project.allPaths(this.m_begin, this.m_end);
+//        double lowest = Double.POSITIVE_INFINITY;
+//        double final_distance = 0;
+//        LinkedList<Section> fastestPath = new LinkedList<>();
+//        for (LinkedList<Section> path : paths) {
+//            double result = 0;
+//            double distance = 0;
+//            for (Section section : path) {
+//                for (Segment segment : section.getSequenceOfSegments()) {
+//                    double vel = getMaximumVelocityIn(segment, vehicle, section);
+//                    distance += segment.getLength();
+//                    result += segment.getLength() / vel;
+//                }
+//            }
+//
+//            if (lowest > result) {
+//                lowest = result;
+//                fastestPath = path;
+//                final_distance = distance;
+//            }
+//        }
+//        fastestResults = new AlgorithmResults(m_project, fastestPath, vehicle, final_distance, lowest);
+//        fastestResults.calculate();
+//    }
     private void setBeginJunction(Junction begin) {
         this.m_begin = begin;
     }
 
     private void setEndJunction(Junction end) {
         this.m_end = end;
-    }
-
-    protected static final double getMaximumVelocityIn(Segment segment, Vehicle vehicle, Section section) {
-        double velocity = vehicle.getRoadVelocityLimit(section.getTypology());
-        double windSpeed = segment.getWindSpeed() * Math.cos(Math.toRadians(segment.getWindDirection()));
-
-        velocity -= windSpeed;
-        double maxVelocity = segment.getMaximumVelocity();
-        velocity = Math.min(velocity, (maxVelocity > 0) ? maxVelocity : velocity);
-        return velocity;
     }
 
     public String toStringHTML(List<String> vehicles) {

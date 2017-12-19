@@ -176,6 +176,7 @@ public class CreateProjectUI extends JDialog {
 
     private void btnCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCloseActionPerformed
         dispose();
+        
 
     }//GEN-LAST:event_btnCloseActionPerformed
 

@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
-public abstract class Vehicle{
+public abstract class Vehicle {
 
     //Car attributes
     /**
@@ -121,6 +121,8 @@ public abstract class Vehicle{
         return m_name;
     }
 
+    public abstract double getMaximumVelocity();
+
     public abstract double getMinRpm();
 
     public abstract void setMinRpm(double m_min_rpm);
@@ -145,7 +147,7 @@ public abstract class Vehicle{
         if (m_road_velocity_limit.containsKey(road)) {
             return m_road_velocity_limit.get(road);
         } else {
-            return -1;
+            return this.getMaximumVelocity();
         }
 
     }
@@ -176,7 +178,7 @@ public abstract class Vehicle{
     public int getVehicleClass() {
         return m_vehicle_class;
     }
-    
+
     public void setRcc(double rcc) {
         if (rcc < 0) {
             throw new IllegalArgumentException("The rolling resistance coefficient of the vehicle must be positive.");
@@ -265,7 +267,7 @@ public abstract class Vehicle{
     public String toString() {
         return "Vehicle{" + "m_name=" + m_name + ", m_description=" + m_description + ", m_type=" + m_type + ", m_fuel=" + m_fuel + ", m_vehicle_class=" + m_vehicle_class + ", m_motorization=" + m_motorization + ", m_wheel_size=" + m_wheel_size + ", m_mass=" + m_mass + ", m_load=" + m_load + ", m_drag_coefficient=" + m_drag_coefficient + ", m_frontal_area=" + m_frontal_area + ", m_rcc=" + m_rcc + ", m_road_velocity_limit=" + m_road_velocity_limit + '}';
     }
-    
+
     /**
      * Returns the textual description of the object in html format.
      *
@@ -284,7 +286,7 @@ public abstract class Vehicle{
         sb.append("\t<li>Frontal Area: ").append(this.m_frontal_area).append(" m</li>\n");
         sb.append("\t<li>RRC: ").append(this.m_rcc).append("</li>\n");
         sb.append("\t<li>Wheel Size: ").append(this.m_wheel_size).append(" m</li>\n");
-        
+
         if (!this.m_road_velocity_limit.isEmpty()) {
             sb.append("\t<li>Velocity Limits:<ul>\n");
             for (Entry<String, Double> entry : this.m_road_velocity_limit.entrySet()) {
