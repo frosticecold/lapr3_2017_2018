@@ -6,6 +6,7 @@
 package lapr.project.networkanalysis;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import lapr.project.calculations.UnitConversion;
@@ -15,10 +16,6 @@ import lapr.project.model.Section;
 import lapr.project.model.Segment;
 import lapr.project.model.Vehicle;
 
-/**
- *
- * @author Raúl Correia <1090657@isep.ipp.pt>
- */
 public class NetworkAnalysis {
 
     private Junction m_begin;
@@ -47,7 +44,7 @@ public class NetworkAnalysis {
         for (LinkedList<Section> path : paths) {
             double result = 0;
             for (Section section : path) {
-                for(Segment segment : section.getSequenceOfSegments()){
+                for (Segment segment : section.getSequenceOfSegments()) {
                     double vel = getMaximumVelocityIn(segment, vehicle, section);
 
                     result += segment.getLength() / vel;
@@ -58,8 +55,8 @@ public class NetworkAnalysis {
                 lowest = result;
                 fastestPath = path;
             }
-        }}
-    
+        }
+    }
 
     private void setBeginJunction(Junction begin) {
         this.m_begin = begin;
@@ -79,4 +76,13 @@ public class NetworkAnalysis {
         return velocity;
     }
 
+    public String toStringHTML(List<String> vehicles) {
+        StringBuilder sb = new StringBuilder();
+
+        sb.append("<h1>Network Static Analysis Results</h1>");
+        sb.append("<br/>");
+        sb.append("<h3>Fastest Path Algorithm Results</h3>\n");
+
+        return sb.toString();
+    }
 }
