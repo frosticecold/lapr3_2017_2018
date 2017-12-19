@@ -1,6 +1,8 @@
 package lapr.project.calculations;
 
 import lapr.project.model.Gear;
+import lapr.project.model.Section;
+import lapr.project.model.Segment;
 import lapr.project.model.Vehicle;
 
 public class PhysicsCalculus {
@@ -84,5 +86,16 @@ public class PhysicsCalculus {
         results[0] = rpm;
         results[1] = gear_ratio;
         return results;
+    }
+
+    public static double getMaximumVelocityIn(Segment segment, Vehicle vehicle, Section section) {
+        double velocity = vehicle.getRoadVelocityLimit(section.getTypology());//This velocity in KM/H
+        velocity = velocity / 3.6;
+        double windSpeed = segment.getWindSpeed() * Math.cos(Math.toRadians(segment.getWindDirection()));
+
+        velocity -= windSpeed;
+        double maxVelocity = segment.getMaximumVelocity();
+        velocity = Math.min(velocity, (maxVelocity > 0) ? maxVelocity : velocity);
+        return velocity;
     }
 }
