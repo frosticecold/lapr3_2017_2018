@@ -43,14 +43,14 @@ public class AlgorithmResults {
             String sectionID = section.getRoadID();
             Road rd = project.getRoadByRoadID(sectionID);
             if (rd.getTypology().equalsIgnoreCase("toll highway")) {
-                if (rd.getTollValue(vehicle.getVehicleClass()) != -1) {
+                if (rd.getTollValue(vehicle.getVehicleClass()) > 0) {
                     toll_value = rd.getTollValue(vehicle.getVehicleClass());
                     temp_cost += toll_value * distance;
                 }
 
             }
             if (rd.getTypology().equalsIgnoreCase("gantry toll highway")) {
-                if (section.getTollValue(vehicle.getVehicleClass()) != -1) {
+                if (section.getTollValue(vehicle.getVehicleClass()) > 0) {
                     temp_cost += section.getTollValue(vehicle.getVehicleClass());
                 }
             }

@@ -45,8 +45,7 @@ public class Gear {
         return "Gear{" + "m_gearID=" + m_gearID + ", m_ratio=" + m_ratio + '}';
     }
 
-    @Override
-    protected Gear clone() {
+    public Gear copy() {
         return new Gear(this);
     }
 

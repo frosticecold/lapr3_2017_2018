@@ -189,7 +189,7 @@ public class Mockup extends javax.swing.JFrame {
     }//GEN-LAST:event_menuItemOpenProjectActionPerformed
 
     private void itemProjectEditProjectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemProjectEditProjectActionPerformed
-        new EditProjectUI().setVisible(true);
+        new EditProjectUI(this).setVisible(true);
     }//GEN-LAST:event_itemProjectEditProjectActionPerformed
 
     private void itemProjectCopyProjectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemProjectCopyProjectActionPerformed

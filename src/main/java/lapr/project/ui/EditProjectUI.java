@@ -2,19 +2,32 @@
  */
 package lapr.project.ui;
 
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import lapr.project.controller.EditProjectController;
+
 /**
  *
  * @author pc asus
  */
-public class EditProjectUI extends javax.swing.JFrame {
+public class EditProjectUI extends javax.swing.JDialog {
 
     private static final long serialVersionUID = 1;
+    private EditProjectController controller;
 
     /**
      * Creates new form EditProjectUI
      */
-    public EditProjectUI() {
+    public EditProjectUI(JFrame parent) {
+        super(parent,true);
         initComponents();
+        controller = new EditProjectController();
+        if (controller.getActiveProject() == null) {
+            JOptionPane.showMessageDialog(this, "There is not an active project at the moment.\nPress OK to close");
+            
+        } else {
+            jtf_currentProject.setText(controller.getActiveProjectName());
+        }
     }
 
     /**
@@ -32,6 +45,10 @@ public class EditProjectUI extends javax.swing.JFrame {
         jtf_description = new javax.swing.JTextField();
         jb_save = new javax.swing.JButton();
         jb_cancel = new javax.swing.JButton();
+        jl_name1 = new javax.swing.JLabel();
+        jtf_currentProject = new javax.swing.JTextField();
+        btn_roads = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -39,11 +56,12 @@ public class EditProjectUI extends javax.swing.JFrame {
 
         jl_description.setText("Description:");
 
-        jtf_name.setText("*project name*");
-
-        jtf_description.setText("*project description*");
-
         jb_save.setText("Save");
+        jb_save.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jb_saveActionPerformed(evt);
+            }
+        });
 
         jb_cancel.setText("Cancel");
         jb_cancel.addActionListener(new java.awt.event.ActionListener() {
@@ -52,24 +70,39 @@ public class EditProjectUI extends javax.swing.JFrame {
             }
         });
 
+        jl_name1.setText("Current Project:");
+
+        jtf_currentProject.setEditable(false);
+
+        btn_roads.setText("New Roads");
+
+        jButton2.setText("New Vehicles");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addGap(35, 35, 35)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jl_name)
-                            .addComponent(jl_description))
-                        .addGap(32, 32, 32)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jtf_name, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jtf_description, javax.swing.GroupLayout.DEFAULT_SIZE, 264, Short.MAX_VALUE)))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jb_cancel)))
+                        .addGap(0, 306, Short.MAX_VALUE)
+                        .addComponent(jb_cancel))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jl_name)
+                            .addComponent(jl_description)
+                            .addComponent(jl_name1))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(btn_roads)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 78, Short.MAX_VALUE)
+                                .addComponent(jButton2))
+                            .addComponent(jtf_name)
+                            .addComponent(jtf_description)
+                            .addComponent(jtf_currentProject, javax.swing.GroupLayout.Alignment.TRAILING))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jb_save)
                 .addContainerGap())
@@ -77,15 +110,23 @@ public class EditProjectUI extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(39, 39, 39)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jl_name)
-                    .addComponent(jtf_name, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(19, 19, 19)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jl_name1)
+                    .addComponent(jtf_currentProject, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jtf_name, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jl_name))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jl_description)
                     .addComponent(jtf_description, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btn_roads)
+                    .addComponent(jButton2))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jb_save)
                     .addComponent(jb_cancel))
@@ -100,46 +141,28 @@ public class EditProjectUI extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_jb_cancelActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(EditProjectUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(EditProjectUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(EditProjectUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(EditProjectUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+    private void jb_saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_saveActionPerformed
+        String nameProject = jtf_name.getText();
+        String descriptionProject = jtf_description.getText();
+        if (nameProject.isEmpty() || descriptionProject.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please fill the project title or description");
+            jtf_name.setText("");
+            jtf_description.setText("");
+        } else {
+            controller.editNewProject(nameProject, descriptionProject);
         }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new EditProjectUI().setVisible(true);
-            }
-        });
-    }
+        dispose();
+    }//GEN-LAST:event_jb_saveActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btn_roads;
+    private javax.swing.JButton jButton2;
     private javax.swing.JButton jb_cancel;
     private javax.swing.JButton jb_save;
     private javax.swing.JLabel jl_description;
     private javax.swing.JLabel jl_name;
+    private javax.swing.JLabel jl_name1;
+    private javax.swing.JTextField jtf_currentProject;
     private javax.swing.JTextField jtf_description;
     private javax.swing.JTextField jtf_name;
     // End of variables declaration//GEN-END:variables

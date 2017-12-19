@@ -196,7 +196,7 @@ public class Project {
                 visited[edge.getElement().getKey()] = true;
                 path.add(edge.getElement());
 
-                if (edge.getVDest().equals(vDest)) {
+                if (edge.getVDest().equals(vDest.getElement())) {
                     paths.add(new LinkedList<>(path));
                     path.removeLast();
                 } else {
@@ -204,7 +204,7 @@ public class Project {
                 }
             }
 
-            if (visited[edge.getElement().getKey()] && !edge.getVDest().equals(vDest)) {
+            if (visited[edge.getElement().getKey()] && !edge.getVDest().equals(vDest.getElement())) {
                 path.removeLast();
             }
             visited[edge.getElement().getKey()] = false;

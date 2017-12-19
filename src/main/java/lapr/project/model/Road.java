@@ -1,7 +1,6 @@
 package lapr.project.model;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -40,7 +39,7 @@ public class Road {
 
         m_listOfSections = new ArrayList<>();
         for (Section section : r.m_listOfSections) {
-            r.m_listOfSections.add(section.clone());
+            r.m_listOfSections.add(section.copy());
         }
 
         Map<Integer, Double> map = new LinkedHashMap<>();

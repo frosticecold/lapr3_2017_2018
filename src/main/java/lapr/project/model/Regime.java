@@ -28,6 +28,22 @@ public class Regime {
         this.m_SFC = r.m_SFC;
     }
 
+    public double getM_torque() {
+        return m_torque;
+    }
+
+    public double getM_rpm_low() {
+        return m_rpm_low;
+    }
+
+    public double getM_rpm_high() {
+        return m_rpm_high;
+    }
+
+    public double getM_SFC() {
+        return m_SFC;
+    }
+
     public void setTorque(double m_torque) {
         this.m_torque = m_torque;
     }

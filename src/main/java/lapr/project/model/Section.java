@@ -34,8 +34,8 @@ public class Section {
     }
 
     public Section(Section s) {
-        this.m_beginning_junction = m_beginning_junction.clone();
-        this.m_ending_junction = m_ending_junction.clone();
+        this.m_beginning_junction = m_beginning_junction.copy();
+        this.m_ending_junction = m_ending_junction.copy();
         this.m_road_id = s.m_road_id;
         this.m_section_id = s.m_section_id;
         this.m_typology = s.m_typology;
@@ -235,8 +235,7 @@ public class Section {
         return section;
     }
 
-    @Override
-    protected Section clone() {
+    public Section copy() {
         return new Section(this);
     }
 

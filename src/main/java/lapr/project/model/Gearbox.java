@@ -20,7 +20,7 @@ public class Gearbox {
 
         m_gears = new ArrayList<>();
         for (Gear gear : g.m_gears) {
-            m_gears.add(gear.clone());
+            m_gears.add(gear.copy());
         }
     }
 
@@ -57,7 +57,7 @@ public class Gearbox {
         return "Gearbox{" + "m_gears=" + m_gears + '}';
     }
 
-    public Gearbox clone() {
+    public Gearbox copy() {
 
         return new Gearbox(this);
     }
