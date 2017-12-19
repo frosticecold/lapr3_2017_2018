@@ -49,4 +49,11 @@ public class Junction {
 
     }
 
+    @Override
+    public String toString() {
+        return "Junction " + m_id;
+    }
+    
+    
+
 }
