@@ -199,5 +199,4 @@ public class VehicleCombustion extends Vehicle {
         }
         return true;
     }
-
 }

@@ -39,13 +39,15 @@ public class NetworkAnalysis {
     private void calculateFastestPath(Vehicle vehicle) {
         List<LinkedList<Section>> paths = this.m_project.allPaths(this.m_begin, this.m_end);
         double lowest = Double.POSITIVE_INFINITY;
+        double final_distance = 0;
         LinkedList<Section> fastestPath = new LinkedList<>();
         for (LinkedList<Section> path : paths) {
             double result = 0;
+            double distance = 0;
             for (Section section : path) {
                 for (Segment segment : section.getSequenceOfSegments()) {
                     double vel = getMaximumVelocityIn(segment, vehicle, section);
-
+                    distance += segment.getLength();
                     result += segment.getLength() / vel;
                 }
             }
@@ -53,10 +55,11 @@ public class NetworkAnalysis {
             if (lowest > result) {
                 lowest = result;
                 fastestPath = path;
+                final_distance = distance;
             }
         }
-        fastestResults = new AlgorithmResults(fastestPath, vehicle, lowest);
-        fastestResults.calculateTripCost();
+        fastestResults = new AlgorithmResults(m_project,fastestPath, vehicle, final_distance, lowest);
+        fastestResults.calculate();
     }
 
     private void setBeginJunction(Junction begin) {
