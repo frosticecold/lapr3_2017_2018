@@ -8,6 +8,7 @@ import java.util.LinkedList;
 import java.util.List;
 import lapr.project.model.Junction;
 import lapr.project.model.Section;
+import lapr.project.model.Segment;
 import oracle.jdbc.OracleTypes;
 
 public class SectionData extends DataAccess<Section> {
@@ -50,6 +51,28 @@ public class SectionData extends DataAccess<Section> {
         rs.close();
 
         return list;
+    }
+
+    public void insert(String pName, Section s) throws SQLException {
+        List<SQLArgument> args1 = new ArrayList<>();
+        
+        args1.add(new SQLArgument(Integer.toString(s.getID()),OracleTypes.VARCHAR));
+        ResultSet rs = super.callFunction("getSectionByID",args1);
+        if(rs.next()) {
+            rs.close();
+            return;
+        }
+        args1.add(new SQLArgument(s.getBeginningJunction().getID(), OracleTypes.VARCHAR));
+        args1.add(new SQLArgument(s.getEndingJunction().getID(), OracleTypes.VARCHAR));
+        args1.add(new SQLArgument(s.getRoadID(), OracleTypes.VARCHAR));
+        args1.add(new SQLArgument(pName, OracleTypes.VARCHAR));
+        args1.add(new SQLArgument(s.getDirection().name(), OracleTypes.VARCHAR));
+        super.callProcedure("insertSection", args1);
+        
+        SegmentData sd = new SegmentData(connection);
+        for(Segment seg : s.getSequenceOfSegments()) {
+            sd.insert(s.getID(), seg);
+        }
     }
 
 }

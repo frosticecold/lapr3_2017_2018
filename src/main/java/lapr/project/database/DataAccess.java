@@ -49,5 +49,34 @@ public abstract class DataAccess<T> {
 
         return c;
     }
+    
+    protected void callProcedure(String procedure, Iterable<SQLArgument> args) throws SQLException {
+        StringBuilder arg = new StringBuilder();
+
+        boolean first = true;
+        for (SQLArgument s : args) {
+            if (!first) {
+                arg.append(",'");
+            } else {
+                arg.append("'");
+            }
+            first = false;
+            String value;
+            if (s.getType() == OracleTypes.VARCHAR) {
+                value = s.getValue();
+            } else {
+                value = s.getValue().replace('.', ',');
+            }
+            if (s.getType() == OracleTypes.VARCHAR) {
+                value = value.replace("'", "''");
+            }
+            arg.append(value).append("'");
+        }
+
+        String sql = String.format("{call %s(%s)}", procedure, arg);
+        try (CallableStatement cstmt = connection.prepareCall(sql)) {
+            cstmt.execute();
+        }
+    }
 
 }

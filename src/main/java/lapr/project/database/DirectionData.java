@@ -29,4 +29,16 @@ public class DirectionData extends DataAccess<Section.Direction> {
         return null;
     }
 
+    public void insert(String name) throws SQLException {
+        List<SQLArgument> args = new ArrayList<>();
+
+        args.add(new SQLArgument(name, OracleTypes.VARCHAR));
+        ResultSet rs = super.callFunction("getDirectionByName", args);
+        if (rs.next()) {
+            rs.close();
+            return;
+        }
+        super.callProcedure("insertDirection", args);
+    }
+
 }

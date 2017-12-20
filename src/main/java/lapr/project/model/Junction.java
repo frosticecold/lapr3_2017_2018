@@ -1,6 +1,5 @@
 package lapr.project.model;
 
-import java.util.Map;
 import java.util.Objects;
 
 public class Junction {

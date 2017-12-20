@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import lapr.project.model.Accelerator;
+import lapr.project.model.Gear;
 import lapr.project.model.Gearbox;
 import lapr.project.model.Vehicle;
 import lapr.project.model.VehicleCombustion;
@@ -49,7 +50,7 @@ public class VehicleData extends DataAccess<Vehicle> {
             AcceleratorData a = new AcceleratorData(connection);
             Accelerator vAccelerator = a.get(vName);
 
-            if (vMotorization.equalsIgnoreCase("combustion")) {
+            if ("combustion".equalsIgnoreCase(vMotorization)) {
                 VehicleCombustion v = new VehicleCombustion();
                 v.setName(vName);
                 v.setDescription(vDescription);
@@ -68,7 +69,7 @@ public class VehicleData extends DataAccess<Vehicle> {
                 v.setAccelerator(vAccelerator);
 
                 list.addVehicle(v);
-            } else if (vMotorization.equalsIgnoreCase("electric")) {
+            } else if ("electric".equalsIgnoreCase(vMotorization)) {
                 VehicleElectric ve = new VehicleElectric();
                 ve.setName(vName);
                 ve.setDescription(vDescription);
@@ -93,6 +94,46 @@ public class VehicleData extends DataAccess<Vehicle> {
         }
 
         return list;
+    }
+
+    public void insert(String pName, Vehicle v) throws SQLException {
+        List<SQLArgument> args = new ArrayList<>();
+
+        args.add(new SQLArgument(v.getName(), OracleTypes.VARCHAR));
+        ResultSet rs = super.callFunction("getJunctionByName", args);
+        if (rs.next()) {
+            rs.close();
+            return;
+        }
+
+        args.clear();
+        args.add(new SQLArgument(pName, OracleTypes.VARCHAR));
+        args.add(new SQLArgument(v.getName(), OracleTypes.VARCHAR));
+        args.add(new SQLArgument(v.getDescription(), OracleTypes.VARCHAR));
+        args.add(new SQLArgument(v.getType(), OracleTypes.VARCHAR));
+        args.add(new SQLArgument(v.getFuel(), OracleTypes.VARCHAR));
+        args.add(new SQLArgument(v.getMotorization(), OracleTypes.VARCHAR));
+        args.add(new SQLArgument(Double.toString(v.getWheelSize()), OracleTypes.NUMBER));
+        args.add(new SQLArgument(Double.toString(v.getMass()), OracleTypes.NUMBER));
+        args.add(new SQLArgument(Double.toString(v.getLoad()), OracleTypes.NUMBER));
+        args.add(new SQLArgument(Double.toString(v.getDragCoefficient()), OracleTypes.NUMBER));
+        args.add(new SQLArgument(Double.toString(v.getFrontalArea()), OracleTypes.NUMBER));
+        args.add(new SQLArgument(Double.toString(v.getRcc()), OracleTypes.NUMBER));
+        args.add(new SQLArgument(Double.toString(v.getMinRpm()), OracleTypes.NUMBER));
+        args.add(new SQLArgument(Double.toString(v.getMaxRpm()), OracleTypes.NUMBER));
+        args.add(new SQLArgument(Double.toString(v.getFinalDriveRatio()), OracleTypes.NUMBER));
+        if(v instanceof VehicleElectric) {
+            args.add(new SQLArgument(Double.toString(((VehicleElectric) v).getEnergyRegenerationRatio()),OracleTypes.NUMBER));
+        }
+        
+        super.callProcedure("insertVehicle", args);
+        
+        GearboxData gd = new GearboxData(connection);
+        gd.insert(v.getName(), v.getGearbox());
+        
+        AcceleratorData ad = new AcceleratorData(connection);
+        ad.insert(v.getName(), v.getAccelerator());
+        
     }
 
 }

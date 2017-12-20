@@ -16,7 +16,11 @@ public class OpenProjectController {
     }
 
     private SQLConnection getSQLConnection() {
-        return sql == null ? sql = new DatabaseConnection().getDatabase() : sql;
+        if(sql == null) {
+            sql = new DatabaseConnection().getDatabase();
+            return sql;
+        }
+        return sql;
     }
 
     public List<String> getProjects() throws SQLException {
