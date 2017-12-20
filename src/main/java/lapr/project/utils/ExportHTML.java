@@ -9,14 +9,11 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import lapr.project.model.Junction;
 import lapr.project.model.Project;
 import lapr.project.model.Road;
 import lapr.project.model.Vehicle;
-import lapr.project.networkanalysis.NetworkAnalysis;
+import lapr.project.networkanalysis.AlgorithmResults;
 
 public class ExportHTML implements Exportable {
 
@@ -25,29 +22,15 @@ public class ExportHTML implements Exportable {
      */
     public ExportHTML() {
     }
-
-    /**
-     * Exports the results of the network static analysis into HTML format.
-     *
-     * @param networkAnalysis Container of the network static analysis results.
-     * @param filePath Path to export the file.
-     */
-    @Override
-    public void exportNetworkAnalysis(NetworkAnalysis networkAnalysis, List<String> vehicles, String filePath) {
+    
+    public void exportAnalysisResult(AlgorithmResults results,String filePath) throws IOException{
         StringBuilder sb = new StringBuilder();
-
         sb.append(openHTML());
-        sb.append(networkAnalysis.toStringHTML(vehicles));
+        sb.append(results.toStringHTML());
         sb.append(closeHTML());
-
-        try {
-            writeFileHTML(sb, filePath);
-        } catch (IOException ex) {
-            throw new IllegalArgumentException("An error occured while"
-                    + " attempting to export the HTML file.");
-        }
+        writeFileHTML(sb, filePath);
     }
-
+    
     public void exportProject(Project activeProject, String filePath) throws IOException {
         StringBuilder sb = new StringBuilder();
         sb.append(openHTML());
