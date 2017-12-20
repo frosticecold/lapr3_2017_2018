@@ -189,6 +189,7 @@ public class CreateProjectUI extends JDialog {
             if (m_project.validate()) {
                 JOptionPane.showMessageDialog(this, "Project was created successfully", "Created a project", JOptionPane.INFORMATION_MESSAGE);
                 Session.setActiveProject(m_project);
+                dispose();
             }
         } catch (IllegalArgumentException ex) {
             JOptionPane.showMessageDialog(this, "The project is invalid, it wasn't created, so it was reseted", "Error!", JOptionPane.ERROR_MESSAGE);
@@ -206,7 +207,6 @@ public class CreateProjectUI extends JDialog {
                 List<Vehicle> lista = xml.importVehicles(file);
                 for (Vehicle v : lista) {
                     m_project.addVehicle(v);
-
                 }
                 JOptionPane.showMessageDialog(this, "Vehicle were imported with success.", "Vehicle import", JOptionPane.INFORMATION_MESSAGE);
             } catch (FileNotFoundException ex) {

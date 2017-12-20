@@ -90,11 +90,11 @@ public class PhysicsCalculus {
 
     public static double getMaximumVelocityIn(Segment segment, Vehicle vehicle, Section section) {
         double velocity = vehicle.getRoadVelocityLimit(section.getTypology());//This velocity in KM/H
-        velocity = velocity / 3.6;
+        velocity = velocity / 3.6;  // convert to m/s
         double windSpeed = segment.getWindSpeed() * Math.cos(Math.toRadians(segment.getWindDirection()));
 
         velocity -= windSpeed;
-        double maxVelocity = segment.getMaximumVelocity();
+        double maxVelocity = segment.getMaximumVelocity() / 3.6; // convert KM/H to m/s
         velocity = Math.min(velocity, (maxVelocity > 0) ? maxVelocity : velocity);
         return velocity;
     }

@@ -18,11 +18,11 @@ import lapr.project.model.Segment;
 import lapr.project.model.Vehicle;
 
 public class NetworkXML implements FileFormat {
-
+    
     private File file;
     private XMLStreamReader reader;
     private String elementContent;
-
+    
     private Project m_project;
     private String m_network_id;
     private String m_network_description;
@@ -60,16 +60,16 @@ public class NetworkXML implements FileFormat {
     private static final String MIN_VELOCITY_TAG = "min_velocity";
     private static final String WIND_DIRECTION_TAG = "wind_direction";
     private static final String WIND_SPEED_TAG = "wind_speed";
-
+    
     public NetworkXML() {
         //Empty constructor
     }
-
+    
     @Override
     public List<Vehicle> importVehicles(File file) throws FileNotFoundException, ImportException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
+    
     @Override
     public boolean importNetwork(Project project, File file) throws FileNotFoundException, ImportException {
         if (project == null || file == null || !file.exists()) {
@@ -84,7 +84,7 @@ public class NetworkXML implements FileFormat {
         }
         return true;
     }
-
+    
     private void importXML() throws FileNotFoundException, XMLStreamException {
         XMLInputFactory factory = XMLInputFactory.newInstance();
         this.reader = factory.createXMLStreamReader(new FileInputStream(this.file));
@@ -94,7 +94,7 @@ public class NetworkXML implements FileFormat {
             identifyXML(xmlEvent);
         }
     }
-
+    
     private void identifyXML(int xmlEvent) throws XMLStreamException {
         switch (xmlEvent) {
             case XMLStreamConstants.START_ELEMENT: {
@@ -108,23 +108,23 @@ public class NetworkXML implements FileFormat {
                     default:
                         break;
                 }
-
+                
             }
         }
     }
-
+    
     private String getElementText() {
         return this.reader.getText().trim();
     }
-
+    
     private void readNetworkElements() throws XMLStreamException {
         while (this.reader.hasNext()) {
             int xmlEvent = this.reader.next();
             checkNetworkElements(xmlEvent);
         }
-
+        
     }
-
+    
     private void checkNetworkElements(int xmlEvent) throws XMLStreamException {
         switch (xmlEvent) {
             case XMLStreamConstants.START_ELEMENT: {
@@ -147,7 +147,7 @@ public class NetworkXML implements FileFormat {
             }
         }
     }
-
+    
     private void checkNetworkStartElement() {
         switch (reader.getLocalName()) {
             case NODE_LIST_TAG: {
@@ -161,41 +161,41 @@ public class NetworkXML implements FileFormat {
                 }
                 break;
             }
-
+            
             case ROADLIST_TAG: {
                 break;
             }
-
+            
             case ROAD_TAG: {
                 String id = this.reader.getAttributeValue(null, "id");
                 m_road = new Road();
                 m_road.setRoadID(id);
                 break;
             }
-
+            
             case ROAD_NAME_TAG: {
                 break;
             }
-
+            
             case TYPOLOGY_TAG: {
                 break;
             }
-
+            
             case TOLL_FARE_TAG: {
                 m_readingtollfare = true;
                 break;
             }
-
+            
             case TOLL_TAG: {
                 m_readingtoll = true;
                 break;
             }
-
+            
             case CLASS_TAG: {
                 m_toll_class = Integer.parseInt(this.reader.getAttributeValue(null, "id"));
                 break;
             }
-
+            
             case SECTION_LIST_TAG: {
                 break;
             }
@@ -210,16 +210,16 @@ public class NetworkXML implements FileFormat {
             case ROAD_ID_TAG: {
                 break;
             }
-
+            
             case DIRECTION_TAG: {
                 break;
             }
-
+            
             case SEGMENT_LIST_TAG: {
                 m_listOfSegment = new ArrayList<>();
                 break;
             }
-
+            
             case SEGMENT_TAG: {
                 m_segment = new Segment();
                 m_segment.setSegmentIndex(Integer.parseInt(this.reader.getAttributeValue(null, "id")));
@@ -230,7 +230,7 @@ public class NetworkXML implements FileFormat {
             }
         }
     }
-
+    
     private void checkNetworkEndElement() {
         switch (reader.getLocalName()) {
             case NODE_LIST_TAG: {
@@ -242,7 +242,7 @@ public class NetworkXML implements FileFormat {
             case ROADLIST_TAG: {
                 break;
             }
-
+            
             case ROAD_TAG: {
                 if (m_road.validate()) {
                     m_project.addRoad(m_road);
@@ -250,17 +250,17 @@ public class NetworkXML implements FileFormat {
                 m_road = null;
                 break;
             }
-
+            
             case ROAD_NAME_TAG: {
                 m_road.setName(this.elementContent);
                 break;
             }
-
+            
             case TYPOLOGY_TAG: {
                 m_road.setTypology(this.elementContent);
                 break;
             }
-
+            
             case TOLL_FARE_TAG: {
                 if (m_readingtollfare) {
                     m_readingtollfare = false;
@@ -273,7 +273,7 @@ public class NetworkXML implements FileFormat {
                 }
                 break;
             }
-
+            
             case CLASS_TAG: {
                 double value = Double.parseDouble(elementContent);
                 if (m_readingtollfare) {
@@ -286,7 +286,7 @@ public class NetworkXML implements FileFormat {
                 }
                 break;
             }
-
+            
             case SECTION_LIST_TAG: {
                 break;
             }
@@ -333,7 +333,7 @@ public class NetworkXML implements FileFormat {
                 m_segment = null;
                 break;
             }
-
+            
             case INITIAL_HEIGHT_TAG: {
                 m_segment.setInitialHeight(Double.parseDouble(this.elementContent));
                 break;
@@ -347,13 +347,13 @@ public class NetworkXML implements FileFormat {
                 break;
             }
             case MAX_VELOCITY_TAG: {
-                Double max_vel = Double.parseDouble(this.elementContent.split(" ")[0]);
+                double max_vel = Double.parseDouble(this.elementContent.split(" ")[0]);
                 m_segment.setMaximumVelocity(max_vel);
                 break;
             }
             case MIN_VELOCITY_TAG: {
                 Double min_vel = Double.parseDouble(this.elementContent.split(" ")[0]);
-                m_segment.setMaximumVelocity(min_vel);
+                m_segment.setMinimumVelocity(min_vel);
                 break;
             }
             case WIND_DIRECTION_TAG: {
