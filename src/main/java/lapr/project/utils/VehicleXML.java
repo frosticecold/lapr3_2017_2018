@@ -39,7 +39,7 @@ public class VehicleXML implements FileFormat {
     private static final String LOAD_TAG = "load";
     private static final String DRAG_TAG = "drag";
     private static final String FRONTAL_AREA_TAG = "frontal_area";
-    private static final String RCC_TAG = "rcc";
+    private static final String RRC_TAG = "rrc";
     private static final String WHEEL_SIZE_TAG = "wheel_size";
     private static final String MIN_RPM_TAG = "min_rpm";
     private static final String MAX_RPM_TAG = "max_rpm";
@@ -243,7 +243,7 @@ public class VehicleXML implements FileFormat {
                 break;
             }
 
-            case RCC_TAG: {
+            case RRC_TAG: {
                 vehicle.setRcc(Double.parseDouble(this.elementContent));
                 break;
             }
@@ -411,7 +411,7 @@ public class VehicleXML implements FileFormat {
     }
 
     private void addMass() {
-        String[] split = this.elementContent.split("");
+        String[] split = this.elementContent.split(" ");
         this.elementContent = split[0];
         double mass = Double.parseDouble(elementContent);
         elementContent = split[1];
@@ -420,7 +420,7 @@ public class VehicleXML implements FileFormat {
     }
 
     private void addLoad() {
-        String[] split = this.elementContent.split("");
+        String[] split = this.elementContent.split(" ");
         this.elementContent = split[0];
         double load = Double.parseDouble(elementContent);
         elementContent = split[1];

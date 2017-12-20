@@ -159,6 +159,18 @@ public abstract class Vehicle {
         this.m_road_velocity_limit = m_road_velocity_limit;
     }
 
+    public String getDescription() {
+        return m_description;
+    }
+
+    public String getMotorization() {
+        return m_motorization;
+    }
+
+    public double getLoad() {
+        return m_load;
+    }
+    
     public double getMass() {
         return m_mass;
     }
@@ -276,6 +288,17 @@ public abstract class Vehicle {
     public String toStringHTML() {
         StringBuilder sb = new StringBuilder();
 
+//        sb.append("<table>\n");
+//        sb.append("\t<tr><th>Vehicle Name</th><th>Description</th><th>Mass</th></tr>\n");
+//        
+//        sb.append("\t<tr>"
+//                            + "<td>").append(this.m_name).append("</td>"
+//                            + "<td>").append(this.m_description).append("</td>"
+//                            + "<td>").append(this.m_mass).append(" Kg</td>"
+//                            + "</td>"
+//                            + "</tr>\n");
+//        sb.append("</table>\n");
+        
         sb.append("\t<li>Name: ").append(this.m_name).append("</li>\n");
         sb.append("\t<li>Description: ").append(this.m_description).append("</li>\n");
         sb.append("\t<li>Type: ").append(this.m_type).append("</li>\n");

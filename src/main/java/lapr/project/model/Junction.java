@@ -1,5 +1,6 @@
 package lapr.project.model;
 
+import java.util.Map;
 import java.util.Objects;
 
 public class Junction {
@@ -53,6 +54,19 @@ public class Junction {
         return "Junction " + m_id;
     }
 
+    /**
+     * Returns the textual description of the object in html format.
+     *
+     * @return Textual description of the object.
+     */
+    public String toStringHTML() {
+        StringBuilder sb = new StringBuilder();
+        
+        sb.append("\t<li>ID: ").append(this.m_id).append("</li>\n");
+
+        return sb.toString();
+    }
+    
     public Junction copy() {
         return new Junction(m_id);
     }

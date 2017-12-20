@@ -100,4 +100,20 @@ public class Road {
         return copy;
     }
 
+    /**
+     * Returns the textual description of the object in html format.
+     *
+     * @return Textual description of the object.
+     */
+    public String toStringHTML() {
+        StringBuilder sb = new StringBuilder();
+        
+        sb.append("\t<li>Road id: ").append(this.m_road_id).append("</li>\n");
+        sb.append("\t<li>Name: ").append(this.m_name).append("</li>\n");
+        sb.append("\t<li>Typology: ").append(this.m_typology).append("</li>\n");
+        sb.append("\t<li>Num of Section: ").append(this.m_num_of_section).append("</li>\n");
+
+        return sb.toString();
+    }
+    
 }
