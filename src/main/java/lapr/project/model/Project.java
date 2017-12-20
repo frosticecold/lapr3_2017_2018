@@ -54,6 +54,12 @@ public class Project {
         this.m_list_roads = listOfRoads;
     }
 
+    public List<Road> getListRoads() {
+        return m_list_roads;
+    }
+    
+    
+    
     public Graph<Junction, Section> getRoadNetwork() {
         return m_road_network;
     }

@@ -54,7 +54,7 @@ public class Mockup extends javax.swing.JFrame {
         subMenuItemExportCSV = new javax.swing.JMenu();
         subItemMenuShow = new javax.swing.JMenu();
         menuItemFile = new javax.swing.JMenu();
-        menuItemSaveFile = new javax.swing.JMenuItem();
+        exportHTML = new javax.swing.JMenuItem();
         menuHelp = new javax.swing.JMenu();
         googleMenuItem = new javax.swing.JMenuItem();
 
@@ -148,8 +148,13 @@ public class Mockup extends javax.swing.JFrame {
 
         menuItemFile.setText("File");
 
-        menuItemSaveFile.setText("Save current project");
-        menuItemFile.add(menuItemSaveFile);
+        exportHTML.setText("Export Project");
+        exportHTML.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                exportHTMLActionPerformed(evt);
+            }
+        });
+        menuItemFile.add(exportHTML);
 
         jMenuBar1.add(menuItemFile);
 
@@ -209,6 +214,10 @@ public class Mockup extends javax.swing.JFrame {
     private void googleMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_googleMenuItemActionPerformed
         openWebPage("https://www.google.pt/");
     }//GEN-LAST:event_googleMenuItemActionPerformed
+
+    private void exportHTMLActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exportHTMLActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_exportHTMLActionPerformed
       
     private void openWebPage(String url) {
         try {
@@ -256,6 +265,7 @@ public class Mockup extends javax.swing.JFrame {
 //        });
 //    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem exportHTML;
     private javax.swing.JMenuItem googleMenuItem;
     private javax.swing.JMenu itemProject;
     private javax.swing.JMenuItem itemProjectCopyProject;
@@ -274,7 +284,6 @@ public class Mockup extends javax.swing.JFrame {
     private javax.swing.JMenu menuItemFile;
     private javax.swing.JMenuItem menuItemOpenProject;
     private javax.swing.JMenu menuItemSave;
-    private javax.swing.JMenuItem menuItemSaveFile;
     private javax.swing.JMenu menuNetworkAnalysis;
     private javax.swing.JMenu menuResults;
     private javax.swing.JMenu subItemMenuShow;

@@ -10,11 +10,14 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
+import lapr.project.model.Junction;
+import lapr.project.model.Project;
+import lapr.project.model.Road;
+import lapr.project.model.Vehicle;
 import lapr.project.networkanalysis.NetworkAnalysis;
 
-public class ExportHTML implements Exportable{
-    
-    
+public class ExportHTML implements Exportable {
+
     /**
      * Creates an instance of ExportHTML, which will serve as a HTML exporter.
      */
@@ -23,19 +26,56 @@ public class ExportHTML implements Exportable{
 
     /**
      * Exports the results of the network static analysis into HTML format.
-     * 
+     *
      * @param networkAnalysis Container of the network static analysis results.
      * @param filePath Path to export the file.
      */
     @Override
     public void exportNetworkAnalysis(NetworkAnalysis networkAnalysis, List<String> vehicles, String filePath) {
         StringBuilder sb = new StringBuilder();
-        
+
         sb.append(openHTML());
         sb.append(networkAnalysis.toStringHTML(vehicles));
         sb.append(closeHTML());
-        
+
         writeFileHTML(sb, filePath);
+    }
+
+    public void exportProject(Project activeProject, String filePath) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(openHTML());
+        sb.append(projectToHTML(activeProject));
+        sb.append(closeHTML());
+        writeFileHTML(sb, filePath);
+    }
+
+    private String projectToHTML(Project activeProject) {
+        StringBuilder sb = new StringBuilder();
+
+        sb.append("<h1>Project</h1>");
+        sb.append("<table>\n");
+        sb.append("\t<tr><th>Vehicles</th></tr>\n");
+        for (Vehicle vehicle : activeProject.getListVehicles().getVehicleList()) {
+            sb.append("\t<tr>" + "<td>").append(vehicle.toStringHTML()).append("</td></tr>\n");
+
+        }
+        sb.append("</table>\n");
+
+        sb.append("<h2>Road Network</h2>");
+        sb.append("<table>\n");
+        sb.append("\t<tr><th>Roads</th></tr>\n");
+        for (Road road : activeProject.getListRoads()) {
+            sb.append("\t<tr>" + "<td>").append(road.toStringHTML()).append("</td></tr>\n");
+        }
+        sb.append("</table>\n");
+        
+        sb.append("<table>\n");
+        sb.append("\t<tr><th>Junctions</th></tr>\n");
+        for (Junction junction : activeProject.getRoadNetwork().vertices()) {
+            sb.append("\t<tr>" + "<td>").append(junction.toStringHTML()).append("</td></tr>\n");
+        }
+        sb.append("</table>\n");
+        return sb.toString();
     }
 
     /**
