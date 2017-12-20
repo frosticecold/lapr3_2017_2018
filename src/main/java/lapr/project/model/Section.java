@@ -241,7 +241,7 @@ public class Section {
 
     }
 
-    /**
+   /**
      * Returns the textual description of the object in html format.
      *
      * @return Textual description of the object.
@@ -249,10 +249,13 @@ public class Section {
     public String toStringHTML() {
         StringBuilder sb = new StringBuilder();
 
-        sb.append("\t<li>Begin Road Junction: ").append(this.m_beginning_junction.toStringHTML()).append("</li>\n");
-        sb.append("\t<li>Road ID: ").append(this.m_road_id).append("</li>\n");
-        sb.append("\t<li>End Road Junction: ").append(this.m_ending_junction.toStringHTML()).append("</li>\n");
-        
+        sb.append("<table>\n");
+        sb.append("\t<tr><th>Begin Road Junction</th><th>Road ID</th><th>End Road Junction</th></tr>");
+        sb.append("<tr>"
+                + "<td>").append(this.m_beginning_junction.toStringHTML()).append("</td>"
+                + "<td>").append(this.m_road_id).append("</td>"
+                + "<td>").append(this.m_ending_junction.toStringHTML()).append("</td>"
+                + "</tr>\n");
         return sb.toString();
     }
 

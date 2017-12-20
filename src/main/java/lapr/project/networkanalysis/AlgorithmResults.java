@@ -1,5 +1,6 @@
 package lapr.project.networkanalysis;
 
+import java.util.Iterator;
 import java.util.LinkedList;
 import lapr.project.model.Junction;
 import lapr.project.model.Project;
@@ -111,17 +112,31 @@ public class AlgorithmResults {
     public String toStringHTML() {
         StringBuilder sb = new StringBuilder();
 
+        StringBuilder path = new StringBuilder();
+        int i = 1;
+        for (Section section : sectionpath) {
+            path.append(section.toStringHTML() + "\n").append("Section " + i + ":");
+            i++;
+        }
+
         sb.append("<h1>Fastest Path Results</h1>");
         sb.append("<table>\n");
-        sb.append("\t<tr><th>Vehicle</th><th>Travel Time</th><th>Consumed Energy</th><th>Cost</th><th>Path</th></tr>\n");
-        
+        sb.append("\t<tr><th>Vehicle</th><th>Travel Time</th><th>Consumed Energy</th><th>Cost</th></tr>\n");
+
         sb.append("<tr>"
                 + "<td>").append(this.vehicle.getName()).append("</td>"
                 + "<td>").append(this.travelTime).append(" s</td>"
                 + "<td>").append(this.energy).append(" J</td>"
                 + "<td>").append(this.cost).append(" €</td>");
         sb.append("</tr>\n");
-
+        sb.append("</table>\n");
+        sb.append("<h2> </h2>");
+        sb.append("<table>\n");
+        sb.append("\t<tr><th>Path</th></tr>\n");
+        sb.append("<tr>"
+                + "<td>").append(path).append("</td>");
+        sb.append("</tr>\n");
+        sb.append("</table>\n");
         return sb.toString();
     }
 }
