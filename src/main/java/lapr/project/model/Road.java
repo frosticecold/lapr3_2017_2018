@@ -1,8 +1,6 @@
 package lapr.project.model;
 
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 
 public class Road {
@@ -24,6 +22,16 @@ public class Road {
         setName(name);
         setTypology(typology);
         m_toll_fare = new LinkedHashMap<>();
+    }
+
+    public Road(Road r) {
+        this.m_road_id = r.m_road_id;
+        this.m_name = r.m_name;
+        this.m_typology = r.m_typology;
+        this.m_toll_fare = new LinkedHashMap<>();
+        for (Integer i : r.m_toll_fare.keySet()) {
+            this.m_toll_fare.put(i, r.m_toll_fare.get(i));
+        }
     }
 
     public String getRoadID() {
@@ -94,12 +102,6 @@ public class Road {
         return true;
     }
 
-    public Road copy() {
-        Road copy = new Road(m_road_id, m_name, m_typology);
-        copy.setTollFare(m_toll_fare);
-        return copy;
-    }
-
     /**
      * Returns the textual description of the object in html format.
      *
@@ -107,12 +109,11 @@ public class Road {
      */
     public String toStringHTML() {
         StringBuilder sb = new StringBuilder();
-        
+
         sb.append("\t<li>Road id: ").append(this.m_road_id).append("</li>\n");
         sb.append("\t<li>Name: ").append(this.m_name).append("</li>\n");
         sb.append("\t<li>Typology: ").append(this.m_typology).append("</li>\n");
 
         return sb.toString();
     }
-    
 }

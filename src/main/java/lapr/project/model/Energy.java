@@ -1,5 +1,6 @@
 package lapr.project.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Energy {
@@ -22,8 +23,11 @@ public class Energy {
         this.m_max_rpm = e.m_max_rpm;
         this.m_min_rpm = e.m_min_rpm;
         this.m_final_drive_ratio = e.m_final_drive_ratio;
-        this.m_gears_list = e.m_gears_list;
-        this.m_throttle_list = e.m_throttle_list;
+        this.m_gears_list = new Gearbox(e.m_gears_list);
+        this.m_throttle_list = new ArrayList<>();
+        for (Throttle t : e.m_throttle_list) {
+            this.m_throttle_list.add(new Throttle(t));
+        }
     }
 
     public Energy() {
@@ -72,10 +76,5 @@ public class Energy {
     @Override
     public String toString() {
         return "Energy{" + "m_min_rpm=" + m_min_rpm + ", m_max_rpm=" + m_max_rpm + ", m_final_drive_ratio=" + m_final_drive_ratio + ", m_gears_list=" + m_gears_list + ", m_throttle_list=" + m_throttle_list + '}';
-    }
-
-    @Override
-    protected Energy clone() {
-        return new Energy(this);
     }
 }

@@ -98,7 +98,7 @@ public class CopyProjectUI extends javax.swing.JDialog {
         if (!controller.copyProject(jTextField1.getText())) {
             JOptionPane.showMessageDialog(this, "Error copying project", "ERROR", JOptionPane.ERROR_MESSAGE);
         } else {
-            JOptionPane.showMessageDialog(this, "the project was copied successfully", "Success", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, "The project was copied successfully", "Success", JOptionPane.INFORMATION_MESSAGE);
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 

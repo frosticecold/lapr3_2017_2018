@@ -16,6 +16,13 @@ public class Gear {
     }
 
     public Gear() {
+        m_gearID = 0;
+        m_ratio = 0;
+    }
+
+    public Gear(Gear otherGear) {
+        this.m_gearID = otherGear.m_gearID;
+        this.m_ratio = otherGear.m_ratio;
     }
 
     public int getGearID() {
@@ -38,9 +45,4 @@ public class Gear {
     public String toString() {
         return "Gear{" + "m_gearID=" + m_gearID + ", m_ratio=" + m_ratio + '}';
     }
-
-    public Gear copy() {
-        return new Gear(m_gearID, m_ratio);
-    }
-
 }

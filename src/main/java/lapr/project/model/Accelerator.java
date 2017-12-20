@@ -11,6 +11,13 @@ public class Accelerator {
         this.m_throttle_list = new HashMap<>();
     }
 
+    public Accelerator(Accelerator acc) {
+        this.m_throttle_list = new HashMap<>();
+        for (Integer i : acc.m_throttle_list.keySet()) {
+            this.m_throttle_list.put(i, acc.m_throttle_list.get(i));
+        }
+    }
+
     public Map<Integer, Throttle> getThrottleList() {
         return m_throttle_list;
     }
@@ -37,11 +44,5 @@ public class Accelerator {
     @Override
     public String toString() {
         return "Accelerator{" + "m_throttle_list=" + m_throttle_list + '}';
-    }
-
-    public Accelerator copy() {
-        Accelerator copy = new Accelerator();
-        copy.setThrottleList(m_throttle_list);
-        return copy;
     }
 }

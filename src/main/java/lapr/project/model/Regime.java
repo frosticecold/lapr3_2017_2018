@@ -21,6 +21,13 @@ public class Regime {
         m_SFC = 0.0;
     }
 
+    public Regime(Regime reg) {
+        this.m_torque = reg.m_torque;
+        this.m_rpm_low = reg.m_rpm_low;
+        this.m_rpm_high = reg.m_rpm_high;
+        this.m_SFC = reg.m_SFC;
+    }
+
     public double getM_torque() {
         return m_torque;
     }
@@ -87,9 +94,4 @@ public class Regime {
     public String toString() {
         return "Regime{" + "m_torque=" + m_torque + ", m_rpm_low=" + m_rpm_low + ", m_rpm_high=" + m_rpm_high + ", m_SFC=" + m_SFC + '}';
     }
-
-    public Regime copy() {
-        return new Regime(m_torque, m_rpm_low, m_rpm_high, m_SFC);
-    }
-
 }

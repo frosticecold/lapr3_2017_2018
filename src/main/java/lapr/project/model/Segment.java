@@ -27,6 +27,17 @@ public class Segment {
         this.m_minimum_velocity = m_minimum_velocity;
     }
 
+    public Segment(Segment s) {
+        this.m_segment_index = s.m_segment_index;
+        this.m_initial_height = s.m_initial_height;
+        this.m_final_height = s.m_final_height;
+        this.m_length = s.m_length;
+        this.m_wind_direction = s.m_wind_direction;
+        this.m_wind_speed = s.m_wind_speed;
+        this.m_maximum_velocity = s.m_maximum_velocity;
+        this.m_minimum_velocity = s.m_minimum_velocity;
+    }
+
     public double getLength() {
         return m_length;
     }
@@ -175,10 +186,5 @@ public class Segment {
         seg.m_minimum_velocity = m_minimum_velocity;
         return seg;
 
-    }
-
-    public Segment copy() {
-        Segment copy = new Segment(m_segment_index, m_initial_height, m_final_height, m_length, m_wind_direction, m_wind_speed, m_maximum_velocity, m_minimum_velocity);
-        return copy;
     }
 }

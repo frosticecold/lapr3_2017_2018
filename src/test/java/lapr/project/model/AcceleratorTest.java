@@ -174,38 +174,5 @@ public class AcceleratorTest {
 
     }
 
-    /**
-     * Test of toString method, of class Accelerator.
-     */
-    @Test
-    public void testCopy() {
-        System.out.println("AcceleratortoStringTest");
-        ArrayList<Regime> m_regime_list = new ArrayList<>();
-        Regime r1 = new Regime(115, 900, 1499, 500);
-        Regime r2 = new Regime(125, 1500, 2499, 450);
-        Regime r3 = new Regime(120, 2500, 3499, 520);
-        Regime r4 = new Regime(105, 3500, 4499, 550);
-        Regime r5 = new Regime(90, 4500, 5500, 650);
-        m_regime_list.add(r1);
-        m_regime_list.add(r2);
-        m_regime_list.add(r3);
-        m_regime_list.add(r4);
-        m_regime_list.add(r5);
-        Throttle t1 = new Throttle(m_regime_list);
-        Map<Integer, Throttle> mapThrottle = new HashMap<>();
-        int throttleId = 25;
-        mapThrottle.put(throttleId, t1);
-
-        Accelerator expResult = new Accelerator();
-        expResult.setThrottleList(mapThrottle);
-        
-        
-        Accelerator result = expResult.copy();
-        assertTrue(result.toString().equals(expResult.toString()));
-        
-        expResult.setThrottleList(new HashMap<>());
-        assertNotEquals(result,expResult);
-        
-    }
 
 }

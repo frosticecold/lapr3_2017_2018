@@ -32,6 +32,24 @@ public class Section {
         m_direction = Direction.DIRECT;
         m_toll = new HashMap<>();
     }
+    
+    public Section(Section s){
+        this.m_beginning_junction = s.m_beginning_junction;
+        this.m_ending_junction = s.m_ending_junction;
+        this.m_road_id = s.m_road_id;
+        this.m_section_id = s.m_section_id;
+        this.m_typology = s.m_typology;
+        
+        this.m_sequenceOfSegments = new ArrayList<>();
+        for (Segment seg: s.m_sequenceOfSegments){
+            this.m_sequenceOfSegments.add(new Segment(seg));
+        }
+        
+        this.m_toll=new HashMap<>();
+        for(Integer i : s.m_toll.keySet()){
+            this.m_toll.put(i, s.m_toll.get(i));
+        }
+    }
 
     public boolean addToll(int vehic_id, double value) {
         if (vehic_id <= 0 || value < 0) {

@@ -1,6 +1,5 @@
 package lapr.project.model;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -14,6 +13,13 @@ public class Gearbox {
 
     public Gearbox() {
         this.m_gears = new LinkedList<>();
+    }
+
+    public Gearbox(Gearbox gea) {
+        this.m_gears = new LinkedList<>();
+        for (Gear r : gea.m_gears) {
+            this.m_gears.add(new Gear(r));
+        }
     }
 
     /**
@@ -57,9 +63,4 @@ public class Gearbox {
     public String toString() {
         return "Gearbox{" + "m_gears=" + m_gears + '}';
     }
-
-    public Gearbox copy() {
-        return new Gearbox(m_gears);
-    }
-
 }
