@@ -187,7 +187,13 @@ public class Mockup extends javax.swing.JFrame {
     }//GEN-LAST:event_menuItemOpenProjectActionPerformed
 
     private void itemProjectEditProjectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemProjectEditProjectActionPerformed
-        new EditProjectUI(this).setVisible(true);
+       if (Session.getActiveProject() != null) {
+            EditProjectUI ui = new EditProjectUI(this);
+            ui.setLocationRelativeTo(this);
+            ui.setVisible(true);
+        } else {
+            JOptionPane.showMessageDialog(this, "There is no active project at the moment.\nPress OK to close");
+        }
     }//GEN-LAST:event_itemProjectEditProjectActionPerformed
 
     private void itemProjectCopyProjectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemProjectCopyProjectActionPerformed
@@ -196,8 +202,7 @@ public class Mockup extends javax.swing.JFrame {
             ui.setLocationRelativeTo(this);
             ui.setVisible(true);
         } else {
-            JOptionPane.showMessageDialog(this, "There is not an active project at the moment.\nPress OK to close");
-
+            JOptionPane.showMessageDialog(this, "There is no active project at the moment.\nPress OK to close");
         }
     }//GEN-LAST:event_itemProjectCopyProjectActionPerformed
 
@@ -209,7 +214,7 @@ public class Mockup extends javax.swing.JFrame {
         try {
             new PathAlgorithmsUI().setVisible(true);
         } catch (NullPointerException n) {
-            JOptionPane.showMessageDialog(this, "No Active Project to Analyse", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "No active project to analyse", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_algorithmsMenuItemActionPerformed
 
