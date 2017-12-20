@@ -7,11 +7,15 @@ package lapr.project.ui;
 
 import java.awt.Toolkit;
 import java.io.File;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import lapr.project.controller.MockUpController;
 import lapr.project.model.Project;
+import lapr.project.utils.Session;
 
 /**
  *
@@ -183,13 +187,23 @@ public class Mockup extends javax.swing.JFrame {
     }//GEN-LAST:event_menuItemOpenProjectActionPerformed
 
     private void itemProjectEditProjectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemProjectEditProjectActionPerformed
-        new EditProjectUI(this).setVisible(true);
+       if (Session.getActiveProject() != null) {
+            EditProjectUI ui = new EditProjectUI(this);
+            ui.setLocationRelativeTo(this);
+            ui.setVisible(true);
+        } else {
+            JOptionPane.showMessageDialog(this, "There is no active project at the moment.\nPress OK to close");
+        }
     }//GEN-LAST:event_itemProjectEditProjectActionPerformed
 
     private void itemProjectCopyProjectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemProjectCopyProjectActionPerformed
-        CopyProjectUI ui = new CopyProjectUI(this, rootPaneCheckingEnabled);
-        ui.setLocationRelativeTo(this);
-        ui.setVisible(true);
+        if (Session.getActiveProject() != null) {
+            CopyProjectUI ui = new CopyProjectUI(this, rootPaneCheckingEnabled);
+            ui.setLocationRelativeTo(this);
+            ui.setVisible(true);
+        } else {
+            JOptionPane.showMessageDialog(this, "There is no active project at the moment.\nPress OK to close");
+        }
     }//GEN-LAST:event_itemProjectCopyProjectActionPerformed
 
     private void menuItemCreateProjectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemCreateProjectActionPerformed
@@ -200,7 +214,7 @@ public class Mockup extends javax.swing.JFrame {
         try {
             new PathAlgorithmsUI().setVisible(true);
         } catch (NullPointerException n) {
-            JOptionPane.showMessageDialog(this, "No Active Project to Analyse", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "No active project to analyse", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_algorithmsMenuItemActionPerformed
 
@@ -223,6 +237,8 @@ public class Mockup extends javax.swing.JFrame {
             }
         } catch (NullPointerException n) {
             JOptionPane.showMessageDialog(this, "No active project to export", "Error", JOptionPane.ERROR_MESSAGE);
+        } catch (IOException ex) {
+            Logger.getLogger(Mockup.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_exportHTMLActionPerformed
 

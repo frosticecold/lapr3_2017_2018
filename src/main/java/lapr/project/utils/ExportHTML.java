@@ -9,12 +9,11 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.List;
 import lapr.project.model.Junction;
 import lapr.project.model.Project;
 import lapr.project.model.Road;
 import lapr.project.model.Vehicle;
-import lapr.project.networkanalysis.NetworkAnalysis;
+import lapr.project.networkanalysis.AlgorithmResults;
 
 public class ExportHTML implements Exportable {
 
@@ -23,25 +22,16 @@ public class ExportHTML implements Exportable {
      */
     public ExportHTML() {
     }
-
-    /**
-     * Exports the results of the network static analysis into HTML format.
-     *
-     * @param networkAnalysis Container of the network static analysis results.
-     * @param filePath Path to export the file.
-     */
-    @Override
-    public void exportNetworkAnalysis(NetworkAnalysis networkAnalysis, List<String> vehicles, String filePath) {
+    
+    public void exportAnalysisResult(AlgorithmResults results,String filePath) throws IOException{
         StringBuilder sb = new StringBuilder();
-
         sb.append(openHTML());
-        sb.append(networkAnalysis.toStringHTML(vehicles));
+        sb.append(results.toStringHTML());
         sb.append(closeHTML());
-
         writeFileHTML(sb, filePath);
     }
-
-    public void exportProject(Project activeProject, String filePath) {
+    
+    public void exportProject(Project activeProject, String filePath) throws IOException {
         StringBuilder sb = new StringBuilder();
         sb.append(openHTML());
         sb.append(projectToHTML(activeProject));
@@ -57,7 +47,6 @@ public class ExportHTML implements Exportable {
         sb.append("\t<tr><th>Vehicles</th></tr>\n");
         for (Vehicle vehicle : activeProject.getListVehicles().getVehicleList()) {
             sb.append("\t<tr>" + "<td>").append(vehicle.toStringHTML()).append("</td></tr>\n");
-
         }
         sb.append("</table>\n");
 
@@ -78,6 +67,8 @@ public class ExportHTML implements Exportable {
         return sb.toString();
     }
 
+    
+    
     /**
      * String with the opening of an HTML file.
      *
@@ -113,7 +104,8 @@ public class ExportHTML implements Exportable {
      * @param stringBuilder Object that contains the output format.
      * @param filePath Path where to export the file.
      */
-    private void writeFileHTML(StringBuilder stringBuilder, String filePath) {
+    private void writeFileHTML(StringBuilder stringBuilder, String filePath) throws IOException {
+        BufferedWriter bw = null;
         try {
             File file = new File(filePath);
 
@@ -122,13 +114,17 @@ public class ExportHTML implements Exportable {
                 file.createNewFile();
             }
 
-            BufferedWriter bw = new BufferedWriter(new FileWriter(file));
+            
+            bw = new BufferedWriter(new FileWriter(file));
             bw.write(stringBuilder.toString());
-            bw.close();
 
         } catch (IOException e) {
             throw new IllegalArgumentException("An error occured while"
                     + " attempting to export the HTML file.");
+        }
+        finally{
+            bw.close();
+            
         }
     }
 }

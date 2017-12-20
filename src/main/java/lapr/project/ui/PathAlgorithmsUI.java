@@ -5,7 +5,13 @@
  */
 package lapr.project.ui;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import lapr.project.controller.PathAlgorithmsController;
 import lapr.project.model.Junction;
 import lapr.project.model.Vehicle;
@@ -14,6 +20,7 @@ public class PathAlgorithmsUI extends javax.swing.JFrame {
 
     private static final long serialVersionUID = 1;
     private PathAlgorithmsController controller;
+    private JFileChooser m_jfc;
 
     /**
      * Creates new form FastestPathUI
@@ -28,9 +35,17 @@ public class PathAlgorithmsUI extends javax.swing.JFrame {
         for (Vehicle v : controller.getVehicles()) {
             vehicleCombobox.addItem(v);
         }
+        initFileChooser();
 
     }
 
+    public void initFileChooser() {
+        m_jfc = new JFileChooser();
+        FileNameExtensionFilter xmlfilter = new FileNameExtensionFilter("HTML files (*.html)", "html");
+        m_jfc.setFileFilter(xmlfilter);
+        m_jfc.setCurrentDirectory(new File(System.getProperty("user.dir")));
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -128,6 +143,11 @@ public class PathAlgorithmsUI extends javax.swing.JFrame {
 
         exportHTMLButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/html_icon.png"))); // NOI18N
         exportHTMLButton.setText("Export to HTML");
+        exportHTMLButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                exportHTMLButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -254,6 +274,26 @@ public class PathAlgorithmsUI extends javax.swing.JFrame {
     private void vehicleComboboxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_vehicleComboboxActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_vehicleComboboxActionPerformed
+
+    private void exportHTMLButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exportHTMLButtonActionPerformed
+        try {
+
+            int returnvalue = m_jfc.showSaveDialog(this);
+            if (returnvalue == JFileChooser.APPROVE_OPTION) {
+                File file = m_jfc.getSelectedFile();
+                String path = file.getPath();
+                if (!(path.contains(".html"))) {
+                    path += ".html";
+                }
+                controller.exportHTML(path);
+                JOptionPane.showMessageDialog(this, "Project exported with success.", "Project Export", JOptionPane.INFORMATION_MESSAGE);
+            }
+        } catch (NullPointerException n) {
+            JOptionPane.showMessageDialog(this, "No active project to export", "Error", JOptionPane.ERROR_MESSAGE);
+        } catch (IOException ex) {
+            Logger.getLogger(Mockup.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_exportHTMLButtonActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

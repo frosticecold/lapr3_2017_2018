@@ -75,7 +75,7 @@ public class CreateProjectUI extends JDialog {
         labelTitle1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Create new project");
+        setTitle("Create New Project");
 
         txtfield_project_title.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

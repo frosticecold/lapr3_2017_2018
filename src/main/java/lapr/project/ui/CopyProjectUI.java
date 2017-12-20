@@ -5,6 +5,7 @@
  */
 package lapr.project.ui;
 
+import java.awt.event.WindowEvent;
 import javax.swing.JOptionPane;
 import lapr.project.controller.CopyProjectController;
 

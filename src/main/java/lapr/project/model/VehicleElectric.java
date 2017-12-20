@@ -97,7 +97,8 @@ public class VehicleElectric extends Vehicle {
 
     /**
      * Returns the maximum velocity in km/h
-     * @return 
+     *
+     * @return
      */
     @Override
     public double getMaximumVelocity() {
@@ -201,17 +202,19 @@ public class VehicleElectric extends Vehicle {
      */
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
+//        StringBuilder sb = new StringBuilder();
+//
+//        sb.append(super.toString());
+//        sb.append("\tRPM Minimum: ").append(this.m_min_rpm).append("\n");
+//        sb.append("\tRPM Maximum: ").append(this.m_max_rpm).append("\n");
+//        sb.append("\tFinal Drive: ").append(this.m_final_drive_ratio).append(" m\n");
+//        sb.append("\tEnergy Regeneration Ratio: ").append(this.m_energy_regeneration_ratio).append(" \n");
+//        sb.append(this.m_gearbox.toString());
+//        sb.append(this.m_accelerator.toString());
+//
+//        return sb.toString();
 
-        sb.append(super.toString());
-        sb.append("\tRPM Minimum: ").append(this.m_min_rpm).append("\n");
-        sb.append("\tRPM Maximum: ").append(this.m_max_rpm).append("\n");
-        sb.append("\tFinal Drive: ").append(this.m_final_drive_ratio).append(" m\n");
-        sb.append("\tEnergy Regeneration Ratio: ").append(this.m_energy_regeneration_ratio).append(" \n");
-        sb.append(this.m_gearbox.toString());
-        sb.append(this.m_accelerator.toString());
-
-        return sb.toString();
+        return super.toString();
     }
 
     /**

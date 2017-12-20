@@ -29,4 +29,7 @@ public class CopyProjectController {
         return true;
     }
 
+    public Project getActiveProject() {
+        return proj;
+    }
 }

@@ -80,19 +80,20 @@ public class AlgorithmResults {
         return vehicle;
     }
 
+    @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append(project.getName()).append("\n").append(project.getDescription());
+        sb.append("Project: ").append(project.getName()).append("\n");
         sb.append("\n");
-        sb.append(vehicle.getName());
+        sb.append("Vehicle: ").append(vehicle.getName()).append("\n");
+        sb.append("\nPath:\n");
+        for (Section s : sectionpath) {
+            sb.append(s);
+            sb.append("\n");
+        }
         sb.append("\nJunctions:\n");
         for (Junction j : junctionpath) {
             sb.append(j);
-            sb.append("\n");
-        }
-        sb.append("\nSections:\n");
-        for (Section s : sectionpath) {
-            sb.append(s);
             sb.append("\n");
         }
         sb.append("\nDistance:").append(distance).append(" Km");
@@ -110,6 +111,10 @@ public class AlgorithmResults {
     public String toStringHTML() {
         StringBuilder sb = new StringBuilder();
 
+        sb.append("<h1>Fastest Path Results</h1>");
+        sb.append("<table>\n");
+        sb.append("\t<tr><th>Vehicle</th><th>Travel Time</th><th>Consumed Energy</th><th>Cost</th><th>Path</th></tr>\n");
+        
         sb.append("<tr>"
                 + "<td>").append(this.vehicle.getName()).append("</td>"
                 + "<td>").append(this.travelTime).append(" s</td>"

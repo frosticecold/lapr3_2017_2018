@@ -289,7 +289,7 @@ public abstract class Vehicle {
 
     @Override
     public String toString() {
-        return "Vehicle{" + "m_name=" + m_name + ", m_description=" + m_description + ", m_type=" + m_type + ", m_fuel=" + m_fuel + ", m_vehicle_class=" + m_vehicle_class + ", m_motorization=" + m_motorization + ", m_wheel_size=" + m_wheel_size + ", m_mass=" + m_mass + ", m_load=" + m_load + ", m_drag_coefficient=" + m_drag_coefficient + ", m_frontal_area=" + m_frontal_area + ", m_rcc=" + m_rcc + ", m_road_velocity_limit=" + m_road_velocity_limit + '}';
+        return m_name;
     }
 
     /**
@@ -299,17 +299,6 @@ public abstract class Vehicle {
      */
     public String toStringHTML() {
         StringBuilder sb = new StringBuilder();
-
-//        sb.append("<table>\n");
-//        sb.append("\t<tr><th>Vehicle Name</th><th>Description</th><th>Mass</th></tr>\n");
-//        
-//        sb.append("\t<tr>"
-//                            + "<td>").append(this.m_name).append("</td>"
-//                            + "<td>").append(this.m_description).append("</td>"
-//                            + "<td>").append(this.m_mass).append(" Kg</td>"
-//                            + "</td>"
-//                            + "</tr>\n");
-//        sb.append("</table>\n");
         
         sb.append("\t<li>Name: ").append(this.m_name).append("</li>\n");
         sb.append("\t<li>Description: ").append(this.m_description).append("</li>\n");
