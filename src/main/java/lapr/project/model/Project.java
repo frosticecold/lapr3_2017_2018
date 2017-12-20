@@ -139,11 +139,11 @@ public class Project {
             }
         }
 
-        if (s.getDirection() == Section.Direction.REVERSE) {
-            orig = s.getEndingJunction();
-            dest = s.getBeginningJunction();
-            return m_road_network.insertEdge(orig, dest, s, s.getSectionLength());
-        }
+//        if (s.getDirection() == Section.Direction.REVERSE) {
+//            orig = s.getEndingJunction();
+//            dest = s.getBeginningJunction();
+//            return m_road_network.insertEdge(orig, dest, s, s.getSectionLength());
+//        }
 
         if (s.getDirection() == Section.Direction.BIDIRECTIONAL) {
             m_road_network.insertEdge(orig, dest, s, s.getSectionLength());
@@ -197,25 +197,25 @@ public class Project {
 //        }
 //    }
 
-    public boolean verifySection(LinkedList<Section> path, Edge<Junction, Section> edge) {
-        for (Section section : path) {
-            if (edge.getVDest().equals(getCorrespondentEdge(section).getVOrig())) {
-                return false;
-            }
-        }
+//    public boolean verifySection(LinkedList<Section> path, Edge<Junction, Section> edge) {
+//        for (Section section : path) {
+//            if (edge.getVDest().equals(getCorrespondentEdge(section).getVOrig())) {
+//                return false;
+//            }
+//        }
+//
+//        return true;
+//    }
 
-        return true;
-    }
-
-    public Edge<Junction, Section> getCorrespondentEdge(Section section) {
-        for (Edge<Junction, Section> edge : this.m_road_network.edges()) {
-            if (edge.getElement().equals(section)) {
-                return edge;
-            }
-        }
-
-        return null;
-    }
+//    public Edge<Junction, Section> getCorrespondentEdge(Section section) {
+//        for (Edge<Junction, Section> edge : this.m_road_network.edges()) {
+//            if (edge.getElement().equals(section)) {
+//                return edge;
+//            }
+//        }
+//
+//        return null;
+//    }
 
     public boolean validate() {
         if (this.m_name == null || m_name.trim().isEmpty()) {

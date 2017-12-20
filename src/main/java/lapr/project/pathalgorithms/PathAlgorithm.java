@@ -10,6 +10,7 @@ import java.util.List;
 import lapr.project.model.Junction;
 import lapr.project.model.Section;
 import lapr.project.model.Vehicle;
+import lapr.project.networkanalysis.AlgorithmResults;
 import lapr.project.utils.graphbase.Graph;
 
 /**
@@ -18,7 +19,7 @@ import lapr.project.utils.graphbase.Graph;
  */
 public interface PathAlgorithm {
 
-    double bestPath(Graph<Junction, Section> graph, Junction start, Junction end, Vehicle v, LinkedList<Junction> path);
+    AlgorithmResults bestPath(Graph<Junction, Section> graph, Junction start, Junction end, Vehicle v, LinkedList<Junction> path);
 
     String toString();
 

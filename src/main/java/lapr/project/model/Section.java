@@ -205,7 +205,7 @@ public class Section {
         section.m_direction = this.m_direction;
         section.m_road_id = this.m_road_id;
         section.m_toll = this.m_toll;
-        section.m_typology=this.m_typology;
+        section.m_typology = this.m_typology;
 
         List<Segment> newlist = new ArrayList<>();
         int index = 0;
@@ -216,6 +216,11 @@ public class Section {
         }
         section.setSegmentList(newlist);
         return section;
+    }
+
+    public String toString() {
+        return m_road_id + " " + m_beginning_junction + " " + m_ending_junction;
+
     }
 
 }

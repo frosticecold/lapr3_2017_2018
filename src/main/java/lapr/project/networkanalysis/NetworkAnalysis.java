@@ -84,7 +84,7 @@ public class NetworkAnalysis {
                 if (fastestResults.getVehicle().getName().equalsIgnoreCase(vehicleName)) {
                     sb.append("\t<tr>"
                             + "<td>").append(vehicleName).append("</td>"
-                            + "<td>").append(fastestResults.getPath().toString()).append("</td>"
+                            + "<td>").append(fastestResults.getSectionPath().toString()).append("</td>"
                             + "<td>").append(fastestResults.getEnergy()).append(" J</td>"
                             + "<td>").append(fastestResults.getTravelTime()).append(" s</td>"
                             + "</tr>\n");

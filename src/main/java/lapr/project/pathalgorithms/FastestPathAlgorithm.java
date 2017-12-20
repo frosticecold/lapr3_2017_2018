@@ -11,6 +11,8 @@ import lapr.project.model.Junction;
 import lapr.project.model.Section;
 import lapr.project.model.Segment;
 import lapr.project.model.Vehicle;
+import lapr.project.networkanalysis.AlgorithmResults;
+import lapr.project.utils.Session;
 import lapr.project.utils.graphbase.Edge;
 import lapr.project.utils.graphbase.Graph;
 
@@ -21,11 +23,14 @@ import lapr.project.utils.graphbase.Graph;
 public class FastestPathAlgorithm implements PathAlgorithm {
 
     @Override
-    public double bestPath(Graph<Junction, Section> graph, Junction start, Junction end, Vehicle v, LinkedList<Junction> path) {
+    public AlgorithmResults bestPath(Graph<Junction, Section> graph, Junction start, Junction end, Vehicle v, LinkedList<Junction> path) {
         Graph<Junction, Section> graphTimeAsWeight = graphTimeAsWeight(graph, v);
         LinkedList<Section> sectionpath = new LinkedList<>();
         double time = shortestPath(graphTimeAsWeight, start, end, path, sectionpath);
-        return time;
+        AlgorithmResults alg = new AlgorithmResults(Session.getActiveProject(), path, sectionpath, v, time);
+        alg.calculate();
+
+        return alg;
     }
 
     public Graph<Junction, Section> graphTimeAsWeight(Graph<Junction, Section> graph, Vehicle v) {
@@ -56,33 +61,33 @@ public class FastestPathAlgorithm implements PathAlgorithm {
         }
         boolean[] visited = new boolean[g.numVertices()];
         int[] pathKeys = new int[g.numVertices()];
-        double[] dist = new double[g.numVertices()];
+        double[] time = new double[g.numVertices()];
         Junction[] vertices = g.allkeyVerts();
         shortPath.clear();
         sectionpath.clear();
 
         for (Junction v : g.vertices()) {
-            dist[g.getKey(v)] = Double.MAX_VALUE;
+            time[g.getKey(v)] = Double.MAX_VALUE;
             pathKeys[g.getKey(v)] = -1;
             visited[g.getKey(v)] = false;
         }
 
-        shortestPathLength(g, vOrig, vertices, visited, pathKeys, dist, sectionpath);
+        shortestPathLength(g, vOrig, vertices, visited, pathKeys, time, sectionpath);
 
-        double lengthPath = dist[g.getKey(vDest)];
+        double lengthPath = time[g.getKey(vDest)];
 
         if (Double.MAX_VALUE - lengthPath > 0) {
-            getPath(g, vOrig, vDest, vertices, pathKeys, shortPath,sectionpath);
+            getPath(g, vOrig, vDest, vertices, pathKeys, shortPath, sectionpath);
             return lengthPath;
         }
         return -1;
     }
 
     private static <V, E> void shortestPathLength(Graph<Junction, Section> g, Junction vOrig, Junction[] vertices,
-            boolean[] visited, int[] pathKeys, double[] dist, LinkedList<Section> sectionpath) {
+            boolean[] visited, int[] pathKeys, double[] time, LinkedList<Section> sectionpath) {
 
         int i = g.getKey(vOrig);
-        dist[i] = 0;
+        time[i] = 0;
         Junction vOrigin;
         while (i != -1) {
 
@@ -93,12 +98,12 @@ public class FastestPathAlgorithm implements PathAlgorithm {
             for (Edge<Junction, Section> edg : g.outgoingEdges(vOrigin)) {
                 Junction vAdj = g.opposite(vOrigin, edg);
                 int kAdj = g.getKey(vAdj);
-                if (!visited[kAdj] && dist[kAdj] > (dist[kOrg] + edg.getWeight())) {
-                    dist[kAdj] = dist[kOrg] + edg.getWeight();
+                if (!visited[kAdj] && time[kAdj] > (time[kOrg] + edg.getWeight())) {
+                    time[kAdj] = time[kOrg] + edg.getWeight();
                     pathKeys[kAdj] = kOrg;
                 }
             }
-            i = getVertMinDist(dist, visited);
+            i = getVertMinDist(time, visited);
         }
     }
 
@@ -112,18 +117,18 @@ public class FastestPathAlgorithm implements PathAlgorithm {
      * @param pathkeys minimum path vertices keys
      * @param path stack with the minimum path (correct order)
      */
-    private static void getPath(Graph<Junction, Section> g, Junction vOrig, Junction vDest, Junction[] verts, int[] pathKeys, LinkedList<Junction> path,LinkedList<Section> sectionpath) {
+    private static void getPath(Graph<Junction, Section> g, Junction vOrig, Junction vDest, Junction[] verts, int[] pathKeys, LinkedList<Junction> path, LinkedList<Section> sectionpath) {
 
         if (!vOrig.equals(vDest)) {
             path.push(vDest);
-            
+
             int vKey = g.getKey(vDest);
             int prevVKey = pathKeys[vKey];
             Junction vDestin;
             vDestin = verts[prevVKey];
             sectionpath.push(g.getEdge(vDest, vDestin).getElement());
 
-            getPath(g, vOrig, vDestin, verts, pathKeys, path,sectionpath);
+            getPath(g, vOrig, vDestin, verts, pathKeys, path, sectionpath);
         } else {
             path.push(vOrig);
         }

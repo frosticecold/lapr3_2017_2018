@@ -15,7 +15,7 @@ import lapr.project.model.Vehicle;
  * @author Oliveira
  */
 public class FastestPathUI extends javax.swing.JFrame {
-
+    
     private static final long serialVersionUID = 1;
     private FastestPathController controller;
 
@@ -32,7 +32,7 @@ public class FastestPathUI extends javax.swing.JFrame {
         for (Vehicle v : controller.getVehicles()) {
             vehicleCombobox.addItem(v);
         }
-
+        
     }
 
     /**
@@ -231,14 +231,15 @@ public class FastestPathUI extends javax.swing.JFrame {
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         if (junctionBeginComboBox.getSelectedItem().equals(junctionEndComboBox.getSelectedItem())) {
             JOptionPane.showMessageDialog(this, "Please select different junctions", "ERROR", JOptionPane.ERROR_MESSAGE);
-
+            
         }
-
+        
         if (fastestPathCheckbox.isSelected()) {
             Junction begin = (Junction) junctionBeginComboBox.getSelectedItem();
             Junction end = (Junction) junctionEndComboBox.getSelectedItem();
             Vehicle v = (Vehicle) vehicleCombobox.getSelectedItem();
             controller.fastestPath(begin, end, v);
+            jTextArea1.setText(controller.getResultsAsText());
         }
     }//GEN-LAST:event_jButton3ActionPerformed
 

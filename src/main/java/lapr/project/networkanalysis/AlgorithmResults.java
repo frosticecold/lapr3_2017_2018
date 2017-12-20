@@ -20,21 +20,18 @@ public class AlgorithmResults {
 
     public AlgorithmResults(Project project, LinkedList<Junction> junctionPath, LinkedList<Section> fastestPath, Vehicle vehicle, double travelTime) {
         this.project = project;
-        this.junctionpath=junctionPath;
+        this.junctionpath = junctionPath;
         this.sectionpath = fastestPath;
         this.vehicle = vehicle;
         this.travelTime = travelTime;
     }
 
     public void calculate() {
-        calculateTripCost();
-
-    }
-
-    public void calculateTripCost() {
         double temp_cost = 0;
         double toll_value = 0;
+        double temp_distance = 0;
         for (Section section : sectionpath) {
+            temp_distance += section.getSectionLength();
             String sectionID = section.getRoadID();
             Road rd = project.getRoadByRoadID(sectionID);
             if (rd.getTypology().equalsIgnoreCase("toll highway")) {
@@ -51,6 +48,8 @@ public class AlgorithmResults {
             }
         }
         cost = temp_cost;
+        distance = temp_distance;
+
     }
 
     public double getEnergy() {
@@ -61,16 +60,46 @@ public class AlgorithmResults {
         return travelTime;
     }
 
-    public LinkedList<Section> getPath() {
+    public double getCost() {
+        return cost;
+    }
+
+    public double getDistance() {
+        return distance;
+    }
+
+    public LinkedList<Section> getSectionPath() {
         return sectionpath;
+    }
+
+    public LinkedList<Junction> getJunctionPath() {
+        return junctionpath;
     }
 
     public Vehicle getVehicle() {
         return vehicle;
     }
 
-    public double getCost() {
-        return cost;
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(project.getName()).append("\n").append(project.getDescription());
+        sb.append("\n");
+        sb.append(vehicle.getName());
+        sb.append("\nJunctions:\n");
+        for (Junction j : junctionpath) {
+            sb.append(j);
+            sb.append("\n");
+        }
+        sb.append("\nSections:\n");
+        for (Section s : sectionpath) {
+            sb.append(s);
+            sb.append("\n");
+        }
+        sb.append("\nDistance:").append(distance).append(" Km");
+        sb.append("\nTravel time:").append(travelTime).append(" s");
+        sb.append("\nCost:").append(cost).append(" €");
+        sb.append("\nEnergy:").append(energy).append(" J");
+        return sb.toString();
     }
 
     /**

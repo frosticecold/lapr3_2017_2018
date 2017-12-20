@@ -10,6 +10,7 @@ import java.util.List;
 import lapr.project.model.Junction;
 import lapr.project.model.Project;
 import lapr.project.model.Vehicle;
+import lapr.project.networkanalysis.AlgorithmResults;
 import lapr.project.networkanalysis.NetworkAnalysis;
 import lapr.project.pathalgorithms.FastestPathAlgorithm;
 import lapr.project.pathalgorithms.PathAlgorithm;
@@ -19,6 +20,7 @@ import lapr.project.utils.Session;
 public class FastestPathController {
 
     private Project p;
+    private AlgorithmResults result;
 
     public FastestPathController() {
         this.p = Session.getActiveProject();
@@ -39,7 +41,15 @@ public class FastestPathController {
     public void fastestPath(Junction start, Junction end, Vehicle v) {
         LinkedList<Junction> path = new LinkedList<>();
         PathAlgorithm alg = new FastestPathAlgorithm();
-        double time = alg.bestPath(p.getRoadNetwork(), start, end, v, path);
+        result = alg.bestPath(p.getRoadNetwork(), start, end, v, path);
+    }
+
+    public AlgorithmResults getResults() {
+        return result;
+    }
+
+    public String getResultsAsText() {
+        return result.toString();
     }
 
     /**
