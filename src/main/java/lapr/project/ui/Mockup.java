@@ -5,6 +5,7 @@
  */
 package lapr.project.ui;
 
+import java.awt.Toolkit;
 import java.io.File;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -61,14 +62,7 @@ public class Mockup extends javax.swing.JFrame {
         itemProjectEditProject = new javax.swing.JMenuItem();
         itemProjectCopyProject = new javax.swing.JMenuItem();
         menuNetworkAnalysis = new javax.swing.JMenu();
-        menuItemBestPath = new javax.swing.JMenu();
         jMenuItem4 = new javax.swing.JMenuItem();
-        menuResults = new javax.swing.JMenu();
-        menuItemSave = new javax.swing.JMenu();
-        menuItemExportShow = new javax.swing.JMenu();
-        subMenuItemExport = new javax.swing.JMenu();
-        subMenuItemExportCSV = new javax.swing.JMenu();
-        subItemMenuShow = new javax.swing.JMenu();
         menuItemFile = new javax.swing.JMenu();
         exportHTML = new javax.swing.JMenuItem();
         menuHelp = new javax.swing.JMenu();
@@ -83,8 +77,9 @@ public class Mockup extends javax.swing.JFrame {
         jMenuItem3.setText("jMenuItem3");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setIconImage(Toolkit.getDefaultToolkit().getImage(Mockup.class.getResource("/traffic_light_icon.png")));
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/lapr_wallpaper.jpg"))); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/analytics_wallpaper.jpg"))); // NOI18N
 
         itemProject.setText("Project");
 
@@ -128,11 +123,8 @@ public class Mockup extends javax.swing.JFrame {
 
         menuNetworkAnalysis.setText("Network Analysis");
 
-        menuItemBestPath.setText("Shortest/Best path");
-        menuNetworkAnalysis.add(menuItemBestPath);
-
         jMenuItem4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/fastest_icon.png"))); // NOI18N
-        jMenuItem4.setText("Fastest Path");
+        jMenuItem4.setText("Algorithms");
         jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem4ActionPerformed(evt);
@@ -141,26 +133,6 @@ public class Mockup extends javax.swing.JFrame {
         menuNetworkAnalysis.add(jMenuItem4);
 
         jMenuBar1.add(menuNetworkAnalysis);
-
-        menuResults.setText("Results");
-
-        menuItemSave.setText("Save current results into project");
-        menuResults.add(menuItemSave);
-
-        menuItemExportShow.setText("Export/Show");
-
-        subMenuItemExport.setText("Export HTML");
-        menuItemExportShow.add(subMenuItemExport);
-
-        subMenuItemExportCSV.setText("Export CSV");
-        menuItemExportShow.add(subMenuItemExportCSV);
-
-        subItemMenuShow.setText("Show results");
-        menuItemExportShow.add(subItemMenuShow);
-
-        menuResults.add(menuItemExportShow);
-
-        jMenuBar1.add(menuResults);
 
         menuItemFile.setText("File");
 
@@ -193,11 +165,11 @@ public class Mockup extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jLabel1)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jLabel1)
         );
 
         pack();
@@ -233,10 +205,14 @@ public class Mockup extends javax.swing.JFrame {
     }//GEN-LAST:event_googleMenuItemActionPerformed
 
     private void exportHTMLActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exportHTMLActionPerformed
-        int returnvalue = m_jfc.showOpenDialog(this);
+        int returnvalue = m_jfc.showSaveDialog(this);
         if (returnvalue == JFileChooser.APPROVE_OPTION) {
             File file = m_jfc.getSelectedFile();
-            controller.exportHTML(file.getPath());
+            String path = file.getPath();
+            if(!(path.contains(".html"))){
+                path += ".html";
+            }
+            controller.exportHTML(path);
             JOptionPane.showMessageDialog(this, "Project exported with success.", "Project Export", JOptionPane.INFORMATION_MESSAGE);
         }
     }//GEN-LAST:event_exportHTMLActionPerformed
@@ -300,16 +276,9 @@ public class Mockup extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenu menuHelp;
-    private javax.swing.JMenu menuItemBestPath;
     private javax.swing.JMenuItem menuItemCreateProject;
-    private javax.swing.JMenu menuItemExportShow;
     private javax.swing.JMenu menuItemFile;
     private javax.swing.JMenuItem menuItemOpenProject;
-    private javax.swing.JMenu menuItemSave;
     private javax.swing.JMenu menuNetworkAnalysis;
-    private javax.swing.JMenu menuResults;
-    private javax.swing.JMenu subItemMenuShow;
-    private javax.swing.JMenu subMenuItemExport;
-    private javax.swing.JMenu subMenuItemExportCSV;
     // End of variables declaration//GEN-END:variables
 }
