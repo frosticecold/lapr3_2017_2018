@@ -61,6 +61,7 @@ public class OpenProjectUI extends javax.swing.JDialog {
         jb_cancel = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Open Project");
 
         jLabel1.setText("Projects:");
 

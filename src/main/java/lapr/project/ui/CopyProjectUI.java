@@ -5,6 +5,7 @@
  */
 package lapr.project.ui;
 
+import java.awt.event.WindowEvent;
 import javax.swing.JOptionPane;
 import lapr.project.controller.CopyProjectController;
 
@@ -24,6 +25,10 @@ public class CopyProjectUI extends javax.swing.JDialog {
     public CopyProjectUI(java.awt.Frame parent, boolean modal) {
         controller = new CopyProjectController();
         initComponents();
+        if (controller.getActiveProject() == null) {
+           
+            this.dispatchEvent(new WindowEvent(parent, WindowEvent.WINDOW_CLOSING));
+        }
     }
 
     /**

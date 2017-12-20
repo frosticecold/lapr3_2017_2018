@@ -12,6 +12,7 @@ import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import lapr.project.controller.MockUpController;
 import lapr.project.model.Project;
+import lapr.project.utils.Session;
 
 /**
  *
@@ -187,9 +188,14 @@ public class Mockup extends javax.swing.JFrame {
     }//GEN-LAST:event_itemProjectEditProjectActionPerformed
 
     private void itemProjectCopyProjectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemProjectCopyProjectActionPerformed
-        CopyProjectUI ui = new CopyProjectUI(this, rootPaneCheckingEnabled);
-        ui.setLocationRelativeTo(this);
-        ui.setVisible(true);
+        if (Session.getActiveProject() != null) {
+            CopyProjectUI ui = new CopyProjectUI(this, rootPaneCheckingEnabled);
+            ui.setLocationRelativeTo(this);
+            ui.setVisible(true);
+        } else {
+            JOptionPane.showMessageDialog(this, "There is not an active project at the moment.\nPress OK to close");
+
+        }
     }//GEN-LAST:event_itemProjectCopyProjectActionPerformed
 
     private void menuItemCreateProjectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemCreateProjectActionPerformed
