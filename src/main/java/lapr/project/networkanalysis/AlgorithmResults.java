@@ -37,7 +37,7 @@ public class AlgorithmResults {
             if (rd.getTypology().equalsIgnoreCase("toll highway")) {
                 if (rd.getTollValue(vehicle.getVehicleClass()) > 0) {
                     toll_value = rd.getTollValue(vehicle.getVehicleClass());
-                    temp_cost += toll_value * distance;
+                    temp_cost += toll_value * section.getSectionLength();
                 }
 
             }
