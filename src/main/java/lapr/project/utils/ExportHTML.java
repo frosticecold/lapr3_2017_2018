@@ -104,7 +104,7 @@ public class ExportHTML implements Exportable {
      * @param stringBuilder Object that contains the output format.
      * @param filePath Path where to export the file.
      */
-    private void writeFileHTML(StringBuilder stringBuilder, String filePath) throws IOException {
+    private void writeFileHTML(StringBuilder stringBuilder, String filePath) throws IOException, NullPointerException {
         BufferedWriter bw = null;
         try {
             File file = new File(filePath);
