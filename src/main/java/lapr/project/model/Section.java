@@ -90,12 +90,12 @@ public class Section {
         return this.key;
     }
 
-    public double getTollValue(int toll_key) {
-        if (toll_key <= 0) {
+    public double getTollValue(int vehicle_id) {
+        if (vehicle_id <= 0) {
             throw new IllegalArgumentException("Invalid toll key");
         }
-        if (m_toll.containsKey(toll_key)) {
-            return m_toll.get(key);
+        if (m_toll.containsKey(vehicle_id)) {
+            return m_toll.get(vehicle_id);
         }
 
         return -1;
