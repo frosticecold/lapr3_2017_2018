@@ -62,7 +62,7 @@ public class Mockup extends javax.swing.JFrame {
         itemProjectEditProject = new javax.swing.JMenuItem();
         itemProjectCopyProject = new javax.swing.JMenuItem();
         menuNetworkAnalysis = new javax.swing.JMenu();
-        jMenuItem4 = new javax.swing.JMenuItem();
+        algorithmsMenuItem = new javax.swing.JMenuItem();
         menuItemFile = new javax.swing.JMenu();
         exportHTML = new javax.swing.JMenuItem();
         menuHelp = new javax.swing.JMenu();
@@ -123,14 +123,14 @@ public class Mockup extends javax.swing.JFrame {
 
         menuNetworkAnalysis.setText("Network Analysis");
 
-        jMenuItem4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/fastest_icon.png"))); // NOI18N
-        jMenuItem4.setText("Algorithms");
-        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+        algorithmsMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/fastest_icon.png"))); // NOI18N
+        algorithmsMenuItem.setText("Algorithms");
+        algorithmsMenuItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem4ActionPerformed(evt);
+                algorithmsMenuItemActionPerformed(evt);
             }
         });
-        menuNetworkAnalysis.add(jMenuItem4);
+        menuNetworkAnalysis.add(algorithmsMenuItem);
 
         jMenuBar1.add(menuNetworkAnalysis);
 
@@ -196,24 +196,33 @@ public class Mockup extends javax.swing.JFrame {
         new CreateProjectUI(this).setVisible(true);
     }//GEN-LAST:event_menuItemCreateProjectActionPerformed
 
-    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
-        new FastestPathUI().setVisible(true);
-    }//GEN-LAST:event_jMenuItem4ActionPerformed
+    private void algorithmsMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_algorithmsMenuItemActionPerformed
+        try {
+            new PathAlgorithmsUI().setVisible(true);
+        } catch (NullPointerException n) {
+            JOptionPane.showMessageDialog(this, "No Active Project to Analyse", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_algorithmsMenuItemActionPerformed
 
     private void googleMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_googleMenuItemActionPerformed
         openWebPage("https://www.google.pt/");
     }//GEN-LAST:event_googleMenuItemActionPerformed
 
     private void exportHTMLActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exportHTMLActionPerformed
-        int returnvalue = m_jfc.showSaveDialog(this);
-        if (returnvalue == JFileChooser.APPROVE_OPTION) {
-            File file = m_jfc.getSelectedFile();
-            String path = file.getPath();
-            if(!(path.contains(".html"))){
-                path += ".html";
+        try {
+
+            int returnvalue = m_jfc.showSaveDialog(this);
+            if (returnvalue == JFileChooser.APPROVE_OPTION) {
+                File file = m_jfc.getSelectedFile();
+                String path = file.getPath();
+                if (!(path.contains(".html"))) {
+                    path += ".html";
+                }
+                controller.exportHTML(path);
+                JOptionPane.showMessageDialog(this, "Project exported with success.", "Project Export", JOptionPane.INFORMATION_MESSAGE);
             }
-            controller.exportHTML(path);
-            JOptionPane.showMessageDialog(this, "Project exported with success.", "Project Export", JOptionPane.INFORMATION_MESSAGE);
+        } catch (NullPointerException n) {
+            JOptionPane.showMessageDialog(this, "No active project to export", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_exportHTMLActionPerformed
 
@@ -263,6 +272,7 @@ public class Mockup extends javax.swing.JFrame {
 //        });
 //    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem algorithmsMenuItem;
     private javax.swing.JMenuItem exportHTML;
     private javax.swing.JMenuItem googleMenuItem;
     private javax.swing.JMenu itemProject;
@@ -274,7 +284,6 @@ public class Mockup extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
-    private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenu menuHelp;
     private javax.swing.JMenuItem menuItemCreateProject;
     private javax.swing.JMenu menuItemFile;

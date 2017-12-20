@@ -17,12 +17,12 @@ import lapr.project.pathalgorithms.PathAlgorithm;
 import lapr.project.utils.ExportHTML;
 import lapr.project.utils.Session;
 
-public class FastestPathController {
+public class PathAlgorithmsController {
 
     private Project p;
     private AlgorithmResults result;
 
-    public FastestPathController() {
+    public PathAlgorithmsController() {
         this.p = Session.getActiveProject();
     }
 
