@@ -18,6 +18,10 @@ public class Session {
         activeProject = project;
     }
 
+    public static boolean isProjectActive() {
+        return activeProject != null;
+    }
+
     public static SQLConnection getConnection() {
         if (sql == null) {
             DatabaseConnection dbc = new DatabaseConnection();
