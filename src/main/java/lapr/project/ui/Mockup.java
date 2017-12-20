@@ -5,6 +5,11 @@
  */
 package lapr.project.ui;
 
+import java.io.File;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import lapr.project.controller.MockUpController;
 import lapr.project.model.Project;
 
 /**
@@ -16,12 +21,23 @@ public class Mockup extends javax.swing.JFrame {
     private static final long serialVersionUID = 1;
 
     protected Project m_project;
+    private JFileChooser m_jfc;
+    private MockUpController controller;
 
     /**
      * Creates new form Mockup
      */
     public Mockup() {
         initComponents();
+        controller = new MockUpController();
+        initFileChooser();
+    }
+
+    public void initFileChooser() {
+        m_jfc = new JFileChooser();
+        FileNameExtensionFilter xmlfilter = new FileNameExtensionFilter("HTML files (*.html)", "html");
+        m_jfc.setFileFilter(xmlfilter);
+        m_jfc.setCurrentDirectory(new File(System.getProperty("user.dir")));
     }
 
     /**
@@ -217,9 +233,14 @@ public class Mockup extends javax.swing.JFrame {
     }//GEN-LAST:event_googleMenuItemActionPerformed
 
     private void exportHTMLActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exportHTMLActionPerformed
-        // TODO add your handling code here:
+        int returnvalue = m_jfc.showOpenDialog(this);
+        if (returnvalue == JFileChooser.APPROVE_OPTION) {
+            File file = m_jfc.getSelectedFile();
+            controller.exportHTML(file.getPath());
+            JOptionPane.showMessageDialog(this, "Project exported with success.", "Project Export", JOptionPane.INFORMATION_MESSAGE);
+        }
     }//GEN-LAST:event_exportHTMLActionPerformed
-      
+
     private void openWebPage(String url) {
         try {
             java.awt.Desktop.getDesktop().browse(java.net.URI.create(url));
@@ -227,7 +248,7 @@ public class Mockup extends javax.swing.JFrame {
             System.out.println(e.getMessage());
         }
     }
-    
+
     protected void setProject(Project p) {
         this.m_project = p;
     }
