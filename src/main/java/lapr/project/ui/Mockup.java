@@ -148,6 +148,7 @@ public class Mockup extends javax.swing.JFrame {
 
         menuItemFile.setText("File");
 
+        exportHTML.setIcon(new javax.swing.ImageIcon(getClass().getResource("/html_icon.png"))); // NOI18N
         exportHTML.setText("Export Project");
         exportHTML.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
