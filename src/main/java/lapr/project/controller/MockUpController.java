@@ -1,5 +1,6 @@
 package lapr.project.controller;
 
+import java.io.IOException;
 import java.util.List;
 import lapr.project.model.Project;
 import lapr.project.networkanalysis.NetworkAnalysis;
@@ -22,7 +23,7 @@ public class MockUpController {
      * @param vehicles (List&lt;String&gt;) The list of vehicle names to export.
      * @param path (String) The file path.
      */
-    public void exportHTML(String path) {
+    public void exportHTML(String path) throws IOException {
         ExportHTML export = new ExportHTML();
         export.exportProject(this.getActiveProject(), path);
     }

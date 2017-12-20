@@ -7,6 +7,9 @@ package lapr.project.ui;
 
 import java.awt.Toolkit;
 import java.io.File;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -229,6 +232,8 @@ public class Mockup extends javax.swing.JFrame {
             }
         } catch (NullPointerException n) {
             JOptionPane.showMessageDialog(this, "No active project to export", "Error", JOptionPane.ERROR_MESSAGE);
+        } catch (IOException ex) {
+            Logger.getLogger(Mockup.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_exportHTMLActionPerformed
 
