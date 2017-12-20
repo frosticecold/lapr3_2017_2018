@@ -7,10 +7,13 @@ import lapr.project.utils.ExportHTML;
 import lapr.project.utils.Session;
 
 public class MockUpController {
-    private Project p;
 
     public MockUpController() {
-        this.p = Session.getActiveProject();
+        
+    }
+
+    public Project getActiveProject() {
+        return Session.getActiveProject();
     }
     
     /**
@@ -21,6 +24,6 @@ public class MockUpController {
      */
     public void exportHTML(String path) {
         ExportHTML export = new ExportHTML();
-        export.exportProject(p, path);
+        export.exportProject(this.getActiveProject(), path);
     }
 }

@@ -68,7 +68,7 @@ public class ExportHTML implements Exportable {
             sb.append("\t<tr>" + "<td>").append(road.toStringHTML()).append("</td></tr>\n");
         }
         sb.append("</table>\n");
-        
+        sb.append("<br/>");
         sb.append("<table>\n");
         sb.append("\t<tr><th>Junctions</th></tr>\n");
         for (Junction junction : activeProject.getRoadNetwork().vertices()) {
