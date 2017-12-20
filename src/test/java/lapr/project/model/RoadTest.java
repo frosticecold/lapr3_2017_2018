@@ -44,22 +44,6 @@ public class RoadTest {
     }
 
     /**
-     * Test of addSection method, of class Road.
-     */
-    @Test
-    public void testAddSection() {
-        System.out.println("addSection");
-        Section s = new Section();
-        Road instance = new Road();
-        boolean expResult = true;
-        boolean result = instance.addSection(s);
-        assertEquals(expResult, result);
-        
-        expResult = false;
-        instance.addSection(s);
-    }
-
-    /**
      * Test of getRoadID method, of class Road.
      */
     @Test
@@ -115,34 +99,6 @@ public class RoadTest {
         }
     }
 
-    /**
-     * Test of getListOfSections method, of class Road.
-     */
-    @Test
-    public void testGetListOfSections() {
-        System.out.println("getListOfSections");
-        Road instance = new Road();
-        assertTrue(instance.getListOfSections().isEmpty());
-        
-        Section s1 = new Section();
-        s1.setBeginJunction(new Junction("a"));
-        s1.setEndJunction(new Junction("b"));
-        s1.setDirection(Section.Direction.DIRECT);
-        s1.setRoadID("A01");
-        Section s2 = new Section();
-        s2.setBeginJunction(new Junction("c"));
-        s2.setEndJunction(new Junction("d"));
-        s2.setDirection(Section.Direction.REVERSE);
-        s2.setRoadID("A03");
-        
-        instance.addSection(s1);
-        instance.addSection(s1);
-        instance.addSection(s2);
-        instance.addSection(s2);
-        
-        assertTrue(instance.getListOfSections().size() == 2);
-        
-    }
 
     /**
      * Test of getTypology method, of class Road.
@@ -172,36 +128,6 @@ public class RoadTest {
         }
     }
 
-    /**
-     * Test of setListOfSections method, of class Road.
-     */
-    @Test
-    public void testSetListOfSections() {
-        System.out.println("setListOfSections");
-        List<Section> m_listOfSections = null;
-        Road instance = new Road();
-        try {
-            instance.setListOfSections(m_listOfSections);
-            assertEquals(m_listOfSections, instance.getListOfSections());
-        } catch (IllegalArgumentException ex) {
-            System.out.println(ex.getMessage());
-        }
-        
-        m_listOfSections = new ArrayList<>();
-        Section s1 = new Section();
-        Section s2 = new Section();
-        Section s3 = new Section();
-        Section s4 = new Section();
-        Section s5 = new Section();
-        m_listOfSections.add(s1);
-        m_listOfSections.add(s2);
-        m_listOfSections.add(s3);
-        m_listOfSections.add(s4);
-        m_listOfSections.add(s5);
-        
-        instance.setListOfSections(m_listOfSections);
-        assertEquals(m_listOfSections, instance.getListOfSections());
-    }
 
     /**
      * Test of setTollFare method, of class Road.

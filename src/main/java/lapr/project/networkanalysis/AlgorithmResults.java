@@ -1,6 +1,7 @@
 package lapr.project.networkanalysis;
 
 import java.util.LinkedList;
+import lapr.project.model.Junction;
 import lapr.project.model.Project;
 import lapr.project.model.Road;
 import lapr.project.model.Section;
@@ -9,26 +10,20 @@ import lapr.project.model.Vehicle;
 public class AlgorithmResults {
 
     private Project project;
-    private LinkedList<Section> path;
+    private LinkedList<Junction> junctionpath;
+    private LinkedList<Section> sectionpath;
     private Vehicle vehicle;
     private double cost;
     private double travelTime;
     private double energy;
     private double distance;
 
-    public AlgorithmResults(Project project, LinkedList<Section> fastestPath, Vehicle vehicle, double distance, double travelTime) {
+    public AlgorithmResults(Project project, LinkedList<Junction> junctionPath, LinkedList<Section> fastestPath, Vehicle vehicle, double travelTime) {
         this.project = project;
-        this.path = fastestPath;
+        this.junctionpath=junctionPath;
+        this.sectionpath = fastestPath;
         this.vehicle = vehicle;
-        this.distance = distance;
         this.travelTime = travelTime;
-    }
-
-    public AlgorithmResults() {
-        this.path = new LinkedList<>();
-        this.cost = 0.0;
-        this.travelTime = 0.0;
-        this.energy = 0.0;
     }
 
     public void calculate() {
@@ -39,7 +34,7 @@ public class AlgorithmResults {
     public void calculateTripCost() {
         double temp_cost = 0;
         double toll_value = 0;
-        for (Section section : path) {
+        for (Section section : sectionpath) {
             String sectionID = section.getRoadID();
             Road rd = project.getRoadByRoadID(sectionID);
             if (rd.getTypology().equalsIgnoreCase("toll highway")) {
@@ -67,7 +62,7 @@ public class AlgorithmResults {
     }
 
     public LinkedList<Section> getPath() {
-        return path;
+        return sectionpath;
     }
 
     public Vehicle getVehicle() {

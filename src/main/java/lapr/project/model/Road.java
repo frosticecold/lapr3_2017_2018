@@ -10,39 +10,20 @@ public class Road {
     private String m_road_id;
     private String m_name;
     private String m_typology;
-    private List<Section> m_listOfSections;
     private Map<Integer, Double> m_toll_fare;
-    private int m_num_of_section;
 
     public Road() {
         m_road_id = "";
         m_name = "";
         m_typology = "";
-        m_listOfSections = new ArrayList<>();
         m_toll_fare = new LinkedHashMap<>();
-        m_num_of_section = 0;
     }
 
     public Road(String road_id, String name, String typology) {
         setRoadID(road_id);
         setName(name);
         setTypology(typology);
-        m_listOfSections = new ArrayList<>();
         m_toll_fare = new LinkedHashMap<>();
-    }
-
-    public boolean addSection(Section s) {
-        if (s == null) {
-            throw new IllegalArgumentException("Invalid section");
-        }
-        boolean added = false;
-        if (!m_listOfSections.contains(s)) {
-            s.setID(m_num_of_section);
-            m_num_of_section++;
-            m_listOfSections.add(s);
-            added = true;
-        }
-        return added;
     }
 
     public String getRoadID() {
@@ -51,10 +32,6 @@ public class Road {
 
     public String getName() {
         return m_name;
-    }
-
-    public List<Section> getListOfSections() {
-        return m_listOfSections;
     }
 
     public String getTypology() {
@@ -80,13 +57,6 @@ public class Road {
             throw new IllegalArgumentException("Invalid typology.");
         }
         m_typology = typology;
-    }
-
-    public void setListOfSections(List<Section> listofsections) {
-        if (listofsections == null) {
-            throw new IllegalArgumentException("Invalid list of sections");
-        }
-        this.m_listOfSections = listofsections;
     }
 
     public void setTollFare(Map<Integer, Double> map) {
@@ -118,7 +88,7 @@ public class Road {
 
     public boolean validate() {
         if (m_name.trim().isEmpty() || m_road_id.trim().isEmpty()
-                || m_typology.trim().isEmpty() || m_listOfSections == null || m_toll_fare == null) {
+                || m_typology.trim().isEmpty() || m_toll_fare == null) {
             throw new IllegalArgumentException("Road is invalid");
         }
         return true;
@@ -126,9 +96,8 @@ public class Road {
 
     public Road copy() {
         Road copy = new Road(m_road_id, m_name, m_typology);
-        copy.setListOfSections(m_listOfSections);
         copy.setTollFare(m_toll_fare);
-        return copy ;
+        return copy;
     }
 
 }
