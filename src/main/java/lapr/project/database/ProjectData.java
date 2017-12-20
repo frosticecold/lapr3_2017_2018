@@ -9,8 +9,11 @@ import lapr.project.model.Junction;
 import lapr.project.model.Project;
 import lapr.project.model.Road;
 import lapr.project.model.Section;
+import lapr.project.model.Section.Direction;
 import lapr.project.model.Segment;
+import lapr.project.model.Vehicle;
 import lapr.project.model.VehicleList;
+import lapr.project.utils.graphbase.Edge;
 import lapr.project.utils.graphbase.Graph;
 import oracle.jdbc.OracleTypes;
 
@@ -95,7 +98,43 @@ public class ProjectData extends DataAccess<Project> {
     }
 
     public void insertProject(Project p) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if(connection == null) {
+            return;
+        }
+        
+        List<SQLArgument> args1 = new ArrayList<>();
+        args1.add(new SQLArgument(p.getName(), OracleTypes.VARCHAR));
+        args1.add(new SQLArgument(p.getDescription(), OracleTypes.VARCHAR));
+        
+        super.callProcedure("insertProject", args1);
+        
+        String pName = p.getName();
+        
+        JunctionData jd = new JunctionData(connection);
+        for (Junction j: p.getRoadNetwork().vertices()) {
+            jd.insert(pName, j);
+        }
+        
+        RoadData rd = new RoadData(connection);
+        for (Road r : p.getListRoads()) {
+            rd.insert(pName, r);
+        }
+        
+        VehicleData vd = new VehicleData(connection);
+        for(Vehicle v : p.getListVehicles().getVehicleList()) {
+            vd.insert(pName, v);
+        }
+        
+        SectionData sd = new SectionData(connection);
+        for(Edge<Junction,Section> edge : p.getRoadNetwork().edges()){
+            Section s = edge.getElement();
+            sd.insert(pName, s);
+        }
+        
+        DirectionData dd = new DirectionData(connection);
+        for(Direction d: Direction.values()) {
+            dd.insert(d.name());
+        }
     }
 
 }

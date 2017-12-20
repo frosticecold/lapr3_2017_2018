@@ -55,29 +55,29 @@ public class OpenProjectUI extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
+        jlProjects = new javax.swing.JLabel();
         jcb_projects = new javax.swing.JComboBox<>();
-        jb_save = new javax.swing.JButton();
-        jb_cancel = new javax.swing.JButton();
+        jbSave = new javax.swing.JButton();
+        jbCancel = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Open Project");
 
-        jLabel1.setText("Projects:");
+        jlProjects.setText("Projects:");
 
         jcb_projects.setModel(projectComboBox);
 
-        jb_save.setText("Save");
-        jb_save.addActionListener(new java.awt.event.ActionListener() {
+        jbSave.setText("Save");
+        jbSave.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jb_saveActionPerformed(evt);
+                jbSaveActionPerformed(evt);
             }
         });
 
-        jb_cancel.setText("Cancel");
-        jb_cancel.addActionListener(new java.awt.event.ActionListener() {
+        jbCancel.setText("Cancel");
+        jbCancel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jb_cancelActionPerformed(evt);
+                jbCancelActionPerformed(evt);
             }
         });
 
@@ -86,37 +86,39 @@ public class OpenProjectUI extends javax.swing.JDialog {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jb_cancel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jb_save)
-                .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addGap(0, 28, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
-                    .addComponent(jcb_projects, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(33, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jcb_projects, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                            .addGap(32, 32, 32)
+                            .addComponent(jlProjects))
+                        .addGroup(layout.createSequentialGroup()
+                            .addGap(130, 130, 130)
+                            .addComponent(jbCancel)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jbSave)
+                        .addGap(109, 109, 109)))
+                .addContainerGap(55, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(19, 19, 19)
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(39, 39, 39)
+                .addComponent(jlProjects)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jcb_projects, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jb_save)
-                    .addComponent(jb_cancel))
-                .addContainerGap())
+                    .addComponent(jbSave)
+                    .addComponent(jbCancel))
+                .addContainerGap(42, Short.MAX_VALUE))
         );
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jb_saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_saveActionPerformed
+    private void jbSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbSaveActionPerformed
         try {
             String proj = projectComboBox.getSelectedItem().toString();
             controller.setActiveProject(proj);
@@ -125,16 +127,16 @@ public class OpenProjectUI extends javax.swing.JDialog {
             Logger.getLogger(OpenProjectUI.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(this, "Couldn't load the selected project.", "Error", JOptionPane.ERROR_MESSAGE);
         }
-    }//GEN-LAST:event_jb_saveActionPerformed
+    }//GEN-LAST:event_jbSaveActionPerformed
 
-    private void jb_cancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_cancelActionPerformed
+    private void jbCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbCancelActionPerformed
         this.dispose();
-    }//GEN-LAST:event_jb_cancelActionPerformed
+    }//GEN-LAST:event_jbCancelActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JButton jb_cancel;
-    private javax.swing.JButton jb_save;
+    private javax.swing.JButton jbCancel;
+    private javax.swing.JButton jbSave;
     private javax.swing.JComboBox<String> jcb_projects;
+    private javax.swing.JLabel jlProjects;
     // End of variables declaration//GEN-END:variables
 }

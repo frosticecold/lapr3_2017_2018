@@ -158,9 +158,17 @@ public abstract class Vehicle {
         }
         this.m_road_velocity_limit = m_road_velocity_limit;
     }
+    
+    public String getType() {
+        return m_type;
+    }
 
     public String getDescription() {
         return m_description;
+    }
+    
+    public String getFuel() {
+        return m_fuel;
     }
 
     public String getMotorization() {
@@ -196,6 +204,10 @@ public abstract class Vehicle {
             throw new IllegalArgumentException("The rolling resistance coefficient of the vehicle must be positive.");
         }
         this.m_rcc = rcc;
+    }
+    
+    public double getRcc() {
+        return m_rcc;
     }
 
     public void setWheelSize(double wheel_size) {

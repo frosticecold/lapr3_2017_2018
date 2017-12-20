@@ -2,8 +2,11 @@ package lapr.project.model;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
+import lapr.project.networkanalysis.AlgorithmResults;
 import lapr.project.utils.graphbase.Edge;
 import lapr.project.utils.graphbase.Graph;
 import lapr.project.utils.graphbase.Vertex;
@@ -15,6 +18,7 @@ public class Project {
     private List<Road> m_list_roads;
     private String m_name;
     private String m_description;
+    private Map<Vehicle, List<AlgorithmResults>> m_results;
 
     public Project() {
         m_name = "";
@@ -22,6 +26,7 @@ public class Project {
         m_road_network = new Graph<>(true);
         m_list_vehicles = new VehicleList();
         m_list_roads = new ArrayList<>();
+        m_results = new LinkedHashMap<>();
     }
 
     public Project(String name, String description) {
@@ -39,6 +44,14 @@ public class Project {
         m_road_network = roadNetwork;
         m_list_vehicles = new VehicleList();
         m_list_roads = roadList;
+    }
+
+    public Map<Vehicle, List<AlgorithmResults>> getResults() {
+        return m_results;
+    }
+
+    public void setResults(Map<Vehicle, List<AlgorithmResults>> m_results) {
+        this.m_results = m_results;
     }
 
 

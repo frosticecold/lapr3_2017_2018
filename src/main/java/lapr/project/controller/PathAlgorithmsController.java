@@ -5,13 +5,13 @@
  */
 package lapr.project.controller;
 
+import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 import lapr.project.model.Junction;
 import lapr.project.model.Project;
 import lapr.project.model.Vehicle;
 import lapr.project.networkanalysis.AlgorithmResults;
-import lapr.project.networkanalysis.NetworkAnalysis;
 import lapr.project.pathalgorithms.FastestPathAlgorithm;
 import lapr.project.pathalgorithms.PathAlgorithm;
 import lapr.project.utils.ExportHTML;
@@ -58,9 +58,8 @@ public class PathAlgorithmsController {
      * @param vehicles (List&lt;String&gt;) The list of vehicle names to export.
      * @param path (String) The file path.
      */
-    public void exportHTML(List<String> vehicles, String path) {
+    public void exportHTML(String path) throws IOException {
         ExportHTML export = new ExportHTML();
-        NetworkAnalysis networkAnalysis = new NetworkAnalysis(p);
-        export.exportNetworkAnalysis(networkAnalysis, vehicles, path);
+        export.exportAnalysisResult(result, path);
     }
 }

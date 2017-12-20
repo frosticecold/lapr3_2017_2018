@@ -9,12 +9,12 @@ import java.util.List;
 import lapr.project.model.Segment;
 import oracle.jdbc.OracleTypes;
 
-public class SegmentData extends DataAccess<Segment>{
+public class SegmentData extends DataAccess<Segment> {
 
     public SegmentData(Connection connection) {
         super(connection);
     }
-    
+
     public List<Segment> get(String sectionID) throws SQLException {
         if (connection == null) {
             return new ArrayList<>();
@@ -32,16 +32,34 @@ public class SegmentData extends DataAccess<Segment>{
             double windSpeed = rs.getFloat("wind_speed");
             double maximumVelocity = rs.getFloat("max_v");
             double minimumVelocity = rs.getFloat("min_v");
-            
+
             Segment s = new Segment(segmentID, initialHeight, finalHeight, length, windDirection, windSpeed, maximumVelocity, minimumVelocity);
-            
+
             list.add(s);
         }
-        
+
         return list;
     }
 
-    
-    
+    public void insert(int sectionID, Segment s) throws SQLException {
+        List<SQLArgument> args1 = new ArrayList<>();
+
+        args1.add(new SQLArgument(Integer.toString(s.getSegmentIndex()), OracleTypes.VARCHAR));
+        ResultSet rs = super.callFunction("getSegmentByIndex", args1);
+        if (rs.next()) {
+            rs.close();
+            return;
+        }
+        args1.add(new SQLArgument(Integer.toString(sectionID), OracleTypes.VARCHAR));
+        args1.add(new SQLArgument(Double.toString(s.getInitialHeight()), OracleTypes.NUMBER));
+        args1.add(new SQLArgument(Double.toString(s.getFinalHeight()), OracleTypes.NUMBER));
+        args1.add(new SQLArgument(Double.toString(s.getLength()), OracleTypes.NUMBER));
+        args1.add(new SQLArgument(Double.toString(s.getWindSpeed()), OracleTypes.NUMBER));
+        args1.add(new SQLArgument(Double.toString(s.getWindDirection()), OracleTypes.NUMBER));
+        args1.add(new SQLArgument(Double.toString(s.getMaximumVelocity()), OracleTypes.NUMBER));
+        args1.add(new SQLArgument(Double.toString(s.getMinimumVelocity()), OracleTypes.NUMBER));
+        
+        super.callProcedure("insertSegment", args1);
+    }
 
 }

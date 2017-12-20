@@ -62,5 +62,14 @@ public class SQLConnection {
     public Connection getConnection() {
         return connection;
     }
+    
+    public void insertProject(Project project) throws SQLException {
+        if (connection == null) {
+            openConnection();
+        }
+        ProjectData p = new ProjectData(connection);
+        
+        p.insertProject(project);
+    }
         
 }
