@@ -22,15 +22,15 @@ public class ExportHTML implements Exportable {
      */
     public ExportHTML() {
     }
-    
-    public void exportAnalysisResult(AlgorithmResults results,String filePath) throws IOException{
+
+    public void exportAnalysisResult(AlgorithmResults results, String filePath) throws IOException {
         StringBuilder sb = new StringBuilder();
         sb.append(openHTML());
         sb.append(results.toStringHTML());
         sb.append(closeHTML());
         writeFileHTML(sb, filePath);
     }
-    
+
     public void exportProject(Project activeProject, String filePath) throws IOException {
         StringBuilder sb = new StringBuilder();
         sb.append(openHTML());
@@ -65,8 +65,8 @@ public class ExportHTML implements Exportable {
         }
         sb.append("</table>\n");
         return sb.toString();
-    } 
-    
+    }
+
     /**
      * String with the opening of an HTML file.
      *
@@ -103,27 +103,25 @@ public class ExportHTML implements Exportable {
      * @param filePath Path where to export the file.
      */
     private void writeFileHTML(StringBuilder stringBuilder, String filePath) throws IOException {
-        BufferedWriter bw = null;
         try {
             File file = new File(filePath);
 
             // If the file doesn't exist, create it
             if (!file.exists()) {
-                file.createNewFile();
+                if (!file.createNewFile()) {
+                    return;
+                }
             }
 
-            
-            bw = new BufferedWriter(new FileWriter(file));
-            bw.write(stringBuilder.toString());
+            try (BufferedWriter bw = new BufferedWriter(new FileWriter(file))) {
+                bw.write(stringBuilder.toString());
+            }
 
         } catch (IOException e) {
             throw new IllegalArgumentException("An error occured while"
                     + " attempting to export the HTML file.");
-        } catch (NullPointerException e){
+        } catch (NullPointerException e) {
             throw new NullPointerException("An error occured whule attempting to export the HTML file.");
-        }
-        finally{
-            bw.close();   
         }
     }
 }

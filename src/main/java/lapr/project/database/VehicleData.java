@@ -100,7 +100,7 @@ public class VehicleData extends DataAccess<Vehicle> {
         List<SQLArgument> args = new ArrayList<>();
 
         args.add(new SQLArgument(v.getName(), OracleTypes.VARCHAR));
-        ResultSet rs = super.callFunction("getJunctionByName", args);
+        ResultSet rs = super.callFunction("getVehicleByName", args);
         if (rs.next()) {
             rs.close();
             return;
@@ -112,6 +112,7 @@ public class VehicleData extends DataAccess<Vehicle> {
         args.add(new SQLArgument(v.getDescription(), OracleTypes.VARCHAR));
         args.add(new SQLArgument(v.getType(), OracleTypes.VARCHAR));
         args.add(new SQLArgument(v.getFuel(), OracleTypes.VARCHAR));
+        args.add(new SQLArgument(Integer.toString(v.getVehicleClass()), OracleTypes.NUMBER));
         args.add(new SQLArgument(v.getMotorization(), OracleTypes.VARCHAR));
         args.add(new SQLArgument(Double.toString(v.getWheelSize()), OracleTypes.NUMBER));
         args.add(new SQLArgument(Double.toString(v.getMass()), OracleTypes.NUMBER));
@@ -124,6 +125,8 @@ public class VehicleData extends DataAccess<Vehicle> {
         args.add(new SQLArgument(Double.toString(v.getFinalDriveRatio()), OracleTypes.NUMBER));
         if(v instanceof VehicleElectric) {
             args.add(new SQLArgument(Double.toString(((VehicleElectric) v).getEnergyRegenerationRatio()),OracleTypes.NUMBER));
+        } else {
+            args.add(new SQLArgument(null, OracleTypes.NULL));
         }
         
         super.callProcedure("insertVehicle", args);

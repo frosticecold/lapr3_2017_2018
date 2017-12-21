@@ -7,7 +7,7 @@ import lapr.project.model.Vehicle;
 
 public class PhysicsCalculus {
 
-    public static double GRAVITY = Constants.GRAVITY;
+    public final static double GRAVITY = Constants.GRAVITY;
 
     public static double forceActingOnVehicle(double motorForce, double rollingResistance, double gravitationalForce, double airDrag) {
         double F = motorForce - rollingResistance - gravitationalForce - airDrag;
