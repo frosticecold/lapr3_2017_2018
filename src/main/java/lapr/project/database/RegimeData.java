@@ -46,7 +46,6 @@ public class RegimeData extends DataAccess<Regime> {
             return;
         }
         for (Regime r : t.getRegimeList()) {
-            args.clear();
             args.add(new SQLArgument(Double.toString(r.getTorqueLow()), OracleTypes.NUMBER));
             args.add(new SQLArgument(Double.toString(r.getTorqueHigh()), OracleTypes.NUMBER));
             args.add(new SQLArgument(Double.toString(r.getRpmLow()), OracleTypes.NUMBER));
