@@ -65,9 +65,7 @@ public class ExportHTML implements Exportable {
         }
         sb.append("</table>\n");
         return sb.toString();
-    }
-
-    
+    } 
     
     /**
      * String with the opening of an HTML file.
@@ -104,7 +102,7 @@ public class ExportHTML implements Exportable {
      * @param stringBuilder Object that contains the output format.
      * @param filePath Path where to export the file.
      */
-    private void writeFileHTML(StringBuilder stringBuilder, String filePath) throws IOException, NullPointerException {
+    private void writeFileHTML(StringBuilder stringBuilder, String filePath) throws IOException {
         BufferedWriter bw = null;
         try {
             File file = new File(filePath);
@@ -121,10 +119,11 @@ public class ExportHTML implements Exportable {
         } catch (IOException e) {
             throw new IllegalArgumentException("An error occured while"
                     + " attempting to export the HTML file.");
+        } catch (NullPointerException e){
+            throw new NullPointerException("An error occured whule attempting to export the HTML file.");
         }
         finally{
-            bw.close();
-            
+            bw.close();   
         }
     }
 }

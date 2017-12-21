@@ -47,11 +47,11 @@ public class AcceleratorTest {
     public void testGetThrottleList() {
         System.out.println("getThrottleList");
         ArrayList<Regime> m_regime_list = new ArrayList<>();
-        Regime r1 = new Regime(115, 900, 1499, 500);
-        Regime r2 = new Regime(125, 1500, 2499, 450);
-        Regime r3 = new Regime(120, 2500, 3499, 520);
-        Regime r4 = new Regime(105, 3500, 4499, 550);
-        Regime r5 = new Regime(90, 4500, 5500, 650);
+        Regime r1 = new Regime(115, 500, 900, 1499, 500);
+        Regime r2 = new Regime(125, 600, 1500, 2499, 450);
+        Regime r3 = new Regime(120, 550, 2500, 3499, 520);
+        Regime r4 = new Regime(105, 400, 3500, 4499, 550);
+        Regime r5 = new Regime(90, 300, 4500, 5500, 650);
         m_regime_list.add(r1);
         m_regime_list.add(r2);
         m_regime_list.add(r3);
@@ -80,11 +80,11 @@ public class AcceleratorTest {
     public void testSetThrottleList() {
         System.out.println("setThrottleList");
         ArrayList<Regime> m_regime_list = new ArrayList<>();
-        Regime r1 = new Regime(115, 900, 1499, 500);
-        Regime r2 = new Regime(125, 1500, 2499, 450);
-        Regime r3 = new Regime(120, 2500, 3499, 520);
-        Regime r4 = new Regime(105, 3500, 4499, 550);
-        Regime r5 = new Regime(90, 4500, 5500, 650);
+        Regime r1 = new Regime(115, 500, 900, 1499, 500);
+        Regime r2 = new Regime(125, 600, 1500, 2499, 450);
+        Regime r3 = new Regime(120, 550, 2500, 3499, 520);
+        Regime r4 = new Regime(105, 400, 3500, 4499, 550);
+        Regime r5 = new Regime(90, 300, 4500, 5500, 650);
         m_regime_list.add(r1);
         m_regime_list.add(r2);
         m_regime_list.add(r3);
@@ -113,11 +113,11 @@ public class AcceleratorTest {
         System.out.println("validateAcceleratorPedal");
 
         ArrayList<Regime> m_regime_list = new ArrayList<>();
-        Regime r1 = new Regime(115, 900, 1499, 500);
-        Regime r2 = new Regime(125, 1500, 2499, 450);
-        Regime r3 = new Regime(120, 2500, 3499, 520);
-        Regime r4 = new Regime(105, 3500, 4499, 550);
-        Regime r5 = new Regime(90, 4500, 5500, 650);
+        Regime r1 = new Regime(115, 500, 900, 1499, 500);
+        Regime r2 = new Regime(125, 600, 1500, 2499, 450);
+        Regime r3 = new Regime(120, 550, 2500, 3499, 520);
+        Regime r4 = new Regime(105, 400, 3500, 4499, 550);
+        Regime r5 = new Regime(90, 300, 4500, 5500, 650);
         m_regime_list.add(r1);
         m_regime_list.add(r2);
         m_regime_list.add(r3);
@@ -149,11 +149,11 @@ public class AcceleratorTest {
     public void testToString() {
         System.out.println("AcceleratortoStringTest");
         ArrayList<Regime> m_regime_list = new ArrayList<>();
-        Regime r1 = new Regime(115, 900, 1499, 500);
-        Regime r2 = new Regime(125, 1500, 2499, 450);
-        Regime r3 = new Regime(120, 2500, 3499, 520);
-        Regime r4 = new Regime(105, 3500, 4499, 550);
-        Regime r5 = new Regime(90, 4500, 5500, 650);
+        Regime r1 = new Regime(115, 500, 900, 1499, 500);
+        Regime r2 = new Regime(125, 600, 1500, 2499, 450);
+        Regime r3 = new Regime(120, 550, 2500, 3499, 520);
+        Regime r4 = new Regime(105, 400, 3500, 4499, 550);
+        Regime r5 = new Regime(90, 300, 4500, 5500, 650);
         m_regime_list.add(r1);
         m_regime_list.add(r2);
         m_regime_list.add(r3);
@@ -166,10 +166,12 @@ public class AcceleratorTest {
 
         Accelerator instance = new Accelerator();
         instance.setThrottleList(mapThrottle);
-        String expResult = "Accelerator{m_throttle_list={25=Throttle{m_regime_list=[Regime{m_torque=115.0, m_rpm_low=900.0, m_rpm_high=1499.0, m_SFC=500.0}, Regime{m_torque=125.0, m_rpm_low=1500.0, m_rpm_high=2499.0, m_SFC=450.0}, Regime{m_torque=120.0, m_rpm_low=2500.0, m_rpm_high=3499.0, m_SFC=520.0}, Regime{m_torque=105.0, m_rpm_low=3500.0, m_rpm_high=4499.0, m_SFC=550.0}, Regime{m_torque=90.0, m_rpm_low=4500.0, m_rpm_high=5500.0, m_SFC=650.0}]}}}";
+        String result = instance.toString();
+        String expResult = "Accelerator{m_throttle_list={25=Throttle{m_regime_list=[Regime{m_torque_low=115.0, m_torque_high=500.0, m_rpm_low=900.0, m_rpm_high=1499.0, m_SFC=500.0}, Regime{m_torque_low=125.0, m_torque_high=600.0, m_rpm_low=1500.0, m_rpm_high=2499.0, m_SFC=450.0}, Regime{m_torque_low=120.0, m_torque_high=550.0, m_rpm_low=2500.0, m_rpm_high=3499.0, m_SFC=520.0}, Regime{m_torque_low=105.0, m_torque_high=400.0, m_rpm_low=3500.0, m_rpm_high=4499.0, m_SFC=550.0}, Regime{m_torque_low=90.0, m_torque_high=300.0, m_rpm_low=4500.0, m_rpm_high=5500.0, m_SFC=650.0}]}}}";
+        assertEquals(expResult, result);
         instance = new Accelerator();
         expResult = "Accelerator{m_throttle_list={}}";
-        String result = instance.toString();
+        result = instance.toString();
         assertEquals(expResult, result);
 
     }

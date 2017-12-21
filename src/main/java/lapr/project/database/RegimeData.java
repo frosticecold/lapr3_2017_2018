@@ -25,12 +25,13 @@ public class RegimeData extends DataAccess<Regime> {
         args.add(new SQLArgument(vehicleName, OracleTypes.VARCHAR));
         ResultSet rs = super.callFunction("getRegime", args);
         while (rs.next()) {
-            double vTorque = rs.getDouble("torque");
+            double vTorqueLow = rs.getDouble("torque_low");
+            double vTorqueHigh = rs.getDouble("torque_high");
             double vRpmLow = rs.getDouble("rpm_low");
             double vRpmHigh = rs.getDouble("rpm_high");
             double vSFC = rs.getDouble("SFC");
 
-            list.add(new Regime(vTorque, vRpmLow, vRpmHigh, vSFC));
+            list.add(new Regime(vTorqueLow, vTorqueHigh, vRpmLow, vRpmHigh, vSFC));
         }
         return list;
     }
@@ -46,10 +47,11 @@ public class RegimeData extends DataAccess<Regime> {
         }
         for (Regime r : t.getRegimeList()) {
             args.clear();
-            args.add(new SQLArgument(Double.toString(r.getM_torque()), OracleTypes.NUMBER));
-            args.add(new SQLArgument(Double.toString(r.getM_rpm_low()), OracleTypes.NUMBER));
-            args.add(new SQLArgument(Double.toString(r.getM_rpm_high()), OracleTypes.NUMBER));
-            args.add(new SQLArgument(Double.toString(r.getM_SFC()), OracleTypes.NUMBER));
+            args.add(new SQLArgument(Double.toString(r.getTorqueLow()), OracleTypes.NUMBER));
+            args.add(new SQLArgument(Double.toString(r.getTorqueHigh()), OracleTypes.NUMBER));
+            args.add(new SQLArgument(Double.toString(r.getRpmLow()), OracleTypes.NUMBER));
+            args.add(new SQLArgument(Double.toString(r.getRpmHigh()), OracleTypes.NUMBER));
+            args.add(new SQLArgument(Double.toString(r.getSFC()), OracleTypes.NUMBER));
             
             super.callProcedure("insertRegime", args);
         }

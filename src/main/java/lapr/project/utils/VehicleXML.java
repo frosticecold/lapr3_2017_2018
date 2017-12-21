@@ -45,7 +45,8 @@ public class VehicleXML implements FileFormat {
     private static final String MAX_RPM_TAG = "max_rpm";
     private static final String FINAL_DRIVE_RATIO_TAG = "final_drive_ratio";
     private static final String RATIO_TAG = "ratio";
-    private static final String TORQUE_TAG = "torque";
+    private static final String TORQUE_LOW_TAG = "torque_low";
+    private static final String TORQUE_HIGH_TAG = "torque_high";
     private static final String RPM_LOW_TAG = "rpm_low";
     private static final String RPM_HIGH_TAG = "rpm_high";
     private static final String SFC_TAG = "SFC";
@@ -287,8 +288,13 @@ public class VehicleXML implements FileFormat {
                 break;
             }
 
-            case TORQUE_TAG: {
-                regime.setTorque(Double.parseDouble(this.elementContent));
+            case TORQUE_LOW_TAG: {
+                regime.setTorqueLow(Double.parseDouble(this.elementContent));
+                break;
+            }
+            
+            case TORQUE_HIGH_TAG: {
+                regime.setTorqueHigh(Double.parseDouble(this.elementContent));
                 break;
             }
 
