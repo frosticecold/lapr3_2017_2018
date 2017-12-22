@@ -185,6 +185,5 @@ public class Segment {
         seg.m_maximum_velocity = m_maximum_velocity;
         seg.m_minimum_velocity = m_minimum_velocity;
         return seg;
-
     }
 }
