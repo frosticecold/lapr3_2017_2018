@@ -2,7 +2,7 @@ package lapr.project.model;
 
 import lapr.project.calculations.UnitConversion;
 
-public class Segment implements Cloneable{
+public class Segment implements Cloneable {
 
     private int m_segment_index;
     private double m_initial_height;
@@ -54,21 +54,6 @@ public class Segment implements Cloneable{
         hash = 61 * hash + (int) (Double.doubleToLongBits(this.m_maximum_velocity) ^ (Double.doubleToLongBits(this.m_maximum_velocity) >>> 32));
         hash = 61 * hash + (int) (Double.doubleToLongBits(this.m_minimum_velocity) ^ (Double.doubleToLongBits(this.m_minimum_velocity) >>> 32));
         return hash;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final Segment other = (Segment) obj;
-        return true;
     }
 
     /**
