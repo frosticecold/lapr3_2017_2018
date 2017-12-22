@@ -192,15 +192,12 @@ public class SegmentTest {
         clone.setMinimumVelocity(120);
         clone.setWindDirection(120);
         clone.setWindSpeed(20);
-        System.out.println(clone);
-        System.out.println(instance);
         assertNotEquals(clone.toString(), instance.toString());
     }
 
     @Test
     public void testHashcode() {
         Segment instance = new Segment(0, 12.0, 0.0, 1.0, -135.0, 10.0, 120.0, 100.0);
-        System.out.println(instance.hashCode());
         assertEquals(-1399408281, instance.hashCode());
     }
 
