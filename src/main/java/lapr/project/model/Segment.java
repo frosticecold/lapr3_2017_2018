@@ -2,7 +2,7 @@ package lapr.project.model;
 
 import lapr.project.calculations.UnitConversion;
 
-public class Segment {
+public class Segment implements Cloneable{
 
     private int m_segment_index;
     private double m_initial_height;
@@ -40,6 +40,35 @@ public class Segment {
 
     public double getLength() {
         return m_length;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 61 * hash + this.m_segment_index;
+        hash = 61 * hash + (int) (Double.doubleToLongBits(this.m_initial_height) ^ (Double.doubleToLongBits(this.m_initial_height) >>> 32));
+        hash = 61 * hash + (int) (Double.doubleToLongBits(this.m_final_height) ^ (Double.doubleToLongBits(this.m_final_height) >>> 32));
+        hash = 61 * hash + (int) (Double.doubleToLongBits(this.m_length) ^ (Double.doubleToLongBits(this.m_length) >>> 32));
+        hash = 61 * hash + (int) (Double.doubleToLongBits(this.m_wind_direction) ^ (Double.doubleToLongBits(this.m_wind_direction) >>> 32));
+        hash = 61 * hash + (int) (Double.doubleToLongBits(this.m_wind_speed) ^ (Double.doubleToLongBits(this.m_wind_speed) >>> 32));
+        hash = 61 * hash + (int) (Double.doubleToLongBits(this.m_maximum_velocity) ^ (Double.doubleToLongBits(this.m_maximum_velocity) >>> 32));
+        hash = 61 * hash + (int) (Double.doubleToLongBits(this.m_minimum_velocity) ^ (Double.doubleToLongBits(this.m_minimum_velocity) >>> 32));
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Segment other = (Segment) obj;
+        return true;
     }
 
     /**
@@ -186,4 +215,14 @@ public class Segment {
         seg.m_minimum_velocity = m_minimum_velocity;
         return seg;
     }
+
+    @Override
+    public String toString() {
+        return "Segment{" + "m_segment_index=" + m_segment_index + ", m_initial_height=" + m_initial_height + ", m_final_height=" + m_final_height + ", m_length=" + m_length + ", m_wind_direction=" + m_wind_direction + ", m_wind_speed=" + m_wind_speed + ", m_maximum_velocity=" + m_maximum_velocity + ", m_minimum_velocity=" + m_minimum_velocity + '}';
+    }
+
+    public Object copy() throws CloneNotSupportedException {
+        return super.clone();
+    }
+
 }

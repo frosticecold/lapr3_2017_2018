@@ -77,6 +77,17 @@ public class SectionTest {
         result = instance.addToll(vehic_id, value);
         assertFalse(result);
 
+        vehic_id = 0;
+        value = 0;
+        result = instance.addToll(vehic_id, value);
+        assertFalse(result);
+
+        value = instance.getTollValue(0);
+        value = instance.getTollValue(-1);
+
+        instance.setKey(-1);
+        instance.setTypology(null);
+        instance.setTypology("");
     }
 
     /**
@@ -321,6 +332,8 @@ public class SectionTest {
         Section expResult = new Section();
         assertTrue(expResult.equals(result));
 
+        assertTrue(result.equals(result));
+
         Object obj = new Object();
         assertFalse(expResult.equals(obj));
 
@@ -330,10 +343,16 @@ public class SectionTest {
         result.setBeginJunction(new Junction("kJunction"));
         expResult.setBeginJunction(new Junction("jJunction"));
         assertFalse(expResult.equals(result));
+        result.setBeginJunction(new Junction("ASD"));
+        expResult.setBeginJunction(new Junction("CVB"));
+        assertFalse(result.equals(expResult));
 
         result.setEndJunction(new Junction("lJunction"));
         expResult.setEndJunction(new Junction("pJunction"));
         assertFalse(expResult.equals(result));
+        result.setEndJunction(new Junction("ERT"));
+        expResult.setEndJunction(new Junction("FGH"));
+        assertFalse(result.equals(expResult));
 
         result.setKey(1);
         expResult.setKey(2);
@@ -362,11 +381,14 @@ public class SectionTest {
         result.setTypology("Highway");
         expResult.setTypology("Regular");
         assertFalse(expResult.equals(result));
+        result.setTypology("Test1");
+        expResult.setTypology("Test2");
+        assertFalse(result.equals(expResult));
     }
-    
+
     @Test
     public void testToString() {
-        
+
         Section instance = new Section();
         instance.setBeginJunction(new Junction("Begin junction"));
         instance.setEndJunction(new Junction("End junction"));
@@ -375,7 +397,7 @@ public class SectionTest {
         instance.setKey(1);
         instance.setRoadID("Road 1");
         instance.setTypology("Regular");
-        List <Segment> segmentList = new ArrayList<>();
+        List<Segment> segmentList = new ArrayList<>();
         Segment s1 = new Segment(1, 10, 10, 15, 0, 20, 100, 80);
         Segment s2 = new Segment(2, 10, 10, 15, 0, 20, 100, 80);
         Segment s3 = new Segment(3, 10, 10, 15, 0, 20, 100, 80);
@@ -385,11 +407,11 @@ public class SectionTest {
         segmentList.add(s3);
         segmentList.add(s4);
         instance.setSegmentList(segmentList);
-    
+
         String expResult = "Road 1 Junction Begin junction Junction End junction";
         String result = instance.toString();
-        
-        assertEquals(expResult , result);
+
+        assertEquals(expResult, result);
     }
-    
+
 }
