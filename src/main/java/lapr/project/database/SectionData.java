@@ -73,6 +73,12 @@ public class SectionData extends DataAccess<Section> {
         for(Segment seg : s.getSequenceOfSegments()) {
             sd.insert(s.getID(), seg);
         }
+        
+        TollData td = new TollData(connection);
+        for(int i : s.getToll().keySet()) {
+            td.insert(i, s.getToll().get(i));
+        }
+        
     }
 
 }
