@@ -87,6 +87,11 @@ public class SegmentTest {
         result = instance.getMinimumVelocity();
         assertEquals(95, result, 0.0);
 
+        result = instance.getWindSpeed();
+        assertEquals(20, result, 0);
+        instance.setWindSpeed(10);
+        result = instance.getWindSpeed();
+        assertEquals(10, result, 0);
     }
 
     /**
@@ -163,7 +168,7 @@ public class SegmentTest {
         instance.setWindSpeed(10);
         Segment expResult = new Segment(0, 12.0, 0.0, 1.0, -135.0, 10.0, 120.0, 100.0);
         Segment result = instance.reverseSegment(index);
-        assertEquals(expResult, result);
+        assertEquals(expResult.toString(), result.toString());
     }
 
     @Test
@@ -178,7 +183,8 @@ public class SegmentTest {
     public void testCopy() throws CloneNotSupportedException {
         Segment instance = new Segment(0, 12.0, 0.0, 1.0, -135.0, 10.0, 120.0, 100.0);
         Segment clone = (Segment) instance.copy();
-        assertEquals(clone, instance);
+        
+        assertEquals(clone.hashCode(), instance.hashCode());
         clone.setFinalHeight(456);
         clone.setInitialHeight(456);
         clone.setLength(4);
@@ -186,8 +192,16 @@ public class SegmentTest {
         clone.setMinimumVelocity(120);
         clone.setWindDirection(120);
         clone.setWindSpeed(20);
-
+        System.out.println(clone);
+        System.out.println(instance);
         assertNotEquals(clone.toString(), instance.toString());
+    }
+
+    @Test
+    public void testHashcode() {
+        Segment instance = new Segment(0, 12.0, 0.0, 1.0, -135.0, 10.0, 120.0, 100.0);
+        System.out.println(instance.hashCode());
+        assertEquals(-1399408281, instance.hashCode());
     }
 
 }
