@@ -15,6 +15,7 @@ import lapr.project.networkanalysis.AlgorithmResults;
 import lapr.project.utils.Session;
 import lapr.project.utils.graphbase.Edge;
 import lapr.project.utils.graphbase.Graph;
+import sun.font.PhysicalFont;
 
 /**
  *
@@ -166,14 +167,14 @@ public class FastestPathAlgorithm implements PathAlgorithm {
         return indice;
     }
 
-    
-    
     private static double calcFastestTime(Section s, Vehicle car) {
 
         double time = 0;
         double final_time = 0;
         double work = 0;
+        
         for (Segment segment : s.getSequenceOfSegments()) {
+            double fa = PhysicsCalculus.calcForceInSegment(segment, car, s);
             double carMaxVel = PhysicsCalculus.calcMaximumVelocity(segment, car, s);
             double time_segment = (segment.getLength() * 1000) / (carMaxVel);
             final_time += time_segment;
