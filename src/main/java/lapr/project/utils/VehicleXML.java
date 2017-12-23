@@ -292,7 +292,7 @@ public class VehicleXML implements FileFormat {
                 regime.setTorqueLow(Double.parseDouble(this.elementContent));
                 break;
             }
-            
+
             case TORQUE_HIGH_TAG: {
                 regime.setTorqueHigh(Double.parseDouble(this.elementContent));
                 break;
@@ -313,6 +313,10 @@ public class VehicleXML implements FileFormat {
                 break;
             }
 
+            case THROTTLE_LIST_TAG: {
+                vehicle.setThrottlesList(throttleList);
+                break;
+            }
             case THROTTLE_TAG: {
                 addThrottleToVehicle();
                 break;

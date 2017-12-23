@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import lapr.project.calculations.PhysicsCalculus;
+import lapr.project.calculations.UnitConversion;
 
 public class Section {
 
@@ -32,21 +34,21 @@ public class Section {
         m_direction = Direction.DIRECT;
         m_toll = new HashMap<>();
     }
-    
-    public Section(Section s){
+
+    public Section(Section s) {
         this.m_beginning_junction = s.m_beginning_junction;
         this.m_ending_junction = s.m_ending_junction;
         this.m_road_id = s.m_road_id;
         this.m_section_id = s.m_section_id;
         this.m_typology = s.m_typology;
-        
+
         this.m_sequenceOfSegments = new ArrayList<>();
-        for (Segment seg: s.m_sequenceOfSegments){
+        for (Segment seg : s.m_sequenceOfSegments) {
             this.m_sequenceOfSegments.add(new Segment(seg));
         }
-        
-        this.m_toll=new HashMap<>();
-        for(Integer i : s.m_toll.keySet()){
+
+        this.m_toll = new HashMap<>();
+        for (Integer i : s.m_toll.keySet()) {
             this.m_toll.put(i, s.m_toll.get(i));
         }
     }
@@ -241,7 +243,7 @@ public class Section {
 
     }
 
-   /**
+    /**
      * Returns the textual description of the object in html format.
      *
      * @return Textual description of the object.

@@ -12,12 +12,12 @@ public class Throttle {
         this.m_regime_list = m_regime_list;
     }
 
-//    public Throttle(Throttle thr) {
-//        this.m_regime_list = new ArrayList<>();
-//        for (Regime r : thr.m_regime_list) {
-//            this.m_regime_list.add(new Regime(r));
-//        }
-//    }
+    public Throttle(Throttle thr) {
+        this.m_regime_list = new ArrayList<>();
+        for (Regime r : thr.m_regime_list) {
+            this.m_regime_list.add(new Regime(r));
+        }
+    }
 
     public Throttle() {
         m_regime_list = new LinkedList<>();

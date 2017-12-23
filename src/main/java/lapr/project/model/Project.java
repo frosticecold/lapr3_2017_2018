@@ -158,11 +158,11 @@ public class Project {
             }
         }
 
-//        if (s.getDirection() == Section.Direction.REVERSE) {
-//            orig = s.getEndingJunction();
-//            dest = s.getBeginningJunction();
-//            return m_road_network.insertEdge(orig, dest, s, s.getSectionLength());
-//        }
+        if (s.getDirection() == Section.Direction.REVERSE) {
+            orig = s.getEndingJunction();
+            dest = s.getBeginningJunction();
+            return m_road_network.insertEdge(orig, dest, s, s.getSectionLength());
+        }
 
         if (s.getDirection() == Section.Direction.BIDIRECTIONAL) {
             m_road_network.insertEdge(orig, dest, s, s.getSectionLength());

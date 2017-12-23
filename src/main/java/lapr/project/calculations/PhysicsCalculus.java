@@ -4,12 +4,22 @@ import lapr.project.model.Gear;
 import lapr.project.model.Section;
 import lapr.project.model.Segment;
 import lapr.project.model.Vehicle;
+import lapr.project.model.VehicleElectric;
 
 public class PhysicsCalculus {
 
     public final static double GRAVITY = Constants.GRAVITY;
+    public static final double AIR_DENSITY = 1.225;
 
-    public static double forceActingOnVehicle(double motorForce, double rollingResistance, double gravitationalForce, double airDrag) {
+    public static double forceActingOnVehicle(double motorForce, double rollingResistance, double airDrag) {
+        if (motorForce < 0 || rollingResistance < 0 || airDrag < 0) {
+            return -1;
+        }
+        return (motorForce - rollingResistance - airDrag);
+
+    }
+
+    public static double forceActingOnVehicleOnSlope(double motorForce, double rollingResistance, double gravitationalForce, double airDrag) {
         double F = motorForce - rollingResistance - gravitationalForce - airDrag;
         return F;
     }
@@ -24,11 +34,18 @@ public class PhysicsCalculus {
         return (torqueFunction * finalDriveRatio * gearRatio) / tireRatio;
     }
 
-    public static double rollingResistanceCalculation(double rollingResistanceCoeficient, double mass, double angle) {
+    public static double rollingResistanceCalculation(double rollingResistanceCoeficient, double mass) {
+        if (rollingResistanceCoeficient < 0 || mass < 0) {
+            return -1;
+        }
+        return rollingResistanceCoeficient * mass * GRAVITY;
+    }
+
+    public static double rollingResistanceCalculationSlope(double rollingResistanceCoeficient, double mass, double angle) {
         if (rollingResistanceCoeficient < 0 || mass < 0 || angle < 0) {
             return -1;
         }
-        return rollingResistanceCoeficient * mass * GRAVITY * Math.cos(angle);
+        return rollingResistanceCoeficient * mass * GRAVITY * Math.cos(Math.toRadians(angle));
     }
 
     public static double gravitationalForceCalculation(double mass, double angle) {
@@ -38,14 +55,11 @@ public class PhysicsCalculus {
         return mass * GRAVITY * Math.sin(angle);
     }
 
-    public static double airDragCalculation(double velocityRelativeAir, double airDragCoeficient, double frontalArea, double airDensity) {
+    public static double airDragCalculation(double velocityRelativeAir, double airDragCoeficient, double frontalArea) {
         if (velocityRelativeAir < 0 || airDragCoeficient < 0 || frontalArea < 0) {
             return -1;
         }
-        if (airDensity < 0) {
-            return -1;
-        }
-        return 0.5 * airDragCoeficient * frontalArea * airDensity * Math.pow(velocityRelativeAir, 2);
+        return 0.5 * airDragCoeficient * frontalArea * AIR_DENSITY * Math.pow(velocityRelativeAir, 2);
     }
 
     public static double velocityRelativeAirCalculation(double rpm, double finalDriveRatio, double kGear, double tireRatio, double windSpeed) {
@@ -88,7 +102,7 @@ public class PhysicsCalculus {
         return results;
     }
 
-    public static double getMaximumVelocityIn(Segment segment, Vehicle vehicle, Section section) {
+    public static double calcMaximumVelocity(Segment segment, Vehicle vehicle, Section section) {
         double velocity = vehicle.getRoadVelocityLimit(section.getTypology());//This velocity in KM/H
         velocity = velocity / 3.6;  // convert to m/s
         double windSpeed = segment.getWindSpeed() * Math.cos(Math.toRadians(segment.getWindDirection()));
@@ -97,5 +111,36 @@ public class PhysicsCalculus {
         double maxVelocity = segment.getMaximumVelocity() / 3.6; // convert KM/H to m/s
         velocity = Math.min(velocity, (maxVelocity > 0) ? maxVelocity : velocity);
         return velocity;
+    }
+
+    public static double calcForceInSegment(Segment segment, Vehicle car, Section section) {
+        double fa = 0;
+        double vel = calcMaximumVelocity(segment, car, section);
+        double slope = segment.calculateSlope();
+        if (slope == 0) {
+            fa = rollingResistanceCalculation(car.getRcc(), car.getMass());
+            fa += airDragCalculation(vel, car.getDragCoefficient(), car.getFrontalArea());
+        } else {
+            if (slope > 0) {
+                fa = rollingResistanceCalculationSlope(car.getRcc(), car.getMass(), slope);
+                fa += airDragCalculation(vel, car.getDragCoefficient(), car.getFrontalArea());
+            } else {
+                fa = rollingResistanceCalculationSlope(car.getRcc(), car.getMass(), slope);
+                fa += airDragCalculation(vel, car.getDragCoefficient(), car.getFrontalArea());
+                double grav = car.getMass() * GRAVITY * Math.sin(Math.toRadians(slope));
+
+                if (grav <= fa || car.getClass().equals(VehicleElectric.class)) {
+                    fa -= grav;
+                    if (car instanceof VehicleElectric) {
+                        fa *= ((VehicleElectric) car).getEnergyRegenerationRatio();
+                    }
+                } else {
+                    fa = 0;
+                }
+
+            }
+
+        }
+        return fa;
     }
 }
