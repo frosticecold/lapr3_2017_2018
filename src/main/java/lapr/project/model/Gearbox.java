@@ -59,6 +59,10 @@ public class Gearbox {
         return m_gears;
     }
 
+    public int getNumberOfGears() {
+        return this.m_gears.size();
+    }
+
     @Override
     public String toString() {
         return "Gearbox{" + "m_gears=" + m_gears + '}';

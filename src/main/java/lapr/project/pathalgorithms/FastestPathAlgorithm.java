@@ -34,7 +34,7 @@ public class FastestPathAlgorithm implements PathAlgorithm {
     }
 
     public static double[] shortestPath(Graph<Junction, Section> graph, Junction vOrig, Junction vDest, Vehicle vehicle, LinkedList<Junction> shortPath, LinkedList<Section> sectionpath) {
-        double results[] = {-1,-1};//Results 0)Time 1) Energy
+        double results[] = {-1, -1};//Results 0)Time 1) Energy
         if (!graph.validVertex(vOrig) || !graph.validVertex(vDest)) {
             return results;
         }
@@ -148,18 +148,20 @@ public class FastestPathAlgorithm implements PathAlgorithm {
         //1) Work
         double results[] = new double[2];
         double final_time = 0;
-        double work = 0;
+        double energy = 0;
 
         for (Segment segment : s.getSequenceOfSegments()) {
             double force = PhysicsCalculus.calcForceInSegment(segment, car, s);
             double carMaxVel = PhysicsCalculus.calcMaximumVelocity(segment, car, s);
             double time_segment = (segment.getLength() * 1000) / (carMaxVel);
+            double[] ideal_motor_force = PhysicsCalculus.calculateIdealMotorForce(car, segment, force,carMaxVel);
+            double power_generated = PhysicsCalculus.calcEnginePower(ideal_motor_force[PhysicsCalculus.TORQUE_VEC], ideal_motor_force[PhysicsCalculus.RPM_VEC]);
+            energy += (power_generated * time_segment);
             final_time += time_segment;
-            work += (force * segment.getLength() * 1000);
 //            }
         }
         results[0] = final_time;
-        results[1] = work;
+        results[1] = energy;
 
         return results;
 

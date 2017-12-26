@@ -61,19 +61,32 @@ public class Regime {
     }
 
     public double getTorqueByRPM(double rpm) {
-        if (rpm < m_rpm_low || rpm > m_torque_high) {
+        if (rpm < m_rpm_low || rpm > m_rpm_high) {
             throw new IllegalArgumentException("Invalid rpm");
         }
         if (rpm == m_rpm_low) {
-            return m_rpm_low;
+            return m_torque_low;
         }
         if (rpm > m_rpm_low && rpm < m_rpm_high) {
             return (m_torque_high + m_torque_low) / 2;
 
         }
         if (rpm == m_rpm_high) {
-            return m_rpm_high;
+            return m_torque_high;
         }
+        return -1;
+    }
+
+    public double getSFCByRPM(double rpm) {
+        if (rpm < m_rpm_low || rpm > m_rpm_high) {
+            throw new IllegalArgumentException("Invalid rpm");
+        }
+
+        if (rpm >= m_rpm_low && rpm <= m_rpm_high) {
+            return this.m_SFC;
+
+        }
+
         return -1;
     }
 

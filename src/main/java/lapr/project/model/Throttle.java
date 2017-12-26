@@ -27,6 +27,25 @@ public class Throttle {
         return m_regime_list;
     }
 
+    public double getTorqueByRPM(double rpm) {
+        for (Regime r : m_regime_list) {
+            if (rpm >= r.getRpmLow() && rpm <= r.getRpmHigh()) {
+                return r.getTorqueByRPM(rpm);
+            }
+        }
+        return -1;
+    }
+
+    public double getSFCByRPM(double rpm) {
+        for (Regime r : m_regime_list) {
+            if (rpm >= r.getRpmLow() && rpm <= r.getRpmHigh()) {
+                return r.getSFCByRPM(rpm);
+            }
+        }
+        return -1;
+
+    }
+
     public void setRegimeList(List<Regime> m_regime_list) {
         this.m_regime_list = m_regime_list;
     }

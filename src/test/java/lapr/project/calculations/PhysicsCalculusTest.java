@@ -71,41 +71,42 @@ public class PhysicsCalculusTest {
         double torqueFunction = 230.000;
         double finalDriveRatio = 3.6;
         double gearRatio = 0.75;
-        double tireRatio = 0.3;
+        double tireRatio = 0.6;
         double expResult = 2070;
         double result = PhysicsCalculus.motorForceCalculation(torqueFunction, finalDriveRatio, gearRatio, tireRatio);
         assertEquals(expResult, result, 0.0001);
         torqueFunction = -230.000;
         finalDriveRatio = 3.6;
         gearRatio = 0.75;
-        tireRatio = 0.3;
+        tireRatio = 0.6;
         result = PhysicsCalculus.motorForceCalculation(torqueFunction, finalDriveRatio, gearRatio, tireRatio);
         assertTrue("Expected -1", result == -1);
         torqueFunction = 230.000;
         finalDriveRatio = -3.6;
         gearRatio = 0.75;
-        tireRatio = 0.3;
-       
+        tireRatio = 0.6;
+
         result = PhysicsCalculus.motorForceCalculation(torqueFunction, finalDriveRatio, gearRatio, tireRatio);
         assertTrue("Expected -1", result == -1);
         torqueFunction = 230.000;
         finalDriveRatio = 3.6;
         gearRatio = -0.75;
-        tireRatio = 0.3;
-        
+        tireRatio = 0.6;
+
         result = PhysicsCalculus.motorForceCalculation(torqueFunction, finalDriveRatio, gearRatio, tireRatio);
         assertTrue("Expected -1", result == -1);
         torqueFunction = 230.000;
         finalDriveRatio = 3.6;
         gearRatio = 0.75;
         tireRatio = -0.3;
-        
+
         result = PhysicsCalculus.motorForceCalculation(torqueFunction, finalDriveRatio, gearRatio, tireRatio);
         assertTrue("Expected -1", result == -1);
     }
 
     /**
-     * Test of rollingResistanceCalculationSlope method, of class PhysicsCalculus.
+     * Test of rollingResistanceCalculationSlope method, of class
+     * PhysicsCalculus.
      */
     @Test
     public void testRollingResistanceCalculation() {
@@ -113,26 +114,26 @@ public class PhysicsCalculusTest {
         double rollingResistanceCoeficient = 0.01;
         double mass = 2020.0;
         double angle = 0.030;
-        angle= Math.toRadians(angle);
+        angle = Math.toRadians(angle);
         double expResult = 198.00519750272485;
         double result = PhysicsCalculus.rollingResistanceCalculationSlope(rollingResistanceCoeficient, mass, angle);
         assertEquals(expResult, result, 0.5);
         rollingResistanceCoeficient = -0.01;
         mass = 2020.0;
         angle = 0.030;
-        angle= Math.toRadians(angle);
+        angle = Math.toRadians(angle);
         result = PhysicsCalculus.rollingResistanceCalculationSlope(rollingResistanceCoeficient, mass, angle);
         assertTrue("Expected -1", result == -1);
         rollingResistanceCoeficient = 0.01;
         mass = -2020.0;
         angle = 0.030;
-        angle= Math.toRadians(angle);
+        angle = Math.toRadians(angle);
         result = PhysicsCalculus.rollingResistanceCalculationSlope(rollingResistanceCoeficient, mass, angle);
         assertTrue("Expected -1", result == -1);
         rollingResistanceCoeficient = 0.01;
         mass = 2020.0;
         angle = -0.030;
-        angle= Math.toRadians(angle);
+        angle = Math.toRadians(angle);
         result = PhysicsCalculus.rollingResistanceCalculationSlope(rollingResistanceCoeficient, mass, angle);
         assertTrue("Expected -1", result == -1);
     }
@@ -145,7 +146,7 @@ public class PhysicsCalculusTest {
         System.out.println("gravitationalForceCalculation");
         double mass = 2020.0;
         double angle = 0.030;
-        
+
         double expResult = 594.1938613629898;
         double result = PhysicsCalculus.gravitationalForceCalculation(mass, angle);
         assertEquals(expResult, result, 0.0001);
@@ -167,7 +168,7 @@ public class PhysicsCalculusTest {
         System.out.println("airDragCalculation");
         double velocityRelativeAir = 29.089;
         double airDragCoeficient = 0.320;
-        double frontalArea = 1.9;        
+        double frontalArea = 1.9;
         double expResult = 315.1136785804;
         double result = PhysicsCalculus.airDragCalculation(velocityRelativeAir, airDragCoeficient, frontalArea);
         assertEquals(expResult, result, 0.0000000000001);

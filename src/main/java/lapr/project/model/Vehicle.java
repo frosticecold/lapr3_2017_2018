@@ -72,6 +72,10 @@ public abstract class Vehicle {
 
     private Map<Integer, Throttle> m_throttle_list;
 
+    public static int THROTTLE_LOW = 25;
+    public static int THROTTLE_MEDIUM = 50;
+    public static int THROTTLE_MAX = 100;
+
     public Vehicle() {
         m_name = "";
         m_description = "";
@@ -228,7 +232,18 @@ public abstract class Vehicle {
         return m_vehicle_class;
     }
 
-    public void setRcc(double rcc) {
+    public double getTorqueAtThrottle(int throttle, double rpm) {
+        double torque = -1;
+        if (throttle == 25 || throttle == 50 || throttle == 100) {
+            Accelerator a = this.getAccelerator();
+            Throttle thr = a.getThrottleList().get(throttle);
+            torque = thr.getTorqueByRPM(rpm);
+        }
+        return torque;
+
+    }
+
+public void setRcc(double rcc) {
         if (rcc < 0) {
             throw new IllegalArgumentException("The rolling resistance coefficient of the vehicle must be positive.");
         }
@@ -321,7 +336,7 @@ public abstract class Vehicle {
     }
 
     @Override
-    public String toString() {
+        public String toString() {
         return m_name;
     }
 

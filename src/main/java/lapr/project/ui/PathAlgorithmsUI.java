@@ -45,7 +45,7 @@ public class PathAlgorithmsUI extends javax.swing.JFrame {
         m_jfc.setFileFilter(xmlfilter);
         m_jfc.setCurrentDirectory(new File(System.getProperty("user.dir")));
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -259,16 +259,17 @@ public class PathAlgorithmsUI extends javax.swing.JFrame {
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         if (junctionBeginComboBox.getSelectedItem().equals(junctionEndComboBox.getSelectedItem())) {
             JOptionPane.showMessageDialog(this, "Please select different junctions", "ERROR", JOptionPane.ERROR_MESSAGE);
-
+        } else {
+            if (fastestPathCheckbox.isSelected()) {
+                Junction begin = (Junction) junctionBeginComboBox.getSelectedItem();
+                Junction end = (Junction) junctionEndComboBox.getSelectedItem();
+                Vehicle v = (Vehicle) vehicleCombobox.getSelectedItem();
+                controller.fastestPath(begin, end, v);
+                jTextArea1.setText(controller.getResultsAsText());
+            }
         }
 
-        if (fastestPathCheckbox.isSelected()) {
-            Junction begin = (Junction) junctionBeginComboBox.getSelectedItem();
-            Junction end = (Junction) junctionEndComboBox.getSelectedItem();
-            Vehicle v = (Vehicle) vehicleCombobox.getSelectedItem();
-            controller.fastestPath(begin, end, v);
-            jTextArea1.setText(controller.getResultsAsText());
-        }
+
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void vehicleComboboxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_vehicleComboboxActionPerformed
