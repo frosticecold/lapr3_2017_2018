@@ -67,11 +67,11 @@ public abstract class Vehicle {
      * Rolling resistance coefficient of the vehicle.
      */
     private double m_rcc;
-    
+
     private Map<String, Double> m_road_velocity_limit;
-    
+
     private Map<Integer, Throttle> m_throttle_list;
-    
+
     public Vehicle() {
         m_name = "";
         m_description = "";
@@ -88,7 +88,7 @@ public abstract class Vehicle {
         m_road_velocity_limit = new HashMap<>();
         m_throttle_list = new LinkedHashMap<>();
     }
-    
+
     public Vehicle(String m_name, String m_description, String m_type, String m_fuel, int m_vehicle_class, String m_motorization, double m_mass, double m_load, double m_drag_coefficient, double m_wheel_size, double m_frontal_area, double m_rcc, Map<String, Double> velocityLimits, Map<Integer, Throttle> throttle_list) {
         this.m_name = m_name;
         this.m_description = m_description;
@@ -105,7 +105,7 @@ public abstract class Vehicle {
         this.m_road_velocity_limit = velocityLimits;
         this.m_throttle_list = throttle_list;
     }
-    
+
     public Vehicle(Vehicle v) {
         this.m_name = v.m_name;
         this.m_description = v.m_description;
@@ -127,38 +127,38 @@ public abstract class Vehicle {
         for (Integer i : v.m_throttle_list.keySet()) {
             this.m_throttle_list.put(i, new Throttle(m_throttle_list.get(i)));
         }
-        
+
     }
-    
+
     public String getName() {
         return m_name;
     }
-    
+
     public Map<Integer, Throttle> getThrottles() {
         return this.m_throttle_list;
-        
+
     }
-    
+
     public abstract double getMaximumVelocity();
-    
+
     public abstract double getMinRpm();
-    
+
     public abstract void setMinRpm(double m_min_rpm);
-    
+
     public abstract double getMaxRpm();
-    
+
     public abstract void setMaxRpm(double m_max_rpm);
-    
+
     public abstract double getFinalDriveRatio();
-    
+
     public abstract void setFinalDriveRatio(double m_final_drive_ratio);
-    
+
     public abstract Gearbox getGearbox();
-    
+
     public abstract void setGearbox(Gearbox m_gearbox);
-    
+
     public abstract Accelerator getAccelerator();
-    
+
     public abstract void setAccelerator(Accelerator m_accelerator);
 
     /**
@@ -174,148 +174,152 @@ public abstract class Vehicle {
         } else {
             return this.getMaximumVelocity();
         }
-        
+
     }
-    
+
     public void setRoadVelocityLimit(Map<String, Double> m_road_velocity_limit) {
         if (m_road_velocity_limit == null) {
             throw new IllegalArgumentException("The road velocity limit map inserted cannot be null.");
         }
         this.m_road_velocity_limit = m_road_velocity_limit;
     }
-    
+
     public String getType() {
         return m_type;
     }
-    
+
     public String getDescription() {
         return m_description;
     }
-    
+
     public String getFuel() {
         return m_fuel;
     }
-    
+
     public String getMotorization() {
         return m_motorization;
     }
-    
+
     public double getLoad() {
         return m_load;
     }
-    
+
     public double getMass() {
         return m_mass;
     }
-    
+
+    public double getTotalWeight() {
+        return m_load + m_mass;
+    }
+
     public double getDragCoefficient() {
         return m_drag_coefficient;
     }
-    
+
     public double getWheelSize() {
         return m_wheel_size;
     }
-    
+
     public double getFrontalArea() {
         return m_frontal_area;
     }
-    
+
     public int getVehicleClass() {
         return m_vehicle_class;
     }
-    
+
     public void setRcc(double rcc) {
         if (rcc < 0) {
             throw new IllegalArgumentException("The rolling resistance coefficient of the vehicle must be positive.");
         }
         this.m_rcc = rcc;
     }
-    
+
     public double getRcc() {
         return m_rcc;
     }
-    
+
     public void setWheelSize(double wheel_size) {
         if (wheel_size <= 0) {
             throw new IllegalArgumentException("The wheel size of the vehicle must be greater than 0");
         }
         this.m_wheel_size = wheel_size;
     }
-    
+
     public void setFrontalArea(double frontal_area) {
         if (frontal_area <= 0) {
             throw new IllegalArgumentException("The frontal area of the vehicle must be greater than 0");
         }
         this.m_frontal_area = frontal_area;
     }
-    
+
     public void setFuel(String fuel) {
         if (fuel == null || fuel.trim().isEmpty()) {
             throw new IllegalArgumentException("The fuel of the vehicle cannot be empty.");
         }
         this.m_fuel = fuel;
     }
-    
+
     public void setDragCoefficient(double drag_coefficient) {
         if (drag_coefficient <= 0) {
             throw new IllegalArgumentException("The drag coefficient of the vehicle must be greater than 0");
         }
         this.m_drag_coefficient = drag_coefficient;
     }
-    
+
     public void setLoad(double load) {
         if (load < 0) {
             throw new IllegalArgumentException("The load of the vehicle must be positive");
         }
         this.m_load = load;
     }
-    
+
     public void setMass(double mass) {
         if (mass <= 0) {
             throw new IllegalArgumentException("The mass of the vehicle must be greater than 0");
         }
         this.m_mass = mass;
     }
-    
+
     public void setMotorization(String motorization) {
         if (motorization == null || motorization.trim().isEmpty()) {
             throw new IllegalArgumentException("The motorization of the vehicle cannot be empty.");
         }
         this.m_motorization = motorization;
     }
-    
+
     public void setName(String name) {
         if (name == null || name.trim().isEmpty()) {
             throw new IllegalArgumentException("The name of the vehicle cannot be empty.");
         }
         this.m_name = name;
     }
-    
+
     public void setDescription(String description) {
         if (description == null || description.trim().isEmpty()) {
             throw new IllegalArgumentException("The description of the vehicle cannot be empty.");
         }
         this.m_description = description;
     }
-    
+
     public void setVehicleClass(int vehicle_class) {
         if (vehicle_class < 0) {
             throw new IllegalArgumentException("The vehicle_class of the vehicle must positive");
         }
         this.m_vehicle_class = vehicle_class;
     }
-    
+
     public void setType(String type) {
         if (type == null || type.trim().isEmpty()) {
             throw new IllegalArgumentException("The type of the vehicle cannot be empty.");
         }
         this.m_type = type;
     }
-    
+
     public void setThrottlesList(Map<Integer, Throttle> throttle_list) {
         this.m_throttle_list = throttle_list;
     }
-    
+
     @Override
     public String toString() {
         return m_name;
@@ -328,7 +332,7 @@ public abstract class Vehicle {
      */
     public String toStringHTML() {
         StringBuilder sb = new StringBuilder();
-        
+
         sb.append("\t<li>Name: ").append(this.m_name).append("</li>\n");
         sb.append("\t<li>Description: ").append(this.m_description).append("</li>\n");
         sb.append("\t<li>Type: ").append(this.m_type).append("</li>\n");
@@ -339,7 +343,7 @@ public abstract class Vehicle {
         sb.append("\t<li>Frontal Area: ").append(this.m_frontal_area).append(" m</li>\n");
         sb.append("\t<li>RRC: ").append(this.m_rcc).append("</li>\n");
         sb.append("\t<li>Wheel Size: ").append(this.m_wheel_size).append(" m</li>\n");
-        
+
         if (!this.m_road_velocity_limit.isEmpty()) {
             sb.append("\t<li>Velocity Limits:<ul>\n");
             for (Entry<String, Double> entry : this.m_road_velocity_limit.entrySet()) {
@@ -350,5 +354,5 @@ public abstract class Vehicle {
         }
         return sb.toString();
     }
-    
+
 }

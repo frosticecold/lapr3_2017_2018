@@ -118,16 +118,16 @@ public class PhysicsCalculus {
         double vel = calcMaximumVelocity(segment, car, section);
         double slope = segment.calculateSlope();
         if (slope == 0) {
-            fa = rollingResistanceCalculation(car.getRcc(), car.getMass());
+            fa = rollingResistanceCalculation(car.getRcc(), car.getTotalWeight());
             fa += airDragCalculation(vel, car.getDragCoefficient(), car.getFrontalArea());
         } else {
             if (slope > 0) {
-                fa = rollingResistanceCalculationSlope(car.getRcc(), car.getMass(), slope);
+                fa = rollingResistanceCalculationSlope(car.getRcc(), car.getTotalWeight(), slope);
                 fa += airDragCalculation(vel, car.getDragCoefficient(), car.getFrontalArea());
             } else {
-                fa = rollingResistanceCalculationSlope(car.getRcc(), car.getMass(), slope);
+                fa = rollingResistanceCalculationSlope(car.getRcc(), car.getTotalWeight(), slope);
                 fa += airDragCalculation(vel, car.getDragCoefficient(), car.getFrontalArea());
-                double grav = car.getMass() * GRAVITY * Math.sin(Math.toRadians(slope));
+                double grav = car.getTotalWeight() * GRAVITY * Math.sin(Math.toRadians(slope));
 
                 if (grav <= fa || car.getClass().equals(VehicleElectric.class)) {
                     fa -= grav;

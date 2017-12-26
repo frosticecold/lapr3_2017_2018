@@ -22,76 +22,47 @@ import lapr.project.utils.graphbase.Graph;
  */
 public class FastestPathAlgorithm implements PathAlgorithm {
 
-//    @Override
-//    public AlgorithmResults bestPath(Graph<Junction, Section> graph, Junction start, Junction end, Vehicle v, LinkedList<Junction> path) {
-//        Graph<Junction, Section> graphTimeAsWeight = graphTimeAsWeight(graph, v);
-//        LinkedList<Section> sectionpath = new LinkedList<>();
-//        double time = shortestPath(graphTimeAsWeight, start, end, path, sectionpath);
-//        AlgorithmResults alg = new AlgorithmResults(Session.getActiveProject(), path, sectionpath, v, time);
-//        alg.calculate();
-//
-//        return alg;
-//    }
     @Override
     public AlgorithmResults bestPath(Graph<Junction, Section> graph, Junction start, Junction end, Vehicle v, LinkedList<Junction> path) {
 
         LinkedList<Section> sectionpath = new LinkedList<>();
-        double time = shortestPath(graph, start, end, v, path, sectionpath);
-        AlgorithmResults alg = new AlgorithmResults(Session.getActiveProject(), path, sectionpath, v, time);
+        double results[] = shortestPath(graph, start, end, v, path, sectionpath);
+        AlgorithmResults alg = new AlgorithmResults(Session.getActiveProject(), path, sectionpath, v, results);
         alg.calculate();
 
         return alg;
     }
 
-    public Graph<Junction, Section> graphTimeAsWeight(Graph<Junction, Section> graph, Vehicle v) {
-        Graph<Junction, Section> graphTime = graph.copyGraph();
-
-        for (Edge<Junction, Section> edge : graphTime.edges()) {
-            double time = 0;
-
-            for (Segment segment : edge.getElement().getSequenceOfSegments()) {
-                //Velocity in m/s
-                double velocity = PhysicsCalculus.calcMaximumVelocity(segment, v, edge.getElement());
-                //Time = d/v (m / m/s)
-                time += (segment.getLength() * 1000) / velocity;
-            }
-
-            edge.setWeight(time);
-
+    public static double[] shortestPath(Graph<Junction, Section> graph, Junction vOrig, Junction vDest, Vehicle vehicle, LinkedList<Junction> shortPath, LinkedList<Section> sectionpath) {
+        double results[] = {-1,-1};//Results 0)Time 1) Energy
+        if (!graph.validVertex(vOrig) || !graph.validVertex(vDest)) {
+            return results;
         }
-
-        return graphTime;
-    }
-    //shortest-path between voInf and vdInf
-
-    public static double shortestPath(Graph<Junction, Section> g, Junction vOrig, Junction vDest, Vehicle vehicle, LinkedList<Junction> shortPath, LinkedList<Section> sectionpath) {
-
-        if (!g.validVertex(vOrig) || !g.validVertex(vDest)) {
-            return -1;
-        }
-        boolean[] visited = new boolean[g.numVertices()];
-        int[] pathKeys = new int[g.numVertices()];
-        double[] time = new double[g.numVertices()];
-        double[] energy = new double[g.numVertices()];
-        Junction[] vertices = g.allkeyVerts();
+        boolean[] visited = new boolean[graph.numVertices()];
+        int[] pathKeys = new int[graph.numVertices()];
+        double[] time = new double[graph.numVertices()];
+        double[] energy = new double[graph.numVertices()];
+        Junction[] vertices = graph.allkeyVerts();
         shortPath.clear();
         sectionpath.clear();
 
-        for (Junction v : g.vertices()) {
-            time[g.getKey(v)] = Double.MAX_VALUE;
-            pathKeys[g.getKey(v)] = -1;
-            visited[g.getKey(v)] = false;
+        for (Junction v : graph.vertices()) {
+            time[graph.getKey(v)] = Double.MAX_VALUE;
+            pathKeys[graph.getKey(v)] = -1;
+            visited[graph.getKey(v)] = false;
         }
 
-        shortestPathLength(g, vOrig, vertices, visited, pathKeys, time, energy, vehicle);
+        shortestPathLength(graph, vOrig, vertices, visited, pathKeys, time, energy, vehicle);
 
-        double lengthPath = time[g.getKey(vDest)];
+        //double timePath = time[graph.getKey(vDest)];
+        results[0] = time[graph.getKey(vDest)];
+        results[1] = energy[graph.getKey(vDest)];
 
-        if (Double.MAX_VALUE - lengthPath > 0) {
-            getPath(g, vOrig, vDest, vertices, pathKeys, shortPath, sectionpath);
-            return lengthPath;
+        if (Double.MAX_VALUE - results[0] > 0) {
+            getPath(graph, vOrig, vDest, vertices, pathKeys, shortPath, sectionpath);
+            return results;
         }
-        return -1;
+        return results;
     }
 
     private static <V, E> void shortestPathLength(Graph<Junction, Section> g, Junction vOrig, Junction[] vertices,
@@ -111,10 +82,14 @@ public class FastestPathAlgorithm implements PathAlgorithm {
                 Junction vAdj = g.opposite(vOrigin, edg);
                 int kAdj = g.getKey(vAdj);
                 section = edg.getElement();
-                double cur_time = calcFastestTime(section, vehicle);
-                if (!visited[kAdj] && time[kAdj] > (time[kOrg] + cur_time)) {
-                    time[kAdj] = time[kOrg] + cur_time;
+                //Results
+                //0) Time
+                //1) Work
+                double results[] = calcFastestTime(section, vehicle);
+                if (!visited[kAdj] && time[kAdj] > (time[kOrg] + results[0])) {
+                    time[kAdj] = time[kOrg] + results[0];
                     pathKeys[kAdj] = kOrg;
+                    energy[kAdj] = energy[kAdj] + results[1];
                 }
             }
             i = getVertMinDist(time, visited);
@@ -166,19 +141,27 @@ public class FastestPathAlgorithm implements PathAlgorithm {
         return indice;
     }
 
-    private static double calcFastestTime(Section s, Vehicle car) {
+    private static double[] calcFastestTime(Section s, Vehicle car) {
 
-        double time = 0;
+        //Vector with results
+        //0) Time
+        //1) Work
+        double results[] = new double[2];
         double final_time = 0;
         double work = 0;
-        
+
         for (Segment segment : s.getSequenceOfSegments()) {
-            double fa = PhysicsCalculus.calcForceInSegment(segment, car, s);
+            double force = PhysicsCalculus.calcForceInSegment(segment, car, s);
             double carMaxVel = PhysicsCalculus.calcMaximumVelocity(segment, car, s);
             double time_segment = (segment.getLength() * 1000) / (carMaxVel);
             final_time += time_segment;
+            work += (force * segment.getLength() * 1000);
 //            }
         }
-        return final_time;
+        results[0] = final_time;
+        results[1] = work;
+
+        return results;
+
     }
 }

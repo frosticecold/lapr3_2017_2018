@@ -19,12 +19,13 @@ public class AlgorithmResults {
     private double energy;
     private double distance;
 
-    public AlgorithmResults(Project project, LinkedList<Junction> junctionPath, LinkedList<Section> fastestPath, Vehicle vehicle, double travelTime) {
+    public AlgorithmResults(Project project, LinkedList<Junction> junctionPath, LinkedList<Section> fastestPath, Vehicle vehicle, double[] results) {
         this.project = project;
         this.junctionpath = junctionPath;
         this.sectionpath = fastestPath;
         this.vehicle = vehicle;
-        this.travelTime = travelTime;
+        this.travelTime = results[0];
+        this.energy = results[1];
     }
 
     public void calculate() {
