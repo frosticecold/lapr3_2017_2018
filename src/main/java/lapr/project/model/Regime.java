@@ -7,7 +7,7 @@ public class Regime {
     private double m_rpm_low;
     private double m_rpm_high;
     private double m_SFC;
-    
+
     public Regime(double m_torque_low, double m_torque_high, double m_rpm_low, double m_rpm_high, double m_SFC) {
         this.m_torque_low = m_torque_low;
         this.m_torque_high = m_torque_high;
@@ -60,6 +60,23 @@ public class Regime {
         return m_SFC;
     }
 
+    public double getTorqueByRPM(double rpm) {
+        if (rpm < m_rpm_low || rpm > m_torque_high) {
+            throw new IllegalArgumentException("Invalid rpm");
+        }
+        if (rpm == m_rpm_low) {
+            return m_rpm_low;
+        }
+        if (rpm > m_rpm_low && rpm < m_rpm_high) {
+            return (m_torque_high + m_torque_low) / 2;
+
+        }
+        if (rpm == m_rpm_high) {
+            return m_rpm_high;
+        }
+        return -1;
+    }
+
     public void setRpmLow(double m_rpm_low) {
         this.m_rpm_low = m_rpm_low;
     }
@@ -98,7 +115,7 @@ public class Regime {
         if (m_torque_low > m_torque_high) {
             throw new IllegalArgumentException("Torque low should be less than torque high.");
         }
-        
+
         if (m_rpm_low > m_rpm_high) {
             throw new IllegalArgumentException("RPM low should be less than RPM high.");
         }
@@ -115,6 +132,4 @@ public class Regime {
         return "Regime{" + "m_torque_low=" + m_torque_low + ", m_torque_high=" + m_torque_high + ", m_rpm_low=" + m_rpm_low + ", m_rpm_high=" + m_rpm_high + ", m_SFC=" + m_SFC + '}';
     }
 
-    
-    
 }

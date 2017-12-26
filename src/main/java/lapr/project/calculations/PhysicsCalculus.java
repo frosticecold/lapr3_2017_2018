@@ -143,4 +143,10 @@ public class PhysicsCalculus {
         }
         return fa;
     }
+    
+    public double[] calculateIdealMotorForce(Vehicle car,Segment s){
+    
+    
+    return new double[2];
+    }
 }
