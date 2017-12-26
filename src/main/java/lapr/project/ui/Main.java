@@ -17,12 +17,13 @@ public class Main {
      */
     public static void main(String[] args) throws ImportException, FileNotFoundException {
 
+        boolean DEBUG = true;
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Mockup().setVisible(true);
+                new Mockup(DEBUG).setVisible(true);
             }
         });
-        
+
 //        Project project = new Project();
 //        
 //        VehicleXML vXML = new VehicleXML();

@@ -6,16 +6,26 @@
 package lapr.project.ui;
 
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
+import javax.swing.JMenu;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import lapr.project.controller.MockUpController;
 import lapr.project.model.Project;
+import lapr.project.model.Vehicle;
+import lapr.project.utils.ImportException;
+import lapr.project.utils.NetworkXML;
 import lapr.project.utils.Session;
+import lapr.project.utils.VehicleXML;
 
 /**
  *
@@ -25,17 +35,22 @@ public class Mockup extends javax.swing.JFrame {
 
     private static final long serialVersionUID = 1;
 
-    protected Project m_project;
     private JFileChooser m_jfc;
     private MockUpController controller;
+    private boolean DEBUG;
 
     /**
      * Creates new form Mockup
+     *
+     * @param isDEBUG
      */
-    public Mockup() {
+    public Mockup(boolean isDEBUG) {
         initComponents();
+        initDEBUGmenu();
         controller = new MockUpController();
         initFileChooser();
+        DEBUG = isDEBUG;
+
     }
 
     public void initFileChooser() {
@@ -43,6 +58,38 @@ public class Mockup extends javax.swing.JFrame {
         FileNameExtensionFilter xmlfilter = new FileNameExtensionFilter("HTML files (*.html)", "html");
         m_jfc.setFileFilter(xmlfilter);
         m_jfc.setCurrentDirectory(new File(System.getProperty("user.dir")));
+    }
+
+    public void initDEBUGmenu() {
+        JMenu debug = new JMenu("Debug");
+        JMenuItem loadExampleProject = new JMenuItem("Dummy project");
+        loadExampleProject.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    Project p = new Project();
+                    Session.setActiveProject(p);
+
+                    NetworkXML nxml = new NetworkXML();
+                    nxml.importNetwork(p, new File("TestSet02_Network_v2.xml"));
+                    VehicleXML vxml = new VehicleXML();
+                    List<Vehicle> importVehicles = vxml.importVehicles(new File("TestSet02_Vehicles_v2.xml"));
+                    for (Vehicle v : importVehicles) {
+                        p.addVehicle(v);
+                    }
+                    JOptionPane.showMessageDialog(Mockup.this, "Dummy project imported successfully", "Loading dummy project", JOptionPane.INFORMATION_MESSAGE);
+                } catch (FileNotFoundException ex) {
+                    Logger.getLogger(Mockup.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (ImportException ex) {
+                    Logger.getLogger(Mockup.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
+            }
+        });
+
+        debug.add(loadExampleProject);
+        jMenuBar1.add(debug);
+
     }
 
     /**
@@ -187,7 +234,7 @@ public class Mockup extends javax.swing.JFrame {
     }//GEN-LAST:event_menuItemOpenProjectActionPerformed
 
     private void itemProjectEditProjectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemProjectEditProjectActionPerformed
-       if (Session.getActiveProject() != null) {
+        if (Session.getActiveProject() != null) {
             EditProjectUI ui = new EditProjectUI(this);
             ui.setLocationRelativeTo(this);
             ui.setVisible(true);
@@ -248,10 +295,6 @@ public class Mockup extends javax.swing.JFrame {
         } catch (java.io.IOException e) {
             System.out.println(e.getMessage());
         }
-    }
-
-    protected void setProject(Project p) {
-        this.m_project = p;
     }
     /**
      * @param args the command line arguments
