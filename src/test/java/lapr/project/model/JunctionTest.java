@@ -38,14 +38,14 @@ public class JunctionTest {
     }
 
     /**
-     * Test of getID method, of class Junction.
+     * Test of getName method, of class Junction.
      */
     @Test
     public void testGetID() {
         System.out.println("getID");
         Junction instance = new Junction("New Junction");
         String expResult = "New Junction";
-        String result = instance.getID();
+        String result = instance.getName();
         assertEquals(expResult, result);
     }
 
@@ -118,4 +118,13 @@ public class JunctionTest {
         assertEquals(expResult, result);
     }
 
+    @Test
+    public void testToStringHTML() {
+        System.out.println("toStringHTML");
+        Junction instance = new Junction("Test");
+        String output = instance.toStringHTML();
+        String expected = "\t<li>ID: " + instance.getName() + "</li>\n";
+        assertEquals(output, expected);
+
+    }
 }

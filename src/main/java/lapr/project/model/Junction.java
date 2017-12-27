@@ -4,24 +4,24 @@ import java.util.Objects;
 
 public class Junction {
 
-    private String m_id;
+    private String name;
 
-    public Junction(String id) {
-        m_id = id;
-    }
-
-    public String getID() {
-        return m_id;
+    public Junction(String name) {
+        this.name = name;
     }
 
     public Junction(Junction j) {
-        this.m_id = j.m_id;
+        this.name = j.name;
+    }
+
+    public String getName() {
+        return name;
     }
 
     @Override
     public int hashCode() {
         int hash = 5;
-        hash = 53 * hash + Objects.hashCode(this.m_id);
+        hash = 53 * hash + Objects.hashCode(this.name);
         return hash;
     }
 
@@ -37,14 +37,14 @@ public class Junction {
             return false;
         }
         final Junction other = (Junction) obj;
-        if (!Objects.equals(this.m_id, other.m_id)) {
+        if (!Objects.equals(this.name, other.name)) {
             return false;
         }
         return true;
     }
 
     public boolean validate() {
-        if (this.m_id == null || this.m_id.trim().isEmpty()) {
+        if (this.name == null || this.name.trim().isEmpty()) {
             throw new IllegalArgumentException("The junction's name cannot be"
                     + "empty.");
         }
@@ -54,7 +54,7 @@ public class Junction {
 
     @Override
     public String toString() {
-        return "Junction " + m_id;
+        return "Junction " + name;
     }
 
     /**
@@ -65,7 +65,7 @@ public class Junction {
     public String toStringHTML() {
         StringBuilder sb = new StringBuilder();
 
-        sb.append("\t<li>ID: ").append(this.m_id).append("</li>\n");
+        sb.append("\t<li>ID: ").append(this.name).append("</li>\n");
 
         return sb.toString();
     }

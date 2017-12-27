@@ -161,7 +161,7 @@ public class SectionTest {
     }
 
     /**
-     * Test of getID method, of class Section.
+     * Test of getName method, of class Section.
      */
     @Test
     public void testGetID() {

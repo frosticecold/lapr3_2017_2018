@@ -103,7 +103,7 @@ public class Project {
             throw new IllegalArgumentException("Junction name is invalid");
         }
         for (Junction j : m_road_network.vertices()) {
-            if (j.getID().equalsIgnoreCase(junction_id)) {
+            if (j.getName().equalsIgnoreCase(junction_id)) {
                 return j;
             }
         }

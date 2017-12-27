@@ -32,7 +32,7 @@ public class JunctionData extends DataAccess<Junction> {
     public void insert(String pName, Junction j) throws SQLException {
         List<SQLArgument> args = new ArrayList<>();
 
-        args.add(new SQLArgument(j.getID(), OracleTypes.VARCHAR));
+        args.add(new SQLArgument(j.getName(), OracleTypes.VARCHAR));
         ResultSet rs = super.callFunction("getJunctionByID", args);
         if (rs.next()) {
             rs.close();
@@ -41,7 +41,7 @@ public class JunctionData extends DataAccess<Junction> {
 
         args.clear();
         args.add(new SQLArgument(pName, OracleTypes.VARCHAR));
-        args.add(new SQLArgument(j.getID(), OracleTypes.VARCHAR));
+        args.add(new SQLArgument(j.getName(), OracleTypes.VARCHAR));
         super.callProcedure("insertJunction", args);
     }
 

@@ -62,8 +62,8 @@ public class SectionData extends DataAccess<Section> {
             rs.close();
             return;
         }
-        args1.add(new SQLArgument(s.getBeginningJunction().getID(), OracleTypes.VARCHAR));
-        args1.add(new SQLArgument(s.getEndingJunction().getID(), OracleTypes.VARCHAR));
+        args1.add(new SQLArgument(s.getBeginningJunction().getName(), OracleTypes.VARCHAR));
+        args1.add(new SQLArgument(s.getEndingJunction().getName(), OracleTypes.VARCHAR));
         args1.add(new SQLArgument(s.getRoadID(), OracleTypes.VARCHAR));
         args1.add(new SQLArgument(pName, OracleTypes.VARCHAR));
         args1.add(new SQLArgument(s.getDirection().name(), OracleTypes.VARCHAR));
