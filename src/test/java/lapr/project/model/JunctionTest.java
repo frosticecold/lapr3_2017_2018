@@ -59,6 +59,7 @@ public class JunctionTest {
         Junction instance = new Junction(test);
         instance.validate();
     }
+
     /**
      * Test of illegalArgumentException in class Junction.
      */
@@ -95,11 +96,11 @@ public class JunctionTest {
         boolean result = instance.equals(obj);
         assertFalse(result);
 
+        assertTrue(instance.equals(instance));
         assertFalse(instance.equals(new Junction("Next")));
         assertFalse(instance.equals(new Gear()));
         assertTrue(instance.equals(new Junction("Junction")));
-        
-        
+
     }
 
     /**
