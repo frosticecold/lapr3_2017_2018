@@ -2,101 +2,102 @@ package lapr.project.model;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
+import lapr.project.calculations.Constants;
 
 public class Road {
 
-    private String m_road_id;
-    private String m_name;
-    private String m_typology;
-    private Map<Integer, Double> m_toll_fare;
+    private String id;
+    private String name;
+    private String typology;
+    private Map<Integer, Double> tollFare;
 
     public Road() {
-        m_road_id = "";
-        m_name = "";
-        m_typology = "";
-        m_toll_fare = new LinkedHashMap<>();
+        id = "";
+        name = "";
+        typology = "";
+        tollFare = new LinkedHashMap<>();
     }
 
-    public Road(String road_id, String name, String typology) {
-        setRoadID(road_id);
+    public Road(String roadID, String name, String typology) {
+        setRoadID(roadID);
         setName(name);
         setTypology(typology);
-        m_toll_fare = new LinkedHashMap<>();
+        tollFare = new LinkedHashMap<>();
     }
 
     public Road(Road r) {
-        this.m_road_id = r.m_road_id;
-        this.m_name = r.m_name;
-        this.m_typology = r.m_typology;
-        this.m_toll_fare = new LinkedHashMap<>();
-        for (Integer i : r.m_toll_fare.keySet()) {
-            this.m_toll_fare.put(i, r.m_toll_fare.get(i));
+        this.id = r.id;
+        this.name = r.name;
+        this.typology = r.typology;
+        this.tollFare = new LinkedHashMap<>();
+        for (Integer i : r.tollFare.keySet()) {
+            this.tollFare.put(i, r.tollFare.get(i));
         }
     }
 
     public String getRoadID() {
-        return m_road_id;
+        return id;
     }
 
     public String getName() {
-        return m_name;
+        return name;
     }
 
     public String getTypology() {
-        return m_typology;
+        return typology;
     }
 
-    public void setRoadID(String road_id) {
-        if (road_id == null || road_id.trim().isEmpty()) {
+    public void setRoadID(String roadID) {
+        if (roadID == null || roadID.trim().isEmpty()) {
             throw new IllegalArgumentException("Invalid road id.");
         }
-        this.m_road_id = road_id;
+        this.id = roadID;
     }
 
     public void setName(String name) {
         if (name == null || name.trim().isEmpty()) {
             throw new IllegalArgumentException("Invalid road name.");
         }
-        this.m_name = name;
+        this.name = name;
     }
 
     public void setTypology(String typology) {
         if (typology == null || typology.trim().isEmpty()) {
             throw new IllegalArgumentException("Invalid typology.");
         }
-        m_typology = typology;
+        this.typology = typology;
     }
 
     public void setTollFare(Map<Integer, Double> map) {
         if (map == null) {
             throw new IllegalArgumentException("Invalid map of toll fares");
         }
-        m_toll_fare = map;
+        tollFare = map;
     }
 
-    public void addTollFare(int vehicle_id, double toll_value) {
-        if (vehicle_id <= 0 || toll_value < 0) {
+    public void addTollFare(int vehicleID, double tollValue) {
+        if (vehicleID <= 0 || tollValue < 0) {
             throw new IllegalArgumentException("Invalid values, "
                     + "must be greater than zero for vehicle and "
                     + "toll_value greater than zero");
         }
-        m_toll_fare.put(vehicle_id, toll_value);
+        tollFare.put(vehicleID, tollValue);
     }
 
-    public double getTollValue(int vehicle_id) {
-        if (vehicle_id <= 0) {
+    public double getTollValue(int vehicleID) {
+        if (vehicleID <= 0) {
             throw new IllegalArgumentException("Vehicle id must be greater than zero");
         }
-        if (m_toll_fare.containsKey(vehicle_id)) {
-            return m_toll_fare.get(vehicle_id);
+        if (tollFare.containsKey(vehicleID)) {
+            return tollFare.get(vehicleID);
         }
 
         return -1;
     }
 
     public boolean validate() {
-        if (m_name.trim().isEmpty() || m_road_id.trim().isEmpty()
-                || m_typology.trim().isEmpty() || m_toll_fare == null) {
+        if (name.trim().isEmpty() || id.trim().isEmpty()
+                || typology.trim().isEmpty()) {
             throw new IllegalArgumentException("Road is invalid");
         }
         return true;
@@ -110,9 +111,9 @@ public class Road {
     public String toStringHTML() {
         StringBuilder sb = new StringBuilder();
 
-        sb.append("\t<li>Road id: ").append(this.m_road_id).append("</li>\n");
-        sb.append("\t<li>Name: ").append(this.m_name).append("</li>\n");
-        sb.append("\t<li>Typology: ").append(this.m_typology).append("</li>\n");
+        sb.append("\t<li>Road id: ").append(this.id).append(Constants.HTML_END_OF_LINE);
+        sb.append("\t<li>Name: ").append(this.name).append(Constants.HTML_END_OF_LINE);
+        sb.append("\t<li>Typology: ").append(this.typology).append(Constants.HTML_END_OF_LINE);
 
         return sb.toString();
     }

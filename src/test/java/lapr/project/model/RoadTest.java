@@ -5,9 +5,8 @@
  */
 package lapr.project.model;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -21,26 +20,47 @@ import static org.junit.Assert.*;
  * @author Raúl Correia <1090657@isep.ipp.pt>
  */
 public class RoadTest {
-    
+
     private static final String DO_NOT_CHANGE_ME = "do not change me";
-    
+
     public RoadTest() {
     }
-    
+
     @BeforeClass
     public static void setUpClass() {
     }
-    
+
     @AfterClass
     public static void tearDownClass() {
     }
-    
+
     @Before
     public void setUp() {
     }
-    
+
     @After
     public void tearDown() {
+    }
+
+    @Test
+    public void testConstructor() {
+
+        String id = "E01";
+        String name = "E01";
+        String typology = "Super Road";
+
+        Road road1 = new Road(id, name, typology);
+
+        assertEquals(road1.getRoadID(), id);
+        assertEquals(road1.getName(), name);
+        assertEquals(road1.getTypology(), typology);
+
+        Road anotherRoad = new Road(road1);
+
+        assertEquals(anotherRoad.getRoadID(), id);
+        assertEquals(anotherRoad.getName(), name);
+        assertEquals(anotherRoad.getTypology(), typology);
+
     }
 
     /**
@@ -54,7 +74,7 @@ public class RoadTest {
         String expResult = "do not change me";
         String result = instance.getRoadID();
         assertEquals(expResult, result);
-        
+
         try {
             instance.setRoadID("");
             result = instance.getRoadID();
@@ -82,7 +102,7 @@ public class RoadTest {
         String expResult = DO_NOT_CHANGE_ME;
         String result = instance.getName();
         assertEquals(expResult, result);
-        
+
         try {
             instance.setName("");
             result = instance.getName();
@@ -99,7 +119,6 @@ public class RoadTest {
         }
     }
 
-
     /**
      * Test of getTypology method, of class Road.
      */
@@ -111,7 +130,7 @@ public class RoadTest {
         String expResult = "do not change me";
         String result = instance.getTypology();
         assertEquals(expResult, result);
-        
+
         try {
             instance.setTypology("");
             result = instance.getTypology();
@@ -128,7 +147,6 @@ public class RoadTest {
         }
     }
 
-
     /**
      * Test of setTollFare method, of class Road.
      */
@@ -142,7 +160,7 @@ public class RoadTest {
         } catch (IllegalArgumentException ex) {
             System.out.println(ex.getMessage());
         }
-        
+
         map = new HashMap<>();
         map.put(1, 2.0);
         map.put(2, 2.0);
@@ -150,6 +168,12 @@ public class RoadTest {
         map.put(4, 2.0);
         map.put(5, 2.0);
         instance.setTollFare(map);
+        
+        try {
+            map.get(0);
+        } catch (IllegalArgumentException ex) {
+            System.out.println(ex.getMessage());
+        }
     }
 
     /**
@@ -166,37 +190,37 @@ public class RoadTest {
         } catch (IllegalArgumentException ex) {
             System.out.println(ex.getMessage());
         }
-        
+
         vehicle_id = 1;
-        
+
         try {
             instance.addTollFare(vehicle_id, toll_value);
         } catch (IllegalArgumentException ex) {
             System.out.println(ex.getMessage());
         }
-        
+
         vehicle_id = 0;
-        
+
         toll_value = 1.0;
         try {
             instance.addTollFare(vehicle_id, toll_value);
         } catch (IllegalArgumentException ex) {
             System.out.println(ex.getMessage());
         }
-        
+
         instance.addTollFare(1, 2.5);
         assertEquals(2.5, instance.getTollValue(1), 0.05);
-        
+
         instance.addTollFare(2, 3.0);
         assertEquals(3.0, instance.getTollValue(2), 0.05);
-        
+
         instance.addTollFare(3, 3.5);
         assertEquals(3.5, instance.getTollValue(3), 0.05);
-        
+
         instance.addTollFare(4, 4.0);
         assertEquals(4.0, instance.getTollValue(4), 0.05);
-        
-        assertEquals(-1,instance.getTollValue(5),0.05);
+
+        assertEquals(-1, instance.getTollValue(5), 0.05);
     }
 
     /**
@@ -213,7 +237,7 @@ public class RoadTest {
         } catch (IllegalArgumentException ex) {
             System.out.println(ex.getMessage());
         }
-        
+
         road.setName(DO_NOT_CHANGE_ME);
         try {
             result = road.validate();
@@ -233,9 +257,9 @@ public class RoadTest {
             System.out.println(ex.getMessage());
         }
         result = road.validate();
-        
+
         expResult = true;
         assertEquals(expResult, result);
     }
-    
+
 }
