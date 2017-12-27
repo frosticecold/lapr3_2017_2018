@@ -53,20 +53,6 @@ public class Edge<V, E> implements Comparable<Object> {
         return null;
     }
 
-    public Vertex<V, E> getVOrigVertex() {
-        if (this.vOrig != null) {
-            return vOrig;
-        }
-        return null;
-    }
-
-    public Vertex<V, E> getVDestVertex() {
-        if (this.vDest != null) {
-            return vDest;
-        }
-        return null;
-    }
-
     public void setVOrig(Vertex<V, E> vo) {
         vOrig = vo;
     }
@@ -127,50 +113,6 @@ public class Edge<V, E> implements Comparable<Object> {
         return hash;
     }
 
-//    @Override
-//    public boolean equals(Object otherObj) {
-//
-//        if (this == otherObj) {
-//            return true;
-//        }
-//
-//        if (otherObj == null || this.getClass() != otherObj.getClass()) {
-//            return false;
-//        }
-//        @SuppressWarnings("unchecked")
-//        Edge<V, E> otherEdge = (Edge<V, E>) otherObj;
-//
-//        // if endpoints vertices are not equal
-//        if ((this.vOrig == null && otherEdge.vOrig != null)
-//                || (this.vOrig != null && otherEdge.vOrig == null)) {
-//            return false;
-//        }
-//
-//        if ((this.vDest == null && otherEdge.vDest != null)
-//                || (this.vDest != null && otherEdge.vDest == null)) {
-//            return false;
-//        }
-//
-//        if (this.vOrig != null && otherEdge.vOrig != null
-//                && !this.vOrig.equals(otherEdge.vOrig)) {
-//            return false;
-//        }
-//
-//        if (this.vDest != null && otherEdge.vDest != null
-//                && !this.vDest.equals(otherEdge.vDest)) {
-//            return false;
-//        }
-//
-//        if (this.weight != otherEdge.weight) {
-//            return false;
-//        }
-//
-//        if (this.element != null && otherEdge.element != null) {
-//            return this.element.equals(otherEdge.element);
-//        }
-//
-//        return true;
-//    }
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {
