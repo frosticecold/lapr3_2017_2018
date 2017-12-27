@@ -125,6 +125,5 @@ public class JunctionTest {
         String output = instance.toStringHTML();
         String expected = "\t<li>ID: " + instance.getName() + "</li>\n";
         assertEquals(output, expected);
-
     }
 }

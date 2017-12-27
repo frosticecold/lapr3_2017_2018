@@ -64,16 +64,20 @@ public class GearTest {
         assertNotEquals(5, result);
 
         instance.setRatio(1.6);
-        double ratioResult = instance.getM_ratio();
+        double ratioResult = instance.getRatio();
         assertEquals(1.6, ratioResult, 0.00005);
 
         instance.setRatio(2.9);
-        ratioResult = instance.getM_ratio();
+        ratioResult = instance.getRatio();
         assertEquals(2.9, ratioResult, 0.00005);
 
         instance.setRatio(2.9);
-        ratioResult = instance.getM_ratio();
+        ratioResult = instance.getRatio();
         assertNotEquals(5.2, ratioResult, 0.00005);
+
+        Gear anotherGear = new Gear(instance);
+        assertEquals(instance.getGearID(), anotherGear.getGearID());
+        assertEquals(instance.getRatio(), anotherGear.getRatio(), 0.05);
 
     }
 
