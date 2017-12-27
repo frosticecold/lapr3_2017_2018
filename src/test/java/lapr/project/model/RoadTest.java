@@ -163,14 +163,28 @@ public class RoadTest {
 
         map = new HashMap<>();
         map.put(1, 2.0);
-        map.put(2, 2.0);
-        map.put(3, 2.0);
-        map.put(4, 2.0);
-        map.put(5, 2.0);
+        map.put(2, 2.5);
+        map.put(3, 3.0);
+        map.put(4, 3.5);
+        map.put(5, 4.0);
         instance.setTollFare(map);
-        
+
         try {
             map.get(0);
+        } catch (IllegalArgumentException ex) {
+            System.out.println(ex.getMessage());
+        }
+
+        Road anotherRoad = new Road(instance);
+
+        try {
+
+            assertEquals(anotherRoad.getTollValue(1), 2.0, 0.05);
+            assertEquals(anotherRoad.getTollValue(2), 2.5, 0.05);
+            assertEquals(anotherRoad.getTollValue(3), 3.0, 0.05);
+            assertEquals(anotherRoad.getTollValue(4), 3.5, 0.05);
+            assertEquals(anotherRoad.getTollValue(5), 4.0, 0.05);
+
         } catch (IllegalArgumentException ex) {
             System.out.println(ex.getMessage());
         }
@@ -260,6 +274,18 @@ public class RoadTest {
 
         expResult = true;
         assertEquals(expResult, result);
+    }
+
+    @Test
+    public void testToStringHTML() {
+        System.out.println("toStringHTML");
+        Road road = new Road(DO_NOT_CHANGE_ME, DO_NOT_CHANGE_ME, DO_NOT_CHANGE_ME);
+        String tohtml = road.toStringHTML();
+        String expected = "\t<li>Road id: " + road.getRoadID() + "</li>\n"
+                + "\t<li>Name: " + road.getName() + "</li>\n"
+                + "\t<li>Typology: " + road.getTypology() + "</li>\n";
+        assertEquals(expected, tohtml);
+
     }
 
 }
