@@ -37,10 +37,7 @@ public class Junction {
             return false;
         }
         final Junction other = (Junction) obj;
-        if (!Objects.equals(this.name, other.name)) {
-            return false;
-        }
-        return true;
+        return Objects.equals(this.name, other.name);
     }
 
     public boolean validate() {

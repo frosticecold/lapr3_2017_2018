@@ -37,6 +37,16 @@ public class JunctionTest {
     public void tearDown() {
     }
 
+    @Test
+    public void testConstructor() {
+        System.out.println("Constructor");
+
+        Junction j1 = new Junction("A");
+        Junction otherJunction = new Junction(j1);
+
+        assertEquals(j1.getName(), otherJunction.getName());
+    }
+
     /**
      * Test of getName method, of class Junction.
      */
