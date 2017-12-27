@@ -97,11 +97,11 @@ public class PhysicsCalculus {
         double first_part = (velocity * 60 * vehicle.getFinalDriveRatio()) / (Math.PI * vehicle.getWheelSize());
         for (Gear g : vehicle.getGearbox().getGearList()) {
             double copy = first_part;
-            copy = copy * g.getM_ratio();
+            copy = copy * g.getRatio();
             if (copy > vehicle.getMinRpm() && copy < vehicle.getMaxRpm()) {
                 if (copy < rpm) {
                     rpm = copy;
-                    gear_ratio = g.getM_ratio();
+                    gear_ratio = g.getRatio();
                 }
             }
         }
@@ -188,7 +188,7 @@ public class PhysicsCalculus {
         int gearSize = car.getGearbox().getNumberOfGears();
         double final_drive_ratio = car.getFinalDriveRatio();
         for (int gear = gearSize; gear > 0; gear--) {
-            double gearRatio = car.getGearbox().getGear(gear).getM_ratio();
+            double gearRatio = car.getGearbox().getGear(gear).getRatio();
             for (double rpm = car.getMinRpm(); rpm <= car.getMaxRpm(); rpm += 20) {
 
                 generated_force[0] = PhysicsCalculus.motorForceCalculation(car.getTorqueAtThrottle(Vehicle.THROTTLE_MAX, rpm), final_drive_ratio, gearRatio, car.getWheelSize());

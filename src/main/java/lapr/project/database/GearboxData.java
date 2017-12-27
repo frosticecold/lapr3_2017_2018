@@ -46,7 +46,7 @@ public class GearboxData extends DataAccess<Gearbox>{
             args.clear();
             args.add(new SQLArgument(vName, OracleTypes.VARCHAR));
             args.add(new SQLArgument(Integer.toString(g.getGearID()), OracleTypes.NUMBER));
-            args.add(new SQLArgument(Double.toString(g.getM_ratio()), OracleTypes.NUMBER));
+            args.add(new SQLArgument(Double.toString(g.getRatio()), OracleTypes.NUMBER));
             
             super.callProcedure("insertGear", args);
         }

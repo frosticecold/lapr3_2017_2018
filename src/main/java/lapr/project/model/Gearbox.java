@@ -33,8 +33,8 @@ public class Gearbox {
     public double getLowestGear() {
         double lowestGear = Double.POSITIVE_INFINITY;
         for (Gear g : m_gears) {
-            if (g.getM_ratio() < lowestGear) {
-                lowestGear = g.getM_ratio();
+            if (g.getRatio() < lowestGear) {
+                lowestGear = g.getRatio();
             }
         }
         return lowestGear;
