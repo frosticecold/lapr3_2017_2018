@@ -64,14 +64,14 @@ public class Regime {
         if (rpm < m_rpm_low || rpm > m_rpm_high) {
             throw new IllegalArgumentException("Invalid rpm");
         }
-        if (rpm == m_rpm_low) {
+        if (Math.abs(rpm - m_rpm_low) < 0.0000001) {
             return m_torque_low;
         }
         if (rpm > m_rpm_low && rpm < m_rpm_high) {
             return (m_torque_high + m_torque_low) / 2;
 
         }
-        if (rpm == m_rpm_high) {
+        if (Math.abs(rpm - m_rpm_high) < 0.0000001) {
             return m_torque_high;
         }
         return -1;

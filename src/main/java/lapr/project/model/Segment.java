@@ -148,20 +148,6 @@ public class Segment {
         this.minimumVelocity = minimumVelocity;
     }
 
-    @Override
-    public int hashCode() {
-        int hash = 7;
-        hash = 61 * hash + this.segmentIndex;
-        hash = 61 * hash + (int) (Double.doubleToLongBits(this.initialHeight) ^ (Double.doubleToLongBits(this.initialHeight) >>> 32));
-        hash = 61 * hash + (int) (Double.doubleToLongBits(this.finalHeight) ^ (Double.doubleToLongBits(this.finalHeight) >>> 32));
-        hash = 61 * hash + (int) (Double.doubleToLongBits(this.length) ^ (Double.doubleToLongBits(this.length) >>> 32));
-        hash = 61 * hash + (int) (Double.doubleToLongBits(this.windDirection) ^ (Double.doubleToLongBits(this.windDirection) >>> 32));
-        hash = 61 * hash + (int) (Double.doubleToLongBits(this.windSpeed) ^ (Double.doubleToLongBits(this.windSpeed) >>> 32));
-        hash = 61 * hash + (int) (Double.doubleToLongBits(this.maximumVelocity) ^ (Double.doubleToLongBits(this.maximumVelocity) >>> 32));
-        hash = 61 * hash + (int) (Double.doubleToLongBits(this.minimumVelocity) ^ (Double.doubleToLongBits(this.minimumVelocity) >>> 32));
-        return hash;
-    }
-
     /**
      * M = Delta Y / Delta X
      *

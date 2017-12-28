@@ -141,7 +141,7 @@ public class PhysicsCalculus {
         double fa = 0;
         double vel = calcMaximumVelocity(segment, car, section);
         double slope = segment.calculateSlope();
-        if (slope == 0) {
+        if (slope == 0.0) {
             fa = rollingResistanceCalculation(car.getRCC(), car.getTotalWeight());
             fa += airDragCalculation(vel, car.getDragCoefficient(), car.getFrontalArea());
         } else {
