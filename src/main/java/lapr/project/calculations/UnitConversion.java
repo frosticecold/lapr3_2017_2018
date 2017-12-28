@@ -14,6 +14,11 @@ public class UnitConversion {
     public static final double MILES_TO_KM = 1.609344;
     public static final int KM_TO_METERS = 1000;
     private static final int HOUR_IN_SECONDS = 3600;
+    private static final String CENTIMETERS = "cm";
+    private static final String METERS = "m";
+    private static final String KILOMETERS = "km";
+    private static final String KILOGRAMS = "kg";
+    private static final String GRAMS = "g";
 
     public static double convertKilometersToMeters(String distance) {
         double lengthKilometers = Double.parseDouble(
@@ -43,8 +48,56 @@ public class UnitConversion {
         double grams = Double.parseDouble(weight.replaceAll("[^0-9.]", ""));
         return grams * 1000;
     }
-    
+
     public static double convertKmToMeters(double km) {
         return km * 1000;
+    }
+
+    public static double convertToPretendedUnity(String number, String pretended) {
+        String[] numberSplit = number.split(" ");
+        switch (pretended) {
+            case (KILOMETERS): {
+                if (numberSplit[1].equalsIgnoreCase(pretended)) {
+                    return Double.parseDouble(numberSplit[0]);
+                } else if (numberSplit[1].equalsIgnoreCase(CENTIMETERS)) {
+                    return Double.parseDouble(numberSplit[0]) * 100000;
+                } else if (numberSplit[1].equalsIgnoreCase(METERS)) {
+                    return Double.parseDouble(numberSplit[0]) * 100;
+                }
+            }
+            case (METERS): {
+                if (numberSplit[1].equalsIgnoreCase(pretended)) {
+                    return Double.parseDouble(numberSplit[0]);
+                } else if (numberSplit[1].equalsIgnoreCase(CENTIMETERS)) {
+                    return Double.parseDouble(numberSplit[0]) * 100;
+                } else if (numberSplit[1].equalsIgnoreCase(KILOMETERS)) {
+                    return Double.parseDouble(numberSplit[0]) / 1000;
+                }
+            }
+            case (CENTIMETERS): {
+                if (numberSplit[1].equalsIgnoreCase(pretended)) {
+                    return Double.parseDouble(numberSplit[0]);
+                } else if (numberSplit[1].equalsIgnoreCase(METERS)) {
+                    return Double.parseDouble(numberSplit[0]) / 100;
+                } else if (numberSplit[1].equalsIgnoreCase(KILOMETERS)) {
+                    return Double.parseDouble(numberSplit[0]) / 100000;
+                }
+            }
+            case (KILOGRAMS): {
+                if (numberSplit[1].equalsIgnoreCase(pretended)) {
+                    return Double.parseDouble(numberSplit[0]);
+                } else if (numberSplit[1].equalsIgnoreCase(GRAMS)) {
+                    return Double.parseDouble(numberSplit[0]) / 1000;
+                } 
+            }
+            case (GRAMS): {
+                if (numberSplit[1].equalsIgnoreCase(pretended)) {
+                    return Double.parseDouble(numberSplit[0]);
+                } else if (numberSplit[1].equalsIgnoreCase(KILOGRAMS)) {
+                    return Double.parseDouble(numberSplit[0]) * 1000;
+                } 
+            }
+        }
+        return Double.parseDouble(numberSplit[0]);
     }
 }
