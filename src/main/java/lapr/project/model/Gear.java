@@ -8,11 +8,11 @@ public class Gear {
     /**
      *
      * @param id_of_gear
-     * @param m_ratio
+     * @param ratio
      */
-    public Gear(int id_of_gear, double m_ratio) {
+    public Gear(int id_of_gear, double ratio) {
         this.id = id_of_gear;
-        this.ratio = m_ratio;
+        this.ratio = ratio;
     }
 
     public Gear() {

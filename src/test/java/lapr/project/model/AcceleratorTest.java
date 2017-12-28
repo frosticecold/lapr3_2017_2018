@@ -7,6 +7,7 @@ package lapr.project.model;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -38,6 +39,38 @@ public class AcceleratorTest {
 
     @After
     public void tearDown() {
+    }
+
+    /**
+     * Test of copy constructor
+     */
+    @Test
+    public void testCopyConstructor() {
+        System.out.println("copyConstructor");
+        Accelerator acc_a = new Accelerator();
+        ArrayList<Regime> regime_list = new ArrayList<>();
+        Regime r1 = new Regime(115, 500, 900, 1499, 500);
+        Regime r2 = new Regime(125, 600, 1500, 2499, 450);
+        Regime r3 = new Regime(120, 550, 2500, 3499, 520);
+        Regime r4 = new Regime(105, 400, 3500, 4499, 550);
+        Regime r5 = new Regime(90, 300, 4500, 5500, 650);
+        regime_list.add(r1);
+        regime_list.add(r2);
+        regime_list.add(r3);
+        regime_list.add(r4);
+        regime_list.add(r5);
+        Throttle t1 = new Throttle(regime_list);
+        LinkedHashMap<Integer,Throttle> map = new LinkedHashMap<>();
+        map.put(25, t1);
+        acc_a.setThrottleList(map);
+        
+        Accelerator ac_b = new Accelerator(acc_a);
+        
+        Throttle t25 = ac_b.getThrottleList().get(25);
+        assertEquals(t1.getRegimeList().get(0).getRpmLow(),t25.getRegimeList().get(0).getRpmLow(),0.05);
+        assertEquals(t1.getRegimeList().get(1).getRpmLow(),t25.getRegimeList().get(1).getRpmLow(),0.05);
+        assertEquals(t1.getRegimeList().get(2).getRpmLow(),t25.getRegimeList().get(2).getRpmLow(),0.05);
+        assertEquals(t1.getRegimeList().get(3).getRpmLow(),t25.getRegimeList().get(3).getRpmLow(),0.05);
     }
 
     /**
@@ -175,6 +208,5 @@ public class AcceleratorTest {
         assertEquals(expResult, result);
 
     }
-
 
 }
