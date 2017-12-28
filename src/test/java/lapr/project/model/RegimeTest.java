@@ -17,26 +17,26 @@ import static org.junit.Assert.*;
  * @author MarioDias
  */
 public class RegimeTest {
-
+    
     public RegimeTest() {
     }
-
+    
     @BeforeClass
     public static void setUpClass() {
     }
-
+    
     @AfterClass
     public static void tearDownClass() {
     }
-
+    
     @Before
     public void setUp() {
     }
-
+    
     @After
     public void tearDown() {
     }
-
+    
     @Test
     public void testConstructor() {
         System.out.println("constructorTest");
@@ -46,18 +46,18 @@ public class RegimeTest {
         reg1.setSFC(500);
         reg1.setTorqueHigh(200);
         reg1.setTorqueLow(100);
-
+        
         Regime reg2 = new Regime(reg1);
-
+        
         assertEquals(reg1.getRpmHigh(), reg2.getRpmHigh(), 0.05);
         assertEquals(reg1.getRpmLow(), reg2.getRpmLow(), 0.05);
         assertEquals(reg1.getSFC(), reg2.getSFC(), 0.05);
         assertEquals(reg1.getTorqueHigh(), reg2.getTorqueHigh(), 0.05);
         assertEquals(reg1.getTorqueLow(), reg2.getTorqueLow(), 0.05);
-
+        
     }
-
-    @Test(expected = IllegalArgumentException.class)
+    
+    @Test
     public void testGetTorqueByRPM() {
         System.out.println("testGetTorqueByRPM");
         Regime reg1 = new Regime();
@@ -66,21 +66,41 @@ public class RegimeTest {
         reg1.setSFC(500);
         reg1.setTorqueHigh(200);
         reg1.setTorqueLow(100);
-
-        reg1.getTorqueByRPM(100);
+        
+        try {
+            reg1.getTorqueByRPM(100);
+        } catch (IllegalArgumentException ex) {
+        }
         reg1.getTorqueByRPM(5000);
-        reg1.getTorqueByRPM(400000);
-
+        try {
+            reg1.getTorqueByRPM(400000);
+        } catch (IllegalArgumentException ex) {
+        }
+        
         System.out.println("testGetSFCbyRPM");
-        reg1.getSFCByRPM(100);
+        try {
+            reg1.getSFCByRPM(100);
+        } catch (IllegalArgumentException ex) {
+        }
         reg1.getSFCByRPM(5000);
-        reg1.getSFCByRPM(50000);
-
+        try {
+            reg1.getSFCByRPM(50000);
+        } catch (IllegalArgumentException ex) {
+        }
+        
+        reg1.getTorqueByRPM(2000);
+        reg1.getTorqueByRPM(4000);
+        reg1.getTorqueByRPM(10000);
+        
+        reg1.getSFCByRPM(2000);
+        reg1.getSFCByRPM(4000);
+        reg1.getSFCByRPM(10000);
+        
     }
-
+    
     @Test
     public void testValidate() {
-
+        
         Regime reg1 = new Regime();
         try {
             reg1.validateRegime();
@@ -93,21 +113,21 @@ public class RegimeTest {
         } catch (IllegalArgumentException ex) {
 //            System.out.println(ex.getMessage());
         }
-
+        
         try {
             reg1.setRpmLow(2000);
             reg1.validateRegime();
         } catch (IllegalArgumentException ex) {
 //            System.out.println(ex.getMessage());
         }
-
+        
         try {
             reg1.setSFC(500);
             reg1.validateRegime();
         } catch (IllegalArgumentException ex) {
 //            System.out.println(ex.getMessage());
         }
-
+        
         try {
             reg1.setTorqueHigh(200);
             reg1.validateRegime();
@@ -126,7 +146,7 @@ public class RegimeTest {
         } catch (IllegalArgumentException ex) {
 //            System.out.println(ex.getMessage());
         }
-
+        
         Regime reg2 = new Regime();
         reg2.setRpmLow(-1000);
         reg2.setRpmHigh(10000);
@@ -138,14 +158,14 @@ public class RegimeTest {
         } catch (IllegalArgumentException ex) {
 //            System.out.println(ex.getMessage());
         }
-
+        
         try {
             reg2.setRpmLow(1000000);
             reg2.validateRegime();
         } catch (IllegalArgumentException ex) {
 //            System.out.println(ex.getMessage());
         }
-
+        
         try {
             reg2.setRpmLow(1000);
             reg2.setRpmHigh(50);
@@ -153,7 +173,7 @@ public class RegimeTest {
         } catch (IllegalArgumentException ex) {
 //            System.out.println(ex.getMessage());
         }
-
+        
         try {
             reg2.setRpmHigh(50000);
             reg2.setTorqueLow(-100);
@@ -161,16 +181,16 @@ public class RegimeTest {
         } catch (IllegalArgumentException ex) {
 //            System.out.println(ex.getMessage());
         }
-
+        
         try {
             reg2.setTorqueLow(100);
             reg2.setTorqueHigh(-100);
             reg2.validateRegime();
-
+            
         } catch (IllegalArgumentException ex) {
 //            System.out.println(ex.getMessage());
         }
-
+        
         try {
             reg2.setTorqueHigh(200);
             reg2.setSFC(-1);
@@ -178,15 +198,15 @@ public class RegimeTest {
         } catch (IllegalArgumentException ex) {
 //            System.out.println(ex.getMessage());
         }
-
+        
         try {
-
+            
             reg2.setSFC(100);
             reg2.validateRegime();
         } catch (IllegalArgumentException ex) {
 //            System.out.println(ex.getMessage());
         }
-
+        
     }
 
     /**
@@ -195,14 +215,14 @@ public class RegimeTest {
     @Test
     public void testSetGetRegime() {
         System.out.println("setTorque");
-
+        
         Regime instance = new Regime();
         assertTrue(0 == instance.getSFC());
         assertTrue(0 == instance.getRpmHigh());
         assertTrue(0 == instance.getRpmLow());
         assertTrue(0 == instance.getTorqueLow());
         assertTrue(0 == instance.getTorqueHigh());
-
+        
         instance.setRpmLow(2000);
         assertFalse(0 == instance.getRpmLow());
         assertTrue(2000 == instance.getRpmLow());
@@ -280,12 +300,12 @@ public class RegimeTest {
         String expResult = "Regime{torque_low=0.0, torque_high=0.0, rplow=0.0, rphigh=0.0, SFC=0.0}";
         String result = instance.toString();
         assertEquals(expResult, result);
-
+        
         instance = new Regime(900, 1900, 2500, 3100, 250);
         expResult = "Regime{torque_low=900.0, torque_high=1900.0, rplow=2500.0, rphigh=3100.0, SFC=250.0}";
         result = instance.toString();
         assertEquals(expResult, result);
-
+        
     }
-
+    
 }
