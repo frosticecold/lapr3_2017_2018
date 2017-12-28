@@ -40,6 +40,9 @@ public class Project {
     public Project(Graph<Junction, Section> roadNetwork, List<Vehicle> vehiclesList, List<Road> roadList) {
         m_road_network = roadNetwork;
         m_list_vehicles = new VehicleList();
+        for (Vehicle v : vehiclesList) {
+            m_list_vehicles.addVehicle(v);
+        }
         m_list_roads = roadList;
     }
 
@@ -50,7 +53,6 @@ public class Project {
     public void setResults(Map<Vehicle, List<AlgorithmResults>> m_results) {
         this.m_results = m_results;
     }
-
 
     public void setRoadNetwork(Graph<Junction, Section> m_road_network) {
         this.m_road_network = m_road_network;
@@ -67,9 +69,7 @@ public class Project {
     public List<Road> getListRoads() {
         return m_list_roads;
     }
-    
-    
-    
+
     public Graph<Junction, Section> getRoadNetwork() {
         return m_road_network;
     }
@@ -77,7 +77,6 @@ public class Project {
     public VehicleList getListVehicles() {
         return m_list_vehicles;
     }
-   
 
     public String getName() {
         return m_name;
@@ -212,7 +211,6 @@ public class Project {
 //            visited[edge.getElement().getKey()] = false;
 //        }
 //    }
-
 //    public boolean verifySection(LinkedList<Section> path, Edge<Junction, Section> edge) {
 //        for (Section section : path) {
 //            if (edge.getVDest().equals(getCorrespondentEdge(section).getVOrig())) {
@@ -222,7 +220,6 @@ public class Project {
 //
 //        return true;
 //    }
-
 //    public Edge<Junction, Section> getCorrespondentEdge(Section section) {
 //        for (Edge<Junction, Section> edge : this.m_road_network.edges()) {
 //            if (edge.getElement().equals(section)) {
@@ -232,7 +229,6 @@ public class Project {
 //
 //        return null;
 //    }
-
     public boolean validate() {
         if (this.m_name == null || m_name.trim().isEmpty()) {
             throw new IllegalArgumentException("The project name is invalid.");
@@ -254,6 +250,5 @@ public class Project {
     public String toString() {
         return "Project{" + "m_road_network=" + m_road_network + ", m_list_vehicles=" + m_list_vehicles + ", m_list_roads=" + m_list_roads + ", m_name=" + m_name + ", m_description=" + m_description + '}';
     }
-
 
 }

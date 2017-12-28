@@ -20,21 +20,26 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import lapr.project.controller.MockUpController;
+import lapr.project.model.Junction;
 import lapr.project.model.Project;
+import lapr.project.model.Road;
+import lapr.project.model.Section;
 import lapr.project.model.Vehicle;
 import lapr.project.utils.ImportException;
 import lapr.project.utils.NetworkXML;
+import lapr.project.utils.Pair;
 import lapr.project.utils.Session;
 import lapr.project.utils.VehicleXML;
+import lapr.project.utils.graphbase.Graph;
 
 /**
  *
  * @author MarioDias
  */
 public class Mockup extends javax.swing.JFrame {
-
+    
     private static final long serialVersionUID = 1;
-
+    
     private JFileChooser m_jfc;
     private MockUpController controller;
     private boolean DEBUG;
@@ -50,16 +55,16 @@ public class Mockup extends javax.swing.JFrame {
         controller = new MockUpController();
         initFileChooser();
         DEBUG = isDEBUG;
-
+        
     }
-
+    
     public void initFileChooser() {
         m_jfc = new JFileChooser();
         FileNameExtensionFilter xmlfilter = new FileNameExtensionFilter("HTML files (*.html)", "html");
         m_jfc.setFileFilter(xmlfilter);
         m_jfc.setCurrentDirectory(new File(System.getProperty("user.dir")));
     }
-
+    
     public void initDEBUGmenu() {
         JMenu debug = new JMenu("Debug");
         JMenuItem loadExampleProject = new JMenuItem("Dummy project");
@@ -69,9 +74,11 @@ public class Mockup extends javax.swing.JFrame {
                 try {
                     Project p = new Project();
                     Session.setActiveProject(p);
-
+                    
                     NetworkXML nxml = new NetworkXML();
-                    nxml.importNetwork(p, new File("TestSet02_Network_v2.xml"));
+                    Pair<Graph<Junction, Section>, List<Road>> pair = nxml.importNetwork(new File("TestSet02_Network_v2.xml"));
+                    p.setRoadNetwork(pair.getFirstElement());
+                    p.setListRoads(pair.getSecondElement());
                     VehicleXML vxml = new VehicleXML();
                     List<Vehicle> importVehicles = vxml.importVehicles(new File("TestSet02_Vehicles_v2.xml"));
                     for (Vehicle v : importVehicles) {
@@ -83,13 +90,13 @@ public class Mockup extends javax.swing.JFrame {
                 } catch (ImportException ex) {
                     Logger.getLogger(Mockup.class.getName()).log(Level.SEVERE, null, ex);
                 }
-
+                
             }
         });
-
+        
         debug.add(loadExampleProject);
         jMenuBar1.add(debug);
-
+        
     }
 
     /**
@@ -271,7 +278,7 @@ public class Mockup extends javax.swing.JFrame {
 
     private void exportHTMLActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exportHTMLActionPerformed
         try {
-
+            
             int returnvalue = m_jfc.showSaveDialog(this);
             if (returnvalue == JFileChooser.APPROVE_OPTION) {
                 File file = m_jfc.getSelectedFile();
@@ -288,7 +295,7 @@ public class Mockup extends javax.swing.JFrame {
             Logger.getLogger(Mockup.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_exportHTMLActionPerformed
-
+    
     private void openWebPage(String url) {
         try {
             java.awt.Desktop.getDesktop().browse(java.net.URI.create(url));

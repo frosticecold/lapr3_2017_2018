@@ -61,11 +61,11 @@ public class ThrottleTest {
     @Test
     public void testSetRegimeList() {
         System.out.println("setRegimeList");
-        List<Regime> m_regime_list = new ArrayList<>();
+        List<Regime> regime_list = new ArrayList<>();
         List<Regime> result = new ArrayList<>();
         Throttle instance = new Throttle();
-        instance.setRegimeList(m_regime_list);
-        assertEquals(result, m_regime_list);
+        instance.setRegimeList(regime_list);
+        assertEquals(result, regime_list);
     }
 
     /**
@@ -75,7 +75,7 @@ public class ThrottleTest {
     public void testToString() {
         System.out.println("toString");
         Throttle instance = new Throttle();
-        String expResult = "Throttle{m_regime_list=[]}";
+        String expResult = "Throttle{regime_list=[]}";
         String result = instance.toString();
         assertEquals(expResult, result);
     }

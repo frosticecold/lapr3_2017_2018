@@ -29,7 +29,7 @@ import lapr.project.utils.VehicleXML;
  */
 public class CreateProjectUI extends JDialog {
 
-    private JFileChooser m_jfc;
+    private JFileChooser jfc;
 
     private transient final CreateProjectController controller;
     boolean validProject;
@@ -52,10 +52,10 @@ public class CreateProjectUI extends JDialog {
     }
 
     public void initFileChooser() {
-        m_jfc = new JFileChooser();
+        jfc = new JFileChooser();
         FileNameExtensionFilter xmlfilter = new FileNameExtensionFilter("XML files (*.xml)", "xml");
-        m_jfc.setFileFilter(xmlfilter);
-        m_jfc.setCurrentDirectory(new File(System.getProperty("user.dir")));
+        jfc.setFileFilter(xmlfilter);
+        jfc.setCurrentDirectory(new File(System.getProperty("user.dir")));
     }
 
     /**
@@ -196,7 +196,7 @@ public class CreateProjectUI extends JDialog {
                 } else {
                     JOptionPane.showMessageDialog(rootPane, "Name and description already exist or are empty.");
                 }
-            } catch(SQLException ex) {
+            } catch (SQLException ex) {
                 Logger.getLogger(CreateProjectUI.class.getName()).log(Level.SEVERE, null, ex);
                 JOptionPane.showMessageDialog(rootPane, String.format("Error trying to connect to the database.\n Information Error: %s", ex.getMessage()));
             }
@@ -204,37 +204,31 @@ public class CreateProjectUI extends JDialog {
     }//GEN-LAST:event_btnCreateProjectActionPerformed
 
     private void btnImportVehicleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImportVehicleActionPerformed
-        m_jfc.setDialogTitle(IMPORT_VEHICLE_TITLE);
-        int returnvalue = m_jfc.showOpenDialog(this);
+        jfc.setDialogTitle(IMPORT_VEHICLE_TITLE);
+        int returnvalue = jfc.showOpenDialog(this);
         if (returnvalue == JFileChooser.APPROVE_OPTION) {
             try {
-                VehicleXML xml = new VehicleXML();
-                File file = m_jfc.getSelectedFile();
-                List<Vehicle> lista = xml.importVehicles(file);
-                for (Vehicle v : lista) {
-                    controller.addVehicle(v);
-                }
-                JOptionPane.showMessageDialog(this, "Vehicle were imported with success.", "Vehicle import", JOptionPane.INFORMATION_MESSAGE);
+                controller.importVehicle(jfc.getSelectedFile());
+                JOptionPane.showMessageDialog(this, "Vehicles were imported with success.", "Vehicle import", JOptionPane.INFORMATION_MESSAGE);
             } catch (FileNotFoundException ex) {
-                Logger.getLogger(CreateProjectUI.class.getName()).log(Level.SEVERE, null, ex);
+                JOptionPane.showMessageDialog(this, "There was an error importing the file", "Error", JOptionPane.ERROR_MESSAGE);
             } catch (ImportException ex) {
                 JOptionPane.showMessageDialog(this, "There was an error importing the file", "Error", JOptionPane.ERROR_MESSAGE);
             }
+
         }
 
     }//GEN-LAST:event_btnImportVehicleActionPerformed
 
     private void btnImportRoadNetworkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImportRoadNetworkActionPerformed
-        m_jfc.setDialogTitle(IMPORT_NETWORK_TITLE);
-        int returnvalue = m_jfc.showOpenDialog(this);
+        jfc.setDialogTitle(IMPORT_NETWORK_TITLE);
+        int returnvalue = jfc.showOpenDialog(this);
         if (returnvalue == JFileChooser.APPROVE_OPTION) {
             try {
-                NetworkXML xml = new NetworkXML();
-                File file = m_jfc.getSelectedFile();
-                xml.importNetwork(Session.getActiveProject(), file); // ISTO NAO PODE SER ASSIM PORQUE O PROJETO AINDA NAO ESTA ATIVO (NAO EXISTE)
+                controller.importNetwork(jfc.getSelectedFile());
                 JOptionPane.showMessageDialog(this, "Roadnetwork was imported with success.", "Roadnetwork import", JOptionPane.INFORMATION_MESSAGE);
             } catch (FileNotFoundException ex) {
-                Logger.getLogger(CreateProjectUI.class.getName()).log(Level.SEVERE, null, ex);
+                JOptionPane.showMessageDialog(this, "There was an error importing the file", "Error", JOptionPane.ERROR_MESSAGE);
             } catch (ImportException ex) {
                 JOptionPane.showMessageDialog(this, "There was an error importing the file", "Error", JOptionPane.ERROR_MESSAGE);
             }

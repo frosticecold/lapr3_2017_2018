@@ -52,6 +52,6 @@ public class Throttle {
 
     @Override
     public String toString() {
-        return "Throttle{" + "m_regime_list=" + m_regime_list + '}';
+        return "Throttle{" + "regime_list=" + m_regime_list + '}';
     }
 }

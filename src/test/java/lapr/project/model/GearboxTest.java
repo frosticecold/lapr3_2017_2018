@@ -92,6 +92,9 @@ public class GearboxTest {
         assertTrue(instance.getGear(5) == g5);
         assertNull(instance.getGear(0));
         assertNull(instance.getGear(7));
+
+        assertTrue(instance.getLowestGear() == instance.getGear(5).getRatio());
+
     }
 
     /**
@@ -110,7 +113,7 @@ public class GearboxTest {
         List<Gear> result = instance.getGearList();
         assertEquals(expResult, result);
         assertEquals(expResult.size(), result.size());
-        
+
         instance.addGear(g1);
         instance.addGear(g2);
         instance.addGear(g3);
@@ -124,7 +127,7 @@ public class GearboxTest {
         result = instance.getGearList();
         assertEquals(expResult, result);
         assertEquals(expResult.size(), result.size());
-        
+
     }
 
     /**
@@ -144,13 +147,12 @@ public class GearboxTest {
         instance.addGear(g3);
         instance.addGear(g4);
         instance.addGear(g5);
-        
-        String expResult = "Gearbox{m_gears=[Gear{m_gearID=1, m_ratio=2.3}, Gear{m_gearID=2, m_ratio=3.3}, Gear{m_gearID=3, m_ratio=1.7}, Gear{m_gearID=4, m_ratio=0.65}, Gear{m_gearID=5, m_ratio=0.4}]}";
+
+        String expResult = "Gearbox{gears=[Gear{gearID=1, ratio=2.3}, Gear{gearID=2, ratio=3.3}, Gear{gearID=3, ratio=1.7}, Gear{gearID=4, ratio=0.65}, Gear{gearID=5, ratio=0.4}]}";
         String result = instance.toString();
         assertEquals(expResult, result);
-        
-        
-        expResult = "Gearbox{m_gears=[Gear{m_gearID=32, m_ratio=2.7}, Gear{m_gearID=2, m_ratio=3.3}, Gear{m_gearID=3, m_ratio=1.7}, Gear{m_gearID=4, m_ratio=0.65}, Gear{m_gearID=5, m_ratio=0.4}]}";
+
+        expResult = "Gearbox{gears=[Gear{gearID=32, ratio=2.7}, Gear{gearID=2, ratio=3.3}, Gear{gearID=3, ratio=1.7}, Gear{gearID=4, ratio=0.65}, Gear{gearID=5, ratio=0.4}]}";
         result = instance.toString();
         assertNotEquals(expResult, result);
     }

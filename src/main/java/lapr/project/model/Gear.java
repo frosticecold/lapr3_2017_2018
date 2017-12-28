@@ -43,7 +43,7 @@ public class Gear {
 
     @Override
     public String toString() {
-        return "Gear{" + "m_gearID=" + id + ", m_ratio=" + ratio + '}';
+        return "Gear{" + "gearID=" + id + ", ratio=" + ratio + '}';
     }
     
 }

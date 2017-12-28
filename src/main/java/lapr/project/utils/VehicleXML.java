@@ -16,10 +16,14 @@ import lapr.project.model.VehicleCombustion;
 import lapr.project.model.VehicleElectric;
 import lapr.project.model.Gear;
 import lapr.project.model.Gearbox;
+import lapr.project.model.Junction;
 import lapr.project.model.Project;
 import lapr.project.model.Regime;
+import lapr.project.model.Road;
+import lapr.project.model.Section;
 import lapr.project.model.Throttle;
 import lapr.project.model.Vehicle;
+import lapr.project.utils.graphbase.Graph;
 
 public class VehicleXML implements FileFormat {
 
@@ -455,7 +459,7 @@ public class VehicleXML implements FileFormat {
     }
 
     @Override
-    public boolean importNetwork(Project project, File file) throws FileNotFoundException, ImportException {
+    public Pair<Graph<Junction, Section>, List<Road>>  importNetwork(File file) throws FileNotFoundException, ImportException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

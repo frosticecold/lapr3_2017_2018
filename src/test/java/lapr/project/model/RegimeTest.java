@@ -125,12 +125,12 @@ public class RegimeTest {
     public void testToString() {
         System.out.println("toString");
         Regime instance = new Regime();
-        String expResult = "Regime{m_torque_low=0.0, m_torque_high=0.0, m_rpm_low=0.0, m_rpm_high=0.0, m_SFC=0.0}";
+        String expResult = "Regime{torque_low=0.0, torque_high=0.0, rplow=0.0, rphigh=0.0, SFC=0.0}";
         String result = instance.toString();
         assertEquals(expResult, result);
 
         instance = new Regime(900, 1900, 2500, 3100, 250);
-        expResult = "Regime{m_torque_low=900.0, m_torque_high=1900.0, m_rpm_low=2500.0, m_rpm_high=3100.0, m_SFC=250.0}";
+        expResult = "Regime{torque_low=900.0, torque_high=1900.0, rplow=2500.0, rphigh=3100.0, SFC=250.0}";
         result = instance.toString();
         assertEquals(expResult, result);
 

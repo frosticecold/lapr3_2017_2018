@@ -16,14 +16,15 @@ import lapr.project.model.Section;
 import lapr.project.model.Section.Direction;
 import lapr.project.model.Segment;
 import lapr.project.model.Vehicle;
+import lapr.project.utils.graphbase.Graph;
 
 public class NetworkXML implements FileFormat {
-    
+
     private File file;
     private XMLStreamReader reader;
     private String elementContent;
-    
-    private Project m_project;
+
+    private Project project;
     private String m_network_id;
     private String m_network_description;
     private Road m_road;
@@ -60,31 +61,34 @@ public class NetworkXML implements FileFormat {
     private static final String MIN_VELOCITY_TAG = "min_velocity";
     private static final String WIND_DIRECTION_TAG = "wind_direction";
     private static final String WIND_SPEED_TAG = "wind_speed";
-    
+
     public NetworkXML() {
         //Empty constructor
     }
-    
+
     @Override
     public List<Vehicle> importVehicles(File file) throws FileNotFoundException, ImportException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
+
     @Override
-    public boolean importNetwork(Project project, File file) throws FileNotFoundException, ImportException {
-        if (project == null || file == null || !file.exists()) {
+    public Pair<Graph<Junction, Section>, List<Road>> importNetwork(File file) throws FileNotFoundException, ImportException {
+        if (file == null || !file.exists()) {
             throw new FileNotFoundException("Must be an existing file.");
         }
         this.file = file;
-        m_project = project;
+        project = new Project();
         try {
             this.importXML();
         } catch (XMLStreamException ex) {
             throw new ImportException(ex);
         }
-        return true;
+        Pair<Graph<Junction, Section>, List<Road>> pair = new Pair<>();
+        pair.setFirstElement(project.getRoadNetwork());
+        pair.setSecondElement(project.getListRoads());
+        return pair;
     }
-    
+
     private void importXML() throws FileNotFoundException, XMLStreamException {
         XMLInputFactory factory = XMLInputFactory.newInstance();
         this.reader = factory.createXMLStreamReader(new FileInputStream(this.file));
@@ -94,7 +98,7 @@ public class NetworkXML implements FileFormat {
             identifyXML(xmlEvent);
         }
     }
-    
+
     private void identifyXML(int xmlEvent) throws XMLStreamException {
         switch (xmlEvent) {
             case XMLStreamConstants.START_ELEMENT: {
@@ -108,23 +112,23 @@ public class NetworkXML implements FileFormat {
                     default:
                         break;
                 }
-                
+
             }
         }
     }
-    
+
     private String getElementText() {
         return this.reader.getText().trim();
     }
-    
+
     private void readNetworkElements() throws XMLStreamException {
         while (this.reader.hasNext()) {
             int xmlEvent = this.reader.next();
             checkNetworkElements(xmlEvent);
         }
-        
+
     }
-    
+
     private void checkNetworkElements(int xmlEvent) throws XMLStreamException {
         switch (xmlEvent) {
             case XMLStreamConstants.START_ELEMENT: {
@@ -147,7 +151,7 @@ public class NetworkXML implements FileFormat {
             }
         }
     }
-    
+
     private void checkNetworkStartElement() {
         switch (reader.getLocalName()) {
             case NODE_LIST_TAG: {
@@ -157,52 +161,52 @@ public class NetworkXML implements FileFormat {
                 String junctionId = this.reader.getAttributeValue(null, "id");
                 Junction j = new Junction(junctionId);
                 if (j.validate()) {
-                    m_project.addJunction(j);
+                    project.addJunction(j);
                 }
                 break;
             }
-            
+
             case ROADLIST_TAG: {
                 break;
             }
-            
+
             case ROAD_TAG: {
                 String id = this.reader.getAttributeValue(null, "id");
                 m_road = new Road();
                 m_road.setRoadID(id);
                 break;
             }
-            
+
             case ROAD_NAME_TAG: {
                 break;
             }
-            
+
             case TYPOLOGY_TAG: {
                 break;
             }
-            
+
             case TOLL_FARE_TAG: {
                 m_readingtollfare = true;
                 break;
             }
-            
+
             case TOLL_TAG: {
                 m_readingtoll = true;
                 break;
             }
-            
+
             case CLASS_TAG: {
                 m_toll_class = Integer.parseInt(this.reader.getAttributeValue(null, "id"));
                 break;
             }
-            
+
             case SECTION_LIST_TAG: {
                 break;
             }
             case ROAD_SECTION_TAG: {
                 m_section = new Section();
-                m_begin = m_project.getJunction(this.reader.getAttributeValue(null, "begin"));
-                m_end = m_project.getJunction(this.reader.getAttributeValue(null, "end"));
+                m_begin = project.getJunction(this.reader.getAttributeValue(null, "begin"));
+                m_end = project.getJunction(this.reader.getAttributeValue(null, "end"));
                 m_section.setBeginJunction(m_begin);
                 m_section.setEndJunction(m_end);
                 break;
@@ -210,16 +214,16 @@ public class NetworkXML implements FileFormat {
             case ROAD_ID_TAG: {
                 break;
             }
-            
+
             case DIRECTION_TAG: {
                 break;
             }
-            
+
             case SEGMENT_LIST_TAG: {
                 m_listOfSegment = new ArrayList<>();
                 break;
             }
-            
+
             case SEGMENT_TAG: {
                 m_segment = new Segment();
                 m_segment.setSegmentIndex(Integer.parseInt(this.reader.getAttributeValue(null, "id")));
@@ -230,7 +234,7 @@ public class NetworkXML implements FileFormat {
             }
         }
     }
-    
+
     private void checkNetworkEndElement() {
         switch (reader.getLocalName()) {
             case NODE_LIST_TAG: {
@@ -242,25 +246,25 @@ public class NetworkXML implements FileFormat {
             case ROADLIST_TAG: {
                 break;
             }
-            
+
             case ROAD_TAG: {
                 if (m_road.validate()) {
-                    m_project.addRoad(m_road);
+                    project.addRoad(m_road);
                 }
                 m_road = null;
                 break;
             }
-            
+
             case ROAD_NAME_TAG: {
                 m_road.setName(this.elementContent);
                 break;
             }
-            
+
             case TYPOLOGY_TAG: {
                 m_road.setTypology(this.elementContent);
                 break;
             }
-            
+
             case TOLL_FARE_TAG: {
                 if (m_readingtollfare) {
                     m_readingtollfare = false;
@@ -273,7 +277,7 @@ public class NetworkXML implements FileFormat {
                 }
                 break;
             }
-            
+
             case CLASS_TAG: {
                 double value = Double.parseDouble(elementContent);
                 if (m_readingtollfare) {
@@ -286,20 +290,20 @@ public class NetworkXML implements FileFormat {
                 }
                 break;
             }
-            
+
             case SECTION_LIST_TAG: {
                 break;
             }
             case ROAD_SECTION_TAG: {
                 if (m_section.validate()) {
-                    m_project.addSection(m_section);
+                    project.addSection(m_section);
                 }
                 break;
             }
             case ROAD_ID_TAG: {
                 String road_id = this.elementContent.trim().replaceAll("\"", "");
                 m_section.setRoadID(road_id);
-                Road r = m_project.getRoadByRoadID(m_section.getRoadID());
+                Road r = project.getRoadByRoadID(m_section.getRoadID());
                 m_section.setTypology(r.getTypology());
                 break;
             }
@@ -333,7 +337,7 @@ public class NetworkXML implements FileFormat {
                 m_segment = null;
                 break;
             }
-            
+
             case INITIAL_HEIGHT_TAG: {
                 m_segment.setInitialHeight(Double.parseDouble(this.elementContent));
                 break;

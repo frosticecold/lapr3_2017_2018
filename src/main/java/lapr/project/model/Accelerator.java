@@ -22,8 +22,8 @@ public class Accelerator {
         return throttleList;
     }
 
-    public void setThrottleList(Map<Integer, Throttle> m_throttle_list) {
-        this.throttleList = m_throttle_list;
+    public void setThrottleList(Map<Integer, Throttle> throttleList) {
+        this.throttleList = throttleList;
     }
 
     /**
@@ -43,6 +43,6 @@ public class Accelerator {
 
     @Override
     public String toString() {
-        return "Accelerator{" + "m_throttle_list=" + throttleList + '}';
+        return "Accelerator{" + "throttle_list=" + throttleList + '}';
     }
 }

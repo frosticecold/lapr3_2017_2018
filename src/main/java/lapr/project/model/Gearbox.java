@@ -5,20 +5,20 @@ import java.util.List;
 
 public class Gearbox {
 
-    private List<Gear> m_gears;
-
-    public Gearbox(List<Gear> m_gears) {
-        this.m_gears = m_gears;
-    }
+    private List<Gear> gearList;
 
     public Gearbox() {
-        this.m_gears = new LinkedList<>();
+        this.gearList = new LinkedList<>();
+    }
+
+    public Gearbox(List<Gear> gearList) {
+        this.gearList = gearList;
     }
 
     public Gearbox(Gearbox gea) {
-        this.m_gears = new LinkedList<>();
-        for (Gear r : gea.m_gears) {
-            this.m_gears.add(new Gear(r));
+        this.gearList = new LinkedList<>();
+        for (Gear r : gea.gearList) {
+            this.gearList.add(new Gear(r));
         }
     }
 
@@ -27,12 +27,12 @@ public class Gearbox {
      * @param g
      */
     public void addGear(Gear g) {
-        m_gears.add(g);
+        gearList.add(g);
     }
 
     public double getLowestGear() {
         double lowestGear = Double.POSITIVE_INFINITY;
-        for (Gear g : m_gears) {
+        for (Gear g : gearList) {
             if (g.getRatio() < lowestGear) {
                 lowestGear = g.getRatio();
             }
@@ -47,7 +47,7 @@ public class Gearbox {
      * @return
      */
     public Gear getGear(int gearID) {
-        for (Gear gear : m_gears) {
+        for (Gear gear : gearList) {
             if (gear.getGearID() == gearID) {
                 return gear;
             }
@@ -56,15 +56,15 @@ public class Gearbox {
     }
 
     public List<Gear> getGearList() {
-        return m_gears;
+        return gearList;
     }
 
     public int getNumberOfGears() {
-        return this.m_gears.size();
+        return this.gearList.size();
     }
 
     @Override
     public String toString() {
-        return "Gearbox{" + "m_gears=" + m_gears + '}';
+        return "Gearbox{" + "gears=" + gearList + '}';
     }
 }

@@ -87,11 +87,11 @@ public class GearTest {
         int id = 1;
         double ratio = 0.95;
         Gear instance = new Gear(id, ratio);
-        String expResult = "Gear{m_gearID=1, m_ratio=0.95}";
+        String expResult = "Gear{gearID=1, ratio=0.95}";
         String result = instance.toString();
         assertEquals(expResult, result);
         instance = new Gear(0, 0);
-        expResult = "Gear{m_gearID=0, m_ratio=0.0}";
+        expResult = "Gear{gearID=0, ratio=0.0}";
         result = instance.toString();
         assertEquals(expResult, result);
     }

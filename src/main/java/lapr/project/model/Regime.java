@@ -2,104 +2,104 @@ package lapr.project.model;
 
 public class Regime {
 
-    private double m_torque_low;
-    private double m_torque_high;
-    private double m_rpm_low;
-    private double m_rpm_high;
-    private double m_SFC;
+    private double torque_low;
+    private double torque_high;
+    private double rplow;
+    private double rphigh;
+    private double SFC;
 
-    public Regime(double m_torque_low, double m_torque_high, double m_rpm_low, double m_rpm_high, double m_SFC) {
-        this.m_torque_low = m_torque_low;
-        this.m_torque_high = m_torque_high;
-        this.m_rpm_low = m_rpm_low;
-        this.m_rpm_high = m_rpm_high;
-        this.m_SFC = m_SFC;
+    public Regime(double torque_low, double torque_high, double rplow, double rphigh, double SFC) {
+        this.torque_low = torque_low;
+        this.torque_high = torque_high;
+        this.rplow = rplow;
+        this.rphigh = rphigh;
+        this.SFC = SFC;
     }
 
     public Regime() {
-        m_torque_low = 0.0;
-        m_torque_high = 0.0;
-        m_rpm_low = 0.0;
-        m_rpm_high = 0.0;
-        m_SFC = 0.0;
+        torque_low = 0.0;
+        torque_high = 0.0;
+        rplow = 0.0;
+        rphigh = 0.0;
+        SFC = 0.0;
     }
 
     public Regime(Regime reg) {
-        this.m_torque_high = reg.m_torque_high;
-        this.m_torque_low = reg.m_torque_low;
-        this.m_rpm_low = reg.m_rpm_low;
-        this.m_rpm_high = reg.m_rpm_high;
-        this.m_SFC = reg.m_SFC;
+        this.torque_high = reg.torque_high;
+        this.torque_low = reg.torque_low;
+        this.rplow = reg.rplow;
+        this.rphigh = reg.rphigh;
+        this.SFC = reg.SFC;
     }
 
     public double getTorqueLow() {
-        return m_torque_low;
+        return torque_low;
     }
 
     public double getTorqueHigh() {
-        return m_torque_high;
+        return torque_high;
     }
 
-    public void setTorqueLow(double m_torque_low) {
-        this.m_torque_low = m_torque_low;
+    public void setTorqueLow(double torque_low) {
+        this.torque_low = torque_low;
     }
 
-    public void setTorqueHigh(double m_torque_high) {
-        this.m_torque_high = m_torque_high;
+    public void setTorqueHigh(double torque_high) {
+        this.torque_high = torque_high;
     }
 
     public double getRpmLow() {
-        return m_rpm_low;
+        return rplow;
     }
 
     public double getRpmHigh() {
-        return m_rpm_high;
+        return rphigh;
     }
 
     public double getSFC() {
-        return m_SFC;
+        return SFC;
     }
 
     public double getTorqueByRPM(double rpm) {
-        if (rpm < m_rpm_low || rpm > m_rpm_high) {
+        if (rpm < rplow || rpm > rphigh) {
             throw new IllegalArgumentException("Invalid rpm");
         }
-        if (Math.abs(rpm - m_rpm_low) < 0.0000001) {
-            return m_torque_low;
+        if (Math.abs(rpm - rplow) < 0.0000001) {
+            return torque_low;
         }
-        if (rpm > m_rpm_low && rpm < m_rpm_high) {
-            return (m_torque_high + m_torque_low) / 2;
+        if (rpm > rplow && rpm < rphigh) {
+            return (torque_high + torque_low) / 2;
 
         }
-        if (Math.abs(rpm - m_rpm_high) < 0.0000001) {
-            return m_torque_high;
+        if (Math.abs(rpm - rphigh) < 0.0000001) {
+            return torque_high;
         }
         return -1;
     }
 
     public double getSFCByRPM(double rpm) {
-        if (rpm < m_rpm_low || rpm > m_rpm_high) {
+        if (rpm < rplow || rpm > rphigh) {
             throw new IllegalArgumentException("Invalid rpm");
         }
 
-        if (rpm >= m_rpm_low && rpm <= m_rpm_high) {
-            return this.m_SFC;
+        if (rpm >= rplow && rpm <= rphigh) {
+            return this.SFC;
 
         }
 
         return -1;
     }
 
-    public void setRpmLow(double m_rpm_low) {
-        this.m_rpm_low = m_rpm_low;
+    public void setRpmLow(double rplow) {
+        this.rplow = rplow;
     }
 
-    public void setRpmHigh(double m_rpm_high) {
-        this.m_rpm_high = m_rpm_high;
+    public void setRpmHigh(double rphigh) {
+        this.rphigh = rphigh;
     }
 
-    public void setSFC(double m_SFC) {
-        this.m_SFC = m_SFC;
+    public void setSFC(double SFC) {
+        this.SFC = SFC;
     }
 
     /**
@@ -109,31 +109,31 @@ public class Regime {
      */
     public boolean validateRegime() {
 
-        if (m_torque_high <= 0) {
+        if (torque_high <= 0) {
             throw new IllegalArgumentException("Torque high must be positive.");
         }
 
-        if (m_torque_low <= 0) {
+        if (torque_low <= 0) {
             throw new IllegalArgumentException("Torque low must be positive.");
         }
 
-        if (m_rpm_low < 0) {
+        if (rplow < 0) {
             throw new IllegalArgumentException("RPM low must be positive.");
         }
 
-        if (m_rpm_high <= 0) {
+        if (rphigh <= 0) {
             throw new IllegalArgumentException("RPM high must be positive.");
         }
 
-        if (m_torque_low > m_torque_high) {
+        if (torque_low > torque_high) {
             throw new IllegalArgumentException("Torque low should be less than torque high.");
         }
 
-        if (m_rpm_low > m_rpm_high) {
+        if (rplow > rphigh) {
             throw new IllegalArgumentException("RPM low should be less than RPM high.");
         }
 
-        if (m_SFC < 0) {
+        if (SFC < 0) {
             throw new IllegalArgumentException("SFC must be positive.");
         }
 
@@ -142,7 +142,7 @@ public class Regime {
 
     @Override
     public String toString() {
-        return "Regime{" + "m_torque_low=" + m_torque_low + ", m_torque_high=" + m_torque_high + ", m_rpm_low=" + m_rpm_low + ", m_rpm_high=" + m_rpm_high + ", m_SFC=" + m_SFC + '}';
+        return "Regime{" + "torque_low=" + torque_low + ", torque_high=" + torque_high + ", rplow=" + rplow + ", rphigh=" + rphigh + ", SFC=" + SFC + '}';
     }
 
 }
