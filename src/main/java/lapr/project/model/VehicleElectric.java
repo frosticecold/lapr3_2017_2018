@@ -121,7 +121,7 @@ public class VehicleElectric extends Vehicle {
      * @param m_min_rpm The new minimum RPM of the vehicle's engine.
      */
     @Override
-    public void setMinRpm(double m_min_rpm) {
+    public void setMinRPM(double m_min_rpm) {
         if (m_min_rpm < 0) {
             throw new IllegalArgumentException("The mimimum rounds per minute "
                     + "of the vehicle should be positive.");
@@ -136,7 +136,7 @@ public class VehicleElectric extends Vehicle {
      * @param m_max_rpm The new maximum RPM of the vehicle's engine.
      */
     @Override
-    public void setMaxRpm(double m_max_rpm) {
+    public void setMaxRPM(double m_max_rpm) {
         if (m_max_rpm <= 0) {
             throw new IllegalArgumentException("The maximum rounds per minute "
                     + "of the vehicle should be positive.");

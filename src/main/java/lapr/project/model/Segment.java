@@ -2,164 +2,164 @@ package lapr.project.model;
 
 import lapr.project.calculations.UnitConversion;
 
-public class Segment implements Cloneable {
+public class Segment {
 
-    private int m_segment_index;
-    private double m_initial_height;
-    private double m_final_height;
-    private double m_length;
-    private double m_wind_direction;
-    private double m_wind_speed;
-    private double m_maximum_velocity;
-    private double m_minimum_velocity;
+    private int segmentIndex;
+    private double initialHeight;
+    private double finalHeight;
+    private double length;
+    private double windDirection;
+    private double windSpeed;
+    private double maximumVelocity;
+    private double minimumVelocity;
 
     public Segment() {
     }
 
-    public Segment(int m_segment_index, double m_initial_height, double m_final_height, double m_length, double m_wind_direction, double m_wind_speed, double m_maximum_velocity, double m_minimum_velocity) {
-        this.m_segment_index = m_segment_index;
-        this.m_initial_height = m_initial_height;
-        this.m_final_height = m_final_height;
-        this.m_length = m_length;
-        this.m_wind_direction = m_wind_direction;
-        this.m_wind_speed = m_wind_speed;
-        this.m_maximum_velocity = m_maximum_velocity;
-        this.m_minimum_velocity = m_minimum_velocity;
+    public Segment(int segmentIndex, double initialHeight, double finalHeight, double length, double windDirection, double windSpeed, double maximumVelocity, double minimumVelocity) {
+        this.segmentIndex = segmentIndex;
+        this.initialHeight = initialHeight;
+        this.finalHeight = finalHeight;
+        this.length = length;
+        this.windDirection = windDirection;
+        this.windSpeed = windSpeed;
+        this.maximumVelocity = maximumVelocity;
+        this.minimumVelocity = minimumVelocity;
     }
 
     public Segment(Segment s) {
-        this.m_segment_index = s.m_segment_index;
-        this.m_initial_height = s.m_initial_height;
-        this.m_final_height = s.m_final_height;
-        this.m_length = s.m_length;
-        this.m_wind_direction = s.m_wind_direction;
-        this.m_wind_speed = s.m_wind_speed;
-        this.m_maximum_velocity = s.m_maximum_velocity;
-        this.m_minimum_velocity = s.m_minimum_velocity;
+        this.segmentIndex = s.segmentIndex;
+        this.initialHeight = s.initialHeight;
+        this.finalHeight = s.finalHeight;
+        this.length = s.length;
+        this.windDirection = s.windDirection;
+        this.windSpeed = s.windSpeed;
+        this.maximumVelocity = s.maximumVelocity;
+        this.minimumVelocity = s.minimumVelocity;
     }
 
     public double getLength() {
-        return m_length;
-    }
-
-    @Override
-    public int hashCode() {
-        int hash = 7;
-        hash = 61 * hash + this.m_segment_index;
-        hash = 61 * hash + (int) (Double.doubleToLongBits(this.m_initial_height) ^ (Double.doubleToLongBits(this.m_initial_height) >>> 32));
-        hash = 61 * hash + (int) (Double.doubleToLongBits(this.m_final_height) ^ (Double.doubleToLongBits(this.m_final_height) >>> 32));
-        hash = 61 * hash + (int) (Double.doubleToLongBits(this.m_length) ^ (Double.doubleToLongBits(this.m_length) >>> 32));
-        hash = 61 * hash + (int) (Double.doubleToLongBits(this.m_wind_direction) ^ (Double.doubleToLongBits(this.m_wind_direction) >>> 32));
-        hash = 61 * hash + (int) (Double.doubleToLongBits(this.m_wind_speed) ^ (Double.doubleToLongBits(this.m_wind_speed) >>> 32));
-        hash = 61 * hash + (int) (Double.doubleToLongBits(this.m_maximum_velocity) ^ (Double.doubleToLongBits(this.m_maximum_velocity) >>> 32));
-        hash = 61 * hash + (int) (Double.doubleToLongBits(this.m_minimum_velocity) ^ (Double.doubleToLongBits(this.m_minimum_velocity) >>> 32));
-        return hash;
+        return length;
     }
 
     /**
      * @return the m_segment_index
      */
     public int getSegmentIndex() {
-        return m_segment_index;
+        return segmentIndex;
     }
 
     /**
      * @return the m_initial_height
      */
     public double getInitialHeight() {
-        return m_initial_height;
+        return initialHeight;
     }
 
     public double getFinalHeight() {
-        return m_final_height;
+        return finalHeight;
     }
 
     /**
      * @return the m_wind_direction
      */
     public double getWindDirection() {
-        return m_wind_direction;
+        return windDirection;
     }
 
     /**
      * @return the m_wind_speed
      */
     public double getWindSpeed() {
-        return m_wind_speed;
+        return windSpeed;
     }
 
     /**
      * @return the m_maximum_velocity
      */
     public double getMaximumVelocity() {
-        return m_maximum_velocity;
+        return maximumVelocity;
     }
 
     /**
      * @return the m_minimum_velocity
      */
     public double getMinimumVelocity() {
-        return m_minimum_velocity;
+        return minimumVelocity;
     }
 
     /**
-     * @param segment_index the m_segment_index to set
+     * @param segmentIndex the m_segment_index to set
      */
-    public void setSegmentIndex(int segment_index) {
-        this.m_segment_index = segment_index;
+    public void setSegmentIndex(int segmentIndex) {
+        this.segmentIndex = segmentIndex;
     }
 
     /**
-     * @param initial_height the m_initial_height to set
+     * @param initialHeight the m_initial_height to set
      */
-    public void setInitialHeight(double initial_height) {
-        this.m_initial_height = initial_height;
+    public void setInitialHeight(double initialHeight) {
+        this.initialHeight = initialHeight;
     }
 
     /**
      *
-     * @param final_height
+     * @param finalHeight
      */
-    public void setFinalHeight(double final_height) {
-        this.m_final_height = final_height;
+    public void setFinalHeight(double finalHeight) {
+        this.finalHeight = finalHeight;
     }
 
     /**
      * @param length the m_length to set
      */
     public void setLength(double length) {
-        this.m_length = length;
+        this.length = length;
     }
 
     /**
-     * @param wind_direction the m_wind_direction to set
+     * @param windDirection the m_wind_direction to set
      */
-    public void setWindDirection(double wind_direction) {
-        this.m_wind_direction = wind_direction;
+    public void setWindDirection(double windDirection) {
+        this.windDirection = windDirection;
     }
 
     /**
-     * @param wind_speed the m_wind_speed to set
+     * @param windSpeed the m_wind_speed to set
      */
-    public void setWindSpeed(double wind_speed) {
-        if (wind_speed < 0) {
+    public void setWindSpeed(double windSpeed) {
+        if (windSpeed < 0) {
             throw new IllegalArgumentException("Wind speed must be equal or greater than zero.");
         }
-        this.m_wind_speed = wind_speed;
+        this.windSpeed = windSpeed;
     }
 
     /**
-     * @param m_maximum_velocity the m_maximum_velocity to set
+     * @param maximumVelocity the m_maximum_velocity to set
      */
-    public void setMaximumVelocity(double m_maximum_velocity) {
-        this.m_maximum_velocity = m_maximum_velocity;
+    public void setMaximumVelocity(double maximumVelocity) {
+        this.maximumVelocity = maximumVelocity;
     }
 
     /**
-     * @param m_minimum_velocity the m_minimum_velocity to set
+     * @param minimumVelocity the m_minimum_velocity to set
      */
-    public void setMinimumVelocity(double m_minimum_velocity) {
-        this.m_minimum_velocity = m_minimum_velocity;
+    public void setMinimumVelocity(double minimumVelocity) {
+        this.minimumVelocity = minimumVelocity;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 61 * hash + this.segmentIndex;
+        hash = 61 * hash + (int) (Double.doubleToLongBits(this.initialHeight) ^ (Double.doubleToLongBits(this.initialHeight) >>> 32));
+        hash = 61 * hash + (int) (Double.doubleToLongBits(this.finalHeight) ^ (Double.doubleToLongBits(this.finalHeight) >>> 32));
+        hash = 61 * hash + (int) (Double.doubleToLongBits(this.length) ^ (Double.doubleToLongBits(this.length) >>> 32));
+        hash = 61 * hash + (int) (Double.doubleToLongBits(this.windDirection) ^ (Double.doubleToLongBits(this.windDirection) >>> 32));
+        hash = 61 * hash + (int) (Double.doubleToLongBits(this.windSpeed) ^ (Double.doubleToLongBits(this.windSpeed) >>> 32));
+        hash = 61 * hash + (int) (Double.doubleToLongBits(this.maximumVelocity) ^ (Double.doubleToLongBits(this.maximumVelocity) >>> 32));
+        hash = 61 * hash + (int) (Double.doubleToLongBits(this.minimumVelocity) ^ (Double.doubleToLongBits(this.minimumVelocity) >>> 32));
+        return hash;
     }
 
     /**
@@ -168,17 +168,23 @@ public class Segment implements Cloneable {
      * @return
      */
     public double calculateSlope() {
-        double deltaY = m_final_height - m_initial_height;
-        double M = deltaY / UnitConversion.convertKmToMeters(m_length);
-        double angle = Math.toDegrees(Math.asin(M));
+        double deltaY = finalHeight - initialHeight;
+        double diagonal = deltaY / UnitConversion.convertKmToMeters(length);
+        double angle = Math.toDegrees(Math.asin(diagonal));
         return angle;
 
     }
 
     public boolean validate() {
-        if (m_segment_index <= 0 || m_initial_height < 0 || m_final_height < 0
-                || m_length <= 0 || m_wind_direction < -180 || m_wind_direction > 180
-                || m_wind_speed < 0 || m_maximum_velocity < 0 || m_minimum_velocity < 0) {
+        if (segmentIndex <= 0 || initialHeight < 0 || finalHeight < 0) {
+            throw new IllegalArgumentException("Segment is not valid.");
+        }
+        if (length <= 0 || windDirection < -180 || windDirection > 180) {
+
+            throw new IllegalArgumentException("Segment is not valid.");
+        }
+        if (windSpeed < 0 || maximumVelocity < 0 || minimumVelocity < 0) {
+
             throw new IllegalArgumentException("Segment is not valid.");
         }
         return true;
@@ -186,28 +192,24 @@ public class Segment implements Cloneable {
 
     public Segment reverseSegment(int index) {
         Segment seg = new Segment();
-        seg.m_segment_index = index;
-        seg.m_initial_height = this.m_final_height;
-        seg.m_final_height = this.m_initial_height;
-        seg.m_length = this.m_length;
-        if (this.m_wind_direction + 180 > 180) {
-            seg.m_wind_direction = this.m_wind_direction - 180;
+        seg.segmentIndex = index;
+        seg.initialHeight = this.finalHeight;
+        seg.finalHeight = this.initialHeight;
+        seg.length = this.length;
+        if (this.windDirection + 180 > 180) {
+            seg.windDirection = this.windDirection - 180;
         } else {
-            seg.m_wind_direction = this.m_wind_direction + 180;
+            seg.windDirection = this.windDirection + 180;
         }
-        seg.m_wind_speed = m_wind_speed;
-        seg.m_maximum_velocity = m_maximum_velocity;
-        seg.m_minimum_velocity = m_minimum_velocity;
+        seg.windSpeed = windSpeed;
+        seg.maximumVelocity = maximumVelocity;
+        seg.minimumVelocity = minimumVelocity;
         return seg;
     }
 
     @Override
     public String toString() {
-        return "Segment{" + "m_segment_index=" + m_segment_index + ", m_initial_height=" + m_initial_height + ", m_final_height=" + m_final_height + ", m_length=" + m_length + ", m_wind_direction=" + m_wind_direction + ", m_wind_speed=" + m_wind_speed + ", m_maximum_velocity=" + m_maximum_velocity + ", m_minimum_velocity=" + m_minimum_velocity + '}';
-    }
-
-    public Object copy() throws CloneNotSupportedException {
-        return super.clone();
+        return "Segment{" + "m_segment_index=" + segmentIndex + ", m_initial_height=" + initialHeight + ", m_final_height=" + finalHeight + ", m_length=" + length + ", m_wind_direction=" + windDirection + ", m_wind_speed=" + windSpeed + ", m_maximum_velocity=" + maximumVelocity + ", m_minimum_velocity=" + minimumVelocity + '}';
     }
 
 }

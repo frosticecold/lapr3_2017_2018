@@ -61,9 +61,9 @@ public class VehicleData extends DataAccess<Vehicle> {
                 v.setWheelSize(vWheelsize);
                 v.setDragCoefficient(vDragCoefficient);
                 v.setFrontalArea(vFrontalArea);
-                v.setRcc(vRollingRes);
-                v.setMinRpm(vMinRpm);
-                v.setMaxRpm(vMaxRpm);
+                v.setRCC(vRollingRes);
+                v.setMinRPM(vMinRpm);
+                v.setMaxRPM(vMaxRpm);
                 v.setFinalDriveRatio(vFinalDriveRatio);
                 v.setGearbox(vGearbox);
                 v.setAccelerator(vAccelerator);
@@ -80,9 +80,9 @@ public class VehicleData extends DataAccess<Vehicle> {
                 ve.setWheelSize(vWheelsize);
                 ve.setDragCoefficient(vDragCoefficient);
                 ve.setFrontalArea(vFrontalArea);
-                ve.setRcc(vRollingRes);
-                ve.setMinRpm(vMinRpm);
-                ve.setMaxRpm(vMaxRpm);
+                ve.setRCC(vRollingRes);
+                ve.setMinRPM(vMinRpm);
+                ve.setMaxRPM(vMaxRpm);
                 ve.setFinalDriveRatio(vFinalDriveRatio);
                 ve.setGearbox(vGearbox);
                 ve.setAccelerator(vAccelerator);
@@ -119,7 +119,7 @@ public class VehicleData extends DataAccess<Vehicle> {
         args.add(new SQLArgument(Double.toString(v.getLoad()), OracleTypes.NUMBER));
         args.add(new SQLArgument(Double.toString(v.getDragCoefficient()), OracleTypes.NUMBER));
         args.add(new SQLArgument(Double.toString(v.getFrontalArea()), OracleTypes.NUMBER));
-        args.add(new SQLArgument(Double.toString(v.getRcc()), OracleTypes.NUMBER));
+        args.add(new SQLArgument(Double.toString(v.getRCC()), OracleTypes.NUMBER));
         args.add(new SQLArgument(Double.toString(v.getMinRpm()), OracleTypes.NUMBER));
         args.add(new SQLArgument(Double.toString(v.getMaxRpm()), OracleTypes.NUMBER));
         args.add(new SQLArgument(Double.toString(v.getFinalDriveRatio()), OracleTypes.NUMBER));

@@ -142,14 +142,14 @@ public class PhysicsCalculus {
         double vel = calcMaximumVelocity(segment, car, section);
         double slope = segment.calculateSlope();
         if (slope == 0) {
-            fa = rollingResistanceCalculation(car.getRcc(), car.getTotalWeight());
+            fa = rollingResistanceCalculation(car.getRCC(), car.getTotalWeight());
             fa += airDragCalculation(vel, car.getDragCoefficient(), car.getFrontalArea());
         } else {
             if (slope > 0) {
-                fa = rollingResistanceCalculationSlope(car.getRcc(), car.getTotalWeight(), slope);
+                fa = rollingResistanceCalculationSlope(car.getRCC(), car.getTotalWeight(), slope);
                 fa += airDragCalculation(vel, car.getDragCoefficient(), car.getFrontalArea());
             } else {
-                fa = rollingResistanceCalculationSlope(car.getRcc(), car.getTotalWeight(), slope);
+                fa = rollingResistanceCalculationSlope(car.getRCC(), car.getTotalWeight(), slope);
                 fa += airDragCalculation(vel, car.getDragCoefficient(), car.getFrontalArea());
                 double grav = car.getTotalWeight() * GRAVITY * Math.sin(Math.toRadians(slope));
 

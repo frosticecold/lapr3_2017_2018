@@ -11,225 +11,272 @@ public abstract class Vehicle {
     /**
      * Name of the vehicle.
      */
-    private String m_name;
+    private String name;
     /**
      * Description of the vehicle.
      */
-    private String m_description;
+    private String description;
 
     /**
      * Type of the vehicle
+     * <p>
+     * Example: car
+     *
      */
-    private String m_type;
+    private String type;
 
     /**
      * Fuel of the vehicle
+     * <p>
+     * Types of Fuel:
+     * <p>
+     * Diesel
+     * <p>
+     * Gasoline
+     * <p>
+     * Electric
      */
-    private String m_fuel;
+    private String fuel;
 
     /**
      * Vehicle Class
+     * <p>
+     * Example : 1,2,3,4
      */
-    private int m_vehicle_class;
+    private int vehicleClass;
 
     /**
      * Motorization of Vehicle
+     * <p>
+     * Example :
+     * <p>
+     * Combustion
+     * <p>
+     * Electric
      */
-    private String m_motorization;
+    private String motorization;
 
     /**
-     * Wheel size of the vehicle
+     * Wheel size of the vehicle (meters)
      */
-    private double m_wheel_size;
+    private double wheelSize;
 
     //Car Physics
     /**
-     * Mass of a vehicle
+     * Mass of a vehicle in Kg
      */
-    private double m_mass;
+    private double mass;
 
     /**
-     * Load of the vehicle
+     * Load of the vehicle in Kg
      */
-    private double m_load;
+    private double load;
 
     /**
-     * Drag Coefficient of the vehicle
+     * Drag Coefficient of the vehicle (no units)
      */
-    private double m_drag_coefficient;
+    private double dragCoefficient;
 
     /**
-     * Frontal area of the vehicle
+     * Frontal area of the vehicle in m^2
      */
-    private double m_frontal_area;
+    private double frontalArea;
 
     /**
-     * Rolling resistance coefficient of the vehicle.
+     * Rolling resistance coefficient of the vehicle. (no units)
      */
-    private double m_rcc;
+    private double rollingResistanceCoefficient;
 
-    private Map<String, Double> m_road_velocity_limit;
+    /**
+     * Map with the max velocity(KM/H) for specific road
+     * <p>
+     * Example: For the regular road, the car can travel at max 90 KM/h
+     */
+    private Map<String, Double> mapRoadVelocityLimit;
 
-    private Map<Integer, Throttle> m_throttle_list;
+    //------------------------------------- THIS MAP IS DUPLICATE ---------------
+    /**
+     * Throttle list for the car, there are three types of throttles
+     * <p>
+     * Throttle Low - 25%
+     * <p>
+     * Throttle Medium = 50%
+     * <p>
+     * Throttle Max = 100%
+     */
+    private Map<Integer, Throttle> throttleList;
 
-    public static int THROTTLE_LOW = 25;
-    public static int THROTTLE_MEDIUM = 50;
-    public static int THROTTLE_MAX = 100;
+    /**
+     * Value for the minimum throttle
+     */
+    public final static int THROTTLE_LOW = 25;
+    /**
+     * Value for the medium throttle
+     */
+    public final static int THROTTLE_MEDIUM = 50;
+    /**
+     * Value for the maximum throttle
+     */
+    public final static int THROTTLE_MAX = 100;
 
+    /**
+     * Value for the diesel fuel type
+     */
+    public final static String FUEL_DIESEL = "diesel";
+    /**
+     * Value for the gasoline fuel type
+     */
+    public final static String FUEL_GASOLINE = "gasoline";
+    /**
+     * Value for the electric fuel type
+     */
+    public final static String FUEL_ELETRIC = "electric";
+
+    /**
+     * Empty constructor
+     */
     public Vehicle() {
-        m_name = "";
-        m_description = "";
-        m_type = "";
-        m_fuel = "";
-        m_vehicle_class = 0;
-        m_motorization = "";
-        m_wheel_size = 0.0;
-        m_mass = 0.0;
-        m_load = 0.0;
-        m_drag_coefficient = 0.0;
-        m_frontal_area = 0.0;
-        m_rcc = 0.0;
-        m_road_velocity_limit = new HashMap<>();
-        m_throttle_list = new LinkedHashMap<>();
+        name = "";
+        description = "";
+        type = "";
+        fuel = "";
+        vehicleClass = 0;
+        motorization = "";
+        wheelSize = 0.0;
+        mass = 0.0;
+        load = 0.0;
+        dragCoefficient = 0.0;
+        frontalArea = 0.0;
+        rollingResistanceCoefficient = 0.0;
+        mapRoadVelocityLimit = new HashMap<>();
+        throttleList = new LinkedHashMap<>();
     }
-
-    public Vehicle(String m_name, String m_description, String m_type, String m_fuel, int m_vehicle_class, String m_motorization, double m_mass, double m_load, double m_drag_coefficient, double m_wheel_size, double m_frontal_area, double m_rcc, Map<String, Double> velocityLimits, Map<Integer, Throttle> throttle_list) {
-        this.m_name = m_name;
-        this.m_description = m_description;
-        this.m_type = m_type;
-        this.m_fuel = m_fuel;
-        this.m_vehicle_class = m_vehicle_class;
-        this.m_motorization = m_motorization;
-        this.m_mass = m_mass;
-        this.m_load = m_load;
-        this.m_drag_coefficient = m_drag_coefficient;
-        this.m_wheel_size = m_wheel_size;
-        this.m_frontal_area = m_frontal_area;
-        this.m_rcc = m_rcc;
-        this.m_road_velocity_limit = velocityLimits;
-        this.m_throttle_list = throttle_list;
-    }
-
-    public Vehicle(Vehicle v) {
-        this.m_name = v.m_name;
-        this.m_description = v.m_description;
-        this.m_type = v.m_type;
-        this.m_fuel = v.m_fuel;
-        this.m_vehicle_class = v.m_vehicle_class;
-        this.m_motorization = v.m_motorization;
-        this.m_mass = v.m_mass;
-        this.m_load = v.m_load;
-        this.m_drag_coefficient = v.m_drag_coefficient;
-        this.m_wheel_size = v.m_wheel_size;
-        this.m_frontal_area = v.m_frontal_area;
-        this.m_rcc = v.m_rcc;
-        this.m_road_velocity_limit = new HashMap<>();
-        for (String road : v.m_road_velocity_limit.keySet()) {
-            this.m_road_velocity_limit.put(road, v.m_road_velocity_limit.get(road));
-        }
-        this.m_throttle_list = new LinkedHashMap<>();
-        for (Integer i : v.m_throttle_list.keySet()) {
-            this.m_throttle_list.put(i, new Throttle(m_throttle_list.get(i)));
-        }
-
-    }
-
-    public String getName() {
-        return m_name;
-    }
-
-    public Map<Integer, Throttle> getThrottles() {
-        return this.m_throttle_list;
-
-    }
-
-    public abstract double getMaximumVelocity();
-
-    public abstract double getMinRpm();
-
-    public abstract void setMinRpm(double m_min_rpm);
-
-    public abstract double getMaxRpm();
-
-    public abstract void setMaxRpm(double m_max_rpm);
-
-    public abstract double getFinalDriveRatio();
-
-    public abstract void setFinalDriveRatio(double m_final_drive_ratio);
-
-    public abstract Gearbox getGearbox();
-
-    public abstract void setGearbox(Gearbox m_gearbox);
-
-    public abstract Accelerator getAccelerator();
-
-    public abstract void setAccelerator(Accelerator m_accelerator);
 
     /**
-     * Returns the car maximum velocity in KM/H fora given road If there is no
-     * speed limit, it returns the maximum car speed
+     * Full constructor for a vehicle
      *
-     * @param road
+     * @param nameOfVehicle Name of Vehicle
+     * @param descriptionOfVehicle Description of the vehicle
+     * @param typeOfVehicle Type of the vehicle
+     * @param fuelOfVehicle Fuel type of the vehicle
+     * @param vehicleClass Vehicle class
+     * @param motorization Type of motor
+     * @param mass Mass of the vehicle (kg)
+     * @param load Load of the vehicle (kg)
+     * @param dragCoefficient Drag coefficient for the vehicle (no units)
+     * @param wheelSize wheel size of the vehicle (m)
+     * @param frontalArea frontal area of the vehicle (m^2)
+     * @param rcc Rolling resistance coefficient of the vehicle.
+     * @param velocityLimits Map with the velocity limits of a road
+     * @param throttleList Map with the throttle list
+     */
+    public Vehicle(String nameOfVehicle, String descriptionOfVehicle, String typeOfVehicle, String fuelOfVehicle, int vehicleClass, String motorization, double mass, double load, double dragCoefficient, double wheelSize, double frontalArea, double rcc, Map<String, Double> velocityLimits, Map<Integer, Throttle> throttleList) {
+        this.name = nameOfVehicle;
+        this.description = descriptionOfVehicle;
+        this.type = typeOfVehicle;
+        this.fuel = fuelOfVehicle;
+        this.vehicleClass = vehicleClass;
+        this.motorization = motorization;
+        this.mass = mass;
+        this.load = load;
+        this.dragCoefficient = dragCoefficient;
+        this.wheelSize = wheelSize;
+        this.frontalArea = frontalArea;
+        this.rollingResistanceCoefficient = rcc;
+        this.mapRoadVelocityLimit = velocityLimits;
+        this.throttleList = throttleList;
+    }
+
+    /**
+     * Copy Constructor
+     *
+     * @param v Vehicle to copy
+     */
+    public Vehicle(Vehicle v) {
+        this.name = v.name;
+        this.description = v.description;
+        this.type = v.type;
+        this.fuel = v.fuel;
+        this.vehicleClass = v.vehicleClass;
+        this.motorization = v.motorization;
+        this.mass = v.mass;
+        this.load = v.load;
+        this.dragCoefficient = v.dragCoefficient;
+        this.wheelSize = v.wheelSize;
+        this.frontalArea = v.frontalArea;
+        this.rollingResistanceCoefficient = v.rollingResistanceCoefficient;
+        this.mapRoadVelocityLimit = new HashMap<>();
+        for (String road : v.mapRoadVelocityLimit.keySet()) {
+            this.mapRoadVelocityLimit.put(road, v.mapRoadVelocityLimit.get(road));
+        }
+        this.throttleList = new LinkedHashMap<>();
+        for (Integer i : v.throttleList.keySet()) {
+            this.throttleList.put(i, new Throttle(throttleList.get(i)));
+        }
+
+    }
+
+    /**
+     * Returns the vehicle name
+     *
+     * @return String with the vehicle name
+     */
+    public String getName() {
+        return name;
+    }
+
+    /**
+     * Returns the map of throttles
+     *
      * @return
      */
-    public double getRoadVelocityLimit(String road) {
-        if (m_road_velocity_limit.containsKey(road)) {
-            return m_road_velocity_limit.get(road);
-        } else {
-            return this.getMaximumVelocity();
-        }
+    public Map<Integer, Throttle> getThrottles() {
+        return this.throttleList;
 
-    }
-
-    public void setRoadVelocityLimit(Map<String, Double> m_road_velocity_limit) {
-        if (m_road_velocity_limit == null) {
-            throw new IllegalArgumentException("The road velocity limit map inserted cannot be null.");
-        }
-        this.m_road_velocity_limit = m_road_velocity_limit;
     }
 
     public String getType() {
-        return m_type;
+        return type;
     }
 
     public String getDescription() {
-        return m_description;
+        return description;
     }
 
     public String getFuel() {
-        return m_fuel;
+        return fuel;
     }
 
     public String getMotorization() {
-        return m_motorization;
+        return motorization;
     }
 
     public double getLoad() {
-        return m_load;
+        return load;
     }
 
     public double getMass() {
-        return m_mass;
+        return mass;
     }
 
     public double getTotalWeight() {
-        return m_load + m_mass;
+        return load + mass;
     }
 
     public double getDragCoefficient() {
-        return m_drag_coefficient;
+        return dragCoefficient;
     }
 
     public double getWheelSize() {
-        return m_wheel_size;
+        return wheelSize;
     }
 
     public double getFrontalArea() {
-        return m_frontal_area;
+        return frontalArea;
     }
 
     public int getVehicleClass() {
-        return m_vehicle_class;
+        return vehicleClass;
     }
 
     public double getTorqueAtThrottle(int throttle, double rpm) {
@@ -243,101 +290,206 @@ public abstract class Vehicle {
 
     }
 
-public void setRcc(double rcc) {
+    /**
+     * Returns the car maximum velocity in KM/H fora given road If there is no
+     * speed limit, it returns the maximum car speed
+     *
+     * @param road
+     * @return
+     */
+    public double getRoadVelocityLimit(String road) {
+        if (mapRoadVelocityLimit.containsKey(road)) {
+            return mapRoadVelocityLimit.get(road);
+        } else {
+            return this.getMaximumVelocity();
+        }
+
+    }
+
+    public double getRCC() {
+        return rollingResistanceCoefficient;
+    }
+
+    /**
+     * Abstract method to return the vehicles maximum velocity
+     *
+     * @return
+     */
+    public abstract double getMaximumVelocity();
+
+    /**
+     * Returns the minimum car RPM
+     *
+     * @return
+     */
+    public abstract double getMinRpm();
+
+    /**
+     * Returns the maximum car RPM
+     *
+     * @return
+     */
+    public abstract double getMaxRpm();
+
+    /**
+     * Returns the final drive ratio of the car
+     *
+     * @return
+     */
+    public abstract double getFinalDriveRatio();
+
+    /**
+     * Returns the gearbox for the car
+     *
+     * @return
+     */
+    public abstract Gearbox getGearbox();
+
+    /**
+     * Returns the accelerator pedal for the car
+     *
+     * @return
+     */
+    public abstract Accelerator getAccelerator();
+
+    /**
+     * method that changes the minimum rpm for the vehicle
+     *
+     * @param minRPM
+     */
+    public abstract void setMinRPM(double minRPM);
+
+    /**
+     * method that changes the maximum rpm for the vehicle
+     *
+     * @param maxRPM
+     */
+    public abstract void setMaxRPM(double maxRPM);
+
+    /**
+     * method that changes the final drive ratio for the vheicle
+     *
+     * @param finalDriveRatio
+     */
+    public abstract void setFinalDriveRatio(double finalDriveRatio);
+
+    /**
+     * Change the gearbox for a vehicle
+     *
+     * @param gearbox
+     */
+    public abstract void setGearbox(Gearbox gearbox);
+
+    /**
+     * Change the accelerator pedal for a vehicle
+     *
+     * @param accelerator
+     */
+    public abstract void setAccelerator(Accelerator accelerator);
+
+    /**
+     * Method that changes the map of road velocity limits
+     *
+     * @param mapRoadVelocityLimit
+     */
+    public void setRoadVelocityLimit(Map<String, Double> mapRoadVelocityLimit) {
+        if (mapRoadVelocityLimit == null) {
+            throw new IllegalArgumentException("The road velocity limit map inserted cannot be null.");
+        }
+        this.mapRoadVelocityLimit = mapRoadVelocityLimit;
+    }
+
+    public void setRCC(double rcc) {
         if (rcc < 0) {
             throw new IllegalArgumentException("The rolling resistance coefficient of the vehicle must be positive.");
         }
-        this.m_rcc = rcc;
-    }
-
-    public double getRcc() {
-        return m_rcc;
+        this.rollingResistanceCoefficient = rcc;
     }
 
     public void setWheelSize(double wheel_size) {
         if (wheel_size <= 0) {
             throw new IllegalArgumentException("The wheel size of the vehicle must be greater than 0");
         }
-        this.m_wheel_size = wheel_size;
+        this.wheelSize = wheel_size;
     }
 
     public void setFrontalArea(double frontal_area) {
         if (frontal_area <= 0) {
             throw new IllegalArgumentException("The frontal area of the vehicle must be greater than 0");
         }
-        this.m_frontal_area = frontal_area;
+        this.frontalArea = frontal_area;
     }
 
     public void setFuel(String fuel) {
         if (fuel == null || fuel.trim().isEmpty()) {
             throw new IllegalArgumentException("The fuel of the vehicle cannot be empty.");
         }
-        this.m_fuel = fuel;
+        this.fuel = fuel;
     }
 
     public void setDragCoefficient(double drag_coefficient) {
         if (drag_coefficient <= 0) {
             throw new IllegalArgumentException("The drag coefficient of the vehicle must be greater than 0");
         }
-        this.m_drag_coefficient = drag_coefficient;
+        this.dragCoefficient = drag_coefficient;
     }
 
     public void setLoad(double load) {
         if (load < 0) {
             throw new IllegalArgumentException("The load of the vehicle must be positive");
         }
-        this.m_load = load;
+        this.load = load;
     }
 
     public void setMass(double mass) {
         if (mass <= 0) {
             throw new IllegalArgumentException("The mass of the vehicle must be greater than 0");
         }
-        this.m_mass = mass;
+        this.mass = mass;
     }
 
     public void setMotorization(String motorization) {
         if (motorization == null || motorization.trim().isEmpty()) {
             throw new IllegalArgumentException("The motorization of the vehicle cannot be empty.");
         }
-        this.m_motorization = motorization;
+        this.motorization = motorization;
     }
 
     public void setName(String name) {
         if (name == null || name.trim().isEmpty()) {
             throw new IllegalArgumentException("The name of the vehicle cannot be empty.");
         }
-        this.m_name = name;
+        this.name = name;
     }
 
     public void setDescription(String description) {
         if (description == null || description.trim().isEmpty()) {
             throw new IllegalArgumentException("The description of the vehicle cannot be empty.");
         }
-        this.m_description = description;
+        this.description = description;
     }
 
     public void setVehicleClass(int vehicle_class) {
         if (vehicle_class < 0) {
             throw new IllegalArgumentException("The vehicle_class of the vehicle must positive");
         }
-        this.m_vehicle_class = vehicle_class;
+        this.vehicleClass = vehicle_class;
     }
 
     public void setType(String type) {
         if (type == null || type.trim().isEmpty()) {
             throw new IllegalArgumentException("The type of the vehicle cannot be empty.");
         }
-        this.m_type = type;
+        this.type = type;
     }
 
     public void setThrottlesList(Map<Integer, Throttle> throttle_list) {
-        this.m_throttle_list = throttle_list;
+        this.throttleList = throttle_list;
     }
 
     @Override
-        public String toString() {
-        return m_name;
+    public String toString() {
+        return name;
     }
 
     /**
@@ -348,20 +500,20 @@ public void setRcc(double rcc) {
     public String toStringHTML() {
         StringBuilder sb = new StringBuilder();
 
-        sb.append("\t<li>Name: ").append(this.m_name).append("</li>\n");
-        sb.append("\t<li>Description: ").append(this.m_description).append("</li>\n");
-        sb.append("\t<li>Type: ").append(this.m_type).append("</li>\n");
-        sb.append("\t<li>Fuel: ").append(this.m_fuel).append("</li>\n");
-        sb.append("\t<li>Mass: ").append(this.m_mass).append(" Kg</li>\n");
-        sb.append("\t<li>Load: ").append(this.m_load).append(" Kg</li>\n");
-        sb.append("\t<li>Drag Coefficient: ").append(this.m_drag_coefficient).append("</li>\n");
-        sb.append("\t<li>Frontal Area: ").append(this.m_frontal_area).append(" m</li>\n");
-        sb.append("\t<li>RRC: ").append(this.m_rcc).append("</li>\n");
-        sb.append("\t<li>Wheel Size: ").append(this.m_wheel_size).append(" m</li>\n");
+        sb.append("\t<li>Name: ").append(this.name).append("</li>\n");
+        sb.append("\t<li>Description: ").append(this.description).append("</li>\n");
+        sb.append("\t<li>Type: ").append(this.type).append("</li>\n");
+        sb.append("\t<li>Fuel: ").append(this.fuel).append("</li>\n");
+        sb.append("\t<li>Mass: ").append(this.mass).append(" Kg</li>\n");
+        sb.append("\t<li>Load: ").append(this.load).append(" Kg</li>\n");
+        sb.append("\t<li>Drag Coefficient: ").append(this.dragCoefficient).append("</li>\n");
+        sb.append("\t<li>Frontal Area: ").append(this.frontalArea).append(" m</li>\n");
+        sb.append("\t<li>RRC: ").append(this.rollingResistanceCoefficient).append("</li>\n");
+        sb.append("\t<li>Wheel Size: ").append(this.wheelSize).append(" m</li>\n");
 
-        if (!this.m_road_velocity_limit.isEmpty()) {
+        if (!this.mapRoadVelocityLimit.isEmpty()) {
             sb.append("\t<li>Velocity Limits:<ul>\n");
-            for (Entry<String, Double> entry : this.m_road_velocity_limit.entrySet()) {
+            for (Entry<String, Double> entry : this.mapRoadVelocityLimit.entrySet()) {
                 sb.append("\t\t<li>").append(entry.getKey()).append(": ")
                         .append(entry.getValue()).append(" m/s</li>\n");
             }

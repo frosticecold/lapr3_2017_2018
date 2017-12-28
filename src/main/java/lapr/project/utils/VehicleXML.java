@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import javax.xml.stream.XMLInputFactory;
@@ -245,7 +246,7 @@ public class VehicleXML implements FileFormat {
             }
 
             case RRC_TAG: {
-                vehicle.setRcc(Double.parseDouble(this.elementContent));
+                vehicle.setRCC(Double.parseDouble(this.elementContent));
                 break;
             }
 
@@ -259,12 +260,12 @@ public class VehicleXML implements FileFormat {
             }
 
             case MIN_RPM_TAG: {
-                vehicle.setMinRpm(Double.parseDouble(this.elementContent));
+                vehicle.setMinRPM(Double.parseDouble(this.elementContent));
                 break;
             }
 
             case MAX_RPM_TAG: {
-                vehicle.setMaxRpm(Double.parseDouble(this.elementContent));
+                vehicle.setMaxRPM(Double.parseDouble(this.elementContent));
                 break;
             }
 
@@ -381,7 +382,7 @@ public class VehicleXML implements FileFormat {
     }
 
     private void createThrottleList() {
-        this.throttleList = new HashMap<>();
+        this.throttleList = new LinkedHashMap<>();
         vehicle.getAccelerator().setThrottleList(throttleList);
     }
 

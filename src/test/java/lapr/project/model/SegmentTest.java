@@ -37,6 +37,24 @@ public class SegmentTest {
     public void tearDown() {
     }
 
+    @Test
+    public void testConstructor() {
+        System.out.println("constructor");
+        Segment instance = new Segment(1, 10, 20, 15, 0, 20, 20, 80);
+        Segment otherSegment = new Segment(instance);
+
+        assertEquals(instance.calculateSlope(), otherSegment.calculateSlope(), 0.05);
+        assertEquals(instance.getSegmentIndex(), otherSegment.getSegmentIndex());
+        assertEquals(instance.getInitialHeight(), otherSegment.getInitialHeight(), 0.05);
+        assertEquals(instance.getFinalHeight(), otherSegment.getFinalHeight(), 0.05);
+        assertEquals(instance.getLength(), otherSegment.getLength(), 0.05);
+        assertEquals(instance.getWindDirection(), otherSegment.getWindDirection(), 0.05);
+        assertEquals(instance.getWindSpeed(), otherSegment.getWindSpeed(), 0.05);
+        assertEquals(instance.getMinimumVelocity(), otherSegment.getMinimumVelocity(), 0.05);
+        assertEquals(instance.getMaximumVelocity(), otherSegment.getMaximumVelocity(), 0.05);
+
+    }
+
     /**
      * Test of getLength method, of class Segment.
      */
@@ -177,22 +195,6 @@ public class SegmentTest {
         String result = instance.toString();
         String expResult = "Segment{m_segment_index=0, m_initial_height=12.0, m_final_height=0.0, m_length=1.0, m_wind_direction=-135.0, m_wind_speed=10.0, m_maximum_velocity=120.0, m_minimum_velocity=100.0}";
         assertEquals(result, expResult);
-    }
-
-    @Test
-    public void testCopy() throws CloneNotSupportedException {
-        Segment instance = new Segment(0, 12.0, 0.0, 1.0, -135.0, 10.0, 120.0, 100.0);
-        Segment clone = (Segment) instance.copy();
-        
-        assertEquals(clone.hashCode(), instance.hashCode());
-        clone.setFinalHeight(456);
-        clone.setInitialHeight(456);
-        clone.setLength(4);
-        clone.setMaximumVelocity(220);
-        clone.setMinimumVelocity(120);
-        clone.setWindDirection(120);
-        clone.setWindSpeed(20);
-        assertNotEquals(clone.toString(), instance.toString());
     }
 
     @Test
