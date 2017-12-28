@@ -78,24 +78,54 @@ public class RegimeTest {
 
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testValidate() {
 
         Regime reg1 = new Regime();
-        reg1.validateRegime();
-        reg1.setRpmHigh(10000);
-        reg1.validateRegime();
-        reg1.setRpmLow(2000);
-        reg1.validateRegime();
-        reg1.setSFC(500);
-        reg1.validateRegime();
-        reg1.setTorqueHigh(200);
-        reg1.validateRegime();
-        reg1.setTorqueLow(100);
-        reg1.validateRegime();
+        try {
+            reg1.validateRegime();
+        } catch (IllegalArgumentException ex) {
+//            System.out.println(ex.getMessage());
+        }
+        try {
+            reg1.setRpmHigh(10000);
+            reg1.validateRegime();
+        } catch (IllegalArgumentException ex) {
+//            System.out.println(ex.getMessage());
+        }
 
-        reg1.setRpmLow(1000000);
-        reg1.validateRegime();
+        try {
+            reg1.setRpmLow(2000);
+            reg1.validateRegime();
+        } catch (IllegalArgumentException ex) {
+//            System.out.println(ex.getMessage());
+        }
+
+        try {
+            reg1.setSFC(500);
+            reg1.validateRegime();
+        } catch (IllegalArgumentException ex) {
+//            System.out.println(ex.getMessage());
+        }
+
+        try {
+            reg1.setTorqueHigh(200);
+            reg1.validateRegime();
+        } catch (IllegalArgumentException ex) {
+//            System.out.println(ex.getMessage());
+        }
+        try {
+            reg1.setTorqueLow(100);
+            reg1.validateRegime();
+        } catch (IllegalArgumentException ex) {
+//            System.out.println(ex.getMessage());
+        }
+        try {
+            reg1.setRpmLow(1000000);
+            reg1.validateRegime();
+        } catch (IllegalArgumentException ex) {
+//            System.out.println(ex.getMessage());
+        }
 
         Regime reg2 = new Regime();
         reg2.setRpmLow(-1000);
@@ -103,29 +133,60 @@ public class RegimeTest {
         reg2.setSFC(500);
         reg2.setTorqueHigh(200);
         reg2.setTorqueLow(100);
-        reg2.validateRegime();
+        try {
+            reg2.validateRegime();
+        } catch (IllegalArgumentException ex) {
+//            System.out.println(ex.getMessage());
+        }
 
-        reg2.setRpmLow(1000000);
-        reg2.validateRegime();
+        try {
+            reg2.setRpmLow(1000000);
+            reg2.validateRegime();
+        } catch (IllegalArgumentException ex) {
+//            System.out.println(ex.getMessage());
+        }
 
-        reg2.setRpmLow(1000);
-        reg2.setRpmHigh(50);
-        reg2.validateRegime();
+        try {
+            reg2.setRpmLow(1000);
+            reg2.setRpmHigh(50);
+            reg2.validateRegime();
+        } catch (IllegalArgumentException ex) {
+//            System.out.println(ex.getMessage());
+        }
 
-        reg2.setRpmHigh(50000);
+        try {
+            reg2.setRpmHigh(50000);
+            reg2.setTorqueLow(-100);
+            reg2.validateRegime();
+        } catch (IllegalArgumentException ex) {
+//            System.out.println(ex.getMessage());
+        }
 
-        reg2.setTorqueLow(-100);
-        reg2.validateRegime();
-        reg2.setTorqueLow(100);
-        reg2.setTorqueHigh(-100);
-        reg2.validateRegime();
-        reg2.setTorqueHigh(200);
+        try {
+            reg2.setTorqueLow(100);
+            reg2.setTorqueHigh(-100);
+            reg2.validateRegime();
 
-        reg2.setSFC(-1);
-        reg2.validateRegime();
+        } catch (IllegalArgumentException ex) {
+//            System.out.println(ex.getMessage());
+        }
 
-        reg2.setSFC(100);
-        reg2.validateRegime();
+        try {
+            reg2.setTorqueHigh(200);
+            reg2.setSFC(-1);
+            reg2.validateRegime();
+        } catch (IllegalArgumentException ex) {
+//            System.out.println(ex.getMessage());
+        }
+
+        try {
+
+            reg2.setSFC(100);
+            reg2.validateRegime();
+        } catch (IllegalArgumentException ex) {
+//            System.out.println(ex.getMessage());
+        }
+
     }
 
     /**
