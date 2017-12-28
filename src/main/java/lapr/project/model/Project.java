@@ -166,9 +166,6 @@ public class Project {
             m_road_network.insertEdge(dest, orig, sec, s.getSectionLength());
             return true;
         }
-
-        s.setKey(m_road_network.numEdges());
-
         return m_road_network.insertEdge(orig, dest, s, s.getSectionLength());
 
     }

@@ -8,15 +8,14 @@ import java.util.Objects;
 
 public class Section {
 
-    private int key;
-    private Junction m_beginning_junction;
-    private Junction m_ending_junction;
-    private String m_road_id;
-    private int m_section_id;
-    private String m_typology;
-    private Direction m_direction;
-    private List<Segment> m_sequenceOfSegments;
-    private Map<Integer, Double> m_toll;
+    private Junction beginningJunction;
+    private Junction endingJunction;
+    private String roadID;
+    private int sectionID;
+    private String typology;
+    private Direction direction;
+    private List<Segment> listOfSegments;
+    private Map<Integer, Double> mapOfTolls;
 
     public enum Direction {
         DIRECT("DIRECT"), REVERSE("REVERSE"), BIDIRECTIONAL("BIDIRECTIONAL");
@@ -28,67 +27,67 @@ public class Section {
     }
 
     public Section() {
-        m_sequenceOfSegments = new ArrayList<>();
-        m_direction = Direction.DIRECT;
-        m_toll = new HashMap<>();
+        listOfSegments = new ArrayList<>();
+        direction = Direction.DIRECT;
+        mapOfTolls = new HashMap<>();
     }
 
     public Section(Section s) {
-        this.m_beginning_junction = s.m_beginning_junction;
-        this.m_ending_junction = s.m_ending_junction;
-        this.m_road_id = s.m_road_id;
-        this.m_section_id = s.m_section_id;
-        this.m_typology = s.m_typology;
+        this.beginningJunction = s.beginningJunction;
+        this.endingJunction = s.endingJunction;
+        this.roadID = s.roadID;
+        this.sectionID = s.sectionID;
+        this.typology = s.typology;
 
-        this.m_sequenceOfSegments = new ArrayList<>();
-        for (Segment seg : s.m_sequenceOfSegments) {
-            this.m_sequenceOfSegments.add(new Segment(seg));
+        this.listOfSegments = new ArrayList<>();
+        for (Segment seg : s.listOfSegments) {
+            this.listOfSegments.add(new Segment(seg));
         }
 
-        this.m_toll = new HashMap<>();
-        for (Integer i : s.m_toll.keySet()) {
-            this.m_toll.put(i, s.m_toll.get(i));
+        this.mapOfTolls = new HashMap<>();
+        for (Integer i : s.mapOfTolls.keySet()) {
+            this.mapOfTolls.put(i, s.mapOfTolls.get(i));
         }
     }
 
     public boolean addToll(int vehic_id, double value) {
         if (vehic_id <= 0 || value < 0) {
-            throw new IllegalArgumentException("Invalida values for toll");
+            throw new IllegalArgumentException("Invalid values for toll");
         }
-        if (!m_toll.containsKey(vehic_id)) {
-            m_toll.put(vehic_id, value);
+        if (!mapOfTolls.containsKey(vehic_id)) {
+            mapOfTolls.put(vehic_id, value);
             return true;
         }
         return false;
     }
 
     public Map<Integer, Double> getToll() {
-        return m_toll;
+        return mapOfTolls;
     }
 
     public Junction getBeginningJunction() {
-        return m_beginning_junction;
+        return beginningJunction;
     }
 
     public Junction getEndingJunction() {
-        return m_ending_junction;
+        return endingJunction;
     }
 
     public Direction getDirection() {
-        return m_direction;
+        return direction;
     }
 
     public int getID() {
-        return m_section_id;
+        return sectionID;
     }
 
     public List<Segment> getSequenceOfSegments() {
-        return m_sequenceOfSegments;
+        return listOfSegments;
     }
 
     public double getSectionLength() {
         double length = 0;
-        for (Segment s : m_sequenceOfSegments) {
+        for (Segment s : listOfSegments) {
             length += s.getLength();
 
         }
@@ -97,37 +96,26 @@ public class Section {
     }
 
     public String getRoadID() {
-        return m_road_id;
+        return roadID;
     }
 
     public String getTypology() {
-        return m_typology;
-    }
-
-    public int getKey() {
-        return this.key;
+        return typology;
     }
 
     public double getTollValue(int vehicle_id) {
         if (vehicle_id <= 0) {
             throw new IllegalArgumentException("Invalid toll key");
         }
-        if (m_toll.containsKey(vehicle_id)) {
-            return m_toll.get(vehicle_id);
+        if (mapOfTolls.containsKey(vehicle_id)) {
+            return mapOfTolls.get(vehicle_id);
         }
 
         return -1;
     }
 
-    public void setKey(int key) {
-        if (key < 0) {
-            throw new IllegalArgumentException("Invalid key.");
-        }
-        this.key = key;
-    }
-
     public void setID(int id) {
-        this.m_section_id = id;
+        this.sectionID = id;
 
     }
 
@@ -135,16 +123,39 @@ public class Section {
         if (typ == null || typ.trim().isEmpty()) {
             throw new IllegalArgumentException("Invalid typology");
         }
-        m_typology = typ;
+        typology = typ;
+    }
+
+    public void setBeginJunction(Junction begin) {
+        this.beginningJunction = begin;
+    }
+
+    public void setEndJunction(Junction end) {
+        this.endingJunction = end;
+    }
+
+    public void setRoadID(String r_id) {
+        this.roadID = r_id;
+    }
+
+    public void setSegmentList(List<Segment> listOfSegments) {
+        this.listOfSegments = listOfSegments;
+    }
+
+    public void setDirection(Direction d) {
+        if (d == null) {
+            throw new IllegalArgumentException("Invalid Direction");
+        }
+        this.direction = d;
     }
 
     @Override
     public int hashCode() {
         int hash = 5;
-        hash = 53 * hash + Objects.hashCode(this.m_beginning_junction);
-        hash = 53 * hash + Objects.hashCode(this.m_ending_junction);
-        hash = 53 * hash + Objects.hashCode(this.m_direction);
-        hash = 53 * hash + Objects.hashCode(this.m_sequenceOfSegments);
+        hash = 53 * hash + Objects.hashCode(this.beginningJunction);
+        hash = 53 * hash + Objects.hashCode(this.endingJunction);
+        hash = 53 * hash + Objects.hashCode(this.direction);
+        hash = 53 * hash + Objects.hashCode(this.listOfSegments);
         return hash;
     }
 
@@ -160,55 +171,32 @@ public class Section {
             return false;
         }
         final Section other = (Section) obj;
-        if (!Objects.equals(this.m_road_id, other.m_road_id)) {
+        if (!Objects.equals(this.roadID, other.roadID)) {
             return false;
         }
-        if (!Objects.equals(this.m_typology, other.m_typology)) {
+        if (!Objects.equals(this.typology, other.typology)) {
             return false;
         }
-        if (!Objects.equals(this.m_beginning_junction, other.m_beginning_junction)) {
+        if (!Objects.equals(this.beginningJunction, other.beginningJunction)) {
             return false;
         }
-        if (!Objects.equals(this.m_ending_junction, other.m_ending_junction)) {
+        if (!Objects.equals(this.endingJunction, other.endingJunction)) {
             return false;
         }
-        if (this.m_direction != other.m_direction) {
+        if (this.direction != other.direction) {
             return false;
         }
-        if (!Objects.equals(this.m_sequenceOfSegments, other.m_sequenceOfSegments)) {
+        if (!Objects.equals(this.listOfSegments, other.listOfSegments)) {
             return false;
         }
         return true;
     }
 
-    public void setBeginJunction(Junction begin) {
-        this.m_beginning_junction = begin;
-    }
-
-    public void setEndJunction(Junction end) {
-        this.m_ending_junction = end;
-    }
-
-    public void setRoadID(String r_id) {
-        this.m_road_id = r_id;
-    }
-
-    public void setSegmentList(List<Segment> listOfSegments) {
-        m_sequenceOfSegments = listOfSegments;
-    }
-
-    public void setDirection(Direction d) {
-        if (d == null) {
-            throw new IllegalArgumentException("Invalid Direction");
-        }
-        this.m_direction = d;
-    }
-
     public boolean validate() {
-        if (!m_beginning_junction.validate() || !m_ending_junction.validate() || m_road_id.trim().isEmpty() || m_direction == null || m_sequenceOfSegments.isEmpty() || m_typology == null || m_typology.trim().isEmpty()) {
+        if (!beginningJunction.validate() || !endingJunction.validate() || roadID.trim().isEmpty() || direction == null || listOfSegments.isEmpty() || typology == null || typology.trim().isEmpty()) {
             throw new IllegalArgumentException(("Section is invalid."));
         }
-        for (Segment seg : m_sequenceOfSegments) {
+        for (Segment seg : listOfSegments) {
             if (!seg.validate()) {
                 return false;
             }
@@ -218,17 +206,17 @@ public class Section {
 
     public Section reverseSegment() {
         Section section = new Section();
-        section.m_beginning_junction = this.m_beginning_junction;
-        section.m_ending_junction = this.m_ending_junction;
-        section.m_direction = this.m_direction;
-        section.m_road_id = this.m_road_id;
-        section.m_toll = this.m_toll;
-        section.m_typology = this.m_typology;
+        section.beginningJunction = this.beginningJunction;
+        section.endingJunction = this.endingJunction;
+        section.direction = this.direction;
+        section.roadID = this.roadID;
+        section.mapOfTolls = this.mapOfTolls;
+        section.typology = this.typology;
 
         List<Segment> newlist = new ArrayList<>();
         int index = 0;
-        for (int i = m_sequenceOfSegments.size() - 1; i >= 0; i--) {
-            Segment seg = m_sequenceOfSegments.get(i).reverseSegment(index);
+        for (int i = listOfSegments.size() - 1; i >= 0; i--) {
+            Segment seg = listOfSegments.get(i).reverseSegment(index);
             index++;
             newlist.add(seg);
         }
@@ -237,7 +225,7 @@ public class Section {
     }
 
     public String toString() {
-        return m_road_id + " " + m_beginning_junction + " " + m_ending_junction;
+        return roadID + " " + beginningJunction + " " + endingJunction;
 
     }
 
@@ -252,9 +240,9 @@ public class Section {
         sb.append("<table>\n");
         sb.append("\t<tr><th>Begin Road Junction</th><th>Road ID</th><th>End Road Junction</th></tr>");
         sb.append("<tr>"
-                + "<td>").append(this.m_beginning_junction.toStringHTML()).append("</td>"
-                + "<td>").append(this.m_road_id).append("</td>"
-                + "<td>").append(this.m_ending_junction.toStringHTML()).append("</td>"
+                + "<td>").append(this.beginningJunction.toStringHTML()).append("</td>"
+                + "<td>").append(this.roadID).append("</td>"
+                + "<td>").append(this.endingJunction.toStringHTML()).append("</td>"
                 + "</tr>\n");
         return sb.toString();
     }

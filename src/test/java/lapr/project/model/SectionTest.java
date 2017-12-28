@@ -7,6 +7,7 @@ package lapr.project.model;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import org.junit.After;
@@ -41,6 +42,37 @@ public class SectionTest {
     public void tearDown() {
     }
 
+    @Test
+    public void testConstructor() {
+        System.out.println("constructor");
+        Section s1 = new Section();
+        Junction j1 = new Junction("n0");
+        Junction j2 = new Junction("n1");
+        s1.setBeginJunction(j1);
+        s1.setEndJunction(j2);
+        s1.setRoadID("E01");
+        s1.setID(1);
+        s1.setTypology("Regular Road");
+        s1.setDirection(Section.Direction.BIDIRECTIONAL);
+
+        Segment seg1 = new Segment(1, 100, 200, 10, 30, 5, 100, 50);
+        Segment seg2 = new Segment(1, 100, 200, 10, -30, 5, 100, 50);
+        s1.getSequenceOfSegments().add(seg1);
+        s1.getSequenceOfSegments().add(seg2);
+
+        s1.addToll(1, 2.5);
+        s1.addToll(2, 3);
+        s1.addToll(3, 3.5);
+        s1.addToll(4, 4);
+
+        Section s2 = new Section(s1);
+        assertEquals(s1.getBeginningJunction(), s2.getBeginningJunction());
+        assertEquals(s1.getEndingJunction(), s2.getEndingJunction());
+        assertEquals(s1.getRoadID(), s2.getRoadID());
+        assertEquals(s1.getID(), s2.getID());
+        assertEquals(s1.getTypology(), s2.getTypology());
+    }
+
     /**
      * Test of addToll method, of class Section.
      */
@@ -61,33 +93,55 @@ public class SectionTest {
     /**
      * Test of illegalArgumentException in class Section.
      */
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void IllegalArgumentExceptionTest() {
         int vehic_id = 0;
         double value = 2.3;
         Section instance = new Section();
-        boolean result = instance.addToll(vehic_id, value);
-        assertFalse(result);
-        vehic_id = 1;
-        value = -5.3;
-        result = instance.addToll(vehic_id, value);
-        assertFalse(result);
-        vehic_id = -1;
-        value = 5.3;
-        result = instance.addToll(vehic_id, value);
+        boolean result = false;
+        try {
+            instance.addToll(vehic_id, value);
+        } catch (IllegalArgumentException ex) {
+        }
+
+        try {
+            vehic_id = 1;
+            value = -5.3;
+            result = instance.addToll(vehic_id, value);
+        } catch (IllegalArgumentException ex) {
+        }
+        try {
+            vehic_id = -1;
+            value = 5.3;
+            result = instance.addToll(vehic_id, value);
+        } catch (IllegalArgumentException ex) {
+        }
         assertFalse(result);
 
-        vehic_id = 0;
-        value = 0;
-        result = instance.addToll(vehic_id, value);
+        try {
+            vehic_id = 0;
+            value = 0;
+            result = instance.addToll(vehic_id, value);
+        } catch (IllegalArgumentException ex) {
+        }
         assertFalse(result);
 
-        value = instance.getTollValue(0);
-        value = instance.getTollValue(-1);
-
-        instance.setKey(-1);
-        instance.setTypology(null);
-        instance.setTypology("");
+        try {
+            value = instance.getTollValue(0);
+        } catch (IllegalArgumentException ex) {
+        }
+        try {
+            value = instance.getTollValue(-1);
+        } catch (IllegalArgumentException ex) {
+        }
+        try {
+            instance.setTypology(null);
+        } catch (IllegalArgumentException ex) {
+        }
+        try {
+            instance.setTypology("");
+        } catch (IllegalArgumentException ex) {
+        }
     }
 
     /**
@@ -189,6 +243,7 @@ public class SectionTest {
         Segment s2 = new Segment(2, 10, 10, 15, 0, 20, 100, 80);
         Segment s3 = new Segment(3, 10, 10, 15, 0, 20, 100, 80);
         Segment s4 = new Segment(4, 10, 10, 15, 0, 20, 100, 80);
+
         List<Segment> expResult = new ArrayList<>();
         expResult.add(s1);
         expResult.add(s2);
@@ -268,30 +323,6 @@ public class SectionTest {
     }
 
     /**
-     * Test of getKey method, of class Section.
-     */
-    @Test
-    public void testGetKey() {
-        System.out.println("getKey");
-        Section instance = new Section();
-        instance.setKey(1);
-        int expResult = 1;
-        int result = instance.getKey();
-        assertEquals(expResult, result);
-
-        instance.setKey(2);
-        expResult = 2;
-        result = instance.getKey();
-        assertEquals(expResult, result);
-
-        instance.setKey(1);
-        expResult = 2;
-        result = instance.getKey();
-        assertNotEquals(expResult, result);
-
-    }
-
-    /**
      * Test of getTollValue method, of class Section.
      */
     @Test
@@ -354,10 +385,6 @@ public class SectionTest {
         expResult.setEndJunction(new Junction("FGH"));
         assertFalse(result.equals(expResult));
 
-        result.setKey(1);
-        expResult.setKey(2);
-        assertFalse(expResult.equals(result));
-
         result.setRoadID("road 1");
         expResult.setRoadID("Road 5");
         assertFalse(expResult.equals(result));
@@ -394,7 +421,6 @@ public class SectionTest {
         instance.setEndJunction(new Junction("End junction"));
         instance.setDirection(Section.Direction.DIRECT);
         instance.setID(1);
-        instance.setKey(1);
         instance.setRoadID("Road 1");
         instance.setTypology("Regular");
         List<Segment> segmentList = new ArrayList<>();

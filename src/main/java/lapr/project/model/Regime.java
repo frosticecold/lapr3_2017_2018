@@ -90,8 +90,8 @@ public class Regime {
         this.rpmHigh = rphigh;
     }
 
-    public void setSFC(double SFC) {
-        this.sfc = SFC;
+    public void setSFC(double sfc) {
+        this.sfc = sfc;
     }
 
     public void setTorqueLow(double torqueLow) {
