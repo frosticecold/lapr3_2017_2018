@@ -19,10 +19,10 @@ public class Section {
 
     public enum Direction {
         DIRECT("DIRECT"), REVERSE("REVERSE"), BIDIRECTIONAL("BIDIRECTIONAL");
-        private final String d_name;
+        private final String directionName;
 
         Direction(String s) {
-            d_name = s;
+            directionName = s;
         }
     }
 
@@ -50,12 +50,12 @@ public class Section {
         }
     }
 
-    public boolean addToll(int vehic_id, double value) {
-        if (vehic_id <= 0 || value < 0) {
+    public boolean addToll(int vehicleID, double value) {
+        if (vehicleID <= 0 || value < 0) {
             throw new IllegalArgumentException("Invalid values for toll");
         }
-        if (!mapOfTolls.containsKey(vehic_id)) {
-            mapOfTolls.put(vehic_id, value);
+        if (!mapOfTolls.containsKey(vehicleID)) {
+            mapOfTolls.put(vehicleID, value);
             return true;
         }
         return false;
@@ -193,7 +193,10 @@ public class Section {
     }
 
     public boolean validate() {
-        if (!beginningJunction.validate() || !endingJunction.validate() || roadID.trim().isEmpty() || direction == null || listOfSegments.isEmpty() || typology == null || typology.trim().isEmpty()) {
+        if (!beginningJunction.validate() || !endingJunction.validate() || roadID.trim().isEmpty()) {
+            throw new IllegalArgumentException(("Section is invalid."));
+        }
+        if (direction == null || listOfSegments.isEmpty() || typology == null || typology.trim().isEmpty()) {
             throw new IllegalArgumentException(("Section is invalid."));
         }
         for (Segment seg : listOfSegments) {
