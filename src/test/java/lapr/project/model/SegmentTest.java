@@ -197,10 +197,5 @@ public class SegmentTest {
         assertEquals(result, expResult);
     }
 
-    @Test
-    public void testHashcode() {
-        Segment instance = new Segment(0, 12.0, 0.0, 1.0, -135.0, 10.0, 120.0, 100.0);
-        assertEquals(-1399408281, instance.hashCode());
-    }
 
 }
