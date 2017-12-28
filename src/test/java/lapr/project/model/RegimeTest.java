@@ -37,6 +37,97 @@ public class RegimeTest {
     public void tearDown() {
     }
 
+    @Test
+    public void testConstructor() {
+        System.out.println("constructorTest");
+        Regime reg1 = new Regime();
+        reg1.setRpmHigh(10000);
+        reg1.setRpmLow(2000);
+        reg1.setSFC(500);
+        reg1.setTorqueHigh(200);
+        reg1.setTorqueLow(100);
+
+        Regime reg2 = new Regime(reg1);
+
+        assertEquals(reg1.getRpmHigh(), reg2.getRpmHigh(), 0.05);
+        assertEquals(reg1.getRpmLow(), reg2.getRpmLow(), 0.05);
+        assertEquals(reg1.getSFC(), reg2.getSFC(), 0.05);
+        assertEquals(reg1.getTorqueHigh(), reg2.getTorqueHigh(), 0.05);
+        assertEquals(reg1.getTorqueLow(), reg2.getTorqueLow(), 0.05);
+
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testGetTorqueByRPM() {
+        System.out.println("testGetTorqueByRPM");
+        Regime reg1 = new Regime();
+        reg1.setRpmHigh(10000);
+        reg1.setRpmLow(2000);
+        reg1.setSFC(500);
+        reg1.setTorqueHigh(200);
+        reg1.setTorqueLow(100);
+
+        reg1.getTorqueByRPM(100);
+        reg1.getTorqueByRPM(5000);
+        reg1.getTorqueByRPM(400000);
+
+        System.out.println("testGetSFCbyRPM");
+        reg1.getSFCByRPM(100);
+        reg1.getSFCByRPM(5000);
+        reg1.getSFCByRPM(50000);
+
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testValidate() {
+
+        Regime reg1 = new Regime();
+        reg1.validateRegime();
+        reg1.setRpmHigh(10000);
+        reg1.validateRegime();
+        reg1.setRpmLow(2000);
+        reg1.validateRegime();
+        reg1.setSFC(500);
+        reg1.validateRegime();
+        reg1.setTorqueHigh(200);
+        reg1.validateRegime();
+        reg1.setTorqueLow(100);
+        reg1.validateRegime();
+
+        reg1.setRpmLow(1000000);
+        reg1.validateRegime();
+
+        Regime reg2 = new Regime();
+        reg2.setRpmLow(-1000);
+        reg2.setRpmHigh(10000);
+        reg2.setSFC(500);
+        reg2.setTorqueHigh(200);
+        reg2.setTorqueLow(100);
+        reg2.validateRegime();
+
+        reg2.setRpmLow(1000000);
+        reg2.validateRegime();
+
+        reg2.setRpmLow(1000);
+        reg2.setRpmHigh(50);
+        reg2.validateRegime();
+
+        reg2.setRpmHigh(50000);
+
+        reg2.setTorqueLow(-100);
+        reg2.validateRegime();
+        reg2.setTorqueLow(100);
+        reg2.setTorqueHigh(-100);
+        reg2.validateRegime();
+        reg2.setTorqueHigh(200);
+
+        reg2.setSFC(-1);
+        reg2.validateRegime();
+
+        reg2.setSFC(100);
+        reg2.validateRegime();
+    }
+
     /**
      * Test of setTorque method, of class Regime.
      */
