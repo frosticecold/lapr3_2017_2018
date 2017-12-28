@@ -7,6 +7,7 @@ package lapr.project.ui;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -15,7 +16,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import lapr.project.model.Project;
+import lapr.project.controller.CreateProjectController;
 import lapr.project.model.Vehicle;
 import lapr.project.utils.ImportException;
 import lapr.project.utils.NetworkXML;
@@ -30,7 +31,7 @@ public class CreateProjectUI extends JDialog {
 
     private JFileChooser m_jfc;
 
-    protected Project m_project;
+    private transient final CreateProjectController controller;
     boolean validProject;
     private static final long serialVersionUID = 1;
     private static final String IMPORT_NETWORK_TITLE = "Import RoadNetwork";
@@ -38,11 +39,13 @@ public class CreateProjectUI extends JDialog {
 
     /**
      * Creates new form CreateProjectUI
+     *
+     * @param parent
      */
     public CreateProjectUI(JFrame parent) {
         super(parent, true);
+        controller = new CreateProjectController();
         initComponents();
-        m_project = new Project();
         initFileChooser();
         validProject = false;
 
@@ -176,24 +179,27 @@ public class CreateProjectUI extends JDialog {
 
     private void btnCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCloseActionPerformed
         dispose();
-        
+
 
     }//GEN-LAST:event_btnCloseActionPerformed
 
     private void btnCreateProjectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateProjectActionPerformed
         String title = txtfield_project_title.getText().trim();
         String description = txtfld_description.getText().trim();
-        m_project.setName(title);
-        m_project.setDescription(description);
-        try {
-            if (m_project.validate()) {
-                JOptionPane.showMessageDialog(this, "Project was created successfully", "Created a project", JOptionPane.INFORMATION_MESSAGE);
-                Session.setActiveProject(m_project);
-                dispose();
+        if (controller.getVehicleList() == null || controller.getRoadList() == null || controller.getRoadNetwork() == null) {
+            JOptionPane.showMessageDialog(rootPane, "Load Files First");
+        } else {
+            try {
+                if (controller.createProject(title, description)) {
+                    JOptionPane.showMessageDialog(this, "Project was created successfully", "Created a project", JOptionPane.INFORMATION_MESSAGE);
+                    dispose();
+                } else {
+                    JOptionPane.showMessageDialog(rootPane, "Name and description already exist or are empty.");
+                }
+            } catch(SQLException ex) {
+                Logger.getLogger(CreateProjectUI.class.getName()).log(Level.SEVERE, null, ex);
+                JOptionPane.showMessageDialog(rootPane, String.format("Error trying to connect to the database.\n Information Error: %s", ex.getMessage()));
             }
-        } catch (IllegalArgumentException ex) {
-            JOptionPane.showMessageDialog(this, "The project is invalid, it wasn't created, so it was reseted", "Error!", JOptionPane.ERROR_MESSAGE);
-            m_project = new Project();
         }
     }//GEN-LAST:event_btnCreateProjectActionPerformed
 
@@ -206,7 +212,7 @@ public class CreateProjectUI extends JDialog {
                 File file = m_jfc.getSelectedFile();
                 List<Vehicle> lista = xml.importVehicles(file);
                 for (Vehicle v : lista) {
-                    m_project.addVehicle(v);
+                    controller.addVehicle(v);
                 }
                 JOptionPane.showMessageDialog(this, "Vehicle were imported with success.", "Vehicle import", JOptionPane.INFORMATION_MESSAGE);
             } catch (FileNotFoundException ex) {
@@ -225,7 +231,7 @@ public class CreateProjectUI extends JDialog {
             try {
                 NetworkXML xml = new NetworkXML();
                 File file = m_jfc.getSelectedFile();
-                xml.importNetwork(m_project, file);
+                xml.importNetwork(Session.getActiveProject(), file); // ISTO NAO PODE SER ASSIM PORQUE O PROJETO AINDA NAO ESTA ATIVO (NAO EXISTE)
                 JOptionPane.showMessageDialog(this, "Roadnetwork was imported with success.", "Roadnetwork import", JOptionPane.INFORMATION_MESSAGE);
             } catch (FileNotFoundException ex) {
                 Logger.getLogger(CreateProjectUI.class.getName()).log(Level.SEVERE, null, ex);
