@@ -5,38 +5,47 @@ public class VehicleCombustion extends Vehicle {
     /**
      * Minimum RPM of the engine of the vehicle.
      */
-    private double m_min_rpm;
+    private double minRPM;
 
     /**
      * Maximum RPM of the engine of the vehicle.
      */
-    private double m_max_rpm;
+    private double maxRPM;
 
     /**
      * Final drive ratio of the vehicle.
      */
-    private double m_final_drive_ratio;
+    private double finalDriveRatio;
 
     /**
      * Gear box of the vehicle.
      */
-    private Gearbox m_gearbox;
+    private Gearbox gearbox;
 
     /**
      * List of possible throtlles of the vehicle.
      */
-    private Accelerator m_accelerator;
+    private Accelerator acceleratorPedal;
 
     /**
      * Creates an instance of an electric vehicle.
      */
     public VehicleCombustion() {
         super();
-        this.m_min_rpm = 0;
-        this.m_max_rpm = 0;
-        this.m_final_drive_ratio = 0.0;
-        this.m_gearbox = new Gearbox();
-        this.m_accelerator = new Accelerator();
+        this.minRPM = 0;
+        this.maxRPM = 0;
+        this.finalDriveRatio = 0.0;
+        this.gearbox = new Gearbox();
+        this.acceleratorPedal = new Accelerator();
+    }
+
+    public VehicleCombustion(VehicleCombustion vehicle) {
+        super(vehicle);
+        this.minRPM = vehicle.minRPM;
+        this.maxRPM = vehicle.maxRPM;
+        this.finalDriveRatio = vehicle.finalDriveRatio;
+        this.gearbox = new Gearbox(vehicle.gearbox);
+        this.acceleratorPedal = new Accelerator(vehicle.acceleratorPedal);
     }
 
     /**
@@ -46,7 +55,7 @@ public class VehicleCombustion extends Vehicle {
      */
     @Override
     public double getMinRpm() {
-        return this.m_min_rpm;
+        return this.minRPM;
     }
 
     /**
@@ -56,7 +65,7 @@ public class VehicleCombustion extends Vehicle {
      */
     @Override
     public double getMaxRpm() {
-        return this.m_max_rpm;
+        return this.maxRPM;
     }
 
     /**
@@ -66,7 +75,7 @@ public class VehicleCombustion extends Vehicle {
      */
     @Override
     public double getFinalDriveRatio() {
-        return this.m_final_drive_ratio;
+        return this.finalDriveRatio;
     }
 
     /**
@@ -76,7 +85,7 @@ public class VehicleCombustion extends Vehicle {
      */
     @Override
     public Gearbox getGearbox() {
-        return this.m_gearbox;
+        return this.gearbox;
     }
 
     /**
@@ -86,69 +95,69 @@ public class VehicleCombustion extends Vehicle {
      */
     @Override
     public Accelerator getAccelerator() {
-        return this.m_accelerator;
+        return this.acceleratorPedal;
     }
 
     /**
      * Sets the minimum RPM of the vehicle's engine.
      *
-     * @param m_min_rpm The new minimum RPM of the vehicle's engine.
+     * @param minRPM The new minimum RPM of the vehicle's engine.
      */
     @Override
-    public void setMinRPM(double m_min_rpm) {
-        if (m_min_rpm < 0) {
+    public void setMinRPM(double minRPM) {
+        if (minRPM < 0) {
             throw new IllegalArgumentException("The mimimum rounds per minute "
                     + "of the vehicle should be positive.");
         }
 
-        this.m_min_rpm = m_min_rpm;
+        this.minRPM = minRPM;
     }
 
     /**
      * Sets the maximum RPM of the vehicle's engine.
      *
-     * @param m_max_rpm The new maximum RPM of the vehicle's engine.
+     * @param maxRPM The new maximum RPM of the vehicle's engine.
      */
     @Override
-    public void setMaxRPM(double m_max_rpm) {
-        if (m_max_rpm <= 0) {
+    public void setMaxRPM(double maxRPM) {
+        if (maxRPM <= 0) {
             throw new IllegalArgumentException("The maximum rounds per minute "
                     + "of the vehicle should be positive.");
         }
 
-        this.m_max_rpm = m_max_rpm;
+        this.maxRPM = maxRPM;
     }
 
     /**
      * Sets the final drive of the vehicle.
      *
-     * @param m_final_drive_ratio The new final drive of the vehicle.
+     * @param finalDriveRatio The new final drive of the vehicle.
      */
     @Override
-    public void setFinalDriveRatio(double m_final_drive_ratio) {
-        if (m_final_drive_ratio <= 0) {
+    public void setFinalDriveRatio(double finalDriveRatio) {
+        if (finalDriveRatio <= 0) {
             throw new IllegalArgumentException("The final drive of the vehicle "
                     + "should be positive.");
         }
 
-        this.m_final_drive_ratio = m_final_drive_ratio;
+        this.finalDriveRatio = finalDriveRatio;
     }
 
     @Override
-    public void setGearbox(Gearbox m_gearbox) {
-        if (m_gearbox == null) {
+    public void setGearbox(Gearbox gearbox) {
+        if (gearbox == null) {
             throw new IllegalArgumentException("The vehicle should have a gearbox. ");
         }
 
-        this.m_gearbox = m_gearbox;
+        this.gearbox = gearbox;
     }
 
-    public void setAccelerator(Accelerator m_accelerator) {
-        if (m_accelerator == null) {
+    public void setAccelerator(Accelerator acceleratorPedal) {
+        if (acceleratorPedal == null) {
             throw new IllegalArgumentException("The vehicle should have a gearbox. ");
         }
 
-        this.m_accelerator = m_accelerator;
+        this.acceleratorPedal = acceleratorPedal;
     }
 
     /**
@@ -181,21 +190,21 @@ public class VehicleCombustion extends Vehicle {
      */
     public boolean validateCombustionVehicle() {
 
-        if (this.m_min_rpm <= 0) {
+        if (this.minRPM <= 0) {
             throw new IllegalArgumentException("The mimimum rounds per minute "
                     + "of the vehicle should be positive.");
         }
 
-        if (this.m_max_rpm <= 0) {
+        if (this.maxRPM <= 0) {
             throw new IllegalArgumentException("The maximum rounds per minute "
                     + "of the vehicle should be positive.");
         }
 
-        if (this.m_min_rpm > m_max_rpm) {
+        if (this.minRPM > maxRPM) {
             throw new IllegalArgumentException("RPM low should be less than RPM high.");
         }
 
-        if (this.m_final_drive_ratio <= 0) {
+        if (this.finalDriveRatio <= 0) {
             throw new IllegalArgumentException("The final drive of the vehicle "
                     + "should be positive.");
         }
@@ -203,14 +212,19 @@ public class VehicleCombustion extends Vehicle {
     }
 
     /**
-     * Returns the maximum velocity in km/h
+     * Returns the maximum velocity in KM/H
      *
      * @return
      */
     @Override
-    public double getMaximumVelocity() {
-        double velocity = (Math.PI * this.getWheelSize() * m_max_rpm) / (60 * m_final_drive_ratio * this.getGearbox().getLowestGear());
+    public double getMaximumEngineVelocity() {
+        double velocity = (Math.PI * this.getWheelSize() * maxRPM) / (60 * finalDriveRatio * this.getGearbox().getLowestGear());
 
         return velocity * 3.6;
+    }
+
+    @Override
+    public Vehicle copy() {
+        return new VehicleCombustion(this);
     }
 }

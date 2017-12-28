@@ -301,7 +301,7 @@ public abstract class Vehicle {
         if (mapRoadVelocityLimit.containsKey(road)) {
             return mapRoadVelocityLimit.get(road);
         } else {
-            return this.getMaximumVelocity();
+            return this.getMaximumEngineVelocity();
         }
 
     }
@@ -315,7 +315,7 @@ public abstract class Vehicle {
      *
      * @return
      */
-    public abstract double getMaximumVelocity();
+    public abstract double getMaximumEngineVelocity();
 
     /**
      * Returns the minimum car RPM
@@ -399,6 +399,11 @@ public abstract class Vehicle {
         this.mapRoadVelocityLimit = mapRoadVelocityLimit;
     }
 
+    /**
+     * Method that changes the vehicle Rolling resistance coefficient
+     *
+     * @param rcc
+     */
     public void setRCC(double rcc) {
         if (rcc < 0) {
             throw new IllegalArgumentException("The rolling resistance coefficient of the vehicle must be positive.");
@@ -406,6 +411,11 @@ public abstract class Vehicle {
         this.rollingResistanceCoefficient = rcc;
     }
 
+    /**
+     * Method that changes the wheel size of the vehicle(m)
+     *
+     * @param wheel_size
+     */
     public void setWheelSize(double wheel_size) {
         if (wheel_size <= 0) {
             throw new IllegalArgumentException("The wheel size of the vehicle must be greater than 0");
@@ -413,6 +423,11 @@ public abstract class Vehicle {
         this.wheelSize = wheel_size;
     }
 
+    /**
+     * Method that changes the frontal area of the vehicle (m^2)
+     *
+     * @param frontal_area
+     */
     public void setFrontalArea(double frontal_area) {
         if (frontal_area <= 0) {
             throw new IllegalArgumentException("The frontal area of the vehicle must be greater than 0");
@@ -420,6 +435,11 @@ public abstract class Vehicle {
         this.frontalArea = frontal_area;
     }
 
+    /**
+     * Method that changes the fuel type of a vehicle
+     *
+     * @param fuel
+     */
     public void setFuel(String fuel) {
         if (fuel == null || fuel.trim().isEmpty()) {
             throw new IllegalArgumentException("The fuel of the vehicle cannot be empty.");
@@ -427,6 +447,11 @@ public abstract class Vehicle {
         this.fuel = fuel;
     }
 
+    /**
+     * Method that changes the Drag Coefficient of a vehicle
+     *
+     * @param drag_coefficient
+     */
     public void setDragCoefficient(double drag_coefficient) {
         if (drag_coefficient <= 0) {
             throw new IllegalArgumentException("The drag coefficient of the vehicle must be greater than 0");
@@ -434,6 +459,11 @@ public abstract class Vehicle {
         this.dragCoefficient = drag_coefficient;
     }
 
+    /**
+     * Method that changes the load of a vehicle (Kg)
+     *
+     * @param load
+     */
     public void setLoad(double load) {
         if (load < 0) {
             throw new IllegalArgumentException("The load of the vehicle must be positive");
@@ -441,6 +471,11 @@ public abstract class Vehicle {
         this.load = load;
     }
 
+    /**
+     * Method that changes the mass of a vehicle (Kg)
+     *
+     * @param mass
+     */
     public void setMass(double mass) {
         if (mass <= 0) {
             throw new IllegalArgumentException("The mass of the vehicle must be greater than 0");
@@ -448,6 +483,11 @@ public abstract class Vehicle {
         this.mass = mass;
     }
 
+    /**
+     * Method that changes the motorization of a vehicle
+     *
+     * @param motorization
+     */
     public void setMotorization(String motorization) {
         if (motorization == null || motorization.trim().isEmpty()) {
             throw new IllegalArgumentException("The motorization of the vehicle cannot be empty.");
@@ -455,6 +495,11 @@ public abstract class Vehicle {
         this.motorization = motorization;
     }
 
+    /**
+     * Method that changes the name of a vehicle
+     *
+     * @param name
+     */
     public void setName(String name) {
         if (name == null || name.trim().isEmpty()) {
             throw new IllegalArgumentException("The name of the vehicle cannot be empty.");
@@ -462,6 +507,11 @@ public abstract class Vehicle {
         this.name = name;
     }
 
+    /**
+     * Method that changes the description of a vehicle
+     *
+     * @param description
+     */
     public void setDescription(String description) {
         if (description == null || description.trim().isEmpty()) {
             throw new IllegalArgumentException("The description of the vehicle cannot be empty.");
@@ -469,6 +519,11 @@ public abstract class Vehicle {
         this.description = description;
     }
 
+    /**
+     * Method that changes the vehicles class
+     *
+     * @param vehicle_class
+     */
     public void setVehicleClass(int vehicle_class) {
         if (vehicle_class < 0) {
             throw new IllegalArgumentException("The vehicle_class of the vehicle must positive");
@@ -476,6 +531,11 @@ public abstract class Vehicle {
         this.vehicleClass = vehicle_class;
     }
 
+    /**
+     * Method that changes the type of vehicle
+     *
+     * @param type
+     */
     public void setType(String type) {
         if (type == null || type.trim().isEmpty()) {
             throw new IllegalArgumentException("The type of the vehicle cannot be empty.");
@@ -483,8 +543,13 @@ public abstract class Vehicle {
         this.type = type;
     }
 
-    public void setThrottlesList(Map<Integer, Throttle> throttle_list) {
-        this.throttleList = throttle_list;
+    /**
+     * Method that changes the throttle list map
+     *
+     * @param throttleList
+     */
+    public void setThrottlesList(Map<Integer, Throttle> throttleList) {
+        this.throttleList = throttleList;
     }
 
     @Override
@@ -521,5 +586,7 @@ public abstract class Vehicle {
         }
         return sb.toString();
     }
+    
+    public abstract Vehicle copy();
 
 }
