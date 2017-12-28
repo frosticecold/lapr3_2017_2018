@@ -5,13 +5,11 @@
  */
 package lapr.project.calculations;
 
-/**
- *
- * @author Raúl Correia <1090657@isep.ipp.pt>
- */
 public class UnitConversion {
 
     public static final double MILES_TO_KM = 1.609344;
+    public static final double KM_PER_HOUR_TO_M_PER_SECOND = 0.277777778;
+    public static final double M_PER_SECOND_TO_KM_PER_HOUR = 3.6;
     public static final int KM_TO_METERS = 1000;
     private static final int HOUR_IN_SECONDS = 3600;
     private static final String CENTIMETERS = "cm";
@@ -19,6 +17,8 @@ public class UnitConversion {
     private static final String KILOMETERS = "km";
     private static final String KILOGRAMS = "kg";
     private static final String GRAMS = "g";
+    private static final String KILOMETERS_PER_HOUR = "km/h";
+    private static final String METERS_PER_SECOND = "m/s";
 
     public static double convertKilometersToMeters(String distance) {
         double lengthKilometers = Double.parseDouble(
@@ -91,7 +91,7 @@ public class UnitConversion {
                     return Double.parseDouble(numberSplit[0]);
                 } else if (numberSplit[1].equalsIgnoreCase(GRAMS)) {
                     return Double.parseDouble(numberSplit[0]) / 1000;
-                } 
+                }
                 break;
             }
             case (GRAMS): {
@@ -99,7 +99,23 @@ public class UnitConversion {
                     return Double.parseDouble(numberSplit[0]);
                 } else if (numberSplit[1].equalsIgnoreCase(KILOGRAMS)) {
                     return Double.parseDouble(numberSplit[0]) * 1000;
-                } 
+                }
+                break;
+            }
+            case (METERS_PER_SECOND): {
+                if (numberSplit[1].equalsIgnoreCase(pretended)) {
+                    return Double.parseDouble(numberSplit[0]);
+                } else if (numberSplit[1].equalsIgnoreCase(KILOMETERS_PER_HOUR)) {
+                    return Double.parseDouble(numberSplit[0]) * KM_PER_HOUR_TO_M_PER_SECOND;
+                }
+                break;
+            }
+            case (KILOMETERS_PER_HOUR): {
+                if (numberSplit[1].equalsIgnoreCase(pretended)) {
+                    return Double.parseDouble(numberSplit[0]);
+                } else if (numberSplit[1].equalsIgnoreCase(METERS_PER_SECOND)) {
+                    return Double.parseDouble(numberSplit[0]) * M_PER_SECOND_TO_KM_PER_HOUR;
+                }
                 break;
             }
         }
