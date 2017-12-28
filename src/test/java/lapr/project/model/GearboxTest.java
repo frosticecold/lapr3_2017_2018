@@ -5,6 +5,7 @@
  */
 package lapr.project.model;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.After;
@@ -39,6 +40,38 @@ public class GearboxTest {
     public void tearDown() {
     }
 
+    @Test
+    public void testConstructor() {
+        System.out.println("testConstructor");
+        Gear g1 = new Gear(1, 2.3);
+        Gear g2 = new Gear(2, 3.3);
+        Gear g3 = new Gear(3, 1.7);
+        Gear g4 = new Gear(4, 0.65);
+        Gear g5 = new Gear(5, 0.4);
+        List<Gear> list = new ArrayList<>();
+        list.add(g1);
+        list.add(g2);
+        list.add(g3);
+        list.add(g4);
+        list.add(g5);
+        Gearbox gearbox1 = new Gearbox(list);
+        assertTrue(gearbox1.getNumberOfGears() == 5);
+
+        Gearbox instance = new Gearbox();
+        instance.addGear(g1);
+        instance.addGear(g2);
+        instance.addGear(g3);
+        instance.addGear(g4);
+        instance.addGear(g5);
+
+        Gearbox gearbox2 = new Gearbox(instance);
+        assertEquals(gearbox2.getGear(1).getRatio(), g1.getRatio(), 0.05);
+        assertEquals(gearbox2.getGear(2).getRatio(), g2.getRatio(), 0.05);
+        assertEquals(gearbox2.getGear(3).getRatio(), g3.getRatio(), 0.05);
+        assertEquals(gearbox2.getGear(4).getRatio(), g4.getRatio(), 0.05);
+        assertEquals(gearbox2.getGear(5).getRatio(), g5.getRatio(), 0.05);
+    }
+
     /**
      * Test of addGear method, of class Gearbox.
      */
@@ -63,6 +96,7 @@ public class GearboxTest {
         instance.addGear(g5);
         assertTrue(instance.getGearList().size() == 5);
 
+        assertTrue(instance.getNumberOfGears() == 5);
     }
 
     /**

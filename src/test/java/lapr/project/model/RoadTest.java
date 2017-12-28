@@ -188,6 +188,14 @@ public class RoadTest {
         } catch (IllegalArgumentException ex) {
             System.out.println(ex.getMessage());
         }
+        try {
+
+            assertEquals(anotherRoad.getTollValue(-1), 2.0, 0.05);
+
+        } catch (IllegalArgumentException ex) {
+            System.out.println(ex.getMessage());
+        }
+
     }
 
     /**
@@ -218,6 +226,25 @@ public class RoadTest {
         toll_value = 1.0;
         try {
             instance.addTollFare(vehicle_id, toll_value);
+        } catch (IllegalArgumentException ex) {
+            System.out.println(ex.getMessage());
+        }
+
+        toll_value = -1;
+
+        try {
+            instance.addTollFare(vehicle_id, toll_value);
+        } catch (IllegalArgumentException ex) {
+            System.out.println(ex.getMessage());
+        }
+
+        try {
+            instance.getTollValue(0);
+        } catch (IllegalArgumentException ex) {
+            System.out.println(ex.getMessage());
+        }
+        try {
+            instance.getTollValue(-1);
         } catch (IllegalArgumentException ex) {
             System.out.println(ex.getMessage());
         }

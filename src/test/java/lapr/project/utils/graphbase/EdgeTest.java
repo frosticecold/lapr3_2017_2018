@@ -237,6 +237,9 @@ public class EdgeTest {
         assertEquals(expResult, result);
 
         System.out.println(instance);
+        
+        instance.setWeight(-1);
+        System.out.println(instance);
 
     }
 
