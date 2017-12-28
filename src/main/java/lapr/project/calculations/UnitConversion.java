@@ -64,6 +64,7 @@ public class UnitConversion {
                 } else if (numberSplit[1].equalsIgnoreCase(METERS)) {
                     return Double.parseDouble(numberSplit[0]) * 100;
                 }
+                break;
             }
             case (METERS): {
                 if (numberSplit[1].equalsIgnoreCase(pretended)) {
@@ -73,6 +74,7 @@ public class UnitConversion {
                 } else if (numberSplit[1].equalsIgnoreCase(KILOMETERS)) {
                     return Double.parseDouble(numberSplit[0]) / 1000;
                 }
+                break;
             }
             case (CENTIMETERS): {
                 if (numberSplit[1].equalsIgnoreCase(pretended)) {
@@ -82,6 +84,7 @@ public class UnitConversion {
                 } else if (numberSplit[1].equalsIgnoreCase(KILOMETERS)) {
                     return Double.parseDouble(numberSplit[0]) / 100000;
                 }
+                break;
             }
             case (KILOGRAMS): {
                 if (numberSplit[1].equalsIgnoreCase(pretended)) {
@@ -89,6 +92,7 @@ public class UnitConversion {
                 } else if (numberSplit[1].equalsIgnoreCase(GRAMS)) {
                     return Double.parseDouble(numberSplit[0]) / 1000;
                 } 
+                break;
             }
             case (GRAMS): {
                 if (numberSplit[1].equalsIgnoreCase(pretended)) {
@@ -96,6 +100,7 @@ public class UnitConversion {
                 } else if (numberSplit[1].equalsIgnoreCase(KILOGRAMS)) {
                     return Double.parseDouble(numberSplit[0]) * 1000;
                 } 
+                break;
             }
         }
         return Double.parseDouble(numberSplit[0]);

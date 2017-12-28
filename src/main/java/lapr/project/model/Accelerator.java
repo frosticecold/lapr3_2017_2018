@@ -5,25 +5,25 @@ import java.util.Map;
 
 public class Accelerator {
 
-    private Map<Integer, Throttle> m_throttle_list;
+    private Map<Integer, Throttle> throttleList;
 
     public Accelerator() {
-        this.m_throttle_list = new HashMap<>();
+        this.throttleList = new HashMap<>();
     }
 
     public Accelerator(Accelerator acc) {
-        this.m_throttle_list = new HashMap<>();
-        for (Integer i : acc.m_throttle_list.keySet()) {
-            this.m_throttle_list.put(i, acc.m_throttle_list.get(i));
+        this.throttleList = new HashMap<>();
+        for (Integer i : acc.throttleList.keySet()) {
+            this.throttleList.put(i, acc.throttleList.get(i));
         }
     }
 
     public Map<Integer, Throttle> getThrottleList() {
-        return m_throttle_list;
+        return throttleList;
     }
 
     public void setThrottleList(Map<Integer, Throttle> m_throttle_list) {
-        this.m_throttle_list = m_throttle_list;
+        this.throttleList = m_throttle_list;
     }
 
     /**
@@ -33,7 +33,7 @@ public class Accelerator {
      */
     public boolean validateAcceleratorPedal() {
 
-        if (this.m_throttle_list.entrySet().isEmpty()) {
+        if (this.throttleList.entrySet().isEmpty()) {
             throw new IllegalArgumentException(
                     "The accelerator pedal must have at least one throttle.");
         }
@@ -43,6 +43,6 @@ public class Accelerator {
 
     @Override
     public String toString() {
-        return "Accelerator{" + "m_throttle_list=" + m_throttle_list + '}';
+        return "Accelerator{" + "m_throttle_list=" + throttleList + '}';
     }
 }

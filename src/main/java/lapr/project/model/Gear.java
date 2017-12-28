@@ -7,12 +7,12 @@ public class Gear {
 
     /**
      *
-     * @param id_of_gear
-     * @param m_ratio
+     * @param idOfGear
+     * @param ratio
      */
-    public Gear(int id_of_gear, double m_ratio) {
-        this.id = id_of_gear;
-        this.ratio = m_ratio;
+    public Gear(int idOfGear, double ratio) {
+        this.id = idOfGear;
+        this.ratio = ratio;
     }
 
     public Gear() {
@@ -29,12 +29,12 @@ public class Gear {
         return id;
     }
 
-    public void setGearID(int m_gearID) {
-        this.id = m_gearID;
+    public void setGearID(int gearID) {
+        this.id = gearID;
     }
 
-    public void setRatio(double m_ratio) {
-        this.ratio = m_ratio;
+    public void setRatio(double ratio) {
+        this.ratio = ratio;
     }
 
     public double getRatio() {
