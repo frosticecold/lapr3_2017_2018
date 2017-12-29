@@ -162,7 +162,7 @@ public class Project {
 
         if (s.getDirection() == Section.Direction.BIDIRECTIONAL) {
             m_road_network.insertEdge(orig, dest, s, s.getSectionLength());
-            Section sec = s.reverseSegment();
+            Section sec = s.reverseSection();
             m_road_network.insertEdge(dest, orig, sec, s.getSectionLength());
             return true;
         }

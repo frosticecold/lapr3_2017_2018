@@ -103,12 +103,12 @@ public class Section {
         return typology;
     }
 
-    public double getTollValue(int vehicle_id) {
-        if (vehicle_id <= 0) {
+    public double getTollValue(int vehicleID) {
+        if (vehicleID <= 0) {
             throw new IllegalArgumentException("Invalid toll key");
         }
-        if (mapOfTolls.containsKey(vehicle_id)) {
-            return mapOfTolls.get(vehicle_id);
+        if (mapOfTolls.containsKey(vehicleID)) {
+            return mapOfTolls.get(vehicleID);
         }
 
         return -1;
@@ -207,10 +207,10 @@ public class Section {
         return true;
     }
 
-    public Section reverseSegment() {
+    public Section reverseSection() {
         Section section = new Section();
-        section.beginningJunction = this.beginningJunction;
-        section.endingJunction = this.endingJunction;
+        section.beginningJunction = this.endingJunction;
+        section.endingJunction = this.beginningJunction;
         section.direction = this.direction;
         section.roadID = this.roadID;
         section.mapOfTolls = this.mapOfTolls;

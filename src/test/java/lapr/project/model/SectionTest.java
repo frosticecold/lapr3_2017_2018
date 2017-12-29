@@ -432,7 +432,7 @@ public class SectionTest {
 
     @Test
     public void testToString() {
-
+        System.out.println("TestToString");
         Section instance = new Section();
         instance.setBeginJunction(new Junction("Begin junction"));
         instance.setEndJunction(new Junction("End junction"));
@@ -455,6 +455,58 @@ public class SectionTest {
         String result = instance.toString();
 
         assertEquals(expResult, result);
+    }
+
+    @Test
+    public void testValidate() {
+        Section instance = new Section();
+        instance.setBeginJunction(new Junction("Begin junction"));
+        instance.setEndJunction(new Junction("End junction"));
+        instance.setDirection(Section.Direction.DIRECT);
+        instance.setID(1);
+        instance.setRoadID("Road 1");
+        instance.setTypology("Regular");
+        List<Segment> segmentList = new ArrayList<>();
+        Segment s1 = new Segment(1, 10, 10, 15, 0, 20, 100, 80);
+        Segment s2 = new Segment(2, 10, 10, 15, 0, 20, 100, 80);
+        Segment s3 = new Segment(3, 10, 10, 15, 0, 20, 100, 80);
+        Segment s4 = new Segment(4, 10, 10, 15, 0, 20, 100, 80);
+        segmentList.add(s1);
+        segmentList.add(s2);
+        segmentList.add(s3);
+        segmentList.add(s4);
+        instance.setSegmentList(segmentList);
+        boolean validate = false;
+        try {
+            validate = instance.validate();
+        } catch (IllegalArgumentException ex) {
+        }
+        assertTrue(validate);
+    }
+
+    @Test
+    public void testReverseSegment() {
+        Section instance = new Section();
+        instance.setBeginJunction(new Junction("Begin junction"));
+        instance.setEndJunction(new Junction("End junction"));
+        instance.setDirection(Section.Direction.DIRECT);
+        instance.setID(1);
+        instance.setRoadID("Road 1");
+        instance.setTypology("Regular");
+        List<Segment> segmentList = new ArrayList<>();
+        Segment s1 = new Segment(1, 10, 10, 15, 0, 20, 100, 80);
+        Segment s2 = new Segment(2, 10, 10, 15, 0, 20, 100, 80);
+        Segment s3 = new Segment(3, 10, 10, 15, 0, 20, 100, 80);
+        Segment s4 = new Segment(4, 10, 10, 15, 0, 20, 100, 80);
+        segmentList.add(s1);
+        segmentList.add(s2);
+        segmentList.add(s3);
+        segmentList.add(s4);
+        instance.setSegmentList(segmentList);
+
+        Section reverse = instance.reverseSection();
+        
+        
     }
 
 }
