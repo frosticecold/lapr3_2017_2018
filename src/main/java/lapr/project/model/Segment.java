@@ -17,14 +17,14 @@ public class Segment {
     }
 
     public Segment(int segmentIndex, double initialHeight, double finalHeight, double length, double windDirection, double windSpeed, double maximumVelocity, double minimumVelocity) {
-        this.segmentIndex = segmentIndex;
-        this.initialHeight = initialHeight;
-        this.finalHeight = finalHeight;
-        this.length = length;
-        this.windDirection = windDirection;
-        this.windSpeed = windSpeed;
-        this.maximumVelocity = maximumVelocity;
-        this.minimumVelocity = minimumVelocity;
+        this.setSegmentIndex(segmentIndex);
+        this.setInitialHeight(initialHeight);
+        this.setFinalHeight(finalHeight);
+        this.setLength(length);
+        this.setWindDirection(windDirection);
+        this.setWindSpeed(windSpeed);
+        this.setMaximumVelocity(maximumVelocity);
+        this.setMinimumVelocity(minimumVelocity);
     }
 
     public Segment(Segment s) {
@@ -92,6 +92,9 @@ public class Segment {
      * @param segmentIndex the m_segment_index to set
      */
     public void setSegmentIndex(int segmentIndex) {
+        if (segmentIndex <= 0) {
+            throw new IllegalArgumentException("Segment index must be greater than zero.");
+        }
         this.segmentIndex = segmentIndex;
     }
 
@@ -99,6 +102,9 @@ public class Segment {
      * @param initialHeight the m_initial_height to set
      */
     public void setInitialHeight(double initialHeight) {
+        if (initialHeight < 0) {
+            throw new IllegalArgumentException("Initial height must be equal or greater than zero");
+        }
         this.initialHeight = initialHeight;
     }
 
@@ -107,6 +113,9 @@ public class Segment {
      * @param finalHeight
      */
     public void setFinalHeight(double finalHeight) {
+        if (finalHeight < 0) {
+            throw new IllegalArgumentException("Final height must be equal or greater than zero");
+        }
         this.finalHeight = finalHeight;
     }
 
@@ -114,6 +123,9 @@ public class Segment {
      * @param length the m_length to set
      */
     public void setLength(double length) {
+        if (length <= 0) {
+            throw new IllegalArgumentException("Length must be equal or greater than zero.");
+        }
         this.length = length;
     }
 
@@ -121,6 +133,9 @@ public class Segment {
      * @param windDirection the m_wind_direction to set
      */
     public void setWindDirection(double windDirection) {
+        if (windDirection <= -180 || windDirection >= 180) {
+            throw new IllegalArgumentException("Invalid windDirection");
+        }
         this.windDirection = windDirection;
     }
 
@@ -138,6 +153,9 @@ public class Segment {
      * @param maximumVelocity the m_maximum_velocity to set
      */
     public void setMaximumVelocity(double maximumVelocity) {
+        if (maximumVelocity < 0) {
+            throw new IllegalArgumentException("Maximum velocity must be greater than zero.");
+        }
         this.maximumVelocity = maximumVelocity;
     }
 
@@ -145,6 +163,9 @@ public class Segment {
      * @param minimumVelocity the m_minimum_velocity to set
      */
     public void setMinimumVelocity(double minimumVelocity) {
+        if (maximumVelocity < 0) {
+            throw new IllegalArgumentException("Minimum velocity must be greater than zero.");
+        }
         this.minimumVelocity = minimumVelocity;
     }
 
@@ -156,25 +177,24 @@ public class Segment {
     public double calculateSlope() {
         double deltaY = finalHeight - initialHeight;
         double diagonal = deltaY / UnitConversion.convertKmToMeters(length);
-        double angle = Math.toDegrees(Math.asin(diagonal));
-        return angle;
+        return Math.toDegrees(Math.asin(diagonal));
 
     }
-
-    public boolean validate() {
-        if (segmentIndex <= 0 || initialHeight < 0 || finalHeight < 0) {
-            throw new IllegalArgumentException("Segment is not valid.");
-        }
-        if (length <= 0 || windDirection < -180 || windDirection > 180) {
-
-            throw new IllegalArgumentException("Segment is not valid.");
-        }
-        if (windSpeed < 0 || maximumVelocity < 0 || minimumVelocity < 0) {
-
-            throw new IllegalArgumentException("Segment is not valid.");
-        }
-        return true;
-    }
+//
+//    public boolean validate() {
+//        if (segmentIndex <= 0 || initialHeight < 0 || finalHeight < 0) {
+//            throw new IllegalArgumentException("Segment is not valid.");
+//        }
+//        if (length <= 0 || windDirection < -180 || windDirection > 180) {
+//
+//            throw new IllegalArgumentException("Segment is not valid.");
+//        }
+//        if (windSpeed < 0 || maximumVelocity < 0 || minimumVelocity < 0) {
+//
+//            throw new IllegalArgumentException("Segment is not valid.");
+//        }
+//        return true;
+//    }
 
     public Segment reverseSegment(int index) {
         Segment seg = new Segment();

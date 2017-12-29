@@ -90,10 +90,14 @@ public class RegimeTest {
 
         reg1.getTorqueByRPM(2000);
         reg1.getTorqueByRPM(4000);
+        reg1.getTorqueByRPM(6000);
+        reg1.getTorqueByRPM(9999);
         reg1.getTorqueByRPM(10000);
 
         reg1.getSFCByRPM(2000);
         reg1.getSFCByRPM(4000);
+        reg1.getSFCByRPM(5000);
+        reg1.getSFCByRPM(9999);
         reg1.getSFCByRPM(10000);
 
     }

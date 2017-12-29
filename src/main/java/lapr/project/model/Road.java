@@ -6,11 +6,29 @@ import lapr.project.calculations.Constants;
 
 public class Road {
 
+    /**
+     * Road ID
+     */
     private String id;
+
+    /**
+     * Road name
+     */
     private String name;
+
+    /**
+     * Road typology
+     */
     private String typology;
+
+    /**
+     * Road tollfare
+     */
     private Map<Integer, Double> tollFare;
 
+    /**
+     * Empty Road constructor
+     */
     public Road() {
         id = "";
         name = "";
@@ -18,6 +36,13 @@ public class Road {
         tollFare = new LinkedHashMap<>();
     }
 
+    /**
+     * Construtor for a Road with 3 parameters
+     *
+     * @param roadID Road id
+     * @param name Name of the Road
+     * @param typology Typology of the road
+     */
     public Road(String roadID, String name, String typology) {
         setRoadID(roadID);
         setName(name);
@@ -25,6 +50,11 @@ public class Road {
         tollFare = new LinkedHashMap<>();
     }
 
+    /**
+     * Copy constructor
+     *
+     * @param r Road object to copy
+     */
     public Road(Road r) {
         this.id = r.id;
         this.name = r.name;
@@ -35,18 +65,38 @@ public class Road {
         }
     }
 
+    /**
+     * Returns the road ID
+     *
+     * @return
+     */
     public String getRoadID() {
         return id;
     }
 
+    /**
+     * Returns the Roads Name
+     *
+     * @return
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * Returns the Roads Typology
+     *
+     * @return
+     */
     public String getTypology() {
         return typology;
     }
 
+    /**
+     * Changes the roads id
+     *
+     * @param roadID
+     */
     public void setRoadID(String roadID) {
         if (roadID == null || roadID.trim().isEmpty()) {
             throw new IllegalArgumentException("Invalid road id.");
@@ -54,6 +104,11 @@ public class Road {
         this.id = roadID;
     }
 
+    /**
+     * Changes the roads name
+     *
+     * @param name
+     */
     public void setName(String name) {
         if (name == null || name.trim().isEmpty()) {
             throw new IllegalArgumentException("Invalid road name.");
@@ -61,6 +116,11 @@ public class Road {
         this.name = name;
     }
 
+    /**
+     * Changes the roads typology
+     *
+     * @param typology
+     */
     public void setTypology(String typology) {
         if (typology == null || typology.trim().isEmpty()) {
             throw new IllegalArgumentException("Invalid typology.");
@@ -68,6 +128,11 @@ public class Road {
         this.typology = typology;
     }
 
+    /**
+     * Changes the toll map for the road
+     *
+     * @param map
+     */
     public void setTollFare(Map<Integer, Double> map) {
         if (map == null) {
             throw new IllegalArgumentException("Invalid map of toll fares");
@@ -75,6 +140,12 @@ public class Road {
         tollFare = map;
     }
 
+    /**
+     * Adds a vehicle id and an value to the toll
+     *
+     * @param vehicleID Vehicle Class
+     * @param tollValue Toll value
+     */
     public void addTollFare(int vehicleID, double tollValue) {
         if (vehicleID <= 0 || tollValue < 0) {
             throw new IllegalArgumentException("Invalid values, "
@@ -84,6 +155,12 @@ public class Road {
         tollFare.put(vehicleID, tollValue);
     }
 
+    /**
+     * Returns the toll value for a determined vehicle class
+     *
+     * @param vehicleID Class of a vehicle
+     * @return
+     */
     public double getTollValue(int vehicleID) {
         if (vehicleID <= 0) {
             throw new IllegalArgumentException("Vehicle id must be greater than zero");
@@ -95,6 +172,11 @@ public class Road {
         return -1;
     }
 
+    /**
+     * Validates a road object
+     *
+     * @return true or IllegalArgumentException
+     */
     public boolean validate() {
         if (name.trim().isEmpty() || id.trim().isEmpty()
                 || typology.trim().isEmpty()) {

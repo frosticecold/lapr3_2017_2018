@@ -110,6 +110,12 @@ public class SegmentTest {
         instance.setWindSpeed(10);
         result = instance.getWindSpeed();
         assertEquals(10, result, 0);
+
+        try {
+            instance.setWindSpeed(-10);
+
+        } catch (IllegalArgumentException ex) {
+        }
     }
 
     /**
@@ -124,78 +130,163 @@ public class SegmentTest {
         assertEquals(expResult, result, 0.00000000005);
     }
 
-    /**
-     * Test of validate method, of class Segment.
-     */
-    @Test(expected = IllegalArgumentException.class)
-    public void IllegalArgumentExceptionTest() {
-        System.out.println("validate");
-        Segment instance = new Segment();
-        instance.setFinalHeight(-1);
-        boolean result = instance.validate();
-        boolean expResult = false;
-        assertEquals(expResult, result);
-        instance.setInitialHeight(-2);
-        result = instance.validate();
-        assertEquals(expResult, result);
-        instance.setLength(-5);
-        result = instance.validate();
-        assertEquals(expResult, result);
-        instance.setMaximumVelocity(-45);
-        result = instance.validate();
-        assertEquals(expResult, result);
-
-        instance.setMinimumVelocity(-98);
-        result = instance.validate();
-        assertEquals(expResult, result);
-
-        instance.setSegmentIndex(0);
-        result = instance.validate();
-        assertEquals(expResult, result);
-        instance.setSegmentIndex(-8);
-        result = instance.validate();
-        assertEquals(expResult, result);
-
-        instance.setWindDirection(190);
-        result = instance.validate();
-        assertEquals(expResult, result);
-        instance.setWindDirection(-190);
-        result = instance.validate();
-        assertEquals(expResult, result);
-
-        instance.setWindSpeed(-8);
-        result = instance.validate();
-        assertEquals(expResult, result);
-    }
-
+//    /**
+//     * Test of validate method, of class Segment.
+//     */
+//    @Test
+//    public void IllegalArgumentExceptionTest() {
+//        System.out.println("validate");
+//        Segment instance = new Segment();
+//        instance.setSegmentIndex(0);
+//        instance.setInitialHeight(0);
+//        instance.setFinalHeight(12);
+//        instance.setLength(1);
+//        instance.setMaximumVelocity(120);
+//        instance.setMinimumVelocity(100);
+//        instance.setWindDirection(45);
+//        instance.setWindSpeed(10);
+//
+//        instance.setSegmentIndex(-1);
+//        try {
+//            instance.validate();
+//        } catch (IllegalArgumentException ex) {
+//        }
+//        instance.setSegmentIndex(0);
+//        instance.setInitialHeight(-100);
+//        try {
+//            instance.validate();
+//        } catch (IllegalArgumentException ex) {
+//        }
+//
+//        instance.setSegmentIndex(0);
+//        instance.setInitialHeight(100);
+//        instance.setFinalHeight(-100);
+//        try {
+//            instance.validate();
+//        } catch (IllegalArgumentException ex) {
+//        }
+//
+//        instance.setSegmentIndex(0);
+//        instance.setInitialHeight(100);
+//        instance.setFinalHeight(200);
+//        instance.setLength(-1);
+//        try {
+//            instance.validate();
+//        } catch (IllegalArgumentException ex) {
+//        }
+//
+//        instance.setSegmentIndex(0);
+//        instance.setInitialHeight(100);
+//        instance.setFinalHeight(200);
+//        instance.setLength(10);
+//        try {
+//            instance.validate();
+//        } catch (IllegalArgumentException ex) {
+//        }
+//
+//        instance.setSegmentIndex(0);
+//        instance.setInitialHeight(100);
+//        instance.setFinalHeight(200);
+//        instance.setLength(-1);
+//        instance.setMaximumVelocity(-100);
+//        try {
+//            instance.validate();
+//        } catch (IllegalArgumentException ex) {
+//        }
+//
+//        instance.setSegmentIndex(0);
+//        instance.setInitialHeight(100);
+//        instance.setFinalHeight(200);
+//        instance.setLength(-1);
+//        instance.setMaximumVelocity(100);
+//        instance.setMinimumVelocity(-100);
+//        try {
+//            instance.validate();
+//        } catch (IllegalArgumentException ex) {
+//        }
+//        instance.setSegmentIndex(0);
+//        instance.setInitialHeight(100);
+//        instance.setFinalHeight(200);
+//        instance.setLength(-1);
+//        instance.setMaximumVelocity(100);
+//        instance.setMinimumVelocity(50);
+//        instance.setWindSpeed(-10);
+//        try {
+//            instance.validate();
+//        } catch (IllegalArgumentException ex) {
+//        }
+//
+//        instance.setSegmentIndex(0);
+//        instance.setInitialHeight(100);
+//        instance.setFinalHeight(200);
+//        instance.setLength(-1);
+//        instance.setMaximumVelocity(100);
+//        instance.setMinimumVelocity(50);
+//        instance.setWindSpeed(10);
+//        instance.setWindDirection(370);
+//        try {
+//            instance.validate();
+//        } catch (IllegalArgumentException ex) {
+//        }
+//
+//        instance.setSegmentIndex(0);
+//        instance.setInitialHeight(100);
+//        instance.setFinalHeight(200);
+//        instance.setLength(-1);
+//        instance.setMaximumVelocity(100);
+//        instance.setMinimumVelocity(50);
+//        instance.setWindSpeed(10);
+//        instance.setWindDirection(-370);
+//        try {
+//            instance.validate();
+//        } catch (IllegalArgumentException ex) {
+//        }
+//
+//        instance.setSegmentIndex(0);
+//        instance.setInitialHeight(100);
+//        instance.setFinalHeight(200);
+//        instance.setLength(-1);
+//        instance.setMaximumVelocity(100);
+//        instance.setMinimumVelocity(50);
+//        instance.setWindSpeed(10);
+//        instance.setWindDirection(370);
+//        try {
+//            instance.validate();
+//        } catch (IllegalArgumentException ex) {
+//        }
+//    }
     /**
      * Test of reverseSegment method, of class Segment.
      */
     @Test
     public void testReverseSegment() {
         System.out.println("reverseSegment");
-        int index = 0;
         Segment instance = new Segment();
         instance.setFinalHeight(12);
         instance.setInitialHeight(0);
         instance.setLength(1);
         instance.setMaximumVelocity(120);
         instance.setMinimumVelocity(100);
-        instance.setSegmentIndex(0);
+        instance.setSegmentIndex(1);
         instance.setWindDirection(45);
         instance.setWindSpeed(10);
-        Segment expResult = new Segment(0, 12.0, 0.0, 1.0, -135.0, 10.0, 120.0, 100.0);
-        Segment result = instance.reverseSegment(index);
-        assertEquals(expResult.toString(), result.toString());
+        Segment result = instance.reverseSegment(1);
+        assertFalse(instance.getInitialHeight() == result.getInitialHeight());
+        assertFalse(instance.getFinalHeight() == result.getFinalHeight());
+        assertEquals(instance.getLength(), result.getLength(), 0.05);
+        assertEquals(instance.getSegmentIndex(), result.getSegmentIndex(), 0.05);
+        assertNotEquals(instance.getWindDirection(), result.getWindDirection(), 0.05);
+        assertEquals(instance.getWindDirection() - 180, result.getWindDirection(), 0.05);
+        assertEquals(instance.getWindSpeed(), result.getWindSpeed(),0.05);
+
     }
 
     @Test
     public void testToString() {
-        Segment instance = new Segment(0, 12.0, 0.0, 1.0, -135.0, 10.0, 120.0, 100.0);
+        Segment instance = new Segment(1, 12.0, 0.0, 1.0, 135.0, 10.0, 120.0, 100.0);
         String result = instance.toString();
-        String expResult = "Segment{m_segment_index=0, m_initial_height=12.0, m_final_height=0.0, m_length=1.0, m_wind_direction=-135.0, m_wind_speed=10.0, m_maximum_velocity=120.0, m_minimum_velocity=100.0}";
+        String expResult = "Segment{m_segment_index=1, m_initial_height=12.0, m_final_height=0.0, m_length=1.0, m_wind_direction=135.0, m_wind_speed=10.0, m_maximum_velocity=120.0, m_minimum_velocity=100.0}";
         assertEquals(result, expResult);
     }
-
 
 }

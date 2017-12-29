@@ -199,12 +199,7 @@ public class Section {
         if (direction == null || listOfSegments.isEmpty() || typology == null || typology.trim().isEmpty()) {
             throw new IllegalArgumentException(("Section is invalid."));
         }
-        for (Segment seg : listOfSegments) {
-            if (!seg.validate()) {
-                return false;
-            }
-        }
-        return true;
+        return !listOfSegments.isEmpty();
     }
 
     public Section reverseSection() {

@@ -56,30 +56,24 @@ public class Regime {
         if (rpm < rpmLow || rpm > rpmHigh) {
             throw new IllegalArgumentException("Invalid rpm");
         }
-        if (Math.abs(rpm - rpmLow) < 0.0000001) {
+        if (Math.abs(rpm - rpmLow) < 0.1) {
             return torqueLow;
         }
         if (rpm > rpmLow && rpm < rpmHigh) {
             return (torqueHigh + torqueLow) / 2;
 
         }
-        if (Math.abs(rpm - rpmHigh) < 0.0000001) {
-            return torqueHigh;
-        }
-        return -1;
+//        if (Math.abs(rpm - rpmHigh) < 0.0000001) {
+        return torqueHigh;
+//        }
+//        return -1;
     }
 
     public double getSFCByRPM(double rpm) {
         if (rpm < rpmLow || rpm > rpmHigh) {
             throw new IllegalArgumentException("Invalid rpm");
         }
-
-        if (rpm >= rpmLow && rpm <= rpmHigh) {
-            return this.sfc;
-
-        }
-
-        return -1;
+        return this.sfc;
     }
 
     public void setRpmLow(double rplow) {

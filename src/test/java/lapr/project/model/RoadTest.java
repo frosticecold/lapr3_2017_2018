@@ -249,6 +249,11 @@ public class RoadTest {
             System.out.println(ex.getMessage());
         }
 
+        try {
+            instance.addTollFare(-1, -1);
+        } catch (IllegalArgumentException ex) {
+        }
+
         instance.addTollFare(1, 2.5);
         assertEquals(2.5, instance.getTollValue(1), 0.05);
 
