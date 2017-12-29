@@ -90,17 +90,12 @@ public class ThrottleTest {
     public void testConstructor() {
         System.out.println("constructorTest");
 
-        Throttle instance = new Throttle();
-        List<Regime> list = new ArrayList<>();
-        list.add(new Regime());
-        list.add(new Regime());
-        list.add(new Regime());
-        list.add(new Regime());
-        list.add(new Regime());
-
-        Throttle otherInstance = new Throttle(instance);
-        assertEquals(instance.getRegimeList().size(), otherInstance.getRegimeList().size());
-
+        Throttle instance = new Throttle(throttle);
+        assertEquals(instance.getSFCByRPM(1000),throttle.getSFCByRPM(1000),0.05);
+        assertEquals(instance.getSFCByRPM(3000),throttle.getSFCByRPM(3000),0.05);
+        assertEquals(instance.getSFCByRPM(4000),throttle.getSFCByRPM(4000),0.05);
+        assertEquals(instance.getSFCByRPM(5000),throttle.getSFCByRPM(5000),0.05);
+        
     }
 
     /**
