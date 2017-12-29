@@ -82,7 +82,7 @@ public class Section {
         return direction;
     }
 
-    public int getID() {
+    public int getSectionID() {
         return sectionID;
     }
 
@@ -119,7 +119,10 @@ public class Section {
         return -1;
     }
 
-    public void setID(int id) {
+    public void setSectionID(int id) {
+        if (id <= 0) {
+            throw new IllegalArgumentException("Invalid id.");
+        }
         this.sectionID = id;
 
     }
@@ -132,18 +135,30 @@ public class Section {
     }
 
     public void setBeginJunction(Junction begin) {
+        if (begin == null) {
+            throw new IllegalArgumentException("Invalid Junction");
+        }
         this.beginningJunction = begin;
     }
 
     public void setEndJunction(Junction end) {
+        if (end == null) {
+            throw new IllegalArgumentException("Invalid Junction");
+        }
         this.endingJunction = end;
     }
 
-    public void setRoadID(String r_id) {
-        this.roadID = r_id;
+    public void setRoadID(String roadID) {
+        if (roadID == null || roadID.trim().isEmpty()) {
+            throw new IllegalArgumentException("Invalid typology");
+        }
+        this.roadID = roadID;
     }
 
     public void setSegmentList(List<Segment> listOfSegments) {
+        if (listOfSegments == null) {
+            throw new IllegalArgumentException("Invalid list of segments");
+        }
         this.listOfSegments = listOfSegments;
     }
 
@@ -201,10 +216,10 @@ public class Section {
         if (beginningJunction == null || endingJunction == null) {
             throw new IllegalArgumentException(("Section is invalid."));
         }
-        if (roadID == null || roadID.trim().isEmpty()) {
+        if (roadID == null) {
             throw new IllegalArgumentException(("Section is invalid."));
         }
-        if (typology == null || typology.trim().isEmpty()) {
+        if (typology == null) {
             throw new IllegalArgumentException(("Section is invalid."));
         }
         if (listOfSegments == null || listOfSegments.isEmpty()) {
