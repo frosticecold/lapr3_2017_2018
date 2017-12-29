@@ -163,7 +163,7 @@ public class Segment {
      * @param minimumVelocity the m_minimum_velocity to set
      */
     public void setMinimumVelocity(double minimumVelocity) {
-        if (maximumVelocity < 0) {
+        if (minimumVelocity < 0) {
             throw new IllegalArgumentException("Minimum velocity must be greater than zero.");
         }
         this.minimumVelocity = minimumVelocity;
