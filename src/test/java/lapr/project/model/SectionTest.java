@@ -494,7 +494,17 @@ public class SectionTest {
             instance.validate();
         } catch (IllegalArgumentException ex) {
         }
+        instance.setRoadID("");
+        try {
+            instance.validate();
+        } catch (IllegalArgumentException ex) {
+        }
         instance.setRoadID("Road 1");
+        try {
+            instance.validate();
+        } catch (IllegalArgumentException ex) {
+        }
+        instance.setTypology("");
         try {
             instance.validate();
         } catch (IllegalArgumentException ex) {
