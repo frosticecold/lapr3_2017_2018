@@ -110,28 +110,28 @@ public abstract class Vehicle {
     /**
      * Value for the minimum throttle
      */
-    public final static int THROTTLE_LOW = 25;
+    public static final int THROTTLE_LOW = 25;
     /**
      * Value for the medium throttle
      */
-    public final static int THROTTLE_MEDIUM = 50;
+    public static final int THROTTLE_MEDIUM = 50;
     /**
      * Value for the maximum throttle
      */
-    public final static int THROTTLE_MAX = 100;
+    public static final int THROTTLE_MAX = 100;
 
     /**
      * Value for the diesel fuel type
      */
-    public final static String FUEL_DIESEL = "diesel";
+    public static final String FUEL_DIESEL = "diesel";
     /**
      * Value for the gasoline fuel type
      */
-    public final static String FUEL_GASOLINE = "gasoline";
+    public static final String FUEL_GASOLINE = "gasoline";
     /**
      * Value for the electric fuel type
      */
-    public final static String FUEL_ELETRIC = "electric";
+    public static final String FUEL_ELETRIC = "electric";
 
     /**
      * Empty constructor
@@ -299,12 +299,13 @@ public abstract class Vehicle {
      * @return
      */
     public double getRoadVelocityLimit(String road) {
-        if (mapRoadVelocityLimit.containsKey(road)) {
-            return mapRoadVelocityLimit.get(road);
-        } else {
-            return this.getMaximumEngineVelocity();
+        road = road.toUpperCase();
+        for (String roadkey : mapRoadVelocityLimit.keySet()) {
+            if (road.contains(roadkey)) {
+                return mapRoadVelocityLimit.get(roadkey);
+            }
         }
-
+        return this.getMaximumEngineVelocity();
     }
 
     public double getRCC() {

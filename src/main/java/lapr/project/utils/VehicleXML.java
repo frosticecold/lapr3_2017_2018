@@ -194,7 +194,7 @@ public class VehicleXML implements FileFormat {
             }
 
             case VELOCITY_LIMIT_LIST_TAG: {
-                this.velocityLimitList = new HashMap<>();
+                this.velocityLimitList = new LinkedHashMap<>();
                 break;
             }
             default:
@@ -329,6 +329,7 @@ public class VehicleXML implements FileFormat {
 
             case SEGMENT_TYPE_TAG: {
                 segmentType = this.elementContent;
+                segmentType = segmentType.toUpperCase();
                 break;
             }
 
