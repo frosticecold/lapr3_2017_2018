@@ -1,5 +1,7 @@
 package lapr.project.model;
 
+import java.util.Map;
+
 public class VehicleCombustion extends Vehicle {
 
     /**
@@ -46,6 +48,15 @@ public class VehicleCombustion extends Vehicle {
         this.finalDriveRatio = vehicle.finalDriveRatio;
         this.gearbox = new Gearbox(vehicle.gearbox);
         this.acceleratorPedal = new Accelerator(vehicle.acceleratorPedal);
+    }
+
+    public VehicleCombustion(double minRPM, double maxRPM, double finalDriveRatio, Gearbox gearbox, Accelerator acceleratorPedal, String nameOfVehicle, String descriptionOfVehicle, String typeOfVehicle, String fuelOfVehicle, int vehicleClass, String motorization, double mass, double load, double dragCoefficient, double wheelSize, double frontalArea, double rcc, Map<String, Double> velocityLimits, Map<Integer, Throttle> throttleList) {
+        super(nameOfVehicle, descriptionOfVehicle, typeOfVehicle, fuelOfVehicle, vehicleClass, motorization, mass, load, dragCoefficient, wheelSize, frontalArea, rcc, velocityLimits, throttleList);
+        this.minRPM = minRPM;
+        this.maxRPM = maxRPM;
+        this.finalDriveRatio = finalDriveRatio;
+        this.gearbox = gearbox;
+        this.acceleratorPedal = acceleratorPedal;
     }
 
     /**

@@ -16,19 +16,19 @@ public class VehicleList {
     /**
      * List of vehicles.
      */
-    private List<Vehicle> m_list_of_vehicles;
+    private List<Vehicle> listOfVehicles;
 
     /**
      * List of vehicle names already on the list for id generation.
      */
-    private Map<String, Integer> m_map_of_vehicle_names;
+    private Map<String, Integer> mapOfVehicleNames;
 
     /**
      * Creates a list of vehicles with an empty list.
      */
     public VehicleList() {
-        this.m_list_of_vehicles = new ArrayList<>();
-        this.m_map_of_vehicle_names = new LinkedHashMap<>();
+        this.listOfVehicles = new ArrayList<>();
+        this.mapOfVehicleNames = new LinkedHashMap<>();
     }
 
     /**
@@ -37,8 +37,8 @@ public class VehicleList {
      * @param source The target vehicle list to clone.
      */
     public VehicleList(VehicleList source) {
-        m_list_of_vehicles = new ArrayList<>();
-        Collections.copy(source.m_list_of_vehicles, m_list_of_vehicles);
+        listOfVehicles = new ArrayList<>();
+        Collections.copy(source.listOfVehicles, listOfVehicles);
     }
 
     /**
@@ -47,7 +47,7 @@ public class VehicleList {
      * @return Number of vehicles in the list.
      */
     public int size() {
-        return this.m_list_of_vehicles.size();
+        return this.listOfVehicles.size();
     }
 
     /**
@@ -57,15 +57,15 @@ public class VehicleList {
      * @return True if the vehicle was added , otherwise returns false.
      */
     public boolean addVehicle(Vehicle vehicle) {
-        if (!this.m_list_of_vehicles.contains(vehicle)) {
-            while (this.m_map_of_vehicle_names.containsKey(vehicle.getName())) {
-                int vehicleCount = this.m_map_of_vehicle_names.get(vehicle.getName());
+        if (!this.listOfVehicles.contains(vehicle)) {
+            while (this.mapOfVehicleNames.containsKey(vehicle.getName())) {
+                int vehicleCount = this.mapOfVehicleNames.get(vehicle.getName());
 
                 vehicle.setName(vehicle.getName() + " " + ++vehicleCount);
             }
 
-            this.m_map_of_vehicle_names.put(vehicle.getName(), 1);
-            return this.m_list_of_vehicles.add(vehicle);
+            this.mapOfVehicleNames.put(vehicle.getName(), 1);
+            return this.listOfVehicles.add(vehicle);
         }
 
         return false;
@@ -78,7 +78,7 @@ public class VehicleList {
      * @return True if the vehicle was added , otherwise returns false.
      */
     public boolean removeVehicle(Vehicle vehicle) {
-        return this.m_list_of_vehicles.remove(vehicle);
+        return this.listOfVehicles.remove(vehicle);
     }
 
     /**
@@ -87,7 +87,7 @@ public class VehicleList {
      * @return Iterator.
      */
     public Iterator<Vehicle> iterator() {
-        return this.m_list_of_vehicles.iterator();
+        return this.listOfVehicles.iterator();
     }
 
     /**
@@ -98,7 +98,7 @@ public class VehicleList {
     public List<String> getVehicleNameList() {
         List<String> vehicleList = new ArrayList<>();
 
-        for (Vehicle vehicle : this.m_list_of_vehicles) {
+        for (Vehicle vehicle : this.listOfVehicles) {
             vehicleList.add(vehicle.getName());
         }
 
@@ -106,7 +106,7 @@ public class VehicleList {
     }
 
     public List<Vehicle> getVehicleList() {
-        return this.m_list_of_vehicles;
+        return this.listOfVehicles;
     }
 
     /**
@@ -121,7 +121,7 @@ public class VehicleList {
         StringBuilder sb = new StringBuilder();
 
         sb.append("List of Vehicles:\n");
-        for (Vehicle vehicle : this.m_list_of_vehicles) {
+        for (Vehicle vehicle : this.listOfVehicles) {
             sb.append(vehicle);
         }
 
@@ -135,7 +135,7 @@ public class VehicleList {
      */
     public boolean validateVehicleList() {
 
-        if (this.m_list_of_vehicles.isEmpty()) {
+        if (this.listOfVehicles.isEmpty()) {
             throw new IllegalArgumentException("The project must be at least one vehicle.");
         }
 

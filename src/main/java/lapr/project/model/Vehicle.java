@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Objects;
 
 public abstract class Vehicle {
 
@@ -586,7 +587,76 @@ public abstract class Vehicle {
         }
         return sb.toString();
     }
-    
+
     public abstract Vehicle copy();
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 97 * hash + Objects.hashCode(this.name);
+        hash = 97 * hash + Objects.hashCode(this.description);
+        hash = 97 * hash + Objects.hashCode(this.type);
+        hash = 97 * hash + Objects.hashCode(this.fuel);
+        hash = 97 * hash + this.vehicleClass;
+        hash = 97 * hash + Objects.hashCode(this.motorization);
+        hash = 97 * hash + (int) (Double.doubleToLongBits(this.wheelSize) ^ (Double.doubleToLongBits(this.wheelSize) >>> 32));
+        hash = 97 * hash + (int) (Double.doubleToLongBits(this.mass) ^ (Double.doubleToLongBits(this.mass) >>> 32));
+        hash = 97 * hash + (int) (Double.doubleToLongBits(this.load) ^ (Double.doubleToLongBits(this.load) >>> 32));
+        hash = 97 * hash + (int) (Double.doubleToLongBits(this.dragCoefficient) ^ (Double.doubleToLongBits(this.dragCoefficient) >>> 32));
+        hash = 97 * hash + (int) (Double.doubleToLongBits(this.frontalArea) ^ (Double.doubleToLongBits(this.frontalArea) >>> 32));
+        hash = 97 * hash + (int) (Double.doubleToLongBits(this.rollingResistanceCoefficient) ^ (Double.doubleToLongBits(this.rollingResistanceCoefficient) >>> 32));
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Vehicle other = (Vehicle) obj;
+        if (this.vehicleClass != other.vehicleClass) {
+            return false;
+        }
+        if (Double.compare(this.wheelSize, other.wheelSize) != 0) {
+            return false;
+        }
+        if (Double.compare(this.mass, other.mass) != 0) {
+            return false;
+        }
+        if (Double.compare(this.load, other.load) != 0) {
+            return false;
+        }
+        if (Double.compare(this.dragCoefficient, other.dragCoefficient) != 0) {
+            return false;
+        }
+        if (Double.compare(this.frontalArea, other.frontalArea) != 0) {
+            return false;
+        }
+        if (Double.compare(this.rollingResistanceCoefficient, other.rollingResistanceCoefficient) != 0) {
+            return false;
+        }
+        if (!this.name.equalsIgnoreCase(other.name)) {
+            return false;
+        }
+        if (!this.description.equalsIgnoreCase(other.description)) {
+            return false;
+        }
+        if (!this.type.equalsIgnoreCase(other.type)) {
+            return false;
+        }
+        if (!this.fuel.equalsIgnoreCase(other.fuel)) {
+            return false;
+        }
+        if (!this.motorization.equalsIgnoreCase(other.motorization)) {
+            return false;
+        }
+        return true;
+    }
 
 }
