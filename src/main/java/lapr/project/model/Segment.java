@@ -180,21 +180,6 @@ public class Segment {
         return Math.toDegrees(Math.asin(diagonal));
 
     }
-//
-//    public boolean validate() {
-//        if (segmentIndex <= 0 || initialHeight < 0 || finalHeight < 0) {
-//            throw new IllegalArgumentException("Segment is not valid.");
-//        }
-//        if (length <= 0 || windDirection < -180 || windDirection > 180) {
-//
-//            throw new IllegalArgumentException("Segment is not valid.");
-//        }
-//        if (windSpeed < 0 || maximumVelocity < 0 || minimumVelocity < 0) {
-//
-//            throw new IllegalArgumentException("Segment is not valid.");
-//        }
-//        return true;
-//    }
 
     public Segment reverseSegment(int index) {
         Segment seg = new Segment();
