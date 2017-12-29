@@ -53,6 +53,17 @@ public class VehicleListTest {
     @Test
     public void testConstructor() {
 
+        VehicleList list = new VehicleList();
+        vh2.setWheelSize(0.75);
+        list.addVehicle(vh1);
+        list.addVehicle(vh2);
+        list.addVehicle(vh3);
+
+        VehicleList otherList = new VehicleList(list);
+        assertEquals(list.getVehicleList().get(0), otherList.getVehicleList().get(0));
+        assertEquals(list.getVehicleList().get(1), otherList.getVehicleList().get(1));
+        assertEquals(list.getVehicleList().get(2), otherList.getVehicleList().get(2));
+
     }
 
     /**
@@ -124,6 +135,7 @@ public class VehicleListTest {
         Iterator<Vehicle> expResult = instance.getVehicleList().iterator();
         assertEquals(expResult.next(), vh1);
         assertEquals(expResult.next(), vh3);
+        assertFalse(expResult.hasNext());
 
     }
 
@@ -192,7 +204,7 @@ public class VehicleListTest {
             instance.validateVehicleList();
         } catch (IllegalArgumentException ex) {
         }
-        
+
         instance.addVehicle(vh1);
         result = instance.validateVehicleList();
         assertEquals(expResult, result);

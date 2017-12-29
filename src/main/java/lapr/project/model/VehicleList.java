@@ -38,7 +38,9 @@ public class VehicleList {
      */
     public VehicleList(VehicleList source) {
         listOfVehicles = new ArrayList<>();
-        Collections.copy(source.listOfVehicles, listOfVehicles);
+        for (Vehicle v : source.listOfVehicles) {
+            listOfVehicles.add(v);
+        }
     }
 
     /**
