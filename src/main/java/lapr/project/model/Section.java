@@ -204,7 +204,10 @@ public class Section {
         if (roadID == null || roadID.trim().isEmpty()) {
             throw new IllegalArgumentException(("Section is invalid."));
         }
-        if (typology == null || typology.trim().isEmpty() || listOfSegments.isEmpty()) {
+        if (typology == null || typology.trim().isEmpty()) {
+            throw new IllegalArgumentException(("Section is invalid."));
+        }
+        if (listOfSegments == null || listOfSegments.isEmpty()) {
             throw new IllegalArgumentException(("Section is invalid."));
         }
         return !listOfSegments.isEmpty();
