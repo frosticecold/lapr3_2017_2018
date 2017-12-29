@@ -470,12 +470,40 @@ public class SectionTest {
     @Test
     public void testValidate() {
         Section instance = new Section();
+        try {
+            instance.validate();
+        } catch (IllegalArgumentException ex) {
+        }
         instance.setBeginJunction(new Junction("Begin junction"));
+        try {
+            instance.validate();
+        } catch (IllegalArgumentException ex) {
+        }
         instance.setEndJunction(new Junction("End junction"));
+        try {
+            instance.validate();
+        } catch (IllegalArgumentException ex) {
+        }
         instance.setDirection(Section.Direction.DIRECT);
+        try {
+            instance.validate();
+        } catch (IllegalArgumentException ex) {
+        }
         instance.setID(1);
+        try {
+            instance.validate();
+        } catch (IllegalArgumentException ex) {
+        }
         instance.setRoadID("Road 1");
+        try {
+            instance.validate();
+        } catch (IllegalArgumentException ex) {
+        }
         instance.setTypology("Regular");
+        try {
+            instance.validate();
+        } catch (IllegalArgumentException ex) {
+        }
         List<Segment> segmentList = new ArrayList<>();
         Segment s1 = new Segment(1, 10, 10, 15, 0, 20, 100, 80);
         Segment s2 = new Segment(2, 10, 10, 15, 0, 20, 100, 80);
@@ -496,6 +524,7 @@ public class SectionTest {
 
     @Test
     public void testReverseSegment() {
+        System.out.println("testReverseSegment");
         Section instance = new Section();
         instance.setBeginJunction(new Junction("Begin junction"));
         instance.setEndJunction(new Junction("End junction"));
@@ -504,7 +533,7 @@ public class SectionTest {
         instance.setRoadID("Road 1");
         instance.setTypology("Regular");
         List<Segment> segmentList = new ArrayList<>();
-        Segment s1 = new Segment(1, 10, 10, 15, 0, 20, 100, 80);
+        Segment s1 = new Segment(1, 10, 100, 250, 0, 20, 100, 80);
         Segment s2 = new Segment(2, 10, 10, 15, 0, 20, 100, 80);
         Segment s3 = new Segment(3, 10, 10, 15, 0, 20, 100, 80);
         Segment s4 = new Segment(4, 10, 10, 15, 0, 20, 100, 80);
@@ -515,7 +544,7 @@ public class SectionTest {
         instance.setSegmentList(segmentList);
 
         Section reverse = instance.reverseSection();
-
+        assertEquals(s1.getFinalHeight(), reverse.getSequenceOfSegments().get(3).getInitialHeight(), 0.05);
     }
 
 }

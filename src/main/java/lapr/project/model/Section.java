@@ -27,6 +27,11 @@ public class Section {
     }
 
     public Section() {
+        beginningJunction = null;
+        endingJunction = null;
+        roadID = null;
+        sectionID = -1;
+        typology = null;
         listOfSegments = new ArrayList<>();
         direction = Direction.DIRECT;
         mapOfTolls = new HashMap<>();
@@ -196,7 +201,7 @@ public class Section {
         if (!beginningJunction.validate() || !endingJunction.validate() || roadID.trim().isEmpty()) {
             throw new IllegalArgumentException(("Section is invalid."));
         }
-        if (direction == null || listOfSegments.isEmpty() || typology == null || typology.trim().isEmpty()) {
+        if (listOfSegments.isEmpty() || typology == null || typology.trim().isEmpty()) {
             throw new IllegalArgumentException(("Section is invalid."));
         }
         return !listOfSegments.isEmpty();
