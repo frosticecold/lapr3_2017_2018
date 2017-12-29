@@ -6,29 +6,29 @@ import java.util.List;
 
 public class Throttle {
 
-    private List<Regime> m_regime_list;
+    private List<Regime> regimeList;
 
-    public Throttle(List<Regime> m_regime_list) {
-        this.m_regime_list = m_regime_list;
+    public Throttle(List<Regime> regimeList) {
+        this.regimeList = regimeList;
     }
 
     public Throttle(Throttle thr) {
-        this.m_regime_list = new ArrayList<>();
-        for (Regime r : thr.m_regime_list) {
-            this.m_regime_list.add(new Regime(r));
+        this.regimeList = new ArrayList<>();
+        for (Regime r : thr.regimeList) {
+            this.regimeList.add(new Regime(r));
         }
     }
 
     public Throttle() {
-        m_regime_list = new LinkedList<>();
+        regimeList = new LinkedList<>();
     }
 
     public List<Regime> getRegimeList() {
-        return m_regime_list;
+        return regimeList;
     }
 
     public double getTorqueByRPM(double rpm) {
-        for (Regime r : m_regime_list) {
+        for (Regime r : regimeList) {
             if (rpm >= r.getRpmLow() && rpm <= r.getRpmHigh()) {
                 return r.getTorqueByRPM(rpm);
             }
@@ -37,7 +37,7 @@ public class Throttle {
     }
 
     public double getSFCByRPM(double rpm) {
-        for (Regime r : m_regime_list) {
+        for (Regime r : regimeList) {
             if (rpm >= r.getRpmLow() && rpm <= r.getRpmHigh()) {
                 return r.getSFCByRPM(rpm);
             }
@@ -46,12 +46,12 @@ public class Throttle {
 
     }
 
-    public void setRegimeList(List<Regime> m_regime_list) {
-        this.m_regime_list = m_regime_list;
+    public void setRegimeList(List<Regime> regimeList) {
+        this.regimeList = regimeList;
     }
 
     @Override
     public String toString() {
-        return "Throttle{" + "regime_list=" + m_regime_list + '}';
+        return "Throttle{" + "regime_list=" + regimeList + '}';
     }
 }
