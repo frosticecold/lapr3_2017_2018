@@ -198,10 +198,13 @@ public class Section {
     }
 
     public boolean validate() {
-        if (!beginningJunction.validate() || !endingJunction.validate() || roadID.trim().isEmpty()) {
+        if (beginningJunction == null || endingJunction == null) {
             throw new IllegalArgumentException(("Section is invalid."));
         }
-        if (listOfSegments.isEmpty() || typology == null || typology.trim().isEmpty()) {
+        if (roadID == null || roadID.trim().isEmpty()) {
+            throw new IllegalArgumentException(("Section is invalid."));
+        }
+        if (typology == null || typology.trim().isEmpty() || listOfSegments.isEmpty()) {
             throw new IllegalArgumentException(("Section is invalid."));
         }
         return !listOfSegments.isEmpty();
