@@ -355,6 +355,9 @@ public class SectionTest {
         expResult = 2.95;
         result = instance.getTollValue(toll_key);
         assertEquals(expResult, result, 0.0005);
+
+        result = instance.getTollValue(6);
+        assertEquals(result, -1, 0.05);
     }
 
     /**
@@ -428,6 +431,13 @@ public class SectionTest {
         assertFalse(result.equals(expResult));
         expResult.setSegmentList(segmentList);
         assertEquals(expResult, result);
+
+        result.setDirection(Section.Direction.BIDIRECTIONAL);
+        assertNotEquals(expResult, result);
+
+        result.setDirection(Section.Direction.DIRECT);
+        result.setEndJunction(new Junction("Top"));
+        assertNotEquals(expResult, result);
     }
 
     @Test
@@ -505,8 +515,7 @@ public class SectionTest {
         instance.setSegmentList(segmentList);
 
         Section reverse = instance.reverseSection();
-        
-        
+
     }
 
 }
