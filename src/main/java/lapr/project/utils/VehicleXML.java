@@ -160,6 +160,7 @@ public class VehicleXML implements FileFormat {
     private void checkVehicleStartElement() {
         switch (reader.getLocalName()) {
             case VEHICLE_TAG: {
+                
                 saveNameAndDescription();
                 break;
             }
