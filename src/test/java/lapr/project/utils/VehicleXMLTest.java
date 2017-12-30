@@ -6,6 +6,7 @@
 package lapr.project.utils;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.LinkedList;
 import java.util.List;
 import lapr.project.model.Accelerator;
@@ -104,32 +105,28 @@ public class VehicleXMLTest {
         assertEquals(expResult3, result3, 0.0);
     }
 
-//    /**
-//     * Test of getVehiclesList method, of class VehicleXML.
-//     */
-//    @Test
-//    public void testGetVehiclesList() {
-//        System.out.println("getVehiclesList");
-//        VehicleXML instance = new VehicleXML();
-//        List<Vehicle> expResult = null;
-//        List<Vehicle> result = instance.getVehiclesList();
-//        assertEquals(expResult, result);
-//        // TODO review the generated test code and remove the default call to fail.
-//        fail("The test case is a prototype.");
-//    }
-//
-//    /**
-//     * Test of importNetwork method, of class VehicleXML.
-//     */
-//    @Test
-//    public void testImportNetwork() throws Exception {
-//        System.out.println("importNetwork");
-//        File file = null;
-//        VehicleXML instance = new VehicleXML();
-//        Pair<Graph<Junction, Section>, List<Road>> expResult = null;
-//        Pair<Graph<Junction, Section>, List<Road>> result = instance.importNetwork(file);
-//        assertEquals(expResult, result);
-//        // TODO review the generated test code and remove the default call to fail.
-//        fail("The test case is a prototype.");
-//    }
+    /**
+     * Test of getVehiclesList method, of class VehicleXML.
+     */
+    @Test
+    public void testGetVehiclesList() throws FileNotFoundException, ImportException {
+        System.out.println("getVehiclesList");
+        File file = new File("TestSet02_Vehicles_v2.xml");
+        VehicleXML instance = new VehicleXML();
+        instance.importVehicles(file);
+        List<Vehicle> vehicleList = new LinkedList<>();
+        
+        Vehicle v1 = new VehicleCombustion(900, 5500, 4, null, null, "Pick_up", "Pick-up test vehicle", "car", "diesel", 2, "combustion", 2400, 1200, 0.39, 0.8, 2.4, 0.015, null, null);
+        Vehicle v2 = new VehicleCombustion(1000, 6500, 3.6, null, null, "Car", "Dummy test vehicle 01", "car", "gasoline", 1, "combustion", 1600, 420, 0.32, 0.6, 1.9, 0.013, null, null);
+        Vehicle v3 = new VehicleElectric();
+        
+        vehicleList.add(v1);
+        vehicleList.add(v2);
+        vehicleList.add(v3);
+        
+        int expResult = vehicleList.size();
+        int result = instance.getVehiclesList().size();
+        assertEquals(expResult, result);
+        
+    }
 }
