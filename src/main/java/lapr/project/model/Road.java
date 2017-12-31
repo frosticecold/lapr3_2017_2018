@@ -2,6 +2,7 @@ package lapr.project.model;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Objects;
 import lapr.project.calculations.Constants;
 
 public class Road {
@@ -185,6 +186,33 @@ public class Road {
         return true;
     }
 
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 37 * hash + Objects.hashCode(this.id);
+        hash = 37 * hash + Objects.hashCode(this.name);
+        hash = 37 * hash + Objects.hashCode(this.typology);
+        hash = 37 * hash + Objects.hashCode(this.tollFare);
+        return hash;
+    }
+//
+//    @Override
+//    public boolean equals(Object obj) {
+//        if (this == obj) {
+//            return true;
+//        }
+//        if (obj == null) {
+//            return false;
+//        }
+//        if (getClass() != obj.getClass()) {
+//            return false;
+//        }
+//        final Road other = (Road) obj;
+//        return true;
+//    }
+
+    
+    
     /**
      * Returns the textual description of the object in html format.
      *
