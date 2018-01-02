@@ -309,6 +309,44 @@ public class RoadTest {
     }
 
     @Test
+    public void testHashCode() {
+        Road road = new Road(DO_NOT_CHANGE_ME, DO_NOT_CHANGE_ME, DO_NOT_CHANGE_ME);
+        System.out.println(road.hashCode());
+        int expResult = 1525428821;
+        assertEquals(road.hashCode(), expResult);
+
+    }
+
+    @Test
+    public void testEquals() {
+        Road road = new Road(DO_NOT_CHANGE_ME, DO_NOT_CHANGE_ME, DO_NOT_CHANGE_ME);
+        assertTrue(road.equals(road));
+
+        assertFalse(road.equals(null));
+
+        assertFalse(road.equals(new Object()));
+
+        Road otherRoad = new Road("A", "B", "C");
+
+        assertFalse(road.equals(otherRoad));
+
+        otherRoad.setRoadID(DO_NOT_CHANGE_ME);
+
+        assertFalse(road.equals(otherRoad));
+
+        otherRoad.setName(DO_NOT_CHANGE_ME);
+
+        assertFalse(road.equals(otherRoad));
+
+        otherRoad.setName("ASD");
+        otherRoad.setTypology(DO_NOT_CHANGE_ME);
+        assertFalse(road.equals(otherRoad));
+
+        otherRoad.setName(DO_NOT_CHANGE_ME);
+        assertTrue(road.equals(otherRoad));
+    }
+
+    @Test
     public void testToStringHTML() {
         System.out.println("toStringHTML");
         Road road = new Road(DO_NOT_CHANGE_ME, DO_NOT_CHANGE_ME, DO_NOT_CHANGE_ME);
