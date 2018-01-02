@@ -5,6 +5,11 @@
  */
 package lapr.project.model;
 
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -76,47 +81,85 @@ public class VehicleElectricTest {
         assertEquals(expResult, result, 0.0);
     }
 
-//    /**
-//     * Test of getGearbox method, of class VehicleElectric.
-//     */
-//    @Test
-//    public void testGetGearbox() {
-//        System.out.println("getGearbox");
-//        VehicleElectric instance = new VehicleElectric();
-//        Gearbox expResult = null;
-//        Gearbox result = instance.getGearbox();
-//        assertEquals(expResult, result);
-//        // TODO review the generated test code and remove the default call to fail.
-//        fail("The test case is a prototype.");
-//    }
-//
-//    /**
-//     * Test of getAccelerator method, of class VehicleElectric.
-//     */
-//    @Test
-//    public void testGetAccelerator() {
-//        System.out.println("getAccelerator");
-//        VehicleElectric instance = new VehicleElectric();
-//        Accelerator expResult = null;
-//        Accelerator result = instance.getAccelerator();
-//        assertEquals(expResult, result);
-//        // TODO review the generated test code and remove the default call to fail.
-//        fail("The test case is a prototype.");
-//    }
-//
-//    /**
-//     * Test of getMaximumEngineVelocity method, of class VehicleElectric.
-//     */
-//    @Test
-//    public void testGetMaximumEngineVelocity() {
-//        System.out.println("getMaximumEngineVelocity");
-//        VehicleElectric instance = new VehicleElectric();
-//        double expResult = 0.0;
-//        double result = instance.getMaximumEngineVelocity();
-//        assertEquals(expResult, result, 0.0);
-//        // TODO review the generated test code and remove the default call to fail.
-//        fail("The test case is a prototype.");
-//    }
+    /**
+     * Test of getGearbox method, of class VehicleElectric.
+     */
+    @Test
+    public void testGetGearbox() {
+        System.out.println("getGearbox");
+        VehicleElectric instance = new VehicleElectric();
+        List<Gear> gears = new LinkedList<>();
+        Gear g1 = new Gear(01, 3);
+        Gear g2 = new Gear(02, 0);
+        Gear g3 = new Gear(03, 1);
+        Gear g4 = new Gear(04, 2);
+        gears.add(g1);
+        gears.add(g2);
+        gears.add(g3);
+        gears.add(g4);
+        Gearbox gearbox = new Gearbox(gears);
+        instance.setGearbox(gearbox);
+        Gearbox expResult = gearbox;
+        Gearbox result = instance.getGearbox();
+        assertEquals(expResult, result);
+    }
+
+    /**
+     * Test of getAccelerator method, of class VehicleElectric.
+     */
+    @Test
+    public void testGetAccelerator() {
+        System.out.println("getAccelerator");
+        VehicleElectric instance = new VehicleElectric();
+        
+        List<Regime> regimeList = new LinkedList<>();
+        
+        Regime r1 = new Regime(10, 20, 4, 8, 1);
+        Regime r2 = new Regime(20, 40, 5, 6, 2);
+        Regime r3 = new Regime(19, 29, 1, 7, 3); 
+        
+        regimeList.add(r1);
+        regimeList.add(r2);
+        regimeList.add(r3);
+        Throttle t1 = new Throttle(regimeList);
+        Map<Integer, Throttle> throttleMap = new HashMap<>();
+        throttleMap.put(25, t1);
+         
+        Accelerator accelerator = new Accelerator();
+        accelerator.setThrottleList(throttleMap);
+        instance.setAccelerator(accelerator);
+        Accelerator expResult = accelerator;
+        Accelerator result = instance.getAccelerator();
+        assertEquals(expResult, result);
+    }
+
+    /**
+     * Test of getMaximumEngineVelocity method, of class VehicleElectric.
+     */
+    @Test
+    public void testGetMaximumEngineVelocity() {
+        System.out.println("getMaximumEngineVelocity");
+        VehicleElectric instance = new VehicleElectric();
+        instance.setWheelSize(1.8);
+        instance.setFinalDriveRatio(1.2);
+        instance.setMaxRPM(200);
+        
+        List<Gear> gears = new LinkedList<>();
+        Gear g1 = new Gear(01, 3);
+        Gear g2 = new Gear(02, 2);
+        Gear g3 = new Gear(03, 1);
+        Gear g4 = new Gear(04, 2);
+        gears.add(g1);
+        gears.add(g2);
+        gears.add(g3);
+        gears.add(g4);
+        Gearbox gearbox = new Gearbox(gears);
+        instance.setGearbox(gearbox);
+        
+        double expResult = 56.548667764616276;
+        double result = instance.getMaximumEngineVelocity();
+        assertEquals(expResult, result, 0.0);
+    }
 //
 //    /**
 //     * Test of getEnergyRegenerationRatio method, of class VehicleElectric.
