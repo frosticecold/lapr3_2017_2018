@@ -33,7 +33,7 @@ public class JunctionData extends DataAccess<Junction> {
         List<SQLArgument> args = new ArrayList<>();
 
         args.add(new SQLArgument(j.getName(), OracleTypes.VARCHAR));
-        ResultSet rs = super.callFunction("getJunctionByID", args);
+        ResultSet rs = super.callFunction("getJunctionByName", args);
         if (rs.next()) {
             rs.close();
             return;

@@ -6,7 +6,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import lapr.project.model.Accelerator;
-import lapr.project.model.Gear;
 import lapr.project.model.Gearbox;
 import lapr.project.model.Vehicle;
 import lapr.project.model.VehicleCombustion;

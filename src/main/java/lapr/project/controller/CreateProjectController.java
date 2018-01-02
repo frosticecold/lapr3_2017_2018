@@ -5,8 +5,6 @@ import java.io.FileNotFoundException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import lapr.project.model.Junction;
 import lapr.project.model.Project;
 import lapr.project.model.Road;
@@ -46,7 +44,7 @@ public class CreateProjectController {
         return listRoads;
     }
 
-    private boolean exists(String title) throws SQLException {
+    private static boolean exists(String title) throws SQLException {
         DatabaseConnection db = new DatabaseConnection();
         SQLConnection sql = db.getDatabase();
         List<String> projects = sql.getProjects();

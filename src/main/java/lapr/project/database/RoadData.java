@@ -36,15 +36,12 @@ public class RoadData extends DataAccess<Road> {
     public void insert(String pName, Road r) throws SQLException {
         List<SQLArgument> args1 = new ArrayList<>();
         
-        args1.add(new SQLArgument(r.getRoadID(),OracleTypes.VARCHAR));
+        args1.add(new SQLArgument(r.getRoadID(),OracleTypes.VARCHAR)); // id road na bd e id, auto inc e cenas
         ResultSet rs = super.callFunction("getRoadByID",args1);
         if(rs.next()) {
             rs.close();
             return;
         }
-        
-        args1.clear();
-        args1.add(new SQLArgument(r.getRoadID(),OracleTypes.VARCHAR));
         args1.add(new SQLArgument(pName,OracleTypes.VARCHAR));
         args1.add(new SQLArgument(r.getName(),OracleTypes.VARCHAR));
         args1.add(new SQLArgument(r.getTypology(),OracleTypes.VARCHAR));
