@@ -195,24 +195,32 @@ public class Road {
         hash = 37 * hash + Objects.hashCode(this.tollFare);
         return hash;
     }
-//
-//    @Override
-//    public boolean equals(Object obj) {
-//        if (this == obj) {
-//            return true;
-//        }
-//        if (obj == null) {
-//            return false;
-//        }
-//        if (getClass() != obj.getClass()) {
-//            return false;
-//        }
-//        final Road other = (Road) obj;
-//        return true;
-//    }
 
-    
-    
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Road other = (Road) obj;
+
+        if (!this.id.equalsIgnoreCase(other.id)) {
+            return false;
+        }
+        if (!this.name.equalsIgnoreCase(other.name)) {
+            return false;
+        }
+        if (!this.typology.equalsIgnoreCase(other.typology)) {
+            return false;
+        }
+        return true;
+    }
+
     /**
      * Returns the textual description of the object in html format.
      *

@@ -298,7 +298,7 @@ public abstract class Vehicle {
      * @param road
      * @return
      */
-    public double getRoadVelocityLimit(String road) {
+    public double getMaximumPermitedVelocity(String road) {
         road = road.toUpperCase();
         for (String roadkey : mapRoadVelocityLimit.keySet()) {
             if (road.contains(roadkey)) {
