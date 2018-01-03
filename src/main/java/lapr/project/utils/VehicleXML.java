@@ -442,7 +442,7 @@ public class VehicleXML implements FileFormat {
         double load = Double.parseDouble(elementContent);
         elementContent = split[1];
         load = unitConversion(load, elementContent);
-        vehicle.setLoad(load);
+        vehicle.setMaxLoad(load);
     }
 
     private double unitConversion(double value, String unity) {

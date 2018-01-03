@@ -41,6 +41,7 @@ public class PathAlgorithmsController {
         LinkedList<Junction> path = new LinkedList<>();
         PathAlgorithm alg = new FastestPathAlgorithm();
         result = alg.bestPath(p.getRoadNetwork(), start, end, v, path);
+        
     }
 
     public AlgorithmResults getResults() {

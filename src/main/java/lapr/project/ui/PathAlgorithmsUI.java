@@ -17,7 +17,7 @@ import lapr.project.model.Junction;
 import lapr.project.model.Vehicle;
 
 public class PathAlgorithmsUI extends javax.swing.JFrame {
-
+    
     private static final long serialVersionUID = 1;
     private PathAlgorithmsController controller;
     private JFileChooser m_jfc;
@@ -36,9 +36,9 @@ public class PathAlgorithmsUI extends javax.swing.JFrame {
             vehicleCombobox.addItem(v);
         }
         initFileChooser();
-
+        
     }
-
+    
     public void initFileChooser() {
         m_jfc = new JFileChooser();
         FileNameExtensionFilter xmlfilter = new FileNameExtensionFilter("HTML files (*.html)", "html");
@@ -154,6 +154,7 @@ public class PathAlgorithmsUI extends javax.swing.JFrame {
 
         jLabel6.setText("Load:");
 
+        loadJTextField.setText("0");
         loadJTextField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 loadJTextFieldActionPerformed(evt);
@@ -281,25 +282,36 @@ public class PathAlgorithmsUI extends javax.swing.JFrame {
     }//GEN-LAST:event_EnergyEfficientCheckboxActionPerformed
 
     private void calculateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_calculateButtonActionPerformed
+        boolean valid = false;
+        double currentLoad = 0;
         if (junctionBeginComboBox.getSelectedItem().equals(junctionEndComboBox.getSelectedItem())) {
             JOptionPane.showMessageDialog(this, "Please select different junctions", "ERROR", JOptionPane.ERROR_MESSAGE);
         } else {
+            if (!loadJTextField.getText().trim().isEmpty()) {
+                double maxLoad = ((Vehicle) vehicleCombobox.getSelectedItem()).getMaxLoad();
+                double load = Double.parseDouble(loadJTextField.getText().trim());
+                if (load > maxLoad) {
+                    valid = false;
+                    JOptionPane.showMessageDialog(this, "The load you inserted is invalid. The maxload of the vehicle is: " + maxLoad,
+                            "ERROR", JOptionPane.ERROR_MESSAGE);
+                } else {
+                    valid = true;
+                    currentLoad = load;
+                }
+            }
+            
+        }
+        if (valid = true) {
             if (fastestPathCheckbox.isSelected()) {
                 Junction begin = (Junction) junctionBeginComboBox.getSelectedItem();
                 Junction end = (Junction) junctionEndComboBox.getSelectedItem();
-                Vehicle v = (Vehicle) vehicleCombobox.getSelectedItem();           
-                double load = Double.parseDouble(loadJTextField.getText());
-                if(load < 0){
-                    JOptionPane.showMessageDialog(this, "Oops! The load must be positive!");
-                }else{   
-                Vehicle vehicleCopy = v.copy();
-                vehicleCopy.setLoad(load);
-                controller.fastestPath(begin, end, vehicleCopy);
+                Vehicle v = (Vehicle) vehicleCombobox.getSelectedItem();
+                v.setCurrentLoad(currentLoad);
+                controller.fastestPath(begin, end, v);
                 jTextArea1.setText(controller.getResultsAsText());
-                }
+                v.setCurrentLoad(0);
             }
         }
-
 
     }//GEN-LAST:event_calculateButtonActionPerformed
 
@@ -309,7 +321,7 @@ public class PathAlgorithmsUI extends javax.swing.JFrame {
 
     private void exportHTMLButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exportHTMLButtonActionPerformed
         try {
-
+            
             int returnvalue = m_jfc.showSaveDialog(this);
             if (returnvalue == JFileChooser.APPROVE_OPTION) {
                 File file = m_jfc.getSelectedFile();

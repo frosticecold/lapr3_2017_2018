@@ -8,7 +8,6 @@ package lapr.project.ui;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.sql.SQLException;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JDialog;
@@ -17,11 +16,7 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import lapr.project.controller.CreateProjectController;
-import lapr.project.model.Vehicle;
 import lapr.project.utils.ImportException;
-import lapr.project.utils.NetworkXML;
-import lapr.project.utils.Session;
-import lapr.project.utils.VehicleXML;
 
 /**
  *
@@ -186,19 +181,23 @@ public class CreateProjectUI extends JDialog {
     private void btnCreateProjectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateProjectActionPerformed
         String title = txtfield_project_title.getText().trim();
         String description = txtfld_description.getText().trim();
-        if (controller.getVehicleList() == null || controller.getRoadList() == null || controller.getRoadNetwork() == null) {
-            JOptionPane.showMessageDialog(rootPane, "Load Files First");
+        if (controller.getVehicleList().isEmpty() || controller.getRoadList().isEmpty()) {
+            JOptionPane.showMessageDialog(rootPane, "Load Files First", "Error", JOptionPane.ERROR_MESSAGE);
         } else {
-            try {
-                if (controller.createProject(title, description)) {
-                    JOptionPane.showMessageDialog(this, "Project was created successfully", "Created a project", JOptionPane.INFORMATION_MESSAGE);
-                    dispose();
-                } else {
-                    JOptionPane.showMessageDialog(rootPane, "Name and description already exist or are empty.");
+            if (controller.getRoadNetwork().numVertices() == 0 || controller.getRoadNetwork().numEdges() == 0) {
+                JOptionPane.showMessageDialog(rootPane, "Load Files First", "Error", JOptionPane.ERROR_MESSAGE);
+            } else {
+                try {
+                    if (controller.createProject(title, description)) {
+                        JOptionPane.showMessageDialog(this, "Project was created successfully", "Created a project", JOptionPane.INFORMATION_MESSAGE);
+                        dispose();
+                    } else {
+                        JOptionPane.showMessageDialog(rootPane, "Name and description already exist or are empty.");
+                    }
+                } catch (SQLException ex) {
+                    Logger.getLogger(CreateProjectUI.class.getName()).log(Level.SEVERE, null, ex);
+                    JOptionPane.showMessageDialog(rootPane, String.format("Error trying to connect to the database.\n Information Error: %s", ex.getMessage()));
                 }
-            } catch (SQLException ex) {
-                Logger.getLogger(CreateProjectUI.class.getName()).log(Level.SEVERE, null, ex);
-                JOptionPane.showMessageDialog(rootPane, String.format("Error trying to connect to the database.\n Information Error: %s", ex.getMessage()));
             }
         }
     }//GEN-LAST:event_btnCreateProjectActionPerformed
