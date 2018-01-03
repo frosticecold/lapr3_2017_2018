@@ -19,7 +19,7 @@ import lapr.project.utils.graphbase.Graph;
  */
 public interface PathAlgorithm {
 
-    AlgorithmResults bestPath(Graph<Junction, Section> graph, Junction start, Junction end, Vehicle v, LinkedList<Junction> path);
+    AlgorithmResults bestPath(Graph<Junction, Section> graph, Junction start, Junction end, Vehicle v, LinkedList<Junction> path, double load);
 
     String toString();
 

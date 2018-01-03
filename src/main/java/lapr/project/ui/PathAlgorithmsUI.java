@@ -67,11 +67,14 @@ public class PathAlgorithmsUI extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
         jLabel4 = new javax.swing.JLabel();
-        jButton3 = new javax.swing.JButton();
+        calculateButton = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
         vehicleCombobox = new javax.swing.JComboBox<>();
         jLabel3 = new javax.swing.JLabel();
         exportHTMLButton = new javax.swing.JButton();
+        jLabel6 = new javax.swing.JLabel();
+        loadJTextField = new javax.swing.JTextField();
+        jLabel7 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -121,12 +124,12 @@ public class PathAlgorithmsUI extends javax.swing.JFrame {
 
         jLabel4.setText("Results:");
 
-        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/path_icon.png"))); // NOI18N
-        jButton3.setText("Calculate");
-        jButton3.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        calculateButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/path_icon.png"))); // NOI18N
+        calculateButton.setText("Calculate");
+        calculateButton.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+        calculateButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                calculateButtonActionPerformed(evt);
             }
         });
 
@@ -139,7 +142,7 @@ public class PathAlgorithmsUI extends javax.swing.JFrame {
             }
         });
 
-        jLabel3.setText("Vehicle");
+        jLabel3.setText("Vehicle:");
 
         exportHTMLButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/html_icon.png"))); // NOI18N
         exportHTMLButton.setText("Export to HTML");
@@ -148,6 +151,16 @@ public class PathAlgorithmsUI extends javax.swing.JFrame {
                 exportHTMLButtonActionPerformed(evt);
             }
         });
+
+        jLabel6.setText("Load:");
+
+        loadJTextField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                loadJTextFieldActionPerformed(evt);
+            }
+        });
+
+        jLabel7.setText("kg");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -158,7 +171,8 @@ public class PathAlgorithmsUI extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1)
                     .addComponent(jLabel2)
-                    .addComponent(jLabel3))
+                    .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(junctionBeginComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -166,14 +180,19 @@ public class PathAlgorithmsUI extends javax.swing.JFrame {
                     .addComponent(vehicleCombobox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(EnergyEfficientCheckbox)
-                                    .addComponent(fastestPathCheckbox, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel5))
-                                .addGap(26, 26, 26))
-                            .addComponent(EnergySavingCheckbox))
-                        .addGap(0, 43, Short.MAX_VALUE)))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(EnergyEfficientCheckbox)
+                                        .addComponent(fastestPathCheckbox, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jLabel5))
+                                    .addGap(26, 26, 26))
+                                .addComponent(EnergySavingCheckbox))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(loadJTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jLabel7)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -193,8 +212,8 @@ public class PathAlgorithmsUI extends javax.swing.JFrame {
                                 .addComponent(exportHTMLButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addContainerGap())))))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 266, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(14, Short.MAX_VALUE)
+                .addComponent(calculateButton, javax.swing.GroupLayout.PREFERRED_SIZE, 266, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(260, 260, 260))
         );
         layout.setVerticalGroup(
@@ -203,7 +222,7 @@ public class PathAlgorithmsUI extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 239, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -217,7 +236,12 @@ public class PathAlgorithmsUI extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(vehicleCombobox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel3))
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(loadJTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel7)
+                            .addComponent(jLabel6))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel5)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(fastestPathCheckbox)
@@ -227,7 +251,7 @@ public class PathAlgorithmsUI extends javax.swing.JFrame {
                         .addComponent(EnergySavingCheckbox)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(calculateButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(exportHTMLButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -256,7 +280,7 @@ public class PathAlgorithmsUI extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_EnergyEfficientCheckboxActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void calculateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_calculateButtonActionPerformed
         if (junctionBeginComboBox.getSelectedItem().equals(junctionEndComboBox.getSelectedItem())) {
             JOptionPane.showMessageDialog(this, "Please select different junctions", "ERROR", JOptionPane.ERROR_MESSAGE);
         } else {
@@ -264,13 +288,14 @@ public class PathAlgorithmsUI extends javax.swing.JFrame {
                 Junction begin = (Junction) junctionBeginComboBox.getSelectedItem();
                 Junction end = (Junction) junctionEndComboBox.getSelectedItem();
                 Vehicle v = (Vehicle) vehicleCombobox.getSelectedItem();
-                controller.fastestPath(begin, end, v);
+                double load = Double.parseDouble(loadJTextField.getText());
+                controller.fastestPath(begin, end, v, load);
                 jTextArea1.setText(controller.getResultsAsText());
             }
         }
 
 
-    }//GEN-LAST:event_jButton3ActionPerformed
+    }//GEN-LAST:event_calculateButtonActionPerformed
 
     private void vehicleComboboxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_vehicleComboboxActionPerformed
         // TODO add your handling code here:
@@ -296,24 +321,31 @@ public class PathAlgorithmsUI extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_exportHTMLButtonActionPerformed
 
+    private void loadJTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loadJTextFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_loadJTextFieldActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JCheckBox EnergyEfficientCheckbox;
     private javax.swing.JCheckBox EnergySavingCheckbox;
+    private javax.swing.JButton calculateButton;
     private javax.swing.JButton exportHTMLButton;
     private javax.swing.JCheckBox fastestPathCheckbox;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea jTextArea1;
     private javax.swing.JComboBox<Junction> junctionBeginComboBox;
     private javax.swing.JComboBox<Junction> junctionEndComboBox;
+    private javax.swing.JTextField loadJTextField;
     private javax.swing.JComboBox<Vehicle> vehicleCombobox;
     // End of variables declaration//GEN-END:variables
 }

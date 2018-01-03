@@ -38,10 +38,10 @@ public class PathAlgorithmsController {
 
     }
 
-    public void fastestPath(Junction start, Junction end, Vehicle v) {
+    public void fastestPath(Junction start, Junction end, Vehicle v, double load) {
         LinkedList<Junction> path = new LinkedList<>();
         PathAlgorithm alg = new FastestPathAlgorithm();
-        result = alg.bestPath(p.getRoadNetwork(), start, end, v, path);
+        result = alg.bestPath(p.getRoadNetwork(), start, end, v, path, load);
     }
 
     public AlgorithmResults getResults() {
