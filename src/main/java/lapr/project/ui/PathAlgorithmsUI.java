@@ -190,7 +190,7 @@ public class PathAlgorithmsUI extends javax.swing.JFrame {
                                 .addComponent(EnergySavingCheckbox))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(loadJTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jLabel7)))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -287,10 +287,16 @@ public class PathAlgorithmsUI extends javax.swing.JFrame {
             if (fastestPathCheckbox.isSelected()) {
                 Junction begin = (Junction) junctionBeginComboBox.getSelectedItem();
                 Junction end = (Junction) junctionEndComboBox.getSelectedItem();
-                Vehicle v = (Vehicle) vehicleCombobox.getSelectedItem();
+                Vehicle v = (Vehicle) vehicleCombobox.getSelectedItem();           
                 double load = Double.parseDouble(loadJTextField.getText());
-                controller.fastestPath(begin, end, v, load);
+                if(load < 0){
+                    JOptionPane.showMessageDialog(this, "Oops! The load must be positive!");
+                }else{   
+                Vehicle vehicleCopy = v.copy();
+                vehicleCopy.setLoad(load);
+                controller.fastestPath(begin, end, vehicleCopy);
                 jTextArea1.setText(controller.getResultsAsText());
+                }
             }
         }
 

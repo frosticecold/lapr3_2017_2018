@@ -212,7 +212,7 @@ public abstract class Vehicle {
         }
         this.throttleList = new LinkedHashMap<>();
         for (Integer i : v.throttleList.keySet()) {
-            this.throttleList.put(i, new Throttle(throttleList.get(i)));
+            this.throttleList.put(i, new Throttle(v.throttleList.get(i)));
         }
 
     }

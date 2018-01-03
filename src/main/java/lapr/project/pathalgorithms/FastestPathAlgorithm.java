@@ -19,17 +19,17 @@ import lapr.project.utils.graphbase.Graph;
 public class FastestPathAlgorithm implements PathAlgorithm {
 
     @Override
-    public AlgorithmResults bestPath(Graph<Junction, Section> graph, Junction start, Junction end, Vehicle v, LinkedList<Junction> path, double load) {
+    public AlgorithmResults bestPath(Graph<Junction, Section> graph, Junction start, Junction end, Vehicle v, LinkedList<Junction> path) {
 
         LinkedList<Section> sectionpath = new LinkedList<>();
-        double results[] = shortestPath(graph, start, end, v, path, sectionpath, load);
+        double results[] = shortestPath(graph, start, end, v, path, sectionpath);
         AlgorithmResults alg = new AlgorithmResults(Session.getActiveProject(), path, sectionpath, v, results);
         alg.calculate();
 
         return alg;
     }
 
-    public static double[] shortestPath(Graph<Junction, Section> graph, Junction vOrig, Junction vDest, Vehicle vehicle, LinkedList<Junction> shortPath, LinkedList<Section> sectionpath, double load) {
+    public static double[] shortestPath(Graph<Junction, Section> graph, Junction vOrig, Junction vDest, Vehicle vehicle, LinkedList<Junction> shortPath, LinkedList<Section> sectionpath) {
         double results[] = {-1, -1};//Results 0)Time 1) Energy
         if (!graph.validVertex(vOrig) || !graph.validVertex(vDest)) {
             return results;
