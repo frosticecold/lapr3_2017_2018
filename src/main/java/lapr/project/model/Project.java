@@ -10,25 +10,25 @@ import lapr.project.utils.graphbase.Graph;
 
 public class Project {
 
-    private Graph<Junction, Section> m_road_network;
-    private VehicleList m_list_vehicles;
-    private List<Road> m_list_roads;
-    private String m_name;
-    private String m_description;
-    private Map<Vehicle, List<AlgorithmResults>> m_results;
+    private String name;
+    private String description;
+    private Graph<Junction, Section> roadNetwork;
+    private List<Road> listRoads;
+    private VehicleList listOfVehicles;
+    private Map<Vehicle, List<AlgorithmResults>> results;
 
     public Project() {
-        m_name = "";
-        m_description = "";
-        m_road_network = new Graph<>(true);
-        m_list_vehicles = new VehicleList();
-        m_list_roads = new ArrayList<>();
-        m_results = new LinkedHashMap<>();
+        name = "";
+        description = "";
+        roadNetwork = new Graph<>(true);
+        listOfVehicles = new VehicleList();
+        listRoads = new ArrayList<>();
+        results = new LinkedHashMap<>();
     }
 
     public Project(String name, String description) {
-        this.m_name = name;
-        this.m_description = description;
+        this.name = name;
+        this.description = description;
     }
 
     /**
@@ -38,67 +38,19 @@ public class Project {
      * @param roadList
      */
     public Project(Graph<Junction, Section> roadNetwork, List<Vehicle> vehiclesList, List<Road> roadList) {
-        m_road_network = roadNetwork;
-        m_list_vehicles = new VehicleList();
+        roadNetwork = roadNetwork;
+        listOfVehicles = new VehicleList();
         for (Vehicle v : vehiclesList) {
-            m_list_vehicles.addVehicle(v);
+            listOfVehicles.addVehicle(v);
         }
-        m_list_roads = roadList;
-    }
-
-    public Map<Vehicle, List<AlgorithmResults>> getResults() {
-        return m_results;
-    }
-
-    public void setResults(Map<Vehicle, List<AlgorithmResults>> m_results) {
-        this.m_results = m_results;
-    }
-
-    public void setRoadNetwork(Graph<Junction, Section> m_road_network) {
-        this.m_road_network = m_road_network;
-    }
-
-    public void setListVehicles(VehicleList vehicle_list) {
-        this.m_list_vehicles = vehicle_list;
-    }
-
-    public void setListRoads(List<Road> listOfRoads) {
-        this.m_list_roads = listOfRoads;
-    }
-
-    public List<Road> getListRoads() {
-        return m_list_roads;
-    }
-
-    public Graph<Junction, Section> getRoadNetwork() {
-        return m_road_network;
-    }
-
-    public VehicleList getListVehicles() {
-        return m_list_vehicles;
-    }
-
-    public String getName() {
-        return m_name;
-    }
-
-    public String getDescription() {
-        return m_description;
-    }
-
-    public void setName(String name) {
-        this.m_name = name;
-    }
-
-    public void setDescription(String description) {
-        this.m_description = description;
+        listRoads = roadList;
     }
 
     public Junction getJunction(String junction_id) {
         if (junction_id == null || junction_id.trim().isEmpty()) {
             throw new IllegalArgumentException("Junction name is invalid");
         }
-        for (Junction j : m_road_network.vertices()) {
+        for (Junction j : roadNetwork.vertices()) {
             if (j.getName().equalsIgnoreCase(junction_id)) {
                 return j;
             }
@@ -107,7 +59,7 @@ public class Project {
     }
 
     public Road getRoadByRoadID(String road_id) {
-        for (Road r : m_list_roads) {
+        for (Road r : listRoads) {
             if (r.getRoadID().equals(road_id)) {
                 return r;
             }
@@ -115,27 +67,75 @@ public class Project {
         return null;
     }
 
+    public List<Road> getListRoads() {
+        return listRoads;
+    }
+
+    public Graph<Junction, Section> getRoadNetwork() {
+        return roadNetwork;
+    }
+
+    public VehicleList getListVehicles() {
+        return listOfVehicles;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public Map<Vehicle, List<AlgorithmResults>> getResults() {
+        return results;
+    }
+
+    public Section getSection(Junction j1, Junction j2) {
+        if (!roadNetwork.validVertex(j1) || !roadNetwork.validVertex(j2)) {
+            throw new IllegalArgumentException("Invalid junction");
+        }
+        return roadNetwork.getEdge(j1, j2).getElement();
+    }
+
+    public void setResults(Map<Vehicle, List<AlgorithmResults>> m_results) {
+        this.results = m_results;
+    }
+
+    public void setRoadNetwork(Graph<Junction, Section> m_road_network) {
+        this.roadNetwork = m_road_network;
+    }
+
+    public void setListVehicles(VehicleList vehicle_list) {
+        this.listOfVehicles = vehicle_list;
+    }
+
+    public void setListRoads(List<Road> listOfRoads) {
+        this.listRoads = listOfRoads;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     public boolean addRoad(Road r) {
         boolean added = false;
-        if (!m_list_roads.contains(r)) {
-            added = m_list_roads.add(r);
+        if (!listRoads.contains(r)) {
+            added = listRoads.add(r);
         }
         return added;
     }
 
-    public Section getSection(Junction j1, Junction j2) {
-        if (!m_road_network.validVertex(j1) || !m_road_network.validVertex(j2)) {
-            throw new IllegalArgumentException("Invalid junction");
-        }
-        return m_road_network.getEdge(j1, j2).getElement();
-    }
-
     public boolean addVehicle(Vehicle v) {
-        return m_list_vehicles.addVehicle(v);
+        return listOfVehicles.addVehicle(v);
     }
 
     public boolean addJunction(Junction j) {
-        return m_road_network.insertVertex(j);
+        return roadNetwork.insertVertex(j);
     }
 
     public boolean addSection(Section s) {
@@ -144,11 +144,11 @@ public class Project {
         if (orig == null || dest == null) {
             return false;
         }
-        if (!m_road_network.validVertex(orig) || !m_road_network.validVertex(dest)) {
+        if (!roadNetwork.validVertex(orig) || !roadNetwork.validVertex(dest)) {
             return false;
         }
 
-        for (Edge<Junction, Section> edge : m_road_network.edges()) {
+        for (Edge<Junction, Section> edge : roadNetwork.edges()) {
             if (edge.getElement().equals(s)) {
                 return false;
             }
@@ -157,86 +157,30 @@ public class Project {
         if (s.getDirection() == Section.Direction.REVERSE) {
             orig = s.getEndingJunction();
             dest = s.getBeginningJunction();
-            return m_road_network.insertEdge(orig, dest, s, s.getSectionLength());
+            return roadNetwork.insertEdge(orig, dest, s, s.getSectionLength());
         }
 
         if (s.getDirection() == Section.Direction.BIDIRECTIONAL) {
-            m_road_network.insertEdge(orig, dest, s, s.getSectionLength());
+            roadNetwork.insertEdge(orig, dest, s, s.getSectionLength());
             Section sec = s.reverseSection();
-            m_road_network.insertEdge(dest, orig, sec, s.getSectionLength());
+            roadNetwork.insertEdge(dest, orig, sec, s.getSectionLength());
             return true;
         }
-        return m_road_network.insertEdge(orig, dest, s, s.getSectionLength());
+        return roadNetwork.insertEdge(orig, dest, s, s.getSectionLength());
 
     }
 
-//    public ArrayList<LinkedList<Section>> allPaths(Junction source, Junction target) {
-//        if (!m_road_network.validVertex(source)) {
-//            throw new IllegalArgumentException(("Source junction is invalid"));
-//        }
-//        if (!m_road_network.validVertex(target)) {
-//            throw new IllegalArgumentException(("Target junction is invalid"));
-//        }
-//
-//        Vertex<Junction, Section> vSource = m_road_network.getVertex(source);
-//        Vertex<Junction, Section> vTarget = m_road_network.getVertex(target);
-//        ArrayList<LinkedList<Section>> paths = new ArrayList<>();
-//        allPaths(vSource, vTarget, new boolean[m_road_network.numEdges()], new LinkedList<>(), paths);
-//
-//        return paths;
-//
-//    }
-//
-//    private void allPaths(Vertex<Junction, Section> vOrig, Vertex<Junction, Section> vDest, boolean[] visited,
-//            LinkedList<Section> path, ArrayList<LinkedList<Section>> paths) {
-//        for (Edge<Junction, Section> edge : vOrig.getAllOutEdges()) {
-//            if (!visited[edge.getElement().getKey()] && verifySection(path, edge)) {
-//                visited[edge.getElement().getKey()] = true;
-//                path.add(edge.getElement());
-//
-//                if (edge.getVDest().equals(vDest)) {
-//                    paths.add(new LinkedList<>(path));
-//                    path.removeLast();
-//                } else {
-//                    allPaths(edge.getVDestVertex(), vDest, visited, path, paths);
-//                }
-//            }
-//
-//            if (visited[edge.getElement().getKey()] && !edge.getVDest().equals(vDest)) {
-//                path.removeLast();
-//            }
-//            visited[edge.getElement().getKey()] = false;
-//        }
-//    }
-//    public boolean verifySection(LinkedList<Section> path, Edge<Junction, Section> edge) {
-//        for (Section section : path) {
-//            if (edge.getVDest().equals(getCorrespondentEdge(section).getVOrig())) {
-//                return false;
-//            }
-//        }
-//
-//        return true;
-//    }
-//    public Edge<Junction, Section> getCorrespondentEdge(Section section) {
-//        for (Edge<Junction, Section> edge : this.m_road_network.edges()) {
-//            if (edge.getElement().equals(section)) {
-//                return edge;
-//            }
-//        }
-//
-//        return null;
-//    }
     public boolean validate() {
-        if (this.m_name == null || m_name.trim().isEmpty()) {
+        if (this.name == null || name.trim().isEmpty()) {
             throw new IllegalArgumentException("The project name is invalid.");
         }
-        if (this.m_description == null || m_name.trim().isEmpty()) {
+        if (this.description == null || name.trim().isEmpty()) {
             throw new IllegalArgumentException(("The project description is invalid."));
         }
-        if (m_road_network.numVertices() < 2 || m_road_network.numEdges() == 0) {
+        if (roadNetwork.numVertices() < 2 || roadNetwork.numEdges() == 0) {
             throw new IllegalArgumentException("The project number of vertices are invalid.");
         }
-        if (m_road_network.numEdges() == 0) {
+        if (roadNetwork.numEdges() == 0) {
             throw new IllegalArgumentException("There must be atleast one road");
         }
 
@@ -245,7 +189,7 @@ public class Project {
 
     @Override
     public String toString() {
-        return "Project{" + "m_road_network=" + m_road_network + ", m_list_vehicles=" + m_list_vehicles + ", m_list_roads=" + m_list_roads + ", m_name=" + m_name + ", m_description=" + m_description + '}';
+        return "Project{" + "m_road_network=" + roadNetwork + ", m_list_vehicles=" + listOfVehicles + ", m_list_roads=" + listRoads + ", m_name=" + name + ", m_description=" + description + '}';
     }
 
 }

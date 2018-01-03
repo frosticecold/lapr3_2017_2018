@@ -7,7 +7,6 @@ package lapr.project.controller;
 
 import java.io.IOException;
 import java.util.LinkedList;
-import java.util.List;
 import lapr.project.model.Junction;
 import lapr.project.model.Project;
 import lapr.project.model.Vehicle;

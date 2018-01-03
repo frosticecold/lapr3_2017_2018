@@ -69,9 +69,14 @@ public abstract class Vehicle {
     private double mass;
 
     /**
-     * Load of the vehicle in Kg
+     * Max Load of the vehicle in Kg
      */
-    private double load;
+    private double maxLoad;
+
+    /**
+     * Current load of the vehicle in KG
+     */
+    private double currentLoad;
 
     /**
      * Drag Coefficient of the vehicle (no units)
@@ -145,7 +150,7 @@ public abstract class Vehicle {
         motorization = "";
         wheelSize = 0.0;
         mass = 0.0;
-        load = 0.0;
+        maxLoad = 0.0;
         dragCoefficient = 0.0;
         frontalArea = 0.0;
         rollingResistanceCoefficient = 0.0;
@@ -179,7 +184,7 @@ public abstract class Vehicle {
         this.vehicleClass = vehicleClass;
         this.motorization = motorization;
         this.mass = mass;
-        this.load = load;
+        this.maxLoad = load;
         this.dragCoefficient = dragCoefficient;
         this.wheelSize = wheelSize;
         this.frontalArea = frontalArea;
@@ -201,7 +206,7 @@ public abstract class Vehicle {
         this.vehicleClass = v.vehicleClass;
         this.motorization = v.motorization;
         this.mass = v.mass;
-        this.load = v.load;
+        this.maxLoad = v.maxLoad;
         this.dragCoefficient = v.dragCoefficient;
         this.wheelSize = v.wheelSize;
         this.frontalArea = v.frontalArea;
@@ -253,7 +258,7 @@ public abstract class Vehicle {
     }
 
     public double getLoad() {
-        return load;
+        return maxLoad;
     }
 
     public double getMass() {
@@ -261,7 +266,7 @@ public abstract class Vehicle {
     }
 
     public double getTotalWeight() {
-        return load + mass;
+        return maxLoad + mass;
     }
 
     public double getDragCoefficient() {
@@ -353,6 +358,20 @@ public abstract class Vehicle {
      * @return
      */
     public abstract Accelerator getAccelerator();
+
+    /**
+     * @return the currentLoad
+     */
+    public double getCurrentLoad() {
+        return currentLoad;
+    }
+
+    /**
+     * @param currentLoad the currentLoad to set
+     */
+    public void setCurrentLoad(double currentLoad) {
+        this.currentLoad = currentLoad;
+    }
 
     /**
      * method that changes the minimum rpm for the vehicle
@@ -462,7 +481,7 @@ public abstract class Vehicle {
     }
 
     /**
-     * Method that changes the load of a vehicle (Kg)
+     * Method that changes the maxLoad of a vehicle (Kg)
      *
      * @param load
      */
@@ -470,7 +489,7 @@ public abstract class Vehicle {
         if (load < 0) {
             throw new IllegalArgumentException("The load of the vehicle must be positive");
         }
-        this.load = load;
+        this.maxLoad = load;
     }
 
     /**
@@ -572,7 +591,7 @@ public abstract class Vehicle {
         sb.append("\t<li>Type: ").append(this.type).append("</li>\n");
         sb.append("\t<li>Fuel: ").append(this.fuel).append("</li>\n");
         sb.append("\t<li>Mass: ").append(this.mass).append(" Kg</li>\n");
-        sb.append("\t<li>Load: ").append(this.load).append(" Kg</li>\n");
+        sb.append("\t<li>Load: ").append(this.maxLoad).append(" Kg</li>\n");
         sb.append("\t<li>Drag Coefficient: ").append(this.dragCoefficient).append("</li>\n");
         sb.append("\t<li>Frontal Area: ").append(this.frontalArea).append(" m</li>\n");
         sb.append("\t<li>RRC: ").append(this.rollingResistanceCoefficient).append("</li>\n");
@@ -602,7 +621,7 @@ public abstract class Vehicle {
         hash = 97 * hash + Objects.hashCode(this.motorization);
         hash = 97 * hash + (int) (Double.doubleToLongBits(this.wheelSize) ^ (Double.doubleToLongBits(this.wheelSize) >>> 32));
         hash = 97 * hash + (int) (Double.doubleToLongBits(this.mass) ^ (Double.doubleToLongBits(this.mass) >>> 32));
-        hash = 97 * hash + (int) (Double.doubleToLongBits(this.load) ^ (Double.doubleToLongBits(this.load) >>> 32));
+        hash = 97 * hash + (int) (Double.doubleToLongBits(this.maxLoad) ^ (Double.doubleToLongBits(this.maxLoad) >>> 32));
         hash = 97 * hash + (int) (Double.doubleToLongBits(this.dragCoefficient) ^ (Double.doubleToLongBits(this.dragCoefficient) >>> 32));
         hash = 97 * hash + (int) (Double.doubleToLongBits(this.frontalArea) ^ (Double.doubleToLongBits(this.frontalArea) >>> 32));
         hash = 97 * hash + (int) (Double.doubleToLongBits(this.rollingResistanceCoefficient) ^ (Double.doubleToLongBits(this.rollingResistanceCoefficient) >>> 32));
@@ -630,7 +649,7 @@ public abstract class Vehicle {
         if (Double.compare(this.mass, other.mass) != 0) {
             return false;
         }
-        if (Double.compare(this.load, other.load) != 0) {
+        if (Double.compare(this.maxLoad, other.maxLoad) != 0) {
             return false;
         }
         if (Double.compare(this.dragCoefficient, other.dragCoefficient) != 0) {

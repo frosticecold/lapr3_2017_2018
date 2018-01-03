@@ -16,6 +16,8 @@ public class Section {
     private Direction direction;
     private List<Segment> listOfSegments;
     private Map<Integer, Double> mapOfTolls;
+    
+    private static int sectionCounter = 0;
 
     public enum Direction {
         DIRECT("DIRECT"), REVERSE("REVERSE"), BIDIRECTIONAL("BIDIRECTIONAL");
@@ -30,7 +32,7 @@ public class Section {
         beginningJunction = null;
         endingJunction = null;
         roadID = null;
-        sectionID = -1;
+        sectionID = ++sectionCounter;
         typology = null;
         listOfSegments = new ArrayList<>();
         direction = Direction.DIRECT;
