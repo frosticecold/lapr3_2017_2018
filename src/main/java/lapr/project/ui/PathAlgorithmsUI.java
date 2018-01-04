@@ -324,7 +324,7 @@ public class PathAlgorithmsUI extends javax.swing.JFrame {
                 Junction end = (Junction) junctionEndComboBox.getSelectedItem();
                 Vehicle v = (Vehicle) vehicleCombobox.getSelectedItem();
                 v.setCurrentLoad(currentLoad);
-                controller.fastestPath(begin, end, v);
+                controller.bestPath(fastestPathCheckbox.isSelected(), EnergyEfficientCheckbox.isSelected(), EnergySavingCheckbox.isSelected(), begin, end, v);
                 jTextArea1.setText(controller.getResultsAsText());
                 v.setCurrentLoad(0);
             }

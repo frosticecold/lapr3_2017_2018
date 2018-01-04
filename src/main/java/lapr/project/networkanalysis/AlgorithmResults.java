@@ -9,17 +9,18 @@ import lapr.project.model.Vehicle;
 
 public class AlgorithmResults {
 
-    private Project project;
-    private LinkedList<Junction> junctionpath;
-    private LinkedList<Section> sectionpath;
-    private Vehicle vehicle;
+    private final Project project;
+    private final LinkedList<Junction> junctionpath;
+    private final LinkedList<Section> sectionpath;
+    private final Vehicle vehicle;
     private double cost;
-    private double travelTime;
-    private double energy;
     private double distance;
-    private double vehicleLoad;
+    private final double travelTime;
+    private final double energy;
+    private final double vehicleLoad;
+    private final String algorithmType;
 
-    public AlgorithmResults(Project project, LinkedList<Junction> junctionPath, LinkedList<Section> fastestPath, Vehicle vehicle, double[] results) {
+    public AlgorithmResults(Project project, LinkedList<Junction> junctionPath, LinkedList<Section> fastestPath, Vehicle vehicle, double[] results, String algorithmType) {
         this.project = project;
         this.junctionpath = junctionPath;
         this.sectionpath = fastestPath;
@@ -27,6 +28,7 @@ public class AlgorithmResults {
         this.travelTime = results[0];
         this.energy = results[1];
         this.vehicleLoad = vehicle.getCurrentLoad();
+        this.algorithmType = algorithmType;
     }
 
     public void calculate() {
@@ -87,26 +89,32 @@ public class AlgorithmResults {
         return vehicle;
     }
 
+    public double getVehicleLoad() {
+        return vehicleLoad;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("Project: ").append(project.getName()).append("\n");
         sb.append("\n");
         sb.append("Vehicle: ").append(vehicle.getName()).append("\n");
+        sb.append("Vehicle total weight: ").append(vehicle.getTotalWeight()).append(("\n"));
         sb.append("\nPath:\n");
         for (Section s : sectionpath) {
             sb.append(s);
             sb.append("\n");
         }
-        sb.append("\nJunctions:\n");
-        for (Junction j : junctionpath) {
-            sb.append(j);
-            sb.append("\n");
-        }
+//        sb.append("\nJunctions:\n");
+//        for (Junction j : junctionpath) {
+//            sb.append(j);
+//            sb.append("\n");
+//        }
         sb.append("\nDistance:").append(distance).append(" Km");
         sb.append("\nTravel time:").append(travelTime).append(" s");
         sb.append("\nCost:").append(cost).append(" €");
         sb.append("\nEnergy:").append(energy).append(" J");
+        sb.append("\nAlgorithm: ").append(algorithmType);
         return sb.toString();
     }
 

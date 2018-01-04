@@ -216,12 +216,12 @@ public class PhysicsCalculus {
                                 results[TORQUE_VEC] = car.getTorqueAtThrottle(convertThrottle(i), rpm);
                             }
                         }
-                    } else {
-                        if (max_velocity > carvelocity) {
-                            break;
-                        }
+                    } //else {
+//                        if (carvelocity > max_velocity) {
+//                            break;
+//                        }
 
-                    }
+                    //}
                 }
 
             }

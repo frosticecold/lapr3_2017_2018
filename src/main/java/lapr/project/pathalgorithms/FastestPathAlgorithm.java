@@ -23,7 +23,7 @@ public class FastestPathAlgorithm implements PathAlgorithm {
 
         LinkedList<Section> sectionpath = new LinkedList<>();
         double results[] = shortestPath(graph, start, end, v, path, sectionpath);
-        AlgorithmResults alg = new AlgorithmResults(Session.getActiveProject(), path, sectionpath, v, results);
+        AlgorithmResults alg = new AlgorithmResults(Session.getActiveProject(), path, sectionpath, v, results, this.toString());
         alg.calculate();
 
         return alg;
@@ -75,6 +75,7 @@ public class FastestPathAlgorithm implements PathAlgorithm {
             visited[kOrg] = true;
 
             for (Edge<Junction, Section> edg : g.outgoingEdges(vOrigin)) {
+
                 Junction vAdj = g.opposite(vOrigin, edg);
                 int kAdj = g.getKey(vAdj);
                 section = edg.getElement();
@@ -86,6 +87,7 @@ public class FastestPathAlgorithm implements PathAlgorithm {
                     time[kAdj] = time[kOrg] + results[0];
                     pathKeys[kAdj] = kOrg;
                     energy[kAdj] = energy[kAdj] + results[1];
+                    //velocity[kAjd] = result[1];
                 }
             }
             i = getVertMinDist(time, visited);
@@ -119,10 +121,6 @@ public class FastestPathAlgorithm implements PathAlgorithm {
         }
     }
 
-    public String toString() {
-        return "Fastest Path";
-    }
-
     private static int getVertMinDist(double[] dist, boolean[] visited) {
         double min = Double.MAX_VALUE;
         int indice = -1;
@@ -150,7 +148,7 @@ public class FastestPathAlgorithm implements PathAlgorithm {
             double force = PhysicsCalculus.calcForceInSegment(segment, car, s);
             double carMaxVel = PhysicsCalculus.calcMaximumVelocity(segment, car, s);
             double time_segment = (segment.getLength() * 1000) / (carMaxVel);
-            double[] ideal_motor_force = PhysicsCalculus.calculateIdealMotorForce(car, segment, force,carMaxVel);
+            double[] ideal_motor_force = PhysicsCalculus.calculateIdealMotorForce(car, segment, force, carMaxVel);
             double power_generated = PhysicsCalculus.calcEnginePower(ideal_motor_force[PhysicsCalculus.TORQUE_VEC], ideal_motor_force[PhysicsCalculus.RPM_VEC]);
             energy += (power_generated * time_segment);
             final_time += time_segment;
@@ -161,5 +159,9 @@ public class FastestPathAlgorithm implements PathAlgorithm {
 
         return results;
 
+    }
+
+    public String toString() {
+        return "Fastest Path";
     }
 }

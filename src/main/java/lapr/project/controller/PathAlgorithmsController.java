@@ -8,6 +8,7 @@ package lapr.project.controller;
 import java.io.IOException;
 import java.util.LinkedList;
 import lapr.project.model.Junction;
+import lapr.project.model.ListOfResults;
 import lapr.project.model.Project;
 import lapr.project.model.Vehicle;
 import lapr.project.networkanalysis.AlgorithmResults;
@@ -21,6 +22,7 @@ public class PathAlgorithmsController {
 
     private Project p;
     private AlgorithmResults result;
+    private ListOfResults listResults;
 
     public PathAlgorithmsController() {
         this.p = Session.getActiveProject();
@@ -34,23 +36,45 @@ public class PathAlgorithmsController {
         return p.getListVehicles().getVehicleList();
     }
 
-    public void bestPath(boolean fastest, boolean efficient, boolean saving) {
-
-    }
-
-    public void fastestPath(Junction start, Junction end, Vehicle v) {
-        LinkedList<Junction> path = new LinkedList<>();
-        PathAlgorithm alg = new FastestPathAlgorithm();
-        result = alg.bestPath(p.getRoadNetwork(), start, end, v, path);
-        
-    }
-
     public AlgorithmResults getResults() {
         return result;
     }
 
     public String getResultsAsText() {
         return result.toString();
+    }
+
+    public void bestPath(boolean fastest, boolean efficient, boolean saving, Junction start, Junction end, Vehicle v) {
+        if (fastest) {
+            fastestPath(start, end, v);
+        }
+        if (efficient) {
+            theoricalMostEnergyEfficientPath(start, end, v);
+        }
+        if (saving) {
+            mostEfficientPathInEnergySavingMode(start, end, v);
+        }
+    }
+
+    public void fastestPath(Junction start, Junction end, Vehicle v) {
+        LinkedList<Junction> path = new LinkedList<>();
+        PathAlgorithm alg = new FastestPathAlgorithm();
+        AlgorithmResults resultfastest = alg.bestPath(p.getRoadNetwork(), start, end, v, path);
+        listResults.addResult(v, resultfastest);
+    }
+
+    public void theoricalMostEnergyEfficientPath(Junction start, Junction end, Vehicle v) {
+        LinkedList<Junction> path = new LinkedList<>();
+        PathAlgorithm alg = new FastestPathAlgorithm();
+        AlgorithmResults resultfastest = alg.bestPath(p.getRoadNetwork(), start, end, v, path);
+        listResults.addResult(v, resultfastest);
+    }
+
+    public void mostEfficientPathInEnergySavingMode(Junction start, Junction end, Vehicle v) {
+        LinkedList<Junction> path = new LinkedList<>();
+        PathAlgorithm alg = new FastestPathAlgorithm();
+        AlgorithmResults resultfastest = alg.bestPath(p.getRoadNetwork(), start, end, v, path);
+        listResults.addResult(v, resultfastest);
     }
 
     /**
@@ -63,8 +87,8 @@ public class PathAlgorithmsController {
         ExportHTML export = new ExportHTML();
         export.exportAnalysisResult(result, path);
     }
-    
-    public void exportCSV(String path) throws Exception{
+
+    public void exportCSV(String path) throws Exception {
         ExportCSV export = new ExportCSV(result, path);
         export.createFile();
     }

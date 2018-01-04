@@ -6,7 +6,6 @@
 package lapr.project.pathalgorithms;
 
 import java.util.LinkedList;
-import java.util.List;
 import lapr.project.model.Junction;
 import lapr.project.model.Section;
 import lapr.project.model.Vehicle;
