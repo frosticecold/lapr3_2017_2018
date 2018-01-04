@@ -55,6 +55,10 @@ public class AlgorithmResults {
 
     }
 
+    public Project getProject() {
+        return project;
+    }
+
     public double getEnergy() {
         return energy;
     }

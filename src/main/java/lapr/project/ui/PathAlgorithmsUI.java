@@ -17,10 +17,11 @@ import lapr.project.model.Junction;
 import lapr.project.model.Vehicle;
 
 public class PathAlgorithmsUI extends javax.swing.JFrame {
-    
+
     private static final long serialVersionUID = 1;
     private PathAlgorithmsController controller;
     private JFileChooser m_jfc;
+    private JFileChooser csvFileChooser;
 
     /**
      * Creates new form FastestPathUI
@@ -36,9 +37,11 @@ public class PathAlgorithmsUI extends javax.swing.JFrame {
             vehicleCombobox.addItem(v);
         }
         initFileChooser();
-        
+        csvFileChooser = new JFileChooser();
+        csvFileChooser.setCurrentDirectory(new File(System.getProperty("user.dir")));
+
     }
-    
+
     public void initFileChooser() {
         m_jfc = new JFileChooser();
         FileNameExtensionFilter xmlfilter = new FileNameExtensionFilter("HTML files (*.html)", "html");
@@ -75,6 +78,7 @@ public class PathAlgorithmsUI extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         loadJTextField = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
+        exportToCSVButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -163,6 +167,14 @@ public class PathAlgorithmsUI extends javax.swing.JFrame {
 
         jLabel7.setText("kg");
 
+        exportToCSVButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/csv_icon.png"))); // NOI18N
+        exportToCSVButton.setText("Export to CSV");
+        exportToCSVButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                exportToCSVButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -205,12 +217,15 @@ public class PathAlgorithmsUI extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel4))
                                 .addGap(11, 11, 11))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(exportHTMLButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(exportToCSVButton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(exportHTMLButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addContainerGap())))))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(14, Short.MAX_VALUE)
@@ -254,7 +269,9 @@ public class PathAlgorithmsUI extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(calculateButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(exportHTMLButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(exportToCSVButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
                     .addComponent(jButton2))
@@ -299,7 +316,7 @@ public class PathAlgorithmsUI extends javax.swing.JFrame {
                     currentLoad = load;
                 }
             }
-            
+
         }
         if (valid = true) {
             if (fastestPathCheckbox.isSelected()) {
@@ -321,7 +338,7 @@ public class PathAlgorithmsUI extends javax.swing.JFrame {
 
     private void exportHTMLButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exportHTMLButtonActionPerformed
         try {
-            
+
             int returnvalue = m_jfc.showSaveDialog(this);
             if (returnvalue == JFileChooser.APPROVE_OPTION) {
                 File file = m_jfc.getSelectedFile();
@@ -330,7 +347,7 @@ public class PathAlgorithmsUI extends javax.swing.JFrame {
                     path += ".html";
                 }
                 controller.exportHTML(path);
-                JOptionPane.showMessageDialog(this, "Project exported with success.", "Project Export", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Results exported with success.", "Results Export", JOptionPane.INFORMATION_MESSAGE);
             }
         } catch (NullPointerException n) {
             JOptionPane.showMessageDialog(this, "No active project to export", "Error", JOptionPane.ERROR_MESSAGE);
@@ -343,12 +360,32 @@ public class PathAlgorithmsUI extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_loadJTextFieldActionPerformed
 
+    private void exportToCSVButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exportToCSVButtonActionPerformed
+        try {
+
+            int returnvalue = csvFileChooser.showSaveDialog(this);
+            if (returnvalue == JFileChooser.APPROVE_OPTION) {
+                File file = csvFileChooser.getSelectedFile();
+                String path = file.getPath();
+                controller.exportCSV(path);
+                JOptionPane.showMessageDialog(this, "Results exported with success.", "Results Export", JOptionPane.INFORMATION_MESSAGE);
+            }
+        } catch (NullPointerException n) {
+            JOptionPane.showMessageDialog(this, "No active project to export", "Error", JOptionPane.ERROR_MESSAGE);
+        } catch (IOException ex) {
+            Logger.getLogger(Mockup.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+            Logger.getLogger(PathAlgorithmsUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_exportToCSVButtonActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JCheckBox EnergyEfficientCheckbox;
     private javax.swing.JCheckBox EnergySavingCheckbox;
     private javax.swing.JButton calculateButton;
     private javax.swing.JButton exportHTMLButton;
+    private javax.swing.JButton exportToCSVButton;
     private javax.swing.JCheckBox fastestPathCheckbox;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
