@@ -7,13 +7,8 @@ package lapr.project.model;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -26,22 +21,6 @@ public class SectionTest {
     public SectionTest() {
     }
     
-    @BeforeClass
-    public static void setUpClass() {
-    }
-    
-    @AfterClass
-    public static void tearDownClass() {
-    }
-    
-    @Before
-    public void setUp() {
-    }
-    
-    @After
-    public void tearDown() {
-    }
-    
     @Test
     public void testConstructor() {
         System.out.println("constructor");
@@ -51,7 +30,6 @@ public class SectionTest {
         s1.setBeginJunction(j1);
         s1.setEndJunction(j2);
         s1.setRoadID("E01");
-        s1.setSectionID(1);
         s1.setTypology("Regular Road");
         s1.setDirection(Section.Direction.BIDIRECTIONAL);
         
@@ -69,7 +47,7 @@ public class SectionTest {
         assertEquals(s1.getBeginningJunction(), s2.getBeginningJunction());
         assertEquals(s1.getEndingJunction(), s2.getEndingJunction());
         assertEquals(s1.getRoadID(), s2.getRoadID());
-        assertEquals(s1.getSectionID(), s2.getSectionID());
+        assertEquals(s1.getSectionID(), s2.getSectionID()-1);
         assertEquals(s1.getTypology(), s2.getTypology());
     }
 

@@ -38,7 +38,7 @@ public class Project {
      * @param roadList
      */
     public Project(Graph<Junction, Section> roadNetwork, List<Vehicle> vehiclesList, List<Road> roadList) {
-        roadNetwork = roadNetwork;
+        this.roadNetwork = roadNetwork;
         listOfVehicles = new VehicleList();
         for (Vehicle v : vehiclesList) {
             listOfVehicles.addVehicle(v);

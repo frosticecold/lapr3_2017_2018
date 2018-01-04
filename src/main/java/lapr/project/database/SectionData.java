@@ -56,7 +56,7 @@ public class SectionData extends DataAccess<Section> {
     public void insert(String pName, Section s) throws SQLException {
         List<SQLArgument> args1 = new ArrayList<>();
         
-        args1.add(new SQLArgument(Integer.toString(s.getSectionID()),OracleTypes.NUMBER));
+        args1.add(new SQLArgument(String.valueOf(s.getSectionID()),OracleTypes.NUMBER));
         ResultSet rs = super.callFunction("getSectionByID",args1);
         if(rs.next()) {
             rs.close();
@@ -66,7 +66,7 @@ public class SectionData extends DataAccess<Section> {
         args1.add(new SQLArgument(s.getEndingJunction().getName(), OracleTypes.VARCHAR));
         args1.add(new SQLArgument(s.getRoadID(), OracleTypes.VARCHAR));
         args1.add(new SQLArgument(pName, OracleTypes.VARCHAR));
-        args1.add(new SQLArgument(s.getDirection().name(), OracleTypes.VARCHAR));
+        args1.add(new SQLArgument(s.getDirection().toString(), OracleTypes.VARCHAR));
         super.callProcedure("insertSection", args1);
         
         SegmentData sd = new SegmentData(connection);
