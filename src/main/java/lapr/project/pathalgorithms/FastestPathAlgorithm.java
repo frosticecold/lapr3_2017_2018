@@ -28,7 +28,7 @@ public class FastestPathAlgorithm implements PathAlgorithm {
     private static final int MIN_THROTTLE = 2;
 
     @Override
-    public AlgorithmResults bestPath(Graph<Junction, Section> graph, Junction start, Junction end, Vehicle v, LinkedList<Junction> path) {
+    public AlgorithmResults bestPath(Graph<Junction, Section> graph, Junction start, Junction end, Vehicle v, LinkedList<Junction> path, double acceleration) {
 
         LinkedList<Section> sectionpath = new LinkedList<>();
         double results[] = shortestPath(graph, start, end, v, path, sectionpath);

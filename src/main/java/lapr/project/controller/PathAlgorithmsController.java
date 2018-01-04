@@ -47,43 +47,42 @@ public class PathAlgorithmsController {
         return result.toString();
     }
 
-    public void bestPath(boolean fastest, boolean efficient, boolean saving, Junction start, Junction end, Vehicle v) {
+    public void bestPath(boolean fastest, boolean efficient, boolean saving, Junction start, Junction end, Vehicle v, double acceleration) {
         if (fastest) {
             fastestPath(start, end, v);
         }
         if (efficient) {
-            theoricalMostEnergyEfficientPath(start, end, v);
+            theoricalMostEnergyEfficientPath(start, end, v, acceleration);
         }
         if (saving) {
-            mostEfficientPathInEnergySavingMode(start, end, v);
+            mostEfficientPathInEnergySavingMode(start, end, v, acceleration);
         }
     }
 
     public void fastestPath(Junction start, Junction end, Vehicle v) {
         LinkedList<Junction> path = new LinkedList<>();
         PathAlgorithm alg = new FastestPathAlgorithm();
-        result = alg.bestPath(p.getRoadNetwork(), start, end, v, path);
+        result = alg.bestPath(p.getRoadNetwork(), start, end, v, path, 0);
         listResults.addResult(v, result);
     }
 
-    public void theoricalMostEnergyEfficientPath(Junction start, Junction end, Vehicle v) {
+    public void theoricalMostEnergyEfficientPath(Junction start, Junction end, Vehicle v, double acceleration) {
         LinkedList<Junction> path = new LinkedList<>();
         PathAlgorithm alg = new FastestPathAlgorithm();
-        result = alg.bestPath(p.getRoadNetwork(), start, end, v, path);
+        result = alg.bestPath(p.getRoadNetwork(), start, end, v, path, acceleration);
         listResults.addResult(v, result);
     }
 
-    public void mostEfficientPathInEnergySavingMode(Junction start, Junction end, Vehicle v) {
+    public void mostEfficientPathInEnergySavingMode(Junction start, Junction end, Vehicle v, double acceleration) {
         LinkedList<Junction> path = new LinkedList<>();
         PathAlgorithm alg = new FastestPathAlgorithm();
-        result = alg.bestPath(p.getRoadNetwork(), start, end, v, path);
+        result = alg.bestPath(p.getRoadNetwork(), start, end, v, path, acceleration);
         listResults.addResult(v, result);
     }
 
     /**
      * Exports the results of the selected vehicles into the specified path.
      *
-     * @param vehicles (List&lt;String&gt;) The list of vehicle names to export.
      * @param path (String) The file path.
      */
     public void exportHTML(String path) throws IOException {
