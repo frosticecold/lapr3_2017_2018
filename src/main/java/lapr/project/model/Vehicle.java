@@ -257,7 +257,7 @@ public abstract class Vehicle {
         return motorization;
     }
 
-    public double getLoad() {
+    public double getMaxLoad() {
         return maxLoad;
     }
 
@@ -266,7 +266,7 @@ public abstract class Vehicle {
     }
 
     public double getTotalWeight() {
-        return maxLoad + mass;
+        return currentLoad + mass;
     }
 
     public double getDragCoefficient() {
@@ -485,7 +485,7 @@ public abstract class Vehicle {
      *
      * @param load
      */
-    public void setLoad(double load) {
+    public void setMaxLoad(double load) {
         if (load < 0) {
             throw new IllegalArgumentException("The load of the vehicle must be positive");
         }

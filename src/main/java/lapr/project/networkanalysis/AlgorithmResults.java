@@ -1,6 +1,5 @@
 package lapr.project.networkanalysis;
 
-import java.util.Iterator;
 import java.util.LinkedList;
 import lapr.project.model.Junction;
 import lapr.project.model.Project;
@@ -18,6 +17,7 @@ public class AlgorithmResults {
     private double travelTime;
     private double energy;
     private double distance;
+    private double vehicleLoad;
 
     public AlgorithmResults(Project project, LinkedList<Junction> junctionPath, LinkedList<Section> fastestPath, Vehicle vehicle, double[] results) {
         this.project = project;
@@ -26,6 +26,7 @@ public class AlgorithmResults {
         this.vehicle = vehicle;
         this.travelTime = results[0];
         this.energy = results[1];
+        this.vehicleLoad = vehicle.getCurrentLoad();
     }
 
     public void calculate() {
@@ -52,6 +53,10 @@ public class AlgorithmResults {
         cost = temp_cost;
         distance = temp_distance;
 
+    }
+
+    public Project getProject() {
+        return project;
     }
 
     public double getEnergy() {

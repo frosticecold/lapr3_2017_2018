@@ -16,7 +16,7 @@ public class Section {
     private Direction direction;
     private List<Segment> listOfSegments;
     private Map<Integer, Double> mapOfTolls;
-    
+
     private static int sectionCounter = 0;
 
     public enum Direction {

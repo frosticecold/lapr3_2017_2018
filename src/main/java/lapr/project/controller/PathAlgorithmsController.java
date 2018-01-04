@@ -13,6 +13,7 @@ import lapr.project.model.Vehicle;
 import lapr.project.networkanalysis.AlgorithmResults;
 import lapr.project.pathalgorithms.FastestPathAlgorithm;
 import lapr.project.pathalgorithms.PathAlgorithm;
+import lapr.project.utils.ExportCSV;
 import lapr.project.utils.ExportHTML;
 import lapr.project.utils.Session;
 
@@ -41,6 +42,7 @@ public class PathAlgorithmsController {
         LinkedList<Junction> path = new LinkedList<>();
         PathAlgorithm alg = new FastestPathAlgorithm();
         result = alg.bestPath(p.getRoadNetwork(), start, end, v, path);
+        
     }
 
     public AlgorithmResults getResults() {
@@ -60,5 +62,10 @@ public class PathAlgorithmsController {
     public void exportHTML(String path) throws IOException {
         ExportHTML export = new ExportHTML();
         export.exportAnalysisResult(result, path);
+    }
+    
+    public void exportCSV(String path) throws Exception{
+        ExportCSV export = new ExportCSV(result, path);
+        export.createFile();
     }
 }

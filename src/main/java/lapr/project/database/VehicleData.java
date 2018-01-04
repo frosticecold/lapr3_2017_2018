@@ -115,7 +115,7 @@ public class VehicleData extends DataAccess<Vehicle> {
         args.add(new SQLArgument(Integer.toString(v.getVehicleClass()), OracleTypes.NUMBER));
         args.add(new SQLArgument(Double.toString(v.getWheelSize()), OracleTypes.NUMBER));
         args.add(new SQLArgument(Double.toString(v.getMass()), OracleTypes.NUMBER));
-        args.add(new SQLArgument(Double.toString(v.getLoad()), OracleTypes.NUMBER));
+        args.add(new SQLArgument(Double.toString(v.getMaxLoad()), OracleTypes.NUMBER));
         args.add(new SQLArgument(Double.toString(v.getDragCoefficient()), OracleTypes.NUMBER));
         args.add(new SQLArgument(Double.toString(v.getFrontalArea()), OracleTypes.NUMBER));
         args.add(new SQLArgument(Double.toString(v.getRCC()), OracleTypes.NUMBER));

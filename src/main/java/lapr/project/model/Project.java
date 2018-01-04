@@ -189,7 +189,7 @@ public class Project {
 
     @Override
     public String toString() {
-        return "Project{" + "m_road_network=" + roadNetwork + ", m_list_vehicles=" + listOfVehicles + ", m_list_roads=" + listRoads + ", m_name=" + name + ", m_description=" + description + '}';
+        return this.name;
     }
 
 }
