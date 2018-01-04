@@ -26,10 +26,9 @@ public class ExportCSV {
     }
 
     public void createFile() throws Exception {
-        BufferedWriter writer = new BufferedWriter(new FileWriter(path + format));
+        FileWriter writer = new FileWriter(path + format);
 
         CSVUtils.writeLine(writer, Arrays.asList("Project", "Path", "Vehicle", "Travel Time", "Cost", "Energy", "Distance"));
-
         CSVUtils.writeLine(writer, Arrays.asList(results.getProject().toString(), results.getSectionPath().toString(), results.getVehicle().toString(), String.valueOf(results.getTravelTime()), String.valueOf(results.getCost()), String.valueOf(results.getEnergy()), String.valueOf(results.getDistance())), ',');
 
         writer.flush();

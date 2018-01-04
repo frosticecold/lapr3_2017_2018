@@ -58,7 +58,7 @@ public class CSVUtils {
 
             first = false;
         }
-        sb.append("\n");
+        sb.append("\n\n");
         w.append(sb.toString());
 
 

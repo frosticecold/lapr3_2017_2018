@@ -360,10 +360,12 @@ public class VehicleXML implements FileFormat {
         switch (this.elementContent) {
             case ELETRIC_VEHICLE_TAG: {
                 this.vehicle = new VehicleElectric();
+                vehicle.setMotorization("electric");
                 break;
             }
             case COMBUSTION_VEHICLE_TAG: {
                 this.vehicle = new VehicleCombustion();
+                vehicle.setMotorization("combustion");
                 break;
             }
             default:
