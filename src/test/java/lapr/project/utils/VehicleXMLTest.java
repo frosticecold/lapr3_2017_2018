@@ -9,15 +9,9 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.LinkedList;
 import java.util.List;
-import lapr.project.model.Accelerator;
-import lapr.project.model.Gearbox;
-import lapr.project.model.Junction;
-import lapr.project.model.Road;
-import lapr.project.model.Section;
 import lapr.project.model.Vehicle;
 import lapr.project.model.VehicleCombustion;
 import lapr.project.model.VehicleElectric;
-import lapr.project.utils.graphbase.Graph;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -65,6 +59,7 @@ public class VehicleXMLTest {
         //Vehicle v3 = new VehicleElectric(0, 12500, 10.6, null, null, "ElectricDummy", "Electric Dummy teste vehicle", "car", "electric", 1, "electric", 1400, 420, 0.31, 0.6, 1.8, 0.01, null, null);
         Vehicle v3 = new VehicleElectric();
         v3.setWheelSize(0.6);
+        v3.setMotorization("electric");
         
         vehicleList.add(v1);
         vehicleList.add(v2);
@@ -107,6 +102,8 @@ public class VehicleXMLTest {
 
     /**
      * Test of getVehiclesList method, of class VehicleXML.
+     * @throws java.io.FileNotFoundException
+     * @throws lapr.project.utils.ImportException
      */
     @Test
     public void testGetVehiclesList() throws FileNotFoundException, ImportException {
