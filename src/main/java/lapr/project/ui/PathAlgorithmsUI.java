@@ -5,6 +5,7 @@
  */
 package lapr.project.ui;
 
+import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.IOException;
 import java.util.logging.Level;
@@ -138,6 +139,7 @@ public class PathAlgorithmsUI extends javax.swing.JFrame {
         jLabel4.setText("Results:");
 
         calculateButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/path_icon.png"))); // NOI18N
+        calculateButton.setMnemonic(KeyEvent.VK_ENTER);
         calculateButton.setText("Calculate");
         calculateButton.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
         calculateButton.addActionListener(new java.awt.event.ActionListener() {
@@ -238,11 +240,12 @@ public class PathAlgorithmsUI extends javax.swing.JFrame {
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(jLabel7)
                                             .addComponent(accelerationUnitLabel))))
-                                .addGap(0, 28, Short.MAX_VALUE))))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(saveButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 257, Short.MAX_VALUE)
-                        .addComponent(calculateButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGap(0, 0, Short.MAX_VALUE))))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(calculateButton, javax.swing.GroupLayout.PREFERRED_SIZE, 273, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(saveButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jButton2)
@@ -251,15 +254,17 @@ public class PathAlgorithmsUI extends javax.swing.JFrame {
                         .addGap(13, 13, 13))
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                            .addGap(0, 9, Short.MAX_VALUE)
+                            .addGap(0, 0, Short.MAX_VALUE)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(jLabel4))
                             .addGap(11, 11, 11))
                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(exportToCSVButton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(exportHTMLButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(exportToCSVButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGap(0, 0, Short.MAX_VALUE)
+                                    .addComponent(exportHTMLButton, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addContainerGap()))))
         );
         layout.setVerticalGroup(
@@ -348,10 +353,10 @@ public class PathAlgorithmsUI extends javax.swing.JFrame {
     }//GEN-LAST:event_energyEfficientCheckboxActionPerformed
 
     private void calculateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_calculateButtonActionPerformed
-       if(!energyEfficientCheckbox.isSelected() && !energySavingCheckbox.isSelected() && !fastestPathCheckbox.isSelected()){
-           JOptionPane.showMessageDialog(this, "Please select an algorithm first!");
-       }
-        
+        if (!energyEfficientCheckbox.isSelected() && !energySavingCheckbox.isSelected() && !fastestPathCheckbox.isSelected()) {
+            JOptionPane.showMessageDialog(this, "Please select an algorithm first!");
+        }
+
         boolean valid = false;
         double currentLoad = 0;
         if (junctionBeginComboBox.getSelectedItem().equals(junctionEndComboBox.getSelectedItem())) {
@@ -416,7 +421,6 @@ public class PathAlgorithmsUI extends javax.swing.JFrame {
 
     private void exportToCSVButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exportToCSVButtonActionPerformed
         try {
-
             int returnvalue = csvFileChooser.showSaveDialog(this);
             if (returnvalue == JFileChooser.APPROVE_OPTION) {
                 File file = csvFileChooser.getSelectedFile();
@@ -434,7 +438,16 @@ public class PathAlgorithmsUI extends javax.swing.JFrame {
     }//GEN-LAST:event_exportToCSVButtonActionPerformed
 
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
-        // TODO add your handling code here:
+        if (controller.hasResult()) {
+            if (controller.saveResults()) {
+                JOptionPane.showMessageDialog(this, "Results saved with success!", "Results Save", JOptionPane.INFORMATION_MESSAGE);
+            }else{
+                JOptionPane.showMessageDialog(this, "Duplicated Results!", "Results Save", JOptionPane.ERROR_MESSAGE);
+            }
+
+        } else {
+            JOptionPane.showMessageDialog(this, "There are no results to save!", "Results Save", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_saveButtonActionPerformed
 
     private void energySavingCheckboxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_energySavingCheckboxActionPerformed

@@ -24,11 +24,9 @@ public class PathAlgorithmsController {
 
     private Project p;
     private AlgorithmResults result;
-    private ListOfResults listResults;
-
+    
     public PathAlgorithmsController() {
         this.p = Session.getActiveProject();
-        listResults = new ListOfResults();
     }
 
     public Iterable<Junction> getJunctions() {
@@ -59,22 +57,27 @@ public class PathAlgorithmsController {
         }
     }
 
+    public boolean hasResult(){
+        if(result == null){
+            return false;
+        }
+        return true;
+    }
+    
     public void fastestPath(Junction start, Junction end, Vehicle v) {
         PathAlgorithm alg = new FastestPathAlgorithm();
         result = alg.bestPath(p.getRoadNetwork(), start, end, v, 0);
-        listResults.addResult(v, result);
     }
 
     public void theoricalMostEnergyEfficientPath(Junction start, Junction end, Vehicle v, double acceleration) {
         PathAlgorithm alg = new FastestPathAlgorithm();
         result = alg.bestPath(p.getRoadNetwork(), start, end, v, acceleration);
-        listResults.addResult(v, result);
+
     }
 
     public void mostEfficientPathInEnergySavingMode(Junction start, Junction end, Vehicle v, double acceleration) {
         PathAlgorithm alg = new FastestPathAlgorithm();
         result = alg.bestPath(p.getRoadNetwork(), start, end, v, acceleration);
-        listResults.addResult(v, result);
     }
 
     /**
@@ -90,5 +93,9 @@ public class PathAlgorithmsController {
     public void exportCSV(String path) throws Exception {
         ExportCSV export = new ExportCSV(result, path);
         export.createFile();
+    }
+    
+    public boolean saveResults(){
+        return p.getResults().addResult(result.getVehicle(), result);
     }
 }

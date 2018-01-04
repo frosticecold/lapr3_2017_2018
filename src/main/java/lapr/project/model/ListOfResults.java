@@ -22,12 +22,14 @@ public class ListOfResults {
 
     public ListOfResults() {
         mapOfResults = new LinkedHashMap<>();
-    }
+    }   
 
     public boolean addResult(Vehicle v, AlgorithmResults result) {
         boolean added = false;
         if (mapOfResults.containsKey(v)) {
+            if(!mapOfResults.get(v).contains(result)){
             added = mapOfResults.get(v).add(result);
+            }
         } else {
             ArrayList<AlgorithmResults> list = new ArrayList<>();
             list.add(result);
@@ -35,6 +37,10 @@ public class ListOfResults {
             added = true;
         }
         return added;
+    }
+
+    public Map<Vehicle, List<AlgorithmResults>> getMapOfResults() {
+        return mapOfResults;
     }
 
     public Iterator<Vehicle> vehicleIterator() {

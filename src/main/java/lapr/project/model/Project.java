@@ -15,7 +15,7 @@ public class Project {
     private Graph<Junction, Section> roadNetwork;
     private List<Road> listRoads;
     private VehicleList listOfVehicles;
-    private Map<Vehicle, List<AlgorithmResults>> results;
+    private ListOfResults listOfResults;
 
     public Project() {
         name = "";
@@ -23,12 +23,15 @@ public class Project {
         roadNetwork = new Graph<>(true);
         listOfVehicles = new VehicleList();
         listRoads = new ArrayList<>();
-        results = new LinkedHashMap<>();
+        listOfResults = new ListOfResults();
     }
 
     public Project(String name, String description) {
         this.name = name;
         this.description = description;
+        listOfVehicles = new VehicleList();
+        listRoads = new ArrayList<>();
+        listOfResults = new ListOfResults();
     }
 
     /**
@@ -44,6 +47,7 @@ public class Project {
             listOfVehicles.addVehicle(v);
         }
         listRoads = roadList;
+        listOfResults = new ListOfResults();
     }
 
     public Junction getJunction(String junction_id) {
@@ -87,8 +91,8 @@ public class Project {
         return description;
     }
 
-    public Map<Vehicle, List<AlgorithmResults>> getResults() {
-        return results;
+    public ListOfResults getResults() {
+        return listOfResults;
     }
 
     public Section getSection(Junction j1, Junction j2) {
@@ -96,10 +100,6 @@ public class Project {
             throw new IllegalArgumentException("Invalid junction");
         }
         return roadNetwork.getEdge(j1, j2).getElement();
-    }
-
-    public void setResults(Map<Vehicle, List<AlgorithmResults>> m_results) {
-        this.results = m_results;
     }
 
     public void setRoadNetwork(Graph<Junction, Section> m_road_network) {
