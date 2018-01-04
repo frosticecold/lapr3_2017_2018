@@ -60,23 +60,20 @@ public class PathAlgorithmsController {
     }
 
     public void fastestPath(Junction start, Junction end, Vehicle v) {
-        LinkedList<Junction> path = new LinkedList<>();
         PathAlgorithm alg = new FastestPathAlgorithm();
-        result = alg.bestPath(p.getRoadNetwork(), start, end, v, path, 0);
+        result = alg.bestPath(p.getRoadNetwork(), start, end, v, 0);
         listResults.addResult(v, result);
     }
 
     public void theoricalMostEnergyEfficientPath(Junction start, Junction end, Vehicle v, double acceleration) {
-        LinkedList<Junction> path = new LinkedList<>();
         PathAlgorithm alg = new FastestPathAlgorithm();
-        result = alg.bestPath(p.getRoadNetwork(), start, end, v, path, acceleration);
+        result = alg.bestPath(p.getRoadNetwork(), start, end, v, acceleration);
         listResults.addResult(v, result);
     }
 
     public void mostEfficientPathInEnergySavingMode(Junction start, Junction end, Vehicle v, double acceleration) {
-        LinkedList<Junction> path = new LinkedList<>();
         PathAlgorithm alg = new FastestPathAlgorithm();
-        result = alg.bestPath(p.getRoadNetwork(), start, end, v, path, acceleration);
+        result = alg.bestPath(p.getRoadNetwork(), start, end, v, acceleration);
         listResults.addResult(v, result);
     }
 

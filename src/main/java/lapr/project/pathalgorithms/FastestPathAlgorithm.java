@@ -28,8 +28,9 @@ public class FastestPathAlgorithm implements PathAlgorithm {
     private static final int MIN_THROTTLE = 2;
 
     @Override
-    public AlgorithmResults bestPath(Graph<Junction, Section> graph, Junction start, Junction end, Vehicle v, LinkedList<Junction> path, double acceleration) {
-
+    public AlgorithmResults bestPath(Graph<Junction, Section> graph, Junction start, Junction end, Vehicle v,double acceleration) {
+        
+        LinkedList<Junction> path = new LinkedList<>();
         LinkedList<Section> sectionpath = new LinkedList<>();
         double results[] = shortestPath(graph, start, end, v, path, sectionpath);
         AlgorithmResults alg = new AlgorithmResults(Session.getActiveProject(), path, sectionpath, v, results, this.toString());
@@ -38,7 +39,7 @@ public class FastestPathAlgorithm implements PathAlgorithm {
         return alg;
     }
 
-    public static double[] shortestPath(Graph<Junction, Section> graph, Junction vOrig, Junction vDest, Vehicle vehicle, LinkedList<Junction> shortPath, LinkedList<Section> sectionpath) {
+    private static double[] shortestPath(Graph<Junction, Section> graph, Junction vOrig, Junction vDest, Vehicle vehicle, LinkedList<Junction> shortPath, LinkedList<Section> sectionpath) {
         double results[] = {-1, -1};//Results 0)Time 1) Energy
         if (!graph.validVertex(vOrig) || !graph.validVertex(vDest)) {
             return results;

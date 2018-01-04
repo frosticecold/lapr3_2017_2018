@@ -5,7 +5,6 @@
  */
 package lapr.project.pathalgorithms;
 
-import java.util.LinkedList;
 import lapr.project.model.Junction;
 import lapr.project.model.Section;
 import lapr.project.model.Vehicle;
@@ -18,8 +17,8 @@ import lapr.project.utils.graphbase.Graph;
  */
 public interface PathAlgorithm {
 
-    AlgorithmResults bestPath(Graph<Junction, Section> graph, Junction start, Junction end, Vehicle v, LinkedList<Junction> path, double acceleration);
+    public AlgorithmResults bestPath(Graph<Junction, Section> graph, Junction start, Junction end, Vehicle v,double acceleration);
 
-    String toString();
+    public String toString();
 
 }
