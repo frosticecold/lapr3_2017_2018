@@ -7,6 +7,11 @@ package lapr.project.pathalgorithms;
 
 import java.util.LinkedList;
 import lapr.project.calculations.PhysicsCalculus;
+import static lapr.project.calculations.PhysicsCalculus.GEAR_VEC;
+import static lapr.project.calculations.PhysicsCalculus.RPM_VEC;
+import static lapr.project.calculations.PhysicsCalculus.THROTTLE_VEC;
+import static lapr.project.calculations.PhysicsCalculus.TORQUE_VEC;
+import static lapr.project.calculations.PhysicsCalculus.calcVelocityBasedOnRPMandGear;
 import lapr.project.model.Junction;
 import lapr.project.model.Section;
 import lapr.project.model.Segment;
@@ -17,6 +22,10 @@ import lapr.project.utils.graphbase.Edge;
 import lapr.project.utils.graphbase.Graph;
 
 public class FastestPathAlgorithm implements PathAlgorithm {
+
+    private static final int MAX_THROTTLE = 0;
+    private static final int MED_THROTTLE = 1;
+    private static final int MIN_THROTTLE = 2;
 
     @Override
     public AlgorithmResults bestPath(Graph<Junction, Section> graph, Junction start, Junction end, Vehicle v, LinkedList<Junction> path) {
@@ -135,7 +144,7 @@ public class FastestPathAlgorithm implements PathAlgorithm {
         return indice;
     }
 
-    private static double[] calcFastestTime(Section s, Vehicle car) {
+    private static double[] calcFastestTime(Section section, Vehicle car) {
 
         //Vector with results
         //0) Time
@@ -144,15 +153,15 @@ public class FastestPathAlgorithm implements PathAlgorithm {
         double final_time = 0;
         double energy = 0;
 
-        for (Segment segment : s.getSequenceOfSegments()) {
-            double force = PhysicsCalculus.calcForceInSegment(segment, car, s);
-            double carMaxVel = PhysicsCalculus.calcMaximumVelocity(segment, car, s);
-            double time_segment = (segment.getLength() * 1000) / (carMaxVel);
-            double[] ideal_motor_force = PhysicsCalculus.calculateIdealMotorForce(car, segment, force, carMaxVel);
+        for (Segment segment : section.getSequenceOfSegments()) {
+            double force = PhysicsCalculus.calcForceInSegment(segment, car, section);
+            double carVelRelativeToAir = PhysicsCalculus.calcMaximumVelocity(segment, car, section); // Function returns velocity in m/s
+            double carVelRelativeToGround = car.getMaximumPermitedVelocity(section.getTypology()) / 3.6; //Function velocity is in KM/H, multiply by 3.6 to get m/s
+            double time_segment = (segment.getLength() * 1000) / (carVelRelativeToGround);
+            double[] ideal_motor_force = calculateIdealMotorForce(car, segment, force, carVelRelativeToAir);
             double power_generated = PhysicsCalculus.calcEnginePower(ideal_motor_force[PhysicsCalculus.TORQUE_VEC], ideal_motor_force[PhysicsCalculus.RPM_VEC]);
             energy += (power_generated * time_segment);
             final_time += time_segment;
-//            }
         }
         results[0] = final_time;
         results[1] = energy;
@@ -163,5 +172,83 @@ public class FastestPathAlgorithm implements PathAlgorithm {
 
     public String toString() {
         return "Fastest Path";
+    }
+
+    private static double[] calculateIdealMotorForce(Vehicle car, Segment s, final double neededForce, final double carvelocity) {
+        if (car == null || s == null || neededForce < 0) {
+            throw new IllegalArgumentException("Invalid parameter");
+        }
+
+        double results[] = new double[4];
+        //0) Throttle
+        //1) gear
+        //2) rpms
+        //3) torque
+
+        double generated_force[] = new double[3];
+        double needed_sfc[] = new double[3];
+        double max_velocity = 0;
+        double minimum_force = Double.MAX_VALUE;
+        double minimum_sfc = Double.MIN_VALUE;
+
+        int gearSize = car.getGearbox().getNumberOfGears();
+        double final_drive_ratio = car.getFinalDriveRatio();
+        for (int gear = gearSize; gear > 0; gear--) {
+            double gearRatio = car.getGearbox().getGear(gear).getRatio();
+            for (double rpm = car.getMinRpm(); rpm <= car.getMaxRpm(); rpm += 20) {
+
+                generated_force[0] = PhysicsCalculus.motorForceCalculation(car.getTorqueAtThrottle(Vehicle.THROTTLE_MAX, rpm), final_drive_ratio, gearRatio, car.getWheelSize());
+                needed_sfc[0] = car.getAccelerator().getThrottleList().get(Vehicle.THROTTLE_MAX).getSFCByRPM(rpm);
+
+                generated_force[1] = PhysicsCalculus.motorForceCalculation(car.getTorqueAtThrottle(Vehicle.THROTTLE_MEDIUM, rpm), final_drive_ratio, gearRatio, car.getWheelSize());
+                needed_sfc[1] = car.getAccelerator().getThrottleList().get(Vehicle.THROTTLE_MEDIUM).getSFCByRPM(rpm);
+
+                generated_force[2] = PhysicsCalculus.motorForceCalculation(car.getTorqueAtThrottle(Vehicle.THROTTLE_LOW, rpm), final_drive_ratio, gearRatio, car.getWheelSize());
+                needed_sfc[2] = car.getAccelerator().getThrottleList().get(Vehicle.THROTTLE_LOW).getSFCByRPM(rpm);
+                max_velocity = calcVelocityBasedOnRPMandGear(car, rpm, gearRatio);
+                for (int i = 0; i < generated_force.length; i++) {
+                    if (generated_force[i] >= neededForce) {
+                        if (generated_force[i] < minimum_force) {
+                            if (Math.abs(carvelocity - max_velocity) < 0.5) {
+                                //if (needed_sfc[i] > minimum_sfc) {
+                                minimum_sfc = needed_sfc[i];
+                                minimum_force = generated_force[i];
+                                results[THROTTLE_VEC] = convertThrottle(i);
+                                results[GEAR_VEC] = gear;
+                                results[RPM_VEC] = rpm;
+                                results[TORQUE_VEC] = car.getTorqueAtThrottle(convertThrottle(i), rpm);
+                            }
+                        }
+                    } //else {
+//                        if (carvelocity > max_velocity) {
+//                            break;
+//                        }
+
+                    //}
+                }
+
+            }
+        }
+
+        return results;
+    }
+
+    private static int convertThrottle(final int i) {
+        int throttle = 0;
+        switch (i) {
+            case MAX_THROTTLE:
+                throttle = Vehicle.THROTTLE_MAX;
+                break;
+            case MED_THROTTLE:
+                throttle = Vehicle.THROTTLE_MEDIUM;
+                break;
+            case MIN_THROTTLE:
+                throttle = Vehicle.THROTTLE_LOW;
+                break;
+            default:
+                throttle = -1;
+                break;
+        }
+        return throttle;
     }
 }

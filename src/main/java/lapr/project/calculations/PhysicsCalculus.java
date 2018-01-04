@@ -8,9 +8,6 @@ import lapr.project.model.VehicleElectric;
 
 public class PhysicsCalculus {
 
-    private static final int MAX_THROTTLE = 0;
-    private static final int MED_THROTTLE = 1;
-    private static final int MIN_THROTTLE = 2;
 
     public final static double GRAVITY = Constants.GRAVITY;
     public static final double AIR_DENSITY = 1.225;
@@ -171,81 +168,5 @@ public class PhysicsCalculus {
         return fa;
     }
 
-    public static double[] calculateIdealMotorForce(Vehicle car, Segment s, final double neededForce, final double carvelocity) {
-        if (car == null || s == null || neededForce < 0) {
-            throw new IllegalArgumentException("Invalid parameter");
-        }
-
-        double results[] = new double[4];
-        //0) Throttle
-        //1) gear
-        //2) rpms
-        //3) torque
-
-        double generated_force[] = new double[3];
-        double needed_sfc[] = new double[3];
-        double max_velocity = 0;
-        double minimum_force = Double.MAX_VALUE;
-        double minimum_sfc = Double.MIN_VALUE;
-
-        int gearSize = car.getGearbox().getNumberOfGears();
-        double final_drive_ratio = car.getFinalDriveRatio();
-        for (int gear = gearSize; gear > 0; gear--) {
-            double gearRatio = car.getGearbox().getGear(gear).getRatio();
-            for (double rpm = car.getMinRpm(); rpm <= car.getMaxRpm(); rpm += 20) {
-
-                generated_force[0] = PhysicsCalculus.motorForceCalculation(car.getTorqueAtThrottle(Vehicle.THROTTLE_MAX, rpm), final_drive_ratio, gearRatio, car.getWheelSize());
-                needed_sfc[0] = car.getAccelerator().getThrottleList().get(Vehicle.THROTTLE_MAX).getSFCByRPM(rpm);
-
-                generated_force[1] = PhysicsCalculus.motorForceCalculation(car.getTorqueAtThrottle(Vehicle.THROTTLE_MEDIUM, rpm), final_drive_ratio, gearRatio, car.getWheelSize());
-                needed_sfc[1] = car.getAccelerator().getThrottleList().get(Vehicle.THROTTLE_MEDIUM).getSFCByRPM(rpm);
-
-                generated_force[2] = PhysicsCalculus.motorForceCalculation(car.getTorqueAtThrottle(Vehicle.THROTTLE_LOW, rpm), final_drive_ratio, gearRatio, car.getWheelSize());
-                needed_sfc[2] = car.getAccelerator().getThrottleList().get(Vehicle.THROTTLE_LOW).getSFCByRPM(rpm);
-                max_velocity = calcVelocityBasedOnRPMandGear(car, rpm, gearRatio);
-                for (int i = 0; i < generated_force.length; i++) {
-                    if (generated_force[i] >= neededForce) {
-                        if (generated_force[i] < minimum_force) {
-                            if (Math.abs(carvelocity - max_velocity) < 0.5) {
-                                //if (needed_sfc[i] > minimum_sfc) {
-                                minimum_sfc = needed_sfc[i];
-                                minimum_force = generated_force[i];
-                                results[THROTTLE_VEC] = convertThrottle(i);
-                                results[GEAR_VEC] = gear;
-                                results[RPM_VEC] = rpm;
-                                results[TORQUE_VEC] = car.getTorqueAtThrottle(convertThrottle(i), rpm);
-                            }
-                        }
-                    } //else {
-//                        if (carvelocity > max_velocity) {
-//                            break;
-//                        }
-
-                    //}
-                }
-
-            }
-        }
-
-        return results;
-    }
-
-    private static int convertThrottle(final int i) {
-        int throttle = 0;
-        switch (i) {
-            case MAX_THROTTLE:
-                throttle = Vehicle.THROTTLE_MAX;
-                break;
-            case MED_THROTTLE:
-                throttle = Vehicle.THROTTLE_MEDIUM;
-                break;
-            case MIN_THROTTLE:
-                throttle = Vehicle.THROTTLE_LOW;
-                break;
-            default:
-                throttle = -1;
-                break;
-        }
-        return throttle;
-    }
+   
 }
