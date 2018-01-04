@@ -93,6 +93,10 @@ public class AlgorithmResults {
         return vehicleLoad;
     }
 
+    public String getAlgorithmType() {
+        return algorithmType;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -153,4 +157,5 @@ public class AlgorithmResults {
         sb.append("</table>\n");
         return sb.toString();
     }
+
 }
