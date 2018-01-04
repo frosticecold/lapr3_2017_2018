@@ -37,9 +37,9 @@ import lapr.project.utils.graphbase.Graph;
  * @author MarioDias
  */
 public class Mockup extends javax.swing.JFrame {
-    
+
     private static final long serialVersionUID = 1;
-    
+
     private JFileChooser m_jfc;
     private MockUpController controller;
     private boolean DEBUG;
@@ -51,20 +51,23 @@ public class Mockup extends javax.swing.JFrame {
      */
     public Mockup(boolean isDEBUG) {
         initComponents();
-        initDEBUGmenu();
+
         controller = new MockUpController();
         initFileChooser();
         DEBUG = isDEBUG;
-        
+
+        if (isDEBUG) {
+            initDEBUGmenu();
+        }
     }
-    
+
     public void initFileChooser() {
         m_jfc = new JFileChooser();
         FileNameExtensionFilter xmlfilter = new FileNameExtensionFilter("HTML files (*.html)", "html");
         m_jfc.setFileFilter(xmlfilter);
         m_jfc.setCurrentDirectory(new File(System.getProperty("user.dir")));
     }
-    
+
     public void initDEBUGmenu() {
         JMenu debug = new JMenu("Debug");
         JMenuItem loadExampleProject = new JMenuItem("Dummy project");
@@ -73,8 +76,10 @@ public class Mockup extends javax.swing.JFrame {
             public void actionPerformed(ActionEvent e) {
                 try {
                     Project p = new Project();
+                    p.setName("Name is TOP SECRET PROJECT");
+                    p.setDescription("Description super duper");
                     Session.setActiveProject(p);
-                    
+
                     NetworkXML nxml = new NetworkXML();
                     Pair<Graph<Junction, Section>, List<Road>> pair = nxml.importNetwork(new File("TestSet02_Network_v2.xml"));
                     p.setRoadNetwork(pair.getFirstElement());
@@ -90,13 +95,13 @@ public class Mockup extends javax.swing.JFrame {
                 } catch (ImportException ex) {
                     Logger.getLogger(Mockup.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                
+
             }
         });
-        
+
         debug.add(loadExampleProject);
         jMenuBar1.add(debug);
-        
+
     }
 
     /**
@@ -278,7 +283,7 @@ public class Mockup extends javax.swing.JFrame {
 
     private void exportHTMLActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exportHTMLActionPerformed
         try {
-            
+
             int returnvalue = m_jfc.showSaveDialog(this);
             if (returnvalue == JFileChooser.APPROVE_OPTION) {
                 File file = m_jfc.getSelectedFile();
@@ -295,7 +300,7 @@ public class Mockup extends javax.swing.JFrame {
             Logger.getLogger(Mockup.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_exportHTMLActionPerformed
-    
+
     private void openWebPage(String url) {
         try {
             java.awt.Desktop.getDesktop().browse(java.net.URI.create(url));

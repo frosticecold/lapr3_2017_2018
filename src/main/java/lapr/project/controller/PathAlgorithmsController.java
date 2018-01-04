@@ -6,7 +6,9 @@
 package lapr.project.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 import lapr.project.model.Junction;
 import lapr.project.model.ListOfResults;
 import lapr.project.model.Project;
@@ -26,6 +28,7 @@ public class PathAlgorithmsController {
 
     public PathAlgorithmsController() {
         this.p = Session.getActiveProject();
+        listResults = new ListOfResults();
     }
 
     public Iterable<Junction> getJunctions() {
@@ -59,22 +62,22 @@ public class PathAlgorithmsController {
     public void fastestPath(Junction start, Junction end, Vehicle v) {
         LinkedList<Junction> path = new LinkedList<>();
         PathAlgorithm alg = new FastestPathAlgorithm();
-        AlgorithmResults resultfastest = alg.bestPath(p.getRoadNetwork(), start, end, v, path);
-        listResults.addResult(v, resultfastest);
+        result = alg.bestPath(p.getRoadNetwork(), start, end, v, path);
+        listResults.addResult(v, result);
     }
 
     public void theoricalMostEnergyEfficientPath(Junction start, Junction end, Vehicle v) {
         LinkedList<Junction> path = new LinkedList<>();
         PathAlgorithm alg = new FastestPathAlgorithm();
-        AlgorithmResults resultfastest = alg.bestPath(p.getRoadNetwork(), start, end, v, path);
-        listResults.addResult(v, resultfastest);
+        result = alg.bestPath(p.getRoadNetwork(), start, end, v, path);
+        listResults.addResult(v, result);
     }
 
     public void mostEfficientPathInEnergySavingMode(Junction start, Junction end, Vehicle v) {
         LinkedList<Junction> path = new LinkedList<>();
         PathAlgorithm alg = new FastestPathAlgorithm();
-        AlgorithmResults resultfastest = alg.bestPath(p.getRoadNetwork(), start, end, v, path);
-        listResults.addResult(v, resultfastest);
+        result = alg.bestPath(p.getRoadNetwork(), start, end, v, path);
+        listResults.addResult(v, result);
     }
 
     /**
