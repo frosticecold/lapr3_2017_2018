@@ -120,6 +120,7 @@ public class Mockup extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         itemProject = new javax.swing.JMenu();
+        LoginMenuItem = new javax.swing.JMenuItem();
         menuItemCreateProject = new javax.swing.JMenuItem();
         menuItemOpenProject = new javax.swing.JMenuItem();
         itemProjectEditProject = new javax.swing.JMenuItem();
@@ -145,6 +146,15 @@ public class Mockup extends javax.swing.JFrame {
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/analytics_wallpaper.jpg"))); // NOI18N
 
         itemProject.setText("Project");
+
+        LoginMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/keyring-icon.png"))); // NOI18N
+        LoginMenuItem.setText("Login");
+        LoginMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                LoginMenuItemActionPerformed(evt);
+            }
+        });
+        itemProject.add(LoginMenuItem);
 
         menuItemCreateProject.setIcon(new javax.swing.ImageIcon(getClass().getResource("/new_icon.png"))); // NOI18N
         menuItemCreateProject.setText("Create project");
@@ -301,6 +311,11 @@ public class Mockup extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_exportHTMLActionPerformed
 
+    private void LoginMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LoginMenuItemActionPerformed
+        DataBaseConnectionUI ui = new DataBaseConnectionUI(this);
+        ui.setVisible(true);
+    }//GEN-LAST:event_LoginMenuItemActionPerformed
+
     private void openWebPage(String url) {
         try {
             java.awt.Desktop.getDesktop().browse(java.net.URI.create(url));
@@ -343,6 +358,7 @@ public class Mockup extends javax.swing.JFrame {
 //        });
 //    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem LoginMenuItem;
     private javax.swing.JMenuItem algorithmsMenuItem;
     private javax.swing.JMenuItem exportHTML;
     private javax.swing.JMenuItem googleMenuItem;
