@@ -8,7 +8,7 @@ public class DatabaseConnection {
 
     public SQLConnection loginDatabase(String username, String password, String url) {
         if (url.equalsIgnoreCase("jdbc:oracle:thin://@vsrvbd1.dei.isep.ipp.pt:1521/pdborcl") && username.equalsIgnoreCase("LAPR3_G19") && password.equalsIgnoreCase("conan")) {
-            return new SQLConnection(username, password, url);
+            return new SQLConnection(url, username, password);
         }else{
             throw new IllegalArgumentException("Wrong username, password or url inserted!");
         }
