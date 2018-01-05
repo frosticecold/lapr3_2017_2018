@@ -5,6 +5,9 @@
  */
 package lapr.project.ui;
 
+import javax.swing.JOptionPane;
+import lapr.project.controller.DataBaseConnectionController;
+
 /**
  *
  * @author Miguel Santos <1161386@isep.ipp.pt>
@@ -12,13 +15,16 @@ package lapr.project.ui;
 public class DataBaseConnectionUI extends javax.swing.JFrame {
 
     private static final long serialVersionUID = 1;
-    
+
+    private DataBaseConnectionController controller;
+
     /**
      * Creates new form DataBaseConnectionUI2
      */
     public DataBaseConnectionUI(java.awt.Frame parent) {
         initComponents();
         this.setVisible(true);
+        controller = new DataBaseConnectionController();
     }
 
     /**
@@ -41,9 +47,9 @@ public class DataBaseConnectionUI extends javax.swing.JFrame {
         urlJLabel = new javax.swing.JLabel();
         urlTextField = new javax.swing.JTextField();
         okButton = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        cancelButton = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Database Login");
         setResizable(false);
 
@@ -59,11 +65,14 @@ public class DataBaseConnectionUI extends javax.swing.JFrame {
 
         PasswordJLabel.setText("Password");
 
+        usernameJTextField.setText("LAPR3_G19");
         usernameJTextField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 usernameJTextFieldActionPerformed(evt);
             }
         });
+
+        passwordJTextField.setText("conan");
 
         urlJLabel.setText("URL");
 
@@ -77,11 +86,11 @@ public class DataBaseConnectionUI extends javax.swing.JFrame {
             }
         });
 
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/return_icon.png"))); // NOI18N
-        jButton2.setText("Cancel");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        cancelButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/return_icon.png"))); // NOI18N
+        cancelButton.setText("Cancel");
+        cancelButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                cancelButtonActionPerformed(evt);
             }
         });
 
@@ -100,8 +109,8 @@ public class DataBaseConnectionUI extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 213, Short.MAX_VALUE))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(passwordJTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 244, Short.MAX_VALUE)
-                                    .addComponent(usernameJTextField))
+                                    .addComponent(passwordJTextField)
+                                    .addComponent(usernameJTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 244, Short.MAX_VALUE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
@@ -116,7 +125,7 @@ public class DataBaseConnectionUI extends javax.swing.JFrame {
                             .addComponent(PasswordJLabel)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                 .addGroup(layout.createSequentialGroup()
-                                    .addComponent(jButton2)
+                                    .addComponent(cancelButton)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                     .addComponent(okButton))
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -154,7 +163,7 @@ public class DataBaseConnectionUI extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(okButton)
-                    .addComponent(jButton2))
+                    .addComponent(cancelButton))
                 .addGap(8, 8, 8))
             .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
@@ -167,18 +176,31 @@ public class DataBaseConnectionUI extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_usernameJTextFieldActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
         dispose();
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_cancelButtonActionPerformed
 
     private void okButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okButtonActionPerformed
-        // TODO add your handling code here:
+        try {
+            if (!usernameJTextField.getText().isEmpty() && !String.valueOf(passwordJTextField.getPassword()).isEmpty() && !urlTextField.getText().isEmpty()) {
+                String username = usernameJTextField.getText();
+                String password = String.valueOf(passwordJTextField.getPassword());
+                String url = urlTextField.getText();
+                controller.connectToDatabase(username, password, url);
+                JOptionPane.showMessageDialog(this, "Connected to Database with Success!", "Welcome", JOptionPane.INFORMATION_MESSAGE);
+                dispose();
+            } else {
+                JOptionPane.showMessageDialog(this, "Please insert all necessary information", "Error!", JOptionPane.ERROR_MESSAGE);
+            }         
+        } catch (IllegalArgumentException e) {
+            JOptionPane.showMessageDialog(this, "Wrong username or password!", "Error!", JOptionPane.INFORMATION_MESSAGE);
+        }
     }//GEN-LAST:event_okButtonActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel PasswordJLabel;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton cancelButton;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

@@ -21,7 +21,10 @@ public class DataBaseConnectionController {
     private SQLConnection sql;
     
     public DataBaseConnectionController(){
-        this.sql = new DatabaseConnection().getDatabase();
+    }
+    
+    public void connectToDatabase(String username, String password, String url){
+        sql = new DatabaseConnection().loginDatabase(username, password, url);
     }
     
     private SQLConnection getSQLConnection() {
