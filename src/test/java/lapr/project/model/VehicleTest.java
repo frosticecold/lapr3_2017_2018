@@ -626,7 +626,7 @@ public class VehicleTest {
 
         }
         vh1.setAccelerator(new Accelerator());
-        
+
         assertEquals(new Accelerator().toString(), vh1.getAccelerator().toString());
     }
 
@@ -653,4 +653,156 @@ public class VehicleTest {
         int result = vh1.hashCode();
         assertEquals(expResult, result);
     }
+
+    /**
+     * Test of ToStringHTML, of class Vehicle.
+     */
+    @Test
+    public void testToStringHTML() {
+        System.out.println("testToStringHTML");
+        String expResult = "";
+        String result = vh1.toStringHTML();
+        StringBuilder sb = new StringBuilder();
+        sb.append("\t<li>Name: ").append(vh1.getName()).append("</li>\n");
+        sb.append("\t<li>Description: ").append(vh1.getDescription()).append("</li>\n");
+        sb.append("\t<li>Type: ").append(vh1.getType()).append("</li>\n");
+        sb.append("\t<li>Fuel: ").append(vh1.getFuel()).append("</li>\n");
+        sb.append("\t<li>Mass: ").append(vh1.getMass()).append(" Kg</li>\n");
+        sb.append("\t<li>Load: ").append(vh1.getMaxLoad()).append(" Kg</li>\n");
+        sb.append("\t<li>Drag Coefficient: ").append(vh1.getDragCoefficient()).append("</li>\n");
+        sb.append("\t<li>Frontal Area: ").append(vh1.getFrontalArea()).append(" m</li>\n");
+        sb.append("\t<li>RRC: ").append(vh1.getRCC()).append("</li>\n");
+        sb.append("\t<li>Wheel Size: ").append(vh1.getWheelSize()).append(" m</li>\n");
+
+        sb.append("\t<li>Velocity Limits:<ul>\n");
+        sb.append("\t\t<li>").append("HIGHWAY").append(": ")
+                .append("110.0").append(" m/s</li>\n");
+
+        sb.append("\t\t<li>").append("ROAD").append(": ")
+                .append("80.0").append(" m/s</li>\n");
+
+        sb.append("\t</ul></li>\n");
+
+        expResult = sb.toString();
+        assertEquals(expResult, result);
+    }
+
+    
+    /**
+     * Test of Equals, of class Vehicle.
+     */
+    @Test
+    public void testEquals() {
+        System.out.println("testToStringHTML");
+        Map<String, Double> mapRoadVelocityLimit = new HashMap<>();
+        mapRoadVelocityLimit.put("HIGHWAY", 110.0);
+        mapRoadVelocityLimit.put("ROAD", 80.0);
+
+        Gear g1 = new Gear(1, 2.3);
+        Gear g2 = new Gear(2, 3.3);
+        Gear g3 = new Gear(3, 1.7);
+        Gear g4 = new Gear(4, 0.65);
+        Gear g5 = new Gear(5, 0.4);
+        List<Gear> list = new ArrayList<>();
+        list.add(g1);
+        list.add(g2);
+        list.add(g3);
+        list.add(g4);
+        list.add(g5);
+        Gearbox gearbox1 = new Gearbox(list);
+
+        Map<Integer, Throttle> throttleList = new LinkedHashMap<>();
+        Throttle throttle = new Throttle();
+        //Throttle 25 of Pickup in files Vehicles_v2.xml
+        Regime reg1 = new Regime();
+
+        reg1.setTorqueLow(115);
+        reg1.setTorqueHigh(125);
+        reg1.setRpmLow(900);
+        reg1.setRpmHigh(1499);
+        reg1.setSFC(500);
+        throttle.getRegimeList().add(reg1);
+
+        Regime reg2 = new Regime();
+        reg2.setTorqueHigh(125);
+        reg2.setTorqueLow(120);
+        reg2.setRpmLow(1500);
+        reg2.setRpmHigh(2499);
+        reg2.setSFC(450);
+        throttle.getRegimeList().add(reg2);
+
+        Regime reg3 = new Regime();
+        reg3.setTorqueHigh(120);
+        reg3.setTorqueLow(105);
+        reg3.setRpmLow(2500);
+        reg3.setRpmHigh(3499);
+        reg3.setSFC(520);
+        throttle.getRegimeList().add(reg3);
+
+        Regime reg4 = new Regime();
+        reg4.setTorqueHigh(105);
+        reg4.setTorqueLow(90);
+        reg4.setRpmLow(3500);
+        reg4.setRpmHigh(4499);
+        reg4.setSFC(550);
+        throttle.getRegimeList().add(reg4);
+
+        Regime reg5 = new Regime();
+        reg5.setTorqueHigh(90);
+        reg5.setTorqueLow(80);
+        reg5.setRpmLow(4500);
+        reg5.setRpmHigh(5500);
+        reg5.setSFC(650);
+        throttle.getRegimeList().add(reg5);
+
+        throttleList.put(25, throttle);
+
+        Accelerator acc = new Accelerator();
+        acc.setThrottleList(throttleList);
+
+        Vehicle vh2 = new VehicleCombustion(1000, 5000, 4, gearbox1, acc, "Pickup", "Super duper pickup", "Car", Vehicle.FUEL_GASOLINE, 1, "Combustion", 2400, 1200, 0.39, 0.8, 2.4, 0.015, mapRoadVelocityLimit, throttleList);
+        assertTrue(vh1.equals(vh2));
+
+        
+        assertFalse(vh1.equals(null));
+
+        vh2.setMass(500);
+        assertFalse(vh1.equals(vh2));
+        vh2.setMass(vh1.getMass());
+                
+        vh2.setMaxLoad(895);
+        assertFalse(vh1.equals(vh2));
+        vh2.setMaxLoad(vh1.getMaxLoad());
+        
+        vh2.setDragCoefficient(0.98);
+        assertFalse(vh1.equals(vh2));
+        vh2.setDragCoefficient(vh1.getDragCoefficient());
+        
+        vh2.setFrontalArea(123);
+        assertFalse(vh1.equals(vh2));
+        vh2.setFrontalArea(vh1.getFrontalArea());
+        
+        vh2.setRCC(3.26);
+        assertFalse(vh1.equals(vh2));
+        vh2.setRCC(vh1.getRCC());
+        
+        vh2.setDescription("Very Good CAR");
+        assertFalse(vh1.equals(vh2));
+        vh2.setDescription(vh1.getDescription());
+        
+        vh2.setType("Booster");
+        assertFalse(vh1.equals(vh2));
+        vh2.setType(vh1.getType());
+        
+        vh2.setFuel("Crazy Fast");
+        assertFalse(vh1.equals(vh2));
+        vh2.setFuel(vh1.getFuel());
+        
+        vh2.setMotorization("Rocket");
+        assertFalse(vh1.equals(vh2));
+        vh2.setMotorization(vh1.getMotorization());
+        
+    }
+
+    
 }
