@@ -5,6 +5,7 @@
  */
 package lapr.project.ui;
 
+import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.IOException;
 import java.util.logging.Level;
@@ -17,10 +18,11 @@ import lapr.project.model.Junction;
 import lapr.project.model.Vehicle;
 
 public class PathAlgorithmsUI extends javax.swing.JFrame {
-    
+
     private static final long serialVersionUID = 1;
     private PathAlgorithmsController controller;
     private JFileChooser m_jfc;
+    private JFileChooser csvFileChooser;
 
     /**
      * Creates new form FastestPathUI
@@ -36,9 +38,11 @@ public class PathAlgorithmsUI extends javax.swing.JFrame {
             vehicleCombobox.addItem(v);
         }
         initFileChooser();
-        
+        csvFileChooser = new JFileChooser();
+        csvFileChooser.setCurrentDirectory(new File(System.getProperty("user.dir")));
+
     }
-    
+
     public void initFileChooser() {
         m_jfc = new JFileChooser();
         FileNameExtensionFilter xmlfilter = new FileNameExtensionFilter("HTML files (*.html)", "html");
@@ -62,8 +66,8 @@ public class PathAlgorithmsUI extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         fastestPathCheckbox = new javax.swing.JCheckBox();
-        EnergyEfficientCheckbox = new javax.swing.JCheckBox();
-        EnergySavingCheckbox = new javax.swing.JCheckBox();
+        energyEfficientCheckbox = new javax.swing.JCheckBox();
+        energySavingCheckbox = new javax.swing.JCheckBox();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
         jLabel4 = new javax.swing.JLabel();
@@ -75,6 +79,11 @@ public class PathAlgorithmsUI extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         loadJTextField = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
+        exportToCSVButton = new javax.swing.JButton();
+        saveButton = new javax.swing.JButton();
+        accelerationJLabel = new javax.swing.JLabel();
+        accelerationJTextField = new javax.swing.JTextField();
+        accelerationUnitLabel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -94,9 +103,9 @@ public class PathAlgorithmsUI extends javax.swing.JFrame {
             }
         });
 
-        jLabel1.setText("Junction 1:");
+        jLabel1.setText("Begin Juntion:");
 
-        jLabel2.setText("Junction 2:");
+        jLabel2.setText("End Junction:");
 
         fastestPathCheckbox.setForeground(new java.awt.Color(255, 0, 0));
         fastestPathCheckbox.setText("Fastest Path");
@@ -106,17 +115,22 @@ public class PathAlgorithmsUI extends javax.swing.JFrame {
             }
         });
 
-        EnergyEfficientCheckbox.setForeground(new java.awt.Color(0, 51, 204));
-        EnergyEfficientCheckbox.setText("Energy Efficient Path");
-        EnergyEfficientCheckbox.setToolTipText("");
-        EnergyEfficientCheckbox.addActionListener(new java.awt.event.ActionListener() {
+        energyEfficientCheckbox.setForeground(new java.awt.Color(0, 51, 204));
+        energyEfficientCheckbox.setText("Energy Efficient Path");
+        energyEfficientCheckbox.setToolTipText("");
+        energyEfficientCheckbox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                EnergyEfficientCheckboxActionPerformed(evt);
+                energyEfficientCheckboxActionPerformed(evt);
             }
         });
 
-        EnergySavingCheckbox.setForeground(new java.awt.Color(0, 153, 0));
-        EnergySavingCheckbox.setText("Energy Saving Mode Path");
+        energySavingCheckbox.setForeground(new java.awt.Color(0, 153, 0));
+        energySavingCheckbox.setText("Energy Saving Mode Path");
+        energySavingCheckbox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                energySavingCheckboxActionPerformed(evt);
+            }
+        });
 
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
@@ -125,6 +139,7 @@ public class PathAlgorithmsUI extends javax.swing.JFrame {
         jLabel4.setText("Results:");
 
         calculateButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/path_icon.png"))); // NOI18N
+        calculateButton.setMnemonic(KeyEvent.VK_ENTER);
         calculateButton.setText("Calculate");
         calculateButton.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
         calculateButton.addActionListener(new java.awt.event.ActionListener() {
@@ -163,59 +178,94 @@ public class PathAlgorithmsUI extends javax.swing.JFrame {
 
         jLabel7.setText("kg");
 
+        exportToCSVButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/csv_icon.png"))); // NOI18N
+        exportToCSVButton.setText("Export to CSV");
+        exportToCSVButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                exportToCSVButtonActionPerformed(evt);
+            }
+        });
+
+        saveButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/save_icon.png"))); // NOI18N
+        saveButton.setText("Save Results");
+        saveButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                saveButtonActionPerformed(evt);
+            }
+        });
+
+        accelerationJLabel.setText("Acceleration:");
+        accelerationJLabel.setEnabled(false);
+
+        accelerationJTextField.setText("0");
+        accelerationJTextField.setEnabled(false);
+
+        accelerationUnitLabel.setText("m/s²");
+        accelerationUnitLabel.setEnabled(false);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(junctionBeginComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(junctionEndComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(vehicleCombobox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(EnergyEfficientCheckbox)
-                                        .addComponent(fastestPathCheckbox, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(jLabel5))
-                                    .addGap(26, 26, 26))
-                                .addComponent(EnergySavingCheckbox))
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(accelerationJLabel, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(junctionBeginComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(junctionEndComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(vehicleCombobox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(loadJTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel7)))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addComponent(energyEfficientCheckbox)
+                                                .addComponent(fastestPathCheckbox, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(jLabel5))
+                                            .addGap(26, 26, 26))
+                                        .addComponent(energySavingCheckbox))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                            .addComponent(accelerationJTextField, javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(loadJTextField, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 110, Short.MAX_VALUE))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel7)
+                                            .addComponent(accelerationUnitLabel))))
+                                .addGap(0, 0, Short.MAX_VALUE))))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(calculateButton, javax.swing.GroupLayout.PREFERRED_SIZE, 273, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(saveButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jButton2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton1)
                         .addGap(13, 13, 13))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel4))
-                                .addGap(11, 11, 11))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(exportHTMLButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addContainerGap())))))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(14, Short.MAX_VALUE)
-                .addComponent(calculateButton, javax.swing.GroupLayout.PREFERRED_SIZE, 266, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(260, 260, 260))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                            .addGap(0, 0, Short.MAX_VALUE)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel4))
+                            .addGap(11, 11, 11))
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(exportToCSVButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGap(0, 0, Short.MAX_VALUE)
+                                    .addComponent(exportHTMLButton, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addContainerGap()))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -242,19 +292,28 @@ public class PathAlgorithmsUI extends javax.swing.JFrame {
                             .addComponent(loadJTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel7)
                             .addComponent(jLabel6))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(accelerationJLabel)
+                            .addComponent(accelerationJTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(accelerationUnitLabel))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel5)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(fastestPathCheckbox)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(EnergyEfficientCheckbox)
+                        .addComponent(energyEfficientCheckbox)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(EnergySavingCheckbox)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(energySavingCheckbox)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(calculateButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(exportHTMLButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(saveButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(exportToCSVButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
                     .addComponent(jButton2))
@@ -274,14 +333,30 @@ public class PathAlgorithmsUI extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void fastestPathCheckboxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fastestPathCheckboxActionPerformed
-        // TODO add your handling code here:
+        if (fastestPathCheckbox.isSelected()) {
+            accelerationJLabel.setEnabled(false);
+            accelerationJTextField.setEnabled(false);
+            accelerationUnitLabel.setEnabled(false);
+            energyEfficientCheckbox.setSelected(false);
+            energySavingCheckbox.setSelected(false);
+        }
     }//GEN-LAST:event_fastestPathCheckboxActionPerformed
 
-    private void EnergyEfficientCheckboxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EnergyEfficientCheckboxActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_EnergyEfficientCheckboxActionPerformed
+    private void energyEfficientCheckboxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_energyEfficientCheckboxActionPerformed
+        if (energyEfficientCheckbox.isSelected()) {
+            accelerationJLabel.setEnabled(true);
+            accelerationJTextField.setEnabled(true);
+            accelerationUnitLabel.setEnabled(true);
+            fastestPathCheckbox.setSelected(false);
+            energySavingCheckbox.setSelected(false);
+        }
+    }//GEN-LAST:event_energyEfficientCheckboxActionPerformed
 
     private void calculateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_calculateButtonActionPerformed
+        if (!energyEfficientCheckbox.isSelected() && !energySavingCheckbox.isSelected() && !fastestPathCheckbox.isSelected()) {
+            JOptionPane.showMessageDialog(this, "Please select an algorithm first!");
+        }
+
         boolean valid = false;
         double currentLoad = 0;
         if (junctionBeginComboBox.getSelectedItem().equals(junctionEndComboBox.getSelectedItem())) {
@@ -299,15 +374,16 @@ public class PathAlgorithmsUI extends javax.swing.JFrame {
                     currentLoad = load;
                 }
             }
-            
+
         }
-        if (valid = true) {
+        if (valid == true) {
             if (fastestPathCheckbox.isSelected()) {
                 Junction begin = (Junction) junctionBeginComboBox.getSelectedItem();
                 Junction end = (Junction) junctionEndComboBox.getSelectedItem();
                 Vehicle v = (Vehicle) vehicleCombobox.getSelectedItem();
                 v.setCurrentLoad(currentLoad);
-                controller.fastestPath(begin, end, v);
+                double acceleration = Double.parseDouble(accelerationJTextField.getText());
+                controller.bestPath(fastestPathCheckbox.isSelected(), energyEfficientCheckbox.isSelected(), energySavingCheckbox.isSelected(), begin, end, v, acceleration);
                 jTextArea1.setText(controller.getResultsAsText());
                 v.setCurrentLoad(0);
             }
@@ -321,7 +397,7 @@ public class PathAlgorithmsUI extends javax.swing.JFrame {
 
     private void exportHTMLButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exportHTMLButtonActionPerformed
         try {
-            
+
             int returnvalue = m_jfc.showSaveDialog(this);
             if (returnvalue == JFileChooser.APPROVE_OPTION) {
                 File file = m_jfc.getSelectedFile();
@@ -330,7 +406,7 @@ public class PathAlgorithmsUI extends javax.swing.JFrame {
                     path += ".html";
                 }
                 controller.exportHTML(path);
-                JOptionPane.showMessageDialog(this, "Project exported with success.", "Project Export", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Results exported with success.", "Results Export", JOptionPane.INFORMATION_MESSAGE);
             }
         } catch (NullPointerException n) {
             JOptionPane.showMessageDialog(this, "No active project to export", "Error", JOptionPane.ERROR_MESSAGE);
@@ -343,12 +419,57 @@ public class PathAlgorithmsUI extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_loadJTextFieldActionPerformed
 
+    private void exportToCSVButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exportToCSVButtonActionPerformed
+        try {
+            int returnvalue = csvFileChooser.showSaveDialog(this);
+            if (returnvalue == JFileChooser.APPROVE_OPTION) {
+                File file = csvFileChooser.getSelectedFile();
+                String path = file.getPath();
+                controller.exportCSV(path);
+                JOptionPane.showMessageDialog(this, "Results exported with success.", "Results Export", JOptionPane.INFORMATION_MESSAGE);
+            }
+        } catch (NullPointerException n) {
+            JOptionPane.showMessageDialog(this, "No active project to export", "Error", JOptionPane.ERROR_MESSAGE);
+        } catch (IOException ex) {
+            Logger.getLogger(Mockup.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+            Logger.getLogger(PathAlgorithmsUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_exportToCSVButtonActionPerformed
+
+    private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
+        if (controller.hasResult()) {
+            if (controller.saveResults()) {
+                JOptionPane.showMessageDialog(this, "Results saved with success!", "Results Save", JOptionPane.INFORMATION_MESSAGE);
+            }else{
+                JOptionPane.showMessageDialog(this, "Duplicated Results!", "Results Save", JOptionPane.ERROR_MESSAGE);
+            }
+
+        } else {
+            JOptionPane.showMessageDialog(this, "There are no results to save!", "Results Save", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_saveButtonActionPerformed
+
+    private void energySavingCheckboxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_energySavingCheckboxActionPerformed
+        if (energySavingCheckbox.isSelected()) {
+            accelerationJLabel.setEnabled(true);
+            accelerationJTextField.setEnabled(true);
+            accelerationUnitLabel.setEnabled(true);
+            fastestPathCheckbox.setSelected(false);
+            energyEfficientCheckbox.setSelected(false);
+        }
+    }//GEN-LAST:event_energySavingCheckboxActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JCheckBox EnergyEfficientCheckbox;
-    private javax.swing.JCheckBox EnergySavingCheckbox;
+    private javax.swing.JLabel accelerationJLabel;
+    private javax.swing.JTextField accelerationJTextField;
+    private javax.swing.JLabel accelerationUnitLabel;
     private javax.swing.JButton calculateButton;
+    private javax.swing.JCheckBox energyEfficientCheckbox;
+    private javax.swing.JCheckBox energySavingCheckbox;
     private javax.swing.JButton exportHTMLButton;
+    private javax.swing.JButton exportToCSVButton;
     private javax.swing.JCheckBox fastestPathCheckbox;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
@@ -364,6 +485,7 @@ public class PathAlgorithmsUI extends javax.swing.JFrame {
     private javax.swing.JComboBox<Junction> junctionBeginComboBox;
     private javax.swing.JComboBox<Junction> junctionEndComboBox;
     private javax.swing.JTextField loadJTextField;
+    private javax.swing.JButton saveButton;
     private javax.swing.JComboBox<Vehicle> vehicleCombobox;
     // End of variables declaration//GEN-END:variables
 }

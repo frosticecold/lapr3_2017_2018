@@ -67,7 +67,7 @@ public class ProjectData extends DataAccess<Project> {
                 SegmentData sd = new SegmentData(connection);
                 List<Segment> segments = sd.get(String.valueOf(section.getSectionID()));
                 section.setSegmentList(segments);
-                
+
                 switch (section.getDirection()) {
                     case DIRECT:
                         g.insertEdge(j1, j2, section, distance);
@@ -82,15 +82,15 @@ public class ProjectData extends DataAccess<Project> {
                 }
             }
             p.setRoadNetwork(g);
-            
+
             RoadData r = new RoadData(connection);
             List<Road> roads = r.get(name);
-            
+
             p.setListRoads(roads);
-            
+
             VehicleData v = new VehicleData(connection);
             VehicleList vehicles = v.get(name);
-            
+
             p.setListVehicles(vehicles);
 
         }
@@ -98,43 +98,50 @@ public class ProjectData extends DataAccess<Project> {
     }
 
     public void insertProject(Project p) throws SQLException {
-        if(connection == null) {
+        if (connection == null) {
             return;
         }
-        
+
         List<SQLArgument> args1 = new ArrayList<>();
         args1.add(new SQLArgument(p.getName(), OracleTypes.VARCHAR));
         args1.add(new SQLArgument(p.getDescription(), OracleTypes.VARCHAR));
-        
+
         super.callProcedure("insertProject", args1);
-        
+
         String pName = p.getName();
-        
+
+        for (int i = 1; i <= 3; i++) {
+            args1.clear();
+            args1.add(new SQLArgument(Integer.toString(i), OracleTypes.NUMBER));
+            super.callProcedure("insertTollClass", args1);
+        }
+
         JunctionData jd = new JunctionData(connection);
-        for (Junction j: p.getRoadNetwork().vertices()) {
+        for (Junction j : p.getRoadNetwork().vertices()) {
             jd.insert(pName, j);
         }
-        
+
         RoadData rd = new RoadData(connection);
         for (Road r : p.getListRoads()) {
             rd.insert(pName, r);
         }
-        
-        VehicleData vd = new VehicleData(connection);
-        for(Vehicle v : p.getListVehicles().getVehicleList()) {
-            vd.insert(pName, v);
+
+        DirectionData dd = new DirectionData(connection);
+        for (Direction d : Direction.values()) {
+            dd.insert(d.name());
         }
-        
+
         SectionData sd = new SectionData(connection);
-        for(Edge<Junction,Section> edge : p.getRoadNetwork().edges()){
+        for (Edge<Junction, Section> edge : p.getRoadNetwork().edges()) {
             Section s = edge.getElement();
             sd.insert(pName, s);
         }
-        
-        DirectionData dd = new DirectionData(connection);
-        for(Direction d: Direction.values()) {
-            dd.insert(d.name());
+
+        VehicleData vd = new VehicleData(connection);
+        for (Vehicle v : p.getListVehicles().getVehicleList()) {
+            vd.insert(pName, v);
         }
+
     }
 
 }

@@ -43,7 +43,7 @@ public class Section {
         this.beginningJunction = s.beginningJunction;
         this.endingJunction = s.endingJunction;
         this.roadID = s.roadID;
-        this.sectionID = s.sectionID;
+        this.sectionID = ++sectionCounter;
         this.typology = s.typology;
 
         this.listOfSegments = new ArrayList<>();

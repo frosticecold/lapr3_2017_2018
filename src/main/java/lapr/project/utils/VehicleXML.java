@@ -59,6 +59,7 @@ public class VehicleXML implements FileFormat {
     private static final String VELOCITY_LIMIT_TAG = "velocity_limit";
     private static final String SEGMENT_TYPE_TAG = "segment_type";
     private static final String LIMIT_TAG = "limit";
+    private static final String ENERGY_REGENERATION_RATIO_TAG = "energy_regeneration_ratio";
 
     private File file;
     private XMLStreamReader reader;
@@ -348,6 +349,12 @@ public class VehicleXML implements FileFormat {
                 vehicle.setRoadVelocityLimit(velocityLimitList);
                 break;
             }
+            
+            case ENERGY_REGENERATION_RATIO_TAG:{
+                if(vehicle instanceof VehicleElectric){
+                    ((VehicleElectric) vehicle).setEnergyRegenerationRatio(Double.parseDouble(this.elementContent));
+                }
+            }
         }
     }
 
@@ -360,10 +367,12 @@ public class VehicleXML implements FileFormat {
         switch (this.elementContent) {
             case ELETRIC_VEHICLE_TAG: {
                 this.vehicle = new VehicleElectric();
+                vehicle.setMotorization(this.elementContent);
                 break;
             }
             case COMBUSTION_VEHICLE_TAG: {
                 this.vehicle = new VehicleCombustion();
+                vehicle.setMotorization(this.elementContent);
                 break;
             }
             default:

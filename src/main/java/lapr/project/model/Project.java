@@ -15,7 +15,7 @@ public class Project {
     private Graph<Junction, Section> roadNetwork;
     private List<Road> listRoads;
     private VehicleList listOfVehicles;
-    private Map<Vehicle, List<AlgorithmResults>> results;
+    private ListOfResults listOfResults;
 
     public Project() {
         name = "";
@@ -23,12 +23,15 @@ public class Project {
         roadNetwork = new Graph<>(true);
         listOfVehicles = new VehicleList();
         listRoads = new ArrayList<>();
-        results = new LinkedHashMap<>();
+        listOfResults = new ListOfResults();
     }
 
     public Project(String name, String description) {
         this.name = name;
         this.description = description;
+        listOfVehicles = new VehicleList();
+        listRoads = new ArrayList<>();
+        listOfResults = new ListOfResults();
     }
 
     /**
@@ -38,12 +41,13 @@ public class Project {
      * @param roadList
      */
     public Project(Graph<Junction, Section> roadNetwork, List<Vehicle> vehiclesList, List<Road> roadList) {
-        roadNetwork = roadNetwork;
+        this.roadNetwork = roadNetwork;
         listOfVehicles = new VehicleList();
         for (Vehicle v : vehiclesList) {
             listOfVehicles.addVehicle(v);
         }
         listRoads = roadList;
+        listOfResults = new ListOfResults();
     }
 
     public Junction getJunction(String junction_id) {
@@ -87,8 +91,8 @@ public class Project {
         return description;
     }
 
-    public Map<Vehicle, List<AlgorithmResults>> getResults() {
-        return results;
+    public ListOfResults getResults() {
+        return listOfResults;
     }
 
     public Section getSection(Junction j1, Junction j2) {
@@ -96,10 +100,6 @@ public class Project {
             throw new IllegalArgumentException("Invalid junction");
         }
         return roadNetwork.getEdge(j1, j2).getElement();
-    }
-
-    public void setResults(Map<Vehicle, List<AlgorithmResults>> m_results) {
-        this.results = m_results;
     }
 
     public void setRoadNetwork(Graph<Junction, Section> m_road_network) {
@@ -189,7 +189,7 @@ public class Project {
 
     @Override
     public String toString() {
-        return "Project{" + "m_road_network=" + roadNetwork + ", m_list_vehicles=" + listOfVehicles + ", m_list_roads=" + listRoads + ", m_name=" + name + ", m_description=" + description + '}';
+        return this.name;
     }
 
 }

@@ -111,8 +111,8 @@ public class VehicleData extends DataAccess<Vehicle> {
         args.add(new SQLArgument(v.getDescription(), OracleTypes.VARCHAR));
         args.add(new SQLArgument(v.getType(), OracleTypes.VARCHAR));
         args.add(new SQLArgument(v.getFuel(), OracleTypes.VARCHAR));
-        args.add(new SQLArgument(Integer.toString(v.getVehicleClass()), OracleTypes.NUMBER));
         args.add(new SQLArgument(v.getMotorization(), OracleTypes.VARCHAR));
+        args.add(new SQLArgument(Integer.toString(v.getVehicleClass()), OracleTypes.NUMBER));
         args.add(new SQLArgument(Double.toString(v.getWheelSize()), OracleTypes.NUMBER));
         args.add(new SQLArgument(Double.toString(v.getMass()), OracleTypes.NUMBER));
         args.add(new SQLArgument(Double.toString(v.getMaxLoad()), OracleTypes.NUMBER));
@@ -122,20 +122,22 @@ public class VehicleData extends DataAccess<Vehicle> {
         args.add(new SQLArgument(Double.toString(v.getMinRpm()), OracleTypes.NUMBER));
         args.add(new SQLArgument(Double.toString(v.getMaxRpm()), OracleTypes.NUMBER));
         args.add(new SQLArgument(Double.toString(v.getFinalDriveRatio()), OracleTypes.NUMBER));
-        if(v instanceof VehicleElectric) {
-            args.add(new SQLArgument(Double.toString(((VehicleElectric) v).getEnergyRegenerationRatio()),OracleTypes.NUMBER));
+        if (v instanceof VehicleElectric) {
+            args.add(new SQLArgument(Double.toString(((VehicleElectric) v).getEnergyRegenerationRatio()), OracleTypes.NUMBER));
         } else {
-            args.add(new SQLArgument(null, OracleTypes.NULL));
+            args.add(new SQLArgument(Double.toString(new Double(0)), OracleTypes.NUMBER));
         }
-        
+
+        System.out.println(args);
+
         super.callProcedure("insertVehicle", args);
-        
+
         GearboxData gd = new GearboxData(connection);
         gd.insert(v.getName(), v.getGearbox());
-        
+
         AcceleratorData ad = new AcceleratorData(connection);
         ad.insert(v.getName(), v.getAccelerator());
-        
+
     }
 
 }

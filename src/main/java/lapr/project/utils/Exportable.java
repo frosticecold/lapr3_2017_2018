@@ -5,12 +5,6 @@
  */
 package lapr.project.utils;
 
-import java.util.List;
-import lapr.project.model.Project;
-import lapr.project.networkanalysis.NetworkAnalysis;
-
 interface Exportable {
-   
-
 
 }
