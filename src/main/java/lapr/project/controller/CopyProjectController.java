@@ -1,6 +1,7 @@
 package lapr.project.controller;
 
 import java.sql.SQLException;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import lapr.project.database.ProjectData;
@@ -13,19 +14,24 @@ public class CopyProjectController {
 
     public boolean copyProject(String name) {
 
-        Project p = Session.getActiveProject();
-
-        p.setName(name);
-
-        ProjectData pd = new ProjectData(Session.getConnection().getConnection());
-
         try {
-            pd.insertProject(p);
+            ProjectData pd = new ProjectData(Session.getConnection().getConnection());
+            List<String> projectNames = pd.getAllProjectsNames();
+            Project p = Session.getActiveProject();
+
+            if (!projectNames.contains(name)) {
+                p.setName(name);
+                p.getResults().clearList();
+
+                pd.insertProject(p);
+
+                Session.setActiveProject(p);
+            } else {
+                return false;
+            }
         } catch (SQLException ex) {
             Logger.getLogger(CopyProjectController.class.getName()).log(Level.SEVERE, null, ex);
-            return false;
         }
-        Session.setActiveProject(p);
         return true;
     }
 
