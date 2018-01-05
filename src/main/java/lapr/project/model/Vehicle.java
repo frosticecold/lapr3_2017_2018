@@ -137,6 +137,8 @@ public abstract class Vehicle {
      * Value for the electric fuel type
      */
     public static final String FUEL_ELETRIC = "electric";
+    
+    public static int vehicleCounter =0;
 
     /**
      * Empty constructor
@@ -283,6 +285,14 @@ public abstract class Vehicle {
 
     public int getVehicleClass() {
         return vehicleClass;
+    }
+
+    public int getVehicleCounter() {
+        return vehicleCounter;
+    }
+
+    public void setVehicleCounter(int vehicleCounter) {
+        Vehicle.vehicleCounter = vehicleCounter;
     }
 
     public double getTorqueAtThrottle(int throttle, double rpm) {

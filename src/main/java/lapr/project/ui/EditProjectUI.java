@@ -2,9 +2,14 @@
  */
 package lapr.project.ui;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import lapr.project.controller.EditProjectController;
+import lapr.project.utils.ImportException;
 
 /**
  *
@@ -14,20 +19,31 @@ public class EditProjectUI extends javax.swing.JDialog {
 
     private static final long serialVersionUID = 1;
     private EditProjectController controller;
+    private JFileChooser jfc;
+    private static final String IMPORT_NETWORK_TITLE = "Import RoadNetwork";
+    private static final String IMPORT_VEHICLE_TITLE = "Import Vehicles";
 
     /**
      * Creates new form EditProjectUI
      */
     public EditProjectUI(JFrame parent) {
-        super(parent,true);
+        super(parent, true);
         initComponents();
+        initFileChooser();
         controller = new EditProjectController();
         if (controller.getActiveProject() == null) {
             JOptionPane.showMessageDialog(this, "There is not an active project at the moment.\nPress OK to close");
-            
+
         } else {
             jtf_currentProject.setText(controller.getActiveProjectName());
         }
+    }
+
+    public void initFileChooser() {
+        jfc = new JFileChooser();
+        FileNameExtensionFilter xmlfilter = new FileNameExtensionFilter("XML files (*.xml)", "xml");
+        jfc.setFileFilter(xmlfilter);
+        jfc.setCurrentDirectory(new File(System.getProperty("user.dir")));
     }
 
     /**
@@ -42,32 +58,37 @@ public class EditProjectUI extends javax.swing.JDialog {
         jl_name = new javax.swing.JLabel();
         jl_description = new javax.swing.JLabel();
         jtf_name = new javax.swing.JTextField();
-        jtf_description = new javax.swing.JTextField();
-        jb_save = new javax.swing.JButton();
-        jb_cancel = new javax.swing.JButton();
+        saveButton = new javax.swing.JButton();
+        cancelButton = new javax.swing.JButton();
         jl_name1 = new javax.swing.JLabel();
         jtf_currentProject = new javax.swing.JTextField();
-        btn_roads = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        newRoadNetworkButton = new javax.swing.JButton();
+        newVehiclesButton = new javax.swing.JButton();
+        newVehiclesJLabel = new javax.swing.JLabel();
+        newRoadNetworkJLabel = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jtf_description = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Edit Project");
 
         jl_name.setText("Name:");
 
-        jl_description.setText("Description:");
+        jl_description.setText("Description");
 
-        jb_save.setText("Save");
-        jb_save.addActionListener(new java.awt.event.ActionListener() {
+        saveButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/save_icon.png"))); // NOI18N
+        saveButton.setText("Save");
+        saveButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jb_saveActionPerformed(evt);
+                saveButtonActionPerformed(evt);
             }
         });
 
-        jb_cancel.setText("Cancel");
-        jb_cancel.addActionListener(new java.awt.event.ActionListener() {
+        cancelButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/return_icon.png"))); // NOI18N
+        cancelButton.setText("Cancel");
+        cancelButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jb_cancelActionPerformed(evt);
+                cancelButtonActionPerformed(evt);
             }
         });
 
@@ -75,9 +96,33 @@ public class EditProjectUI extends javax.swing.JDialog {
 
         jtf_currentProject.setEditable(false);
 
-        btn_roads.setText("New Roads");
+        newRoadNetworkButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/roadNetwork_icon.png"))); // NOI18N
+        newRoadNetworkButton.setText("New Roads");
+        newRoadNetworkButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                newRoadNetworkButtonActionPerformed(evt);
+            }
+        });
 
-        jButton2.setText("New Vehicles");
+        newVehiclesButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vehicle_icon.png"))); // NOI18N
+        newVehiclesButton.setText("New Vehicles");
+        newVehiclesButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                newVehiclesButtonActionPerformed(evt);
+            }
+        });
+
+        newVehiclesJLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/check_icon.png"))); // NOI18N
+        newVehiclesJLabel.setText("Not Imported");
+        newVehiclesJLabel.setEnabled(false);
+
+        newRoadNetworkJLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/check_icon.png"))); // NOI18N
+        newRoadNetworkJLabel.setText("Not Imported");
+        newRoadNetworkJLabel.setEnabled(false);
+
+        jtf_description.setColumns(20);
+        jtf_description.setRows(5);
+        jScrollPane1.setViewportView(jtf_description);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -85,25 +130,41 @@ public class EditProjectUI extends javax.swing.JDialog {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addComponent(cancelButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(saveButton)
+                .addGap(22, 22, 22))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(82, 82, 82)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(newVehiclesButton, javax.swing.GroupLayout.DEFAULT_SIZE, 141, Short.MAX_VALUE)
+                    .addComponent(newRoadNetworkButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jb_cancel)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jb_save))
+                        .addComponent(newRoadNetworkJLabel)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
+                        .addComponent(newVehiclesJLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(65, 65, 65))))
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(52, 52, 52)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jl_name)
-                            .addComponent(jl_description)
-                            .addComponent(jl_name1))
+                            .addComponent(jl_name1)
+                            .addComponent(jl_name))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jtf_name)
-                            .addComponent(jtf_description)
-                            .addComponent(jtf_currentProject, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(btn_roads)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 78, Short.MAX_VALUE)
-                                .addComponent(jButton2)))))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jtf_currentProject, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jtf_name, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(6, 6, 6)
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 368, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jl_description))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -117,30 +178,34 @@ public class EditProjectUI extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jtf_name, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jl_name))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jl_description)
-                    .addComponent(jtf_description, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btn_roads)
-                    .addComponent(jButton2))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jl_description)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jb_save)
-                    .addComponent(jb_cancel))
-                .addContainerGap(7, Short.MAX_VALUE))
+                    .addComponent(newVehiclesButton)
+                    .addComponent(newVehiclesJLabel))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(newRoadNetworkButton)
+                    .addComponent(newRoadNetworkJLabel))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(saveButton)
+                    .addComponent(cancelButton))
+                .addGap(11, 11, 11))
         );
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jb_cancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_cancelActionPerformed
+    private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
         dispose();
-    }//GEN-LAST:event_jb_cancelActionPerformed
+    }//GEN-LAST:event_cancelButtonActionPerformed
 
-    private void jb_saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_saveActionPerformed
+    private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
         String nameProject = jtf_name.getText();
         String descriptionProject = jtf_description.getText();
         if (nameProject.isEmpty() || descriptionProject.isEmpty()) {
@@ -151,18 +216,56 @@ public class EditProjectUI extends javax.swing.JDialog {
             controller.editNewProject(nameProject, descriptionProject);
         }
         dispose();
-    }//GEN-LAST:event_jb_saveActionPerformed
+    }//GEN-LAST:event_saveButtonActionPerformed
+
+    private void newVehiclesButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newVehiclesButtonActionPerformed
+        jfc.setDialogTitle(IMPORT_VEHICLE_TITLE);
+        int returnvalue = jfc.showOpenDialog(this);
+        if (returnvalue == JFileChooser.APPROVE_OPTION) {
+            try {
+                controller.addVehicles(jfc.getSelectedFile());
+                newVehiclesJLabel.setEnabled(true);
+                newVehiclesJLabel.setText("Imported");
+                JOptionPane.showMessageDialog(this, "Vehicles were imported with success.", "Vehicle import", JOptionPane.INFORMATION_MESSAGE);
+            } catch (FileNotFoundException ex) {
+                JOptionPane.showMessageDialog(this, "There was an error importing the file", "Error", JOptionPane.ERROR_MESSAGE);
+            } catch (ImportException ex) {
+                JOptionPane.showMessageDialog(this, "There was an error importing the file", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+
+        }
+    }//GEN-LAST:event_newVehiclesButtonActionPerformed
+
+    private void newRoadNetworkButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newRoadNetworkButtonActionPerformed
+        jfc.setDialogTitle(IMPORT_NETWORK_TITLE);
+        int returnvalue = jfc.showOpenDialog(this);
+        if (returnvalue == JFileChooser.APPROVE_OPTION) {
+            try {
+                controller.addRoadNetwork(jfc.getSelectedFile());
+                newRoadNetworkJLabel.setEnabled(true);
+                newRoadNetworkJLabel.setText("Imported");
+                JOptionPane.showMessageDialog(this, "Roadnetwork was imported with success.", "Roadnetwork import", JOptionPane.INFORMATION_MESSAGE);
+            } catch (FileNotFoundException ex) {
+                JOptionPane.showMessageDialog(this, "There was an error importing the file", "Error", JOptionPane.ERROR_MESSAGE);
+            } catch (ImportException ex) {
+                JOptionPane.showMessageDialog(this, "There was an error importing the file", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }//GEN-LAST:event_newRoadNetworkButtonActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btn_roads;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jb_cancel;
-    private javax.swing.JButton jb_save;
+    private javax.swing.JButton cancelButton;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel jl_description;
     private javax.swing.JLabel jl_name;
     private javax.swing.JLabel jl_name1;
     private javax.swing.JTextField jtf_currentProject;
-    private javax.swing.JTextField jtf_description;
+    private javax.swing.JTextArea jtf_description;
     private javax.swing.JTextField jtf_name;
+    private javax.swing.JButton newRoadNetworkButton;
+    private javax.swing.JLabel newRoadNetworkJLabel;
+    private javax.swing.JButton newVehiclesButton;
+    private javax.swing.JLabel newVehiclesJLabel;
+    private javax.swing.JButton saveButton;
     // End of variables declaration//GEN-END:variables
 }
