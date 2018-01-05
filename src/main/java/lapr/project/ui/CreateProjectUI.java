@@ -188,11 +188,11 @@ public class CreateProjectUI extends JDialog {
                 JOptionPane.showMessageDialog(rootPane, "Load Files First", "Error", JOptionPane.ERROR_MESSAGE);
             } else {
                 try {
-                    if (controller.createProject(title, description)) {
+                    if (!controller.createProject(title, description)) {
+                        JOptionPane.showMessageDialog(rootPane, "Name and description already exist or are empty.");
+                    } else {
                         JOptionPane.showMessageDialog(this, "Project was created successfully", "Created a project", JOptionPane.INFORMATION_MESSAGE);
                         dispose();
-                    } else {
-                        JOptionPane.showMessageDialog(rootPane, "Name and description already exist or are empty.");
                     }
                 } catch (SQLException ex) {
                     Logger.getLogger(CreateProjectUI.class.getName()).log(Level.SEVERE, null, ex);
@@ -214,7 +214,6 @@ public class CreateProjectUI extends JDialog {
             } catch (ImportException ex) {
                 JOptionPane.showMessageDialog(this, "There was an error importing the file", "Error", JOptionPane.ERROR_MESSAGE);
             }
-
         }
 
     }//GEN-LAST:event_btnImportVehicleActionPerformed
@@ -232,7 +231,6 @@ public class CreateProjectUI extends JDialog {
                 JOptionPane.showMessageDialog(this, "There was an error importing the file", "Error", JOptionPane.ERROR_MESSAGE);
             }
         }
-
     }//GEN-LAST:event_btnImportRoadNetworkActionPerformed
 
     private void txtfield_project_titleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtfield_project_titleActionPerformed

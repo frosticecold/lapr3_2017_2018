@@ -29,7 +29,6 @@ public class CreateProjectController {
         roadNetwork = new Graph<>(true);
         listVehicles = new ArrayList<>();
         listRoads = new ArrayList<>();
-
     }
 
     public Graph<Junction, Section> getRoadNetwork() {
@@ -77,7 +76,6 @@ public class CreateProjectController {
         } else {
             throw new ImportException();
         }
-
     }
 
     public void importNetwork(File file) throws FileNotFoundException, ImportException {
@@ -87,6 +85,5 @@ public class CreateProjectController {
 
         roadNetwork = pair.getFirstElement();
         listRoads = pair.getSecondElement();
-
     }
 }

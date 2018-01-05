@@ -10,8 +10,6 @@ import lapr.project.utils.Session;
 
 public class CopyProjectController {
 
-    private Project proj;
-
     public boolean copyProject(String name) {
 
         try {
@@ -33,9 +31,5 @@ public class CopyProjectController {
             Logger.getLogger(CopyProjectController.class.getName()).log(Level.SEVERE, null, ex);
         }
         return true;
-    }
-
-    public Project getActiveProject() {
-        return proj;
     }
 }
