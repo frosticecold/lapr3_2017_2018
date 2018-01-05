@@ -145,7 +145,7 @@ public class FastestPathAlgorithm implements PathAlgorithm {
         return indice;
     }
 
-    private static double[] calcFastestTime(Section section, Vehicle car) {
+     private static double[] calcFastestTime(Section section, Vehicle car) {
 
         //Vector with results
         //0) Time

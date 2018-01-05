@@ -8,7 +8,6 @@ import lapr.project.model.VehicleElectric;
 
 public class PhysicsCalculus {
 
-
     public final static double GRAVITY = Constants.GRAVITY;
     public static final double AIR_DENSITY = 1.225;
     public static final int THROTTLE_VEC = 0;
@@ -168,5 +167,14 @@ public class PhysicsCalculus {
         return fa;
     }
 
-   
+    public static double calcTimeBasedOnVelocityAndAcceleration(double desiredVelocity, double initialVelocity, double acceleration) {
+        double time = (desiredVelocity - initialVelocity) / Math.abs(acceleration);
+        return time;
+    }
+
+    public static double calcDistance(double initialvelocity, double acceleration, double time) {
+        double distance = (initialvelocity * time) + (0.5 * acceleration * time * time);
+        return distance;
+    }
+
 }
