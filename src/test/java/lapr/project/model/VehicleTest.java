@@ -120,6 +120,17 @@ public class VehicleTest {
         String expResult = "Pickup";
         String result = vh1.getName();
         assertEquals(expResult, result);
+
+        try {
+            vh1.setName(null);
+        } catch (IllegalArgumentException t) {
+            System.out.println("Error inserting name, name is null");
+        }
+        try {
+            vh1.setName("");
+        } catch (IllegalArgumentException t) {
+            System.out.println("Error inserting name, name is null");
+        }
     }
 
     /**
@@ -190,6 +201,17 @@ public class VehicleTest {
         String expResult = "Car";
         String result = vh1.getType();
         assertEquals(expResult, result);
+
+        try {
+            vh1.setType(null);
+        } catch (IllegalArgumentException t) {
+            System.out.println("Error inserting type");
+        }
+        try {
+            vh1.setType("");
+        } catch (IllegalArgumentException t) {
+            System.out.println("Error inserting type");
+        }
     }
 
     /**
@@ -201,6 +223,16 @@ public class VehicleTest {
         String expResult = "Super duper pickup";
         String result = vh1.getDescription();
         assertEquals(expResult, result);
+        try {
+            vh1.setDescription("");
+        } catch (IllegalArgumentException t) {
+            System.out.println("Error inserting type");
+        }
+        try {
+            vh1.setDescription(null);
+        } catch (IllegalArgumentException t) {
+            System.out.println("Error inserting type");
+        }
     }
 
     /**
@@ -212,6 +244,17 @@ public class VehicleTest {
         String expResult = Vehicle.FUEL_GASOLINE;
         String result = vh1.getFuel();
         assertEquals(expResult, result);
+
+        try {
+            vh1.setFuel(null);
+        } catch (IllegalArgumentException t) {
+            System.out.println("Error inserting type");
+        }
+        try {
+            vh1.setFuel("");
+        } catch (IllegalArgumentException t) {
+            System.out.println("Error inserting type");
+        }
     }
 
     /**
@@ -223,6 +266,16 @@ public class VehicleTest {
         String expResult = "Combustion";
         String result = vh1.getMotorization();
         assertEquals(expResult, result);
+        try {
+            vh1.setMotorization("");
+        } catch (IllegalArgumentException t) {
+            System.out.println("Error inserting type");
+        }
+        try {
+            vh1.setMotorization(null);
+        } catch (IllegalArgumentException t) {
+            System.out.println("Error inserting type");
+        }
     }
 
     /**
@@ -234,6 +287,12 @@ public class VehicleTest {
         double expResult = 1200.0;
         double result = vh1.getMaxLoad();
         assertEquals(expResult, result, 0.0);
+
+        try {
+            vh1.setMaxLoad(-1);
+        } catch (IllegalArgumentException t) {
+            System.out.println("Error inserting Max Load");
+        }
     }
 
     /**
@@ -245,6 +304,17 @@ public class VehicleTest {
         double expResult = 2400.0;
         double result = vh1.getMass();
         assertEquals(expResult, result, 0.0);
+
+        try {
+            vh1.setMass(0);
+        } catch (IllegalArgumentException t) {
+            System.out.println("Error inserting Mass");
+        }
+        try {
+            vh1.setMass(-1);
+        } catch (IllegalArgumentException t) {
+            System.out.println("Error inserting Mass");
+        }
     }
 
     /**
@@ -267,6 +337,17 @@ public class VehicleTest {
         double expResult = 0.39;
         double result = vh1.getDragCoefficient();
         assertEquals(expResult, result, 0.0);
+
+        try {
+            vh1.setDragCoefficient(0);
+        } catch (IllegalArgumentException t) {
+            System.out.println("Error inserting Drag Coeficient");
+        }
+        try {
+            vh1.setDragCoefficient(-1);
+        } catch (IllegalArgumentException t) {
+            System.out.println("Error inserting Drag Coeficient");
+        }
     }
 
     /**
@@ -278,6 +359,17 @@ public class VehicleTest {
         double expResult = 0.8;
         double result = vh1.getWheelSize();
         assertEquals(expResult, result, 0.0);
+
+        try {
+            vh1.setWheelSize(0);
+        } catch (IllegalArgumentException t) {
+            System.out.println("Error inserting Wheel size");
+        }
+        try {
+            vh1.setWheelSize(-1);
+        } catch (IllegalArgumentException t) {
+            System.out.println("Error inserting Wheel size");
+        }
     }
 
     /**
@@ -289,6 +381,17 @@ public class VehicleTest {
         double expResult = 2.4;
         double result = vh1.getFrontalArea();
         assertEquals(expResult, result, 0.0);
+
+        try {
+            vh1.setFrontalArea(0);
+        } catch (IllegalArgumentException t) {
+            System.out.println("Error inserting Frontal area");
+        }
+        try {
+            vh1.setFrontalArea(-1);
+        } catch (IllegalArgumentException t) {
+            System.out.println("Error inserting Frontal Area");
+        }
     }
 
     /**
@@ -300,6 +403,12 @@ public class VehicleTest {
         int expResult = 1;
         int result = vh1.getVehicleClass();
         assertEquals(expResult, result);
+
+        try {
+            vh1.setVehicleClass(-1);
+        } catch (IllegalArgumentException t) {
+            System.out.println("Error inserting Class");
+        }
     }
 
     /**
@@ -341,6 +450,12 @@ public class VehicleTest {
         double result = vh1.getRCC();
         assertEquals(expResult, result, 0.0);
 
+        try {
+            vh1.setRCC(-1);
+        } catch (IllegalArgumentException t) {
+            System.out.println("Error inserting RCC");
+        }
+
     }
 
     /**
@@ -363,6 +478,12 @@ public class VehicleTest {
         double expResult = 1000.0;
         double result = vh1.getMinRpm();
         assertEquals(expResult, result, 0.0);
+
+        try {
+            vh1.setMinRPM(-1);
+        } catch (IllegalArgumentException t) {
+            System.out.println("Error inserting Min RPM");
+        }
     }
 
     /**
@@ -374,6 +495,17 @@ public class VehicleTest {
         double expResult = 5000.0;
         double result = vh1.getMaxRpm();
         assertEquals(expResult, result, 0.0);
+
+        try {
+            vh1.setMaxRPM(0);
+        } catch (IllegalArgumentException t) {
+            System.out.println("Error inserting Max RPM");
+        }
+        try {
+            vh1.setMaxRPM(-1);
+        } catch (IllegalArgumentException t) {
+            System.out.println("Error inserting Max RPM");
+        }
     }
 
     /**
@@ -385,6 +517,17 @@ public class VehicleTest {
         double expResult = 4.0;
         double result = vh1.getFinalDriveRatio();
         assertEquals(expResult, result, 0.0);
+
+        try {
+            vh1.setFinalDriveRatio(0);
+        } catch (IllegalArgumentException t) {
+            System.out.println("Error inserting Final drive ratio");
+        }
+        try {
+            vh1.setFinalDriveRatio(-1);
+        } catch (IllegalArgumentException t) {
+            System.out.println("Error inserting Final drive ratio");
+        }
     }
 
     /**
@@ -410,6 +553,12 @@ public class VehicleTest {
         assertEquals(expResult.toString(), result.toString());
         assertEquals(expResult.getNumberOfGears(), result.getNumberOfGears());
         assertEquals(expResult.getLowestGear(), result.getLowestGear(), 0.5);
+
+        try {
+            vh1.setGearbox(null);
+        } catch (IllegalArgumentException t) {
+            System.out.println("Error inserting Gearbox");
+        }
 
     }
 
@@ -469,6 +618,16 @@ public class VehicleTest {
         expResult.setThrottleList(throttleList);
         Accelerator result = vh1.getAccelerator();
         assertTrue(expResult.toString().equalsIgnoreCase(result.toString()));
+
+        try {
+            vh1.setAccelerator(null);
+        } catch (IllegalArgumentException t) {
+            System.out.println("Error inserting Accelerator");
+
+        }
+        vh1.setAccelerator(new Accelerator());
+        
+        assertEquals(new Accelerator().toString(), vh1.getAccelerator().toString());
     }
 
     /*
@@ -483,20 +642,7 @@ public class VehicleTest {
         assertEquals(expResult, result);
 
     }
-//
-//    /**
-//     * Test of copy method, of class Vehicle.
-//     */
-//    @Test
-//    public void testCopy() {
-//        System.out.println("copy");
-//
-//        Vehicle expResult = null;
-//        Vehicle result = vh1.copy();
-//        assertEquals(expResult, result);
-//
-//    }
-//
+
     /**
      * Test of hashCode method, of class Vehicle.
      */
@@ -507,18 +653,4 @@ public class VehicleTest {
         int result = vh1.hashCode();
         assertEquals(expResult, result);
     }
-//
-//    /**
-//     * Test of equals method, of class Vehicle.
-//     */
-//    @Test
-//    public void testEquals() {
-//        System.out.println("equals");
-//        Object obj = null;
-//
-//        boolean expResult = false;
-//        boolean result = vh1.equals(obj);
-//        assertEquals(expResult, result);
-//
-//    }
 }
