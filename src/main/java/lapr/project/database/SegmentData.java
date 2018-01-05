@@ -29,15 +29,15 @@ public class SegmentData extends DataAccess<Segment> {
             double finalHeight = rs.getFloat("final_height");
             double length = rs.getFloat("length");
             double windDirection = rs.getFloat("wind_direction");
-            double windSpeed = rs.getFloat("wind_speed");
-            double maximumVelocity = rs.getFloat("max_v");
-            double minimumVelocity = rs.getFloat("min_v");
+            double windSpeed = rs.getFloat("wind");
+            double maximumVelocity = rs.getFloat("maximum_v");
+            double minimumVelocity = rs.getFloat("minimum_v");
 
             Segment s = new Segment(segmentID, initialHeight, finalHeight, length, windDirection, windSpeed, maximumVelocity, minimumVelocity);
 
             list.add(s);
         }
-
+        System.out.println(list.size());
         return list;
     }
 
@@ -45,12 +45,12 @@ public class SegmentData extends DataAccess<Segment> {
         List<SQLArgument> args1 = new ArrayList<>();
 
         args1.add(new SQLArgument(Integer.toString(s.getSegmentIndex()), OracleTypes.VARCHAR));
+        args1.add(new SQLArgument(Integer.toString(sectionID), OracleTypes.VARCHAR));
         ResultSet rs = super.callFunction("getSegmentByIndex", args1);
         if (rs.next()) {
             rs.close();
             return;
         }
-        args1.add(new SQLArgument(Integer.toString(sectionID), OracleTypes.VARCHAR));
         args1.add(new SQLArgument(Double.toString(s.getInitialHeight()), OracleTypes.NUMBER));
         args1.add(new SQLArgument(Double.toString(s.getFinalHeight()), OracleTypes.NUMBER));
         args1.add(new SQLArgument(Double.toString(s.getLength()), OracleTypes.NUMBER));

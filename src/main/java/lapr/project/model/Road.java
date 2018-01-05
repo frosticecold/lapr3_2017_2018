@@ -172,6 +172,15 @@ public class Road {
 
         return -1;
     }
+    
+    /**
+     * Returns the toll fare map
+     * 
+     * @return Map of tolls and respective class
+     */
+    public Map<Integer, Double> getTollFare() {
+        return tollFare;
+    }
 
     /**
      * Validates a road object

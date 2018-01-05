@@ -4,12 +4,10 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import lapr.project.model.Gear;
 import lapr.project.model.Gearbox;
 import oracle.jdbc.OracleTypes;
-import oracle.net.aso.g;
 
 public class GearboxData extends DataAccess<Gearbox> {
 
@@ -50,7 +48,6 @@ public class GearboxData extends DataAccess<Gearbox> {
             args.add(new SQLArgument(vName, OracleTypes.VARCHAR));
             args.add(new SQLArgument(Integer.toString(g.getGearID()), OracleTypes.NUMBER));
             args.add(new SQLArgument(Double.toString(g.getRatio()), OracleTypes.NUMBER));
-            System.out.println(args);
 
             super.callProcedure("insertGear", args);
         }

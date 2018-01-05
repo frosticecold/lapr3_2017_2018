@@ -6,25 +6,26 @@
 package lapr.project.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import lapr.project.model.Junction;
-import lapr.project.model.ListOfResults;
 import lapr.project.model.Project;
 import lapr.project.model.Vehicle;
 import lapr.project.networkanalysis.AlgorithmResults;
 import lapr.project.pathalgorithms.FastestPathAlgorithm;
 import lapr.project.pathalgorithms.PathAlgorithm;
+import lapr.project.utils.DatabaseConnection;
 import lapr.project.utils.ExportCSV;
 import lapr.project.utils.ExportHTML;
+import lapr.project.utils.SQLConnection;
 import lapr.project.utils.Session;
 
 public class PathAlgorithmsController {
 
     private Project p;
     private AlgorithmResults result;
-    
+
     public PathAlgorithmsController() {
         this.p = Session.getActiveProject();
     }
@@ -57,13 +58,10 @@ public class PathAlgorithmsController {
         }
     }
 
-    public boolean hasResult(){
-        if(result == null){
-            return false;
-        }
-        return true;
+    public boolean hasResult() {
+        return result != null;
     }
-    
+
     public void fastestPath(Junction start, Junction end, Vehicle v) {
         PathAlgorithm alg = new FastestPathAlgorithm();
         result = alg.bestPath(p.getRoadNetwork(), start, end, v, 0);
@@ -84,6 +82,7 @@ public class PathAlgorithmsController {
      * Exports the results of the selected vehicles into the specified path.
      *
      * @param path (String) The file path.
+     * @throws java.io.IOException
      */
     public void exportHTML(String path) throws IOException {
         ExportHTML export = new ExportHTML();
@@ -94,8 +93,17 @@ public class PathAlgorithmsController {
         ExportCSV export = new ExportCSV(result, path);
         export.createFile();
     }
-    
-    public boolean saveResults(){
-        return p.getResults().addResult(result.getVehicle(), result);
+
+    public boolean saveResults() {
+        DatabaseConnection db = new DatabaseConnection();
+        SQLConnection sql = db.getDatabase();
+        try {
+            p.getResults().addResult(result.getVehicle(), result);
+            sql.insertResults(p, p.getResults().getMapOfResults());
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(PathAlgorithmsController.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
     }
 }

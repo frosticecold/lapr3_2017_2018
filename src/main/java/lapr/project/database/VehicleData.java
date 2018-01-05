@@ -28,20 +28,22 @@ public class VehicleData extends DataAccess<Vehicle> {
         args.add(new SQLArgument(name, OracleTypes.VARCHAR));
         ResultSet rs = super.callFunction("getVehicle", args);
         while (rs.next()) {
-            String vName = rs.getString("v_name");
-            String vDescription = rs.getString("v_description");
-            String vType = rs.getString("v_type");
-            String vFuel = rs.getString("v_fuel");
-            int vClass = rs.getInt("v_class");
-            String vMotorization = rs.getString("v_motorization");
-            double vWheelsize = rs.getDouble("v_wheelSize");
-            double vDragCoefficient = rs.getDouble("v_dragCoefficient");
-            double vFrontalArea = rs.getDouble("v_frontalArea");
-            double vRollingRes = rs.getDouble("v_rollingResistanceCoef");
-            double vMinRpm = rs.getDouble("v_minRpm");
-            double vMaxRpm = rs.getDouble("v_maxRpm");
-            double vFinalDriveRatio = rs.getDouble("v_finalDriveRatio");
-            double vEnergyRegenerationRatio = rs.getDouble("v_energyRegenerationRatio");
+            String vName = rs.getString("name");
+            String vDescription = rs.getString("description");
+            String vType = rs.getString("vtype");
+            String vFuel = rs.getString("fuel");
+            double vMass = rs.getDouble("mass");
+            double vLoad = rs.getDouble("load");
+            int vClass = rs.getInt("id_tollclass");
+            String vMotorization = rs.getString("motorization");
+            double vWheelsize = rs.getDouble("wheel_size");
+            double vDragCoefficient = rs.getDouble("drag_coefficient");
+            double vFrontalArea = rs.getDouble("frontal_area");
+            double vRollingRes = rs.getDouble("rolling_coefficient");
+            double vMinRpm = rs.getDouble("minRpm");
+            double vMaxRpm = rs.getDouble("maxRpm");
+            double vFinalDriveRatio = rs.getDouble("final_Ratio");
+            double vEnergyRegenerationRatio = rs.getDouble("energy_regen");
 
             GearboxData g = new GearboxData(connection);
             Gearbox vGearbox = g.get(vName);
@@ -55,6 +57,8 @@ public class VehicleData extends DataAccess<Vehicle> {
                 v.setDescription(vDescription);
                 v.setType(vType);
                 v.setFuel(vFuel);
+                v.setMass(vMass);
+                v.setMaxLoad(vLoad);
                 v.setVehicleClass(vClass);
                 v.setMotorization(vMotorization);
                 v.setWheelSize(vWheelsize);
@@ -74,6 +78,8 @@ public class VehicleData extends DataAccess<Vehicle> {
                 ve.setDescription(vDescription);
                 ve.setType(vType);
                 ve.setFuel(vFuel);
+                ve.setMass(vMass);
+                ve.setMaxLoad(vLoad);
                 ve.setVehicleClass(vClass);
                 ve.setMotorization(vMotorization);
                 ve.setWheelSize(vWheelsize);
@@ -125,10 +131,8 @@ public class VehicleData extends DataAccess<Vehicle> {
         if (v instanceof VehicleElectric) {
             args.add(new SQLArgument(Double.toString(((VehicleElectric) v).getEnergyRegenerationRatio()), OracleTypes.NUMBER));
         } else {
-            args.add(new SQLArgument(Double.toString(new Double(0)), OracleTypes.NUMBER));
+            args.add(new SQLArgument("0", OracleTypes.NUMBER));
         }
-
-        System.out.println(args);
 
         super.callProcedure("insertVehicle", args);
 

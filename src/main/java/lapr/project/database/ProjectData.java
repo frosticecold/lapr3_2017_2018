@@ -50,6 +50,7 @@ public class ProjectData extends DataAccess<Project> {
         Project p = null;
         while (rs.next()) {
             String description = rs.getString("description");
+            System.out.println(description);
             p = new Project();
 
             p.setName(name);
@@ -68,17 +69,10 @@ public class ProjectData extends DataAccess<Project> {
                 List<Segment> segments = sd.get(String.valueOf(section.getSectionID()));
                 section.setSegmentList(segments);
 
-                switch (section.getDirection()) {
-                    case DIRECT:
-                        g.insertEdge(j1, j2, section, distance);
-                        break;
-                    case REVERSE:
-                        g.insertEdge(j2, j1, section, distance);
-                        break;
-                    case BIDIRECTIONAL:
-                        g.insertEdge(j1, j2, section, distance);
-                        g.insertEdge(j2, j1, section, distance);
-                        break;
+                if (section.getDirection().compareTo(Direction.REVERSE) == 0) {
+                    g.insertEdge(j2, j1, section, distance);
+                } else {
+                    g.insertEdge(j1, j2, section, distance);
                 }
             }
             p.setRoadNetwork(g);

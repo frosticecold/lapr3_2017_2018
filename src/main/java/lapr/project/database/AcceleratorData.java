@@ -51,7 +51,7 @@ public class AcceleratorData extends DataAccess<Accelerator> {
             return;
         }
         super.callProcedure("insertAccelerator", args);
-        
+
         RegimeData rd = new RegimeData(connection);
 
         for (Integer i : accelerator.getThrottleList().keySet()) {
@@ -59,7 +59,7 @@ public class AcceleratorData extends DataAccess<Accelerator> {
             args.add(new SQLArgument(vName, OracleTypes.VARCHAR));
             args.add(new SQLArgument(Integer.toString(i), OracleTypes.NUMBER));
             super.callProcedure("insertThrottle", args);
-            rd.insert(i, accelerator.getThrottleList().get(i));
+            rd.insert(i, vName, accelerator.getThrottleList().get(i));
         }
     }
 

@@ -22,21 +22,21 @@ public class RoadData extends DataAccess<Road> {
         List<Road> list = new LinkedList<>();
         List<SQLArgument> args = new ArrayList<>();
         args.add(new SQLArgument(projectName, OracleTypes.VARCHAR));
-        ResultSet rs = super.callFunction("getRoad", args);
-        while (rs.next()) {
-            String roadID = String.valueOf(rs.getInt("id_road"));
-            String roadName = rs.getString("name");
-            String roadType = rs.getString("Tipology");
-            list.add(new Road(roadID, roadName, roadType));
+        try (ResultSet rs = super.callFunction("getRoad", args)) {
+            while (rs.next()) {
+                String roadID = rs.getString("id_road");
+                String roadName = rs.getString("name");
+                String roadType = rs.getString("Tipology");
+                list.add(new Road(roadID, roadName, roadType));
+            }
         }
-        rs.close();
         return list;
     }
 
     public void insert(String pName, Road r) throws SQLException {
         List<SQLArgument> args1 = new ArrayList<>();
         
-        args1.add(new SQLArgument(r.getRoadID(),OracleTypes.VARCHAR)); // id road na bd e id, auto inc e cenas
+        args1.add(new SQLArgument(r.getRoadID(),OracleTypes.VARCHAR));
         ResultSet rs = super.callFunction("getRoadByID",args1);
         if(rs.next()) {
             rs.close();
@@ -47,5 +47,13 @@ public class RoadData extends DataAccess<Road> {
         args1.add(new SQLArgument(r.getTypology(),OracleTypes.VARCHAR));
         
         super.callProcedure("insertRoad", args1);
+        
+        for (int i : r.getTollFare().keySet()) {
+            args1.clear();
+            args1.add(new SQLArgument(r.getRoadID(), OracleTypes.VARCHAR));
+            args1.add(new SQLArgument(Integer.toString(i), OracleTypes.NUMBER));
+            args1.add(new SQLArgument(String.valueOf(r.getTollValue(i)), OracleTypes.NUMBER));
+            super.callProcedure("insertRoadToll", args1);
+        }
     }
 }

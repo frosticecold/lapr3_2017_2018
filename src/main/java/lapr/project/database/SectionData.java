@@ -25,40 +25,39 @@ public class SectionData extends DataAccess<Section> {
 
         List<SQLArgument> args = new ArrayList<>();
         args.add(new SQLArgument(projectName, OracleTypes.VARCHAR));
-        ResultSet rs = super.callFunction("getSections", args);
-        while (rs.next()) {
-            int begginingJunction = rs.getInt("id_BegginingJ");
-            int endingJunction = rs.getInt("id_EndingJ");
-            int directionID = rs.getInt("id_Direction");
-            int roadID = rs.getInt("id_Road");
-            
-            JunctionData j = new JunctionData(connection);
-            Junction beginJunction = j.get(Integer.toString(begginingJunction));
-            Junction endJunction = j.get(Integer.toString(endingJunction));
-            
-            DirectionData d = new DirectionData(connection);
-            Section.Direction direction = d.get(directionID);
-            
-          
-            Section s = new Section();
-            s.setBeginJunction(beginJunction);
-            s.setEndJunction(endJunction);
-            s.setDirection(direction);
-            s.setRoadID(String.valueOf(roadID));
-            list.add(s);
-
+        try (ResultSet rs = super.callFunction("getSections", args)) {
+            while (rs.next()) {
+                int begginingJunction = rs.getInt("id_BegginingJ");
+                int endingJunction = rs.getInt("id_EndingJ");
+                int directionID = rs.getInt("id_Direction");
+                String roadID = rs.getString("id_Road");
+                
+                JunctionData j = new JunctionData(connection);
+                Junction beginJunction = j.get(Integer.toString(begginingJunction));
+                Junction endJunction = j.get(Integer.toString(endingJunction));
+                
+                DirectionData d = new DirectionData(connection);
+                Section.Direction direction = d.get(directionID);
+                
+                Section s = new Section();
+                s.setBeginJunction(beginJunction);
+                s.setEndJunction(endJunction);
+                s.setDirection(direction);
+                s.setRoadID(roadID);
+                list.add(s);
+                
+            }
         }
-        rs.close();
-
+        System.out.println(list.size());
         return list;
     }
 
     public void insert(String pName, Section s) throws SQLException {
         List<SQLArgument> args1 = new ArrayList<>();
-        
-        args1.add(new SQLArgument(String.valueOf(s.getSectionID()),OracleTypes.NUMBER));
-        ResultSet rs = super.callFunction("getSectionByID",args1);
-        if(rs.next()) {
+
+        args1.add(new SQLArgument(String.valueOf(s.getSectionID()), OracleTypes.NUMBER));
+        ResultSet rs = super.callFunction("getSectionByID", args1);
+        if (rs.next()) {
             rs.close();
             return;
         }
@@ -68,17 +67,18 @@ public class SectionData extends DataAccess<Section> {
         args1.add(new SQLArgument(pName, OracleTypes.VARCHAR));
         args1.add(new SQLArgument(s.getDirection().toString(), OracleTypes.VARCHAR));
         super.callProcedure("insertSection", args1);
-        
+
         SegmentData sd = new SegmentData(connection);
-        for(Segment seg : s.getSequenceOfSegments()) {
+        for (int i = 0; i < s.getSequenceOfSegments().size(); i++) {
+            Segment seg = s.getSequenceOfSegments().get(i);
             sd.insert(s.getSectionID(), seg);
         }
-        
+
         TollData td = new TollData(connection);
-        for(int i : s.getToll().keySet()) {
-            td.insert(i, s.getToll().get(i));
+        for (int i : s.getToll().keySet()) {
+            td.insert(i, s.getSectionID(), s.getToll().get(i));
         }
-        
+
     }
 
 }

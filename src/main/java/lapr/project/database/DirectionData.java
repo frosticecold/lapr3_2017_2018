@@ -20,12 +20,11 @@ public class DirectionData extends DataAccess<Section.Direction> {
         }
         List<SQLArgument> args = new ArrayList<>();
         args.add(new SQLArgument(Integer.toString(directionID), OracleTypes.NUMBER));
-        ResultSet rs = super.callFunction("getDirection", args);
-
-        if (rs.next()) {
-            return Section.Direction.valueOf(rs.getString("description"));
+        try (ResultSet rs = super.callFunction("getDirection", args)) {
+            if (rs.next()) {
+                return Section.Direction.valueOf(rs.getString("description"));
+            }
         }
-        rs.close();
         return null;
     }
 

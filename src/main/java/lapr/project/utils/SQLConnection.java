@@ -2,8 +2,12 @@ package lapr.project.utils;
 
 import java.sql.*;
 import java.util.List;
+import java.util.Map;
 import lapr.project.database.ProjectData;
+import lapr.project.database.ResultsData;
 import lapr.project.model.Project;
+import lapr.project.model.Vehicle;
+import lapr.project.networkanalysis.AlgorithmResults;
 import oracle.jdbc.pool.OracleDataSource;
 
 public class SQLConnection {
@@ -62,14 +66,23 @@ public class SQLConnection {
     public Connection getConnection() {
         return connection;
     }
-    
+
     public void insertProject(Project project) throws SQLException {
         if (connection == null) {
             openConnection();
         }
         ProjectData p = new ProjectData(connection);
-        
+
         p.insertProject(project);
     }
-        
+
+    public void insertResults(Project p, Map<Vehicle, List<AlgorithmResults>> mapOfResults) throws SQLException {
+        if (connection == null) {
+            openConnection();
+        }
+
+        ResultsData rd = new ResultsData(connection);
+        rd.insertResults(p, mapOfResults);
+    }
+
 }
