@@ -160,7 +160,7 @@
     		</throttle_list>
     	</energy>
     </vehicle>
-    <vehicle name="Pick_up1" description= "Pick-up test vehicle">
+    <vehicle name="Pick_up" description= "Pick-up test vehicle">
 		<type>car</type>
 		<toll_class>2</toll_class>
 		<motorization>combustion</motorization>
@@ -320,7 +320,7 @@
     		</throttle_list>
     	</energy>
     </vehicle>
-    <vehicle name="Pick_up2" description= "Pick-up test vehicle">
+    <vehicle name="Pick_up" description= "Pick-up test vehicle">
 		<type>car</type>
 		<toll_class>2</toll_class>
 		<motorization>combustion</motorization>
@@ -641,6 +641,181 @@
     	<frontal_area>1.8</frontal_area>
     	<rrc>0.01</rrc>
     	<wheel_size>0.6</wheel_size>
+   		<energy>  			
+    		<min_rpm>0</min_rpm>
+    		<max_rpm>12500</max_rpm>
+    		<final_drive_ratio>10.6</final_drive_ratio>
+    		<energy_regeneration_ratio>0.8</energy_regeneration_ratio>
+   			<gear_list>
+    			<gear id="01">
+    				<ratio>1</ratio>
+    			</gear>
+    		</gear_list>
+    		<throttle_list>
+    			<throttle id="25">
+    				<regime>
+    					<torque_low>185</torque_low>
+						<torque_high>175</torque_high>
+    					<rpm_low>0</rpm_low>
+    					<rpm_high>3499</rpm_high>
+    				</regime>
+    				<regime>
+    					<torque_low>175</torque_low>
+						<torque_high>166</torque_high>
+    					<rpm_low>3500</rpm_low>
+    					<rpm_high>4499</rpm_high>
+    				</regime>
+    				<regime>
+    					<torque_low>166</torque_low>
+						<torque_high>158</torque_high>
+    					<rpm_low>4500</rpm_low>
+    					<rpm_high>5499</rpm_high>
+    				</regime>
+    				<regime>
+    					<torque_low>158</torque_low>
+						<torque_high>143</torque_high>
+    					<rpm_low>5500</rpm_low>
+    					<rpm_high>6499</rpm_high>
+    				</regime>
+    				<regime>
+    					<torque_low>143</torque_low>
+						<torque_high>129</torque_high>
+    					<rpm_low>6500</rpm_low>
+    					<rpm_high>7499</rpm_high>
+    				</regime>
+    				<regime>
+    					<torque_low>129</torque_low>
+						<torque_high>116</torque_high>
+    					<rpm_low>7500</rpm_low>
+    					<rpm_high>8499</rpm_high>
+    				</regime>
+    				<regime>
+    					<torque_low>116</torque_low>
+						<torque_high>104</torque_high>
+    					<rpm_low>8500</rpm_low>
+    					<rpm_high>9499</rpm_high>
+    				</regime>
+    				<regime>
+    					<torque_low>104</torque_low>
+						<torque_high>81</torque_high>
+    					<rpm_low>9500</rpm_low>
+    					<rpm_high>12500</rpm_high>
+    				</regime>
+    			</throttle>
+    			<throttle id="50">
+    				<regime>
+    					<torque_low>250</torque_low>
+						<torque_high>237</torque_high>
+    					<rpm_low>0</rpm_low>
+    					<rpm_high>3499</rpm_high>
+    				</regime>
+    				<regime>
+    					<torque_low>237</torque_low>
+						<torque_high>224</torque_high>
+    					<rpm_low>3500</rpm_low>
+    					<rpm_high>4499</rpm_high>
+    				</regime>
+    				<regime>
+    					<torque_low>224</torque_low>
+						<torque_high>213</torque_high>
+    					<rpm_low>4500</rpm_low>
+    					<rpm_high>5499</rpm_high>
+    				</regime>
+    				<regime>
+    					<torque_low>213</torque_low>
+						<torque_high>192</torque_high>
+    					<rpm_low>5500</rpm_low>
+    					<rpm_high>6499</rpm_high>
+    				</regime>
+    				<regime>
+    					<torque_low>192</torque_low>
+						<torque_high>174</torque_high>
+    					<rpm_low>6500</rpm_low>
+    					<rpm_high>7499</rpm_high>
+    				</regime>
+    				<regime>
+    					<torque_low>174</torque_low>
+						<torque_high>156</torque_high>
+    					<rpm_low>7500</rpm_low>
+    					<rpm_high>8499</rpm_high>
+    				</regime>
+    				<regime>
+    					<torque_low>156</torque_low>
+						<torque_high>140</torque_high>
+    					<rpm_low>8500</rpm_low>
+    					<rpm_high>9499</rpm_high>
+    				</regime>
+    				<regime>
+    					<torque_low>140</torque_low>
+						<torque_high>112</torque_high>
+    					<rpm_low>9500</rpm_low>
+    					<rpm_high>12500</rpm_high>
+    				</regime>
+    			</throttle>
+    			<throttle id="100">
+    				<regime>
+    					<torque_low>350</torque_low>
+						<torque_high>332</torque_high>
+    					<rpm_low>0</rpm_low>
+    					<rpm_high>3499</rpm_high>
+    				</regime>
+    				<regime>
+    					<torque_low>332</torque_low>
+						<torque_high>315</torque_high>
+    					<rpm_low>3500</rpm_low>
+    					<rpm_high>4499</rpm_high>
+    				</regime>
+    				<regime>
+    					<torque_low>315</torque_low>
+						<torque_high>299</torque_high>
+    					<rpm_low>4500</rpm_low>
+    					<rpm_high>5499</rpm_high>
+    				</regime>
+    				<regime>
+    					<torque_low>299</torque_low>
+						<torque_high>270</torque_high>
+    					<rpm_low>5500</rpm_low>
+    					<rpm_high>6499</rpm_high>
+    				</regime>
+    				<regime>
+    					<torque_low>270</torque_low>
+						<torque_high>243</torque_high>
+    					<rpm_low>6500</rpm_low>
+    					<rpm_high>7499</rpm_high>
+    				</regime>
+    				<regime>
+    					<torque_low>243</torque_low>
+						<torque_high>222</torque_high>
+    					<rpm_low>7500</rpm_low>
+    					<rpm_high>8499</rpm_high>
+    				</regime>
+    				<regime>
+    					<torque_low>222</torque_low>
+						<torque_high>200</torque_high>
+    					<rpm_low>8500</rpm_low>
+    					<rpm_high>9499</rpm_high>
+    				</regime>
+    				<regime>
+    					<torque_low>200</torque_low>
+						<torque_high>160</torque_high>
+    					<rpm_low>9500</rpm_low>
+    					<rpm_high>12500</rpm_high>
+    				</regime>
+    			</throttle>
+    		</throttle_list>
+    	</energy>
+    </vehicle>
+    <vehicle name="ElectricDummy" description= "Electric Dummy teste vehicle">
+		<type>car</type>
+		<toll_class>1</toll_class>
+		<motorization>electric</motorization>
+		<fuel>electric</fuel>
+		<mass>1400 Kg</mass>
+		<load>420 kg</load>
+    	<drag>0.31</drag>
+    	<frontal_area>1.8</frontal_area>
+    	<rrc>0.01</rrc>
+    	<wheel_size>0.7</wheel_size>
    		<energy>  			
     		<min_rpm>0</min_rpm>
     		<max_rpm>12500</max_rpm>
