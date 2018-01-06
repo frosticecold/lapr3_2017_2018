@@ -1,4 +1,4 @@
- /*
+/*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -20,8 +20,6 @@ import lapr.project.utils.graphbase.Graph;
  *
  * @author Raúl Correia <1090657@isep.ipp.pt>
  */
-
-
 public class TheoreticalEnergyEfficientAlgorithm implements PathAlgorithm {
 
     public static final String ALG_NAME = "Theoretical Most Energy Efficient Path";
@@ -47,18 +45,26 @@ public class TheoreticalEnergyEfficientAlgorithm implements PathAlgorithm {
         double[] time = new double[graph.numVertices()];
         double[] energy = new double[graph.numVertices()];
         double[] velocity = new double[graph.numVertices()];
+        double[] torque = new double[graph.numVertices()];
+        double[] rpm = new double[graph.numVertices()];
+        double[] gear = new double[graph.numVertices()];
         Junction[] vertices = graph.allkeyVerts();
         shortPath.clear();
         sectionpath.clear();
 
         for (Junction v : graph.vertices()) {
-            time[graph.getKey(v)] = Double.MAX_VALUE;
-            pathKeys[graph.getKey(v)] = -1;
-            velocity[graph.getKey(v)] = 0;
-            visited[graph.getKey(v)] = false;
+            int key = graph.getKey(v);
+            pathKeys[key] = -1;
+            visited[key] = false;
+            time[key] = Double.MAX_VALUE;
+            energy[key] = 0;
+            velocity[key] = 0;
+            torque[key] = 0;
+            rpm[key] = 0;
+            gear[key] = 0;
         }
 
-        efficientPathLength(graph, vOrig, vertices, visited, pathKeys, time, energy, velocity, vehicle, acceleration);
+        efficientPathLength(graph, vOrig, vertices, visited, pathKeys, time, energy, velocity, torque, rpm, gear, vehicle, acceleration);
 
         //double timePath = time[graph.getKey(vDest)];
         results[1] = time[graph.getKey(vDest)];
@@ -72,7 +78,7 @@ public class TheoreticalEnergyEfficientAlgorithm implements PathAlgorithm {
     }
 
     private static <V, E> void efficientPathLength(Graph<Junction, Section> g, Junction vOrig, Junction[] vertices,
-            boolean[] visited, int[] pathKeys, double[] time, double[] energy, double[] velocity, Vehicle vehicle, double acceleration) {
+            boolean[] visited, int[] pathKeys, double[] time, double[] energy, double[] velocity, double[] torque, double[] rpm, double[] gear, Vehicle vehicle, double acceleration) {
 
         Section section = new Section();
         int i = g.getKey(vOrig);
@@ -87,34 +93,85 @@ public class TheoreticalEnergyEfficientAlgorithm implements PathAlgorithm {
                 Junction vAdj = g.opposite(vOrigin, edg);
                 int kAdj = g.getKey(vAdj);
                 section = edg.getElement();
+                double previous_velocity = velocity[kOrg];
+                double previous_torque = torque[kOrg];
+                double previous_rpm = rpm[kOrg];
+                double previous_gear = gear[kOrg];
                 //Results
                 //0) Time
                 //1) Energy
                 //2) Velocity
-                double previous_velocity = velocity[kOrg];
-                double results[] = calcEfficientPath(section, vehicle, acceleration, previous_velocity);
-                if (!visited[kAdj] && time[kAdj] > (time[kOrg] + results[1])) {
-                    time[kAdj] = time[kOrg] + results[1];
-                    pathKeys[kAdj] = kOrg;
-                    energy[kAdj] = energy[kAdj] + results[1];
-                    //velocity[kAjd] = result[1];
+                //3) torque
+                //4) rpm
+                //5) gear
+                double results[] = calcEfficientPath(section, vehicle, acceleration, previous_velocity, previous_torque, previous_rpm, previous_gear);
+                if (results[0] != -1) {
+                    if (!visited[kAdj] && time[kAdj] > (time[kOrg] + results[1])) {
+                        time[kAdj] = time[kOrg] + results[1];
+                        pathKeys[kAdj] = kOrg;
+                        energy[kAdj] = energy[kAdj] + results[1];
+                    }
                 }
             }
             i = getVertMinDist(time, visited);
         }
     }
 
-    private static double[] calcEfficientPath(Section section, Vehicle car, double acceleration, double previousVelocity) {
+    private static double[] calcEfficientPath(Section section, Vehicle car, double acceleration, double previousVelocity, double previousTorque, double previousRpm, double previousGear) {
         double fma = car.getTotalWeight() * acceleration;
+        double[] results = new double[6];
+        //Results
+        //0) Time
+        //1) Energy
+        //2) Velocity
+        //3) torque
+        //4) rpm
+        //5) gear
         for (Segment seg : section.getSequenceOfSegments()) {
-            double neededforce = PhysicsCalculus.calcForceInSegment(seg, car, section);
-            double maximumvel = car.getMaximumPermitedVelocity(section.getTypology());
-            if (maximumvel > seg.getMaximumVelocity()) {
-                maximumvel = seg.getMaximumVelocity();
+            boolean accel = false;
+            boolean braking = false;
+            double maximumvel = car.getMaximumPermitedVelocity2(seg, section.getRoadID()) / 3.6;
+            double deltatimeaccel = 0;
+            double acceldistance = 0;
+            double segmentLength = seg.getLength() * 1000;
+            if (previousVelocity < maximumvel) {
+                braking = false;
+                accel = true;
+            } else {
+                if (previousVelocity > maximumvel) {
+                    accel = false;
+                    braking = true;
+                }
             }
-            double deltatimeaccel = PhysicsCalculus.calcTimeBasedOnVelocityAndAcceleration(maximumvel, previousVelocity, acceleration);
+            if (accel) {
+                deltatimeaccel = PhysicsCalculus.calcTimeBasedOnVelocityAndAcceleration(maximumvel, previousVelocity, acceleration);
+                acceldistance = PhysicsCalculus.calcDistance(previousVelocity, acceleration, deltatimeaccel);
+            } else {
+                if (braking) {
+                    deltatimeaccel = PhysicsCalculus.calcTimeBasedOnVelocityAndAcceleration(maximumvel, previousVelocity, acceleration * -1);
+                    acceldistance = PhysicsCalculus.calcDistance(previousVelocity, acceleration, deltatimeaccel);
+                }
+            }
+            //If accel or brake distance is valid
+            if (acceldistance < segmentLength) {
+                double remainingtime = (segmentLength - acceldistance) / maximumvel;
+                results[0] += deltatimeaccel + remainingtime;
+            } else { // Else it is a invalid path
+                if (accel) {
+                    deltatimeaccel = PhysicsCalculus.calcTimeBasedOnDistanceAndAcceleration(previousVelocity, segmentLength, acceleration);
+                    previousVelocity = PhysicsCalculus.calcVelocityBasedOnInitialVelocityAccelerationTime(previousVelocity, acceleration, deltatimeaccel);
+                    results[0] += deltatimeaccel;
+                    continue;
+                }
+                if (braking) {
+                    for (int i = 0; i < results.length; i++) {
+                        results[i] = -1;
+                    }
+                }
+                break;
+            }
         }
-        return new double[2];
+        return results;
     }
 
     /**

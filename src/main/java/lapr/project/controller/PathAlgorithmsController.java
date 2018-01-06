@@ -15,6 +15,7 @@ import lapr.project.model.Vehicle;
 import lapr.project.networkanalysis.AlgorithmResults;
 import lapr.project.pathalgorithms.FastestPathAlgorithm;
 import lapr.project.pathalgorithms.PathAlgorithm;
+import lapr.project.pathalgorithms.TheoreticalEnergyEfficientAlgorithm;
 import lapr.project.utils.DatabaseConnection;
 import lapr.project.utils.ExportCSV;
 import lapr.project.utils.ExportHTML;
@@ -68,7 +69,7 @@ public class PathAlgorithmsController {
     }
 
     public void theoricalMostEnergyEfficientPath(Junction start, Junction end, Vehicle v, double acceleration) {
-        PathAlgorithm alg = new FastestPathAlgorithm();
+        PathAlgorithm alg = new TheoreticalEnergyEfficientAlgorithm();
         result = alg.bestPath(p.getRoadNetwork(), start, end, v, acceleration);
 
     }

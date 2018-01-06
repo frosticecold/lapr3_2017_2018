@@ -21,6 +21,7 @@ public class AlgorithmResults {
     private final double vehicleLoad;
     private final String algorithmType;
 
+    
     public AlgorithmResults(Project project, LinkedList<Junction> junctionPath, LinkedList<Section> fastestPath, Vehicle vehicle, double[] results, String algorithmType) {
         this.project = project;
         this.junctionpath = junctionPath;

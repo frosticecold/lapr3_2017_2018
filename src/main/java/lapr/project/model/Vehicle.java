@@ -137,8 +137,8 @@ public abstract class Vehicle {
      * Value for the electric fuel type
      */
     public static final String FUEL_ELETRIC = "electric";
-    
-    public static int vehicleCounter =0;
+
+    public static int vehicleCounter = 0;
 
     /**
      * Empty constructor
@@ -307,7 +307,7 @@ public abstract class Vehicle {
     }
 
     /**
-     * Returns the car maximum velocity in KM/H fora given road If there is no
+     * Returns the car maximum velocity in KM/H for a given road If there is no
      * speed limit, it returns the maximum car speed
      *
      * @param road
@@ -321,6 +321,28 @@ public abstract class Vehicle {
             }
         }
         return this.getMaximumEngineVelocity();
+    }
+
+    /**
+     * Returns the car maximum velocity in KM/H for a given road If there is no
+     * speed limit, it returns the maximum car speed
+     *
+     * @param segment
+     * @param road
+     * @return
+     */
+    public double getMaximumPermitedVelocity2(Segment segment, String road) {
+        double maxVel = getMaximumPermitedVelocity(road);
+        double maxSegVel = segment.getMaximumVelocity();
+        if (Math.abs(maxSegVel) < 0.005) {
+            return maxVel;
+        }
+        if (maxSegVel < maxVel) {
+            return maxSegVel;
+        } else {
+            return maxVel;
+        }
+
     }
 
     public double getRCC() {

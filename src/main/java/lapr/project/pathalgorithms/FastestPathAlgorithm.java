@@ -28,8 +28,8 @@ public class FastestPathAlgorithm implements PathAlgorithm {
     private static final int MIN_THROTTLE = 2;
 
     @Override
-    public AlgorithmResults bestPath(Graph<Junction, Section> graph, Junction start, Junction end, Vehicle v,double acceleration) {
-        
+    public AlgorithmResults bestPath(Graph<Junction, Section> graph, Junction start, Junction end, Vehicle v, double acceleration) {
+
         LinkedList<Junction> path = new LinkedList<>();
         LinkedList<Section> sectionpath = new LinkedList<>();
         double results[] = shortestPath(graph, start, end, v, path, sectionpath);
@@ -121,11 +121,15 @@ public class FastestPathAlgorithm implements PathAlgorithm {
 
             int vKey = g.getKey(vDest);
             int prevVKey = pathKeys[vKey];
-            Junction vDestin;
-            vDestin = verts[prevVKey];
-            sectionpath.push(g.getEdge(vDest, vDestin).getElement());
+            Junction vPrevious;
+            vPrevious = verts[prevVKey];
+            if (g.getEdge(vDest, vPrevious).getElement().getDirection() == Section.Direction.REVERSE) {
+                sectionpath.push(g.getEdge(vDest, vPrevious).getElement());
+            } else {
+                sectionpath.push((g.getEdge(vPrevious, vDest)).getElement());
+            }
 
-            getPath(g, vOrig, vDestin, verts, pathKeys, path, sectionpath);
+            getPath(g, vOrig, vPrevious, verts, pathKeys, path, sectionpath);
         } else {
             path.push(vOrig);
         }
@@ -145,7 +149,7 @@ public class FastestPathAlgorithm implements PathAlgorithm {
         return indice;
     }
 
-     private static double[] calcFastestTime(Section section, Vehicle car) {
+    private static double[] calcFastestTime(Section section, Vehicle car) {
 
         //Vector with results
         //0) Time
@@ -155,11 +159,11 @@ public class FastestPathAlgorithm implements PathAlgorithm {
         double energy = 0;
 
         for (Segment segment : section.getSequenceOfSegments()) {
-            double force = PhysicsCalculus.calcForceInSegment(segment, car, section);
+            double neededForce = PhysicsCalculus.calcForceInSegment(segment, car, section);
             double carVelRelativeToAir = PhysicsCalculus.calcMaximumVelocity(segment, car, section); // Function returns velocity in m/s
-            double carVelRelativeToGround = car.getMaximumPermitedVelocity(section.getTypology()) / 3.6; //Function velocity is in KM/H, multiply by 3.6 to get m/s
+            double carVelRelativeToGround = car.getMaximumPermitedVelocity(section.getTypology()) / 3.6; //Function velocity is in KM/H,divide by 3.6 to get m/s
             double time_segment = (segment.getLength() * 1000) / (carVelRelativeToGround);
-            double[] ideal_motor_force = calculateIdealMotorForce(car, segment, force, carVelRelativeToAir);
+            double[] ideal_motor_force = calculateIdealMotorForce(car, segment, neededForce, carVelRelativeToAir);
             double power_generated = PhysicsCalculus.calcEnginePower(ideal_motor_force[PhysicsCalculus.TORQUE_VEC], ideal_motor_force[PhysicsCalculus.RPM_VEC]);
             energy += (power_generated * time_segment);
             final_time += time_segment;

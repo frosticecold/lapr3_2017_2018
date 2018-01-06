@@ -144,25 +144,30 @@ public class PhysicsCalculus {
             fa = rollingResistanceCalculation(car.getRCC(), car.getTotalWeight());
             fa += airDragCalculation(vel, car.getDragCoefficient(), car.getFrontalArea());
         } else {
-            if (slope > 0) {
-                fa = rollingResistanceCalculationSlope(car.getRCC(), car.getTotalWeight(), slope);
-                fa += airDragCalculation(vel, car.getDragCoefficient(), car.getFrontalArea());
-            } else {
-                fa = rollingResistanceCalculationSlope(car.getRCC(), car.getTotalWeight(), slope);
-                fa += airDragCalculation(vel, car.getDragCoefficient(), car.getFrontalArea());
-                double grav = car.getTotalWeight() * GRAVITY * Math.sin(Math.toRadians(slope));
+            //if (slope > 0) {
+            fa = rollingResistanceCalculationSlope(car.getRCC(), car.getTotalWeight(), slope);
+            fa += airDragCalculation(vel, car.getDragCoefficient(), car.getFrontalArea());
+            double grav = car.getTotalWeight() * GRAVITY * Math.sin(Math.toRadians(slope));
+            fa += grav;
+//            } else {
+//                fa = rollingResistanceCalculationSlope(car.getRCC(), car.getTotalWeight(), slope);
+//                fa += airDragCalculation(vel, car.getDragCoefficient(), car.getFrontalArea());
+//                double grav = car.getTotalWeight() * GRAVITY * Math.sin(Math.toRadians(slope));
+//
+//                if (grav <= fa || car.getClass().equals(VehicleElectric.class)) {
+//                    fa -= grav;
+//                    if (car instanceof VehicleElectric) {
+//                        fa *= ((VehicleElectric) car).getEnergyRegenerationRatio();
+//                    }
+//                } else {
+//                    fa = 0;
+//                }
+//
+//            }
 
-                if (grav <= fa || car.getClass().equals(VehicleElectric.class)) {
-                    fa -= grav;
-                    if (car instanceof VehicleElectric) {
-                        fa *= ((VehicleElectric) car).getEnergyRegenerationRatio();
-                    }
-                } else {
-                    fa = 0;
-                }
-
-            }
-
+        }
+        if (fa <= 0) {
+            fa = 0;
         }
         return fa;
     }
@@ -172,9 +177,19 @@ public class PhysicsCalculus {
         return time;
     }
 
+    public static double calcTimeBasedOnDistanceAndAcceleration(double initialVelocity, double distance, double acceleration) {
+        double firstpart = 2 * (distance - initialVelocity) / acceleration;
+        double result = Math.sqrt(firstpart);
+        return result;
+    }
+
     public static double calcDistance(double initialvelocity, double acceleration, double time) {
         double distance = (initialvelocity * time) + (0.5 * acceleration * time * time);
         return distance;
     }
 
+    public static double calcVelocityBasedOnInitialVelocityAccelerationTime(double initialVelocity, double acceleration, double time) {
+
+        return initialVelocity + (acceleration * time);
+    }
 }

@@ -358,7 +358,7 @@ public class PathAlgorithmsUI extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Please select an algorithm first!");
         }
 
-        boolean valid = false;
+        boolean loadValid = false;
         double currentLoad = 0;
         if (junctionBeginComboBox.getSelectedItem().equals(junctionEndComboBox.getSelectedItem())) {
             JOptionPane.showMessageDialog(this, "Please select different junctions", "ERROR", JOptionPane.ERROR_MESSAGE);
@@ -367,26 +367,30 @@ public class PathAlgorithmsUI extends javax.swing.JFrame {
                 double maxLoad = ((Vehicle) vehicleCombobox.getSelectedItem()).getMaxLoad();
                 double load = Double.parseDouble(loadJTextField.getText().trim());
                 if (load > maxLoad) {
-                    valid = false;
+                    loadValid = false;
                     JOptionPane.showMessageDialog(this, "The load you inserted is invalid. The maxload of the vehicle is: " + maxLoad,
                             "ERROR", JOptionPane.ERROR_MESSAGE);
                 } else {
-                    valid = true;
+                    loadValid = true;
                     currentLoad = load;
                 }
             }
 
         }
-        if (valid == true) {
-            if (fastestPathCheckbox.isSelected()) {
-                Junction begin = (Junction) junctionBeginComboBox.getSelectedItem();
-                Junction end = (Junction) junctionEndComboBox.getSelectedItem();
-                Vehicle v = (Vehicle) vehicleCombobox.getSelectedItem();
-                v.setCurrentLoad(currentLoad);
-                double acceleration = Double.parseDouble(accelerationJTextField.getText());
-                controller.bestPath(fastestPathCheckbox.isSelected(), energyEfficientCheckbox.isSelected(), energySavingCheckbox.isSelected(), begin, end, v, acceleration);
-                jTextArea1.setText(controller.getResultsAsText());
-                v.setCurrentLoad(0);
+        if (loadValid == true) {
+            if (Math.abs(Double.parseDouble(accelerationJTextField.getText())) < 0.0005) {
+                JOptionPane.showMessageDialog(this, "The acceleration you inserted is invalid.", "ERROR", JOptionPane.ERROR_MESSAGE);
+            } else {
+                if (fastestPathCheckbox.isSelected() || energyEfficientCheckbox.isSelected() || energySavingCheckbox.isSelected()) {
+                    Junction begin = (Junction) junctionBeginComboBox.getSelectedItem();
+                    Junction end = (Junction) junctionEndComboBox.getSelectedItem();
+                    Vehicle v = (Vehicle) vehicleCombobox.getSelectedItem();
+                    v.setCurrentLoad(currentLoad);
+                    double acceleration = Double.parseDouble(accelerationJTextField.getText());
+                    controller.bestPath(fastestPathCheckbox.isSelected(), energyEfficientCheckbox.isSelected(), energySavingCheckbox.isSelected(), begin, end, v, acceleration);
+                    jTextArea1.setText(controller.getResultsAsText());
+                    v.setCurrentLoad(0);
+                }
             }
         }
 
@@ -442,7 +446,7 @@ public class PathAlgorithmsUI extends javax.swing.JFrame {
         if (controller.hasResult()) {
             if (controller.saveResults()) {
                 JOptionPane.showMessageDialog(this, "Results saved with success!", "Results Save", JOptionPane.INFORMATION_MESSAGE);
-            }else{
+            } else {
                 JOptionPane.showMessageDialog(this, "Duplicated Results!", "Results Save", JOptionPane.ERROR_MESSAGE);
             }
 
