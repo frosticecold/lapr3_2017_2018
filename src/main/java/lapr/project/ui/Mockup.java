@@ -127,6 +127,7 @@ public class Mockup extends javax.swing.JFrame {
         itemProjectCopyProject = new javax.swing.JMenuItem();
         menuNetworkAnalysis = new javax.swing.JMenu();
         algorithmsMenuItem = new javax.swing.JMenuItem();
+        vehicleComparisonJMenuItem = new javax.swing.JMenuItem();
         menuItemFile = new javax.swing.JMenu();
         exportHTML = new javax.swing.JMenuItem();
         menuHelp = new javax.swing.JMenu();
@@ -204,6 +205,15 @@ public class Mockup extends javax.swing.JFrame {
             }
         });
         menuNetworkAnalysis.add(algorithmsMenuItem);
+
+        vehicleComparisonJMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vehicle_comparison_icon.png"))); // NOI18N
+        vehicleComparisonJMenuItem.setText("Vehicle Comparison");
+        vehicleComparisonJMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                vehicleComparisonJMenuItemActionPerformed(evt);
+            }
+        });
+        menuNetworkAnalysis.add(vehicleComparisonJMenuItem);
 
         jMenuBar1.add(menuNetworkAnalysis);
 
@@ -316,6 +326,16 @@ public class Mockup extends javax.swing.JFrame {
         ui.setVisible(true);
     }//GEN-LAST:event_LoginMenuItemActionPerformed
 
+    private void vehicleComparisonJMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_vehicleComparisonJMenuItemActionPerformed
+        if (Session.getActiveProject() != null) {
+            VehicleComparisonUI ui = new VehicleComparisonUI(this);
+            ui.setLocationRelativeTo(this);
+            ui.setVisible(true);
+        } else {
+            JOptionPane.showMessageDialog(this, "There is no active project at the moment.\nPress OK to close");
+        }
+    }//GEN-LAST:event_vehicleComparisonJMenuItemActionPerformed
+
     private void openWebPage(String url) {
         try {
             java.awt.Desktop.getDesktop().browse(java.net.URI.create(url));
@@ -376,5 +396,6 @@ public class Mockup extends javax.swing.JFrame {
     private javax.swing.JMenu menuItemFile;
     private javax.swing.JMenuItem menuItemOpenProject;
     private javax.swing.JMenu menuNetworkAnalysis;
+    private javax.swing.JMenuItem vehicleComparisonJMenuItem;
     // End of variables declaration//GEN-END:variables
 }
