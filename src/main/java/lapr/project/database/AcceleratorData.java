@@ -29,7 +29,7 @@ public class AcceleratorData extends DataAccess<Accelerator> {
         ResultSet rs = super.callFunction("getThrottle", args);
 
         while (rs.next()) {
-            int id = rs.getInt("id");
+            int id = rs.getInt("description");
             RegimeData r = new RegimeData(connection);
             List<Regime> regimeList = r.get(vehicleName);
 
