@@ -5,14 +5,11 @@
  */
 package lapr.project.controller;
 
-import java.util.LinkedList;
 import java.util.List;
 import lapr.project.model.Junction;
 import lapr.project.model.Project;
 import lapr.project.model.Vehicle;
 import lapr.project.networkanalysis.AlgorithmResults;
-import lapr.project.pathalgorithms.FastestPathAlgorithm;
-import lapr.project.pathalgorithms.PathAlgorithm;
 import lapr.project.utils.Session;
 
 /**
@@ -22,12 +19,9 @@ import lapr.project.utils.Session;
 public class VehicleComparisonController {
     
     private Project project;
-    private AlgorithmResults result;
-    private List<AlgorithmResults> resultsList;
-    
+    private AlgorithmResults results;
     public VehicleComparisonController(){
         this.project = Session.getActiveProject();
-        this.resultsList = new LinkedList<>();
     }
     
     public String getProjectName(){
@@ -40,41 +34,5 @@ public class VehicleComparisonController {
     
     public Iterable<Junction> getProjectJunctions(){
         return project.getRoadNetwork().vertices();
-    }
-    
-    public void bestPath(boolean fastest, boolean efficient, boolean saving, Junction start, Junction end, Vehicle v, double acceleration) {
-        if (fastest) {
-            fastestPath(start, end, v);
-        }
-        if (efficient) {
-            theoricalMostEnergyEfficientPath(start, end, v, acceleration);
-        }
-        if (saving) {
-            mostEfficientPathInEnergySavingMode(start, end, v, acceleration);
-        }
-    }
-    
-    private void fastestPath(Junction start, Junction end, Vehicle v) {
-        PathAlgorithm alg = new FastestPathAlgorithm();
-        result = alg.bestPath(project.getRoadNetwork(), start, end, v, 0);
-    }
-
-    private void theoricalMostEnergyEfficientPath(Junction start, Junction end, Vehicle v, double acceleration) {
-        PathAlgorithm alg = new FastestPathAlgorithm();
-        result = alg.bestPath(project.getRoadNetwork(), start, end, v, acceleration);
-
-    }
-
-    private void mostEfficientPathInEnergySavingMode(Junction start, Junction end, Vehicle v, double acceleration) {
-        PathAlgorithm alg = new FastestPathAlgorithm();
-        result = alg.bestPath(project.getRoadNetwork(), start, end, v, acceleration);
-    }
-
-    public List<AlgorithmResults> getResultsList() {
-        return resultsList;
-    }
-    
-    public void addResult(){
-        resultsList.add(result);
     }
 }
