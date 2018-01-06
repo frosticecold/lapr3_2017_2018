@@ -183,7 +183,7 @@ public class AlgorithmVehicleResultsUI extends javax.swing.JDialog {
                                     .addComponent(totalweightTextField)
                                     .addComponent(vehicleCombobox, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel9)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(algorithmTextfield, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -245,6 +245,7 @@ public class AlgorithmVehicleResultsUI extends javax.swing.JDialog {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void vehicleComboboxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_vehicleComboboxActionPerformed
@@ -255,6 +256,7 @@ public class AlgorithmVehicleResultsUI extends javax.swing.JDialog {
         traveltimeTextfield.setText(String.valueOf(listAlgorithms.get(vehicleCombobox.getSelectedIndex()).getTravelTime()) + " seg");
         costTextfield.setText(String.valueOf(listAlgorithms.get(vehicleCombobox.getSelectedIndex()).getCost()) + " €");
         energyTextfield.setText(String.valueOf(listAlgorithms.get(vehicleCombobox.getSelectedIndex()).getEnergy()) + " J");
+        algorithmTextfield.setText(listAlgorithms.get(vehicleCombobox.getSelectedIndex()).getAlgorithmType());
         String finalPath = "";
         for (Section section : listAlgorithms.get(vehicleCombobox.getSelectedIndex()).getSectionPath()) {
             finalPath += section.getRoadID() + "\n";

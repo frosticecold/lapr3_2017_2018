@@ -5,12 +5,15 @@
  */
 package lapr.project.ui;
 
+import java.util.LinkedList;
+import java.util.List;
 import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import lapr.project.controller.VehicleComparisonController;
 import lapr.project.model.Junction;
 import lapr.project.model.Vehicle;
+import lapr.project.networkanalysis.AlgorithmResults;
 
 /**
  *
@@ -75,6 +78,9 @@ public class VehicleComparisonUI extends javax.swing.JFrame {
         energyEfficientCheckbox = new javax.swing.JCheckBox();
         energySavingCheckbox = new javax.swing.JCheckBox();
         fastestPathCheckbox = new javax.swing.JCheckBox();
+        jLabel7 = new javax.swing.JLabel();
+        accelerationJTextField = new javax.swing.JTextField();
+        accelerationUnitLabel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -156,6 +162,14 @@ public class VehicleComparisonUI extends javax.swing.JFrame {
             }
         });
 
+        jLabel7.setText("Acceleration:");
+
+        accelerationJTextField.setText("0");
+        accelerationJTextField.setEnabled(false);
+
+        accelerationUnitLabel.setText("m/s²");
+        accelerationUnitLabel.setEnabled(false);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -169,37 +183,11 @@ public class VehicleComparisonUI extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(cancelJButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(compareJButton))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(energyEfficientCheckbox)
-                                            .addComponent(fastestPathCheckbox, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGap(26, 26, 26))
-                                    .addComponent(energySavingCheckbox))
-                                .addGap(27, 27, 27)
-                                .addComponent(jLabel5))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel6)
-                                .addGap(122, 122, 122)
-                                .addComponent(jLabel4)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(beginJunctionJCombobox, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(endJunctionComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(25, 25, 25)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel1)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -207,8 +195,45 @@ public class VehicleComparisonUI extends javax.swing.JFrame {
                                     .addComponent(addVehicleJButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(projectNameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(27, 27, 27))
+                            .addComponent(projectNameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(layout.createSequentialGroup()
+                            .addGap(0, 0, Short.MAX_VALUE)
+                            .addComponent(cancelJButton)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(compareJButton)
+                            .addGap(21, 21, 21))
+                        .addGroup(layout.createSequentialGroup()
+                            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(jLabel6)
+                                    .addGap(122, 122, 122)
+                                    .addComponent(jLabel4)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(beginJunctionJCombobox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(endJunctionComboBox, 0, 158, Short.MAX_VALUE)))
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addComponent(energyEfficientCheckbox)
+                                                .addComponent(fastestPathCheckbox, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addGap(26, 26, 26))
+                                        .addComponent(energySavingCheckbox))
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addGap(27, 27, 27)
+                                            .addComponent(jLabel5))
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addGap(29, 29, 29)
+                                            .addComponent(jLabel7)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                            .addComponent(accelerationJTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                            .addComponent(accelerationUnitLabel))))))))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -243,7 +268,12 @@ public class VehicleComparisonUI extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(endJunctionComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel5))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel7)
+                            .addComponent(accelerationJTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(accelerationUnitLabel))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(compareJButton)
                             .addComponent(cancelJButton))
@@ -283,7 +313,13 @@ public class VehicleComparisonUI extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Please select different junctions", "ERROR", JOptionPane.ERROR_MESSAGE);
         }
 
+        for (int i = 0; i < comparisonVehiclesModel.size(); i++) {
+            controller.bestPath(fastestPathCheckbox.isEnabled(), energyEfficientCheckbox.isEnabled(), energySavingCheckbox.isEnabled(), (Junction) beginJunctionJCombobox.getSelectedItem(), (Junction) endJunctionComboBox.getSelectedItem(), comparisonVehiclesModel.get(i), Double.parseDouble(accelerationJTextField.getText()));
+            controller.addResult();
+        }
 
+        AlgorithmVehicleResultsUI ui = new AlgorithmVehicleResultsUI(this, controller.getResultsList());
+        ui.setVisible(true);
     }//GEN-LAST:event_compareJButtonActionPerformed
 
     private void cancelJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelJButtonActionPerformed
@@ -299,6 +335,7 @@ public class VehicleComparisonUI extends javax.swing.JFrame {
 
     private void energySavingCheckboxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_energySavingCheckboxActionPerformed
         if (energySavingCheckbox.isSelected()) {
+            accelerationJTextField.setEnabled(true);
             fastestPathCheckbox.setSelected(false);
             energyEfficientCheckbox.setSelected(false);
         }
@@ -306,6 +343,8 @@ public class VehicleComparisonUI extends javax.swing.JFrame {
 
     private void fastestPathCheckboxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fastestPathCheckboxActionPerformed
         if (fastestPathCheckbox.isSelected()) {
+            accelerationJTextField.setEnabled(true);
+            accelerationJTextField.setEnabled(false);
             energyEfficientCheckbox.setSelected(false);
             energySavingCheckbox.setSelected(false);
         }
@@ -326,6 +365,8 @@ public class VehicleComparisonUI extends javax.swing.JFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField accelerationJTextField;
+    private javax.swing.JLabel accelerationUnitLabel;
     private javax.swing.JButton addVehicleJButton;
     private javax.swing.JComboBox<Junction> beginJunctionJCombobox;
     private javax.swing.JButton cancelJButton;
@@ -341,6 +382,7 @@ public class VehicleComparisonUI extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextField projectNameTextField;
