@@ -13,9 +13,10 @@ import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import lapr.project.controller.AlgorithmVehicleResultsController;
 import lapr.project.model.Section;
 import lapr.project.networkanalysis.AlgorithmResults;
-import lapr.project.utils.ExportHTML;
 
 /**
  *
@@ -28,20 +29,30 @@ public class AlgorithmVehicleResultsUI extends javax.swing.JDialog {
      */
     private static final long serialVersionUID = 1;
     private List<AlgorithmResults> listAlgorithms;
-    private JFileChooser m_jfc;
+    private JFileChooser fileChooser;
+    private AlgorithmVehicleResultsController controller;
 
     public AlgorithmVehicleResultsUI(JFrame parent, List<AlgorithmResults> listAlgorithms) {
         super(parent, true);
+        controller = new AlgorithmVehicleResultsController();
         initComponents();
+        initFileChooser();
         this.listAlgorithms = listAlgorithms;
         if (!listAlgorithms.isEmpty()) {
             for (AlgorithmResults listAlgorithm : listAlgorithms) {
                 vehicleCombobox.addItem(listAlgorithm.getVehicle().getName());
             }
         } else {
-            JOptionPane.showMessageDialog(parent, "Error, there is no vehicles chosen to present results.");
+            JOptionPane.showMessageDialog(parent, "Error, there is no vehicles to present results.");
             this.dispose();
         }
+    }
+
+    public void initFileChooser() {
+        fileChooser = new JFileChooser();
+        FileNameExtensionFilter xmlfilter = new FileNameExtensionFilter("HTML files (*.html)", "html");
+        fileChooser.setFileFilter(xmlfilter);
+        fileChooser.setCurrentDirectory(new File(System.getProperty("user.dir")));
     }
 
     /**
@@ -249,36 +260,47 @@ public class AlgorithmVehicleResultsUI extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void vehicleComboboxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_vehicleComboboxActionPerformed
-        projectTextfield.setText(listAlgorithms.get(vehicleCombobox.getSelectedIndex()).getProject().getName());
-        vehicleTextfield.setText(listAlgorithms.get(vehicleCombobox.getSelectedIndex()).getVehicle().getName());
-        totalweightTextField.setText(String.valueOf(listAlgorithms.get(vehicleCombobox.getSelectedIndex()).getVehicle().getTotalWeight()) + " kg");
-        distanceTextfield.setText(String.valueOf(listAlgorithms.get(vehicleCombobox.getSelectedIndex()).getDistance()) + " km");
-        traveltimeTextfield.setText(String.valueOf(listAlgorithms.get(vehicleCombobox.getSelectedIndex()).getTravelTime()) + " seg");
-        costTextfield.setText(String.valueOf(listAlgorithms.get(vehicleCombobox.getSelectedIndex()).getCost()) + " €");
-        energyTextfield.setText(String.valueOf(listAlgorithms.get(vehicleCombobox.getSelectedIndex()).getEnergy()) + " J");
-        algorithmTextfield.setText(listAlgorithms.get(vehicleCombobox.getSelectedIndex()).getAlgorithmType());
-        String finalPath = "";
-        for (Section section : listAlgorithms.get(vehicleCombobox.getSelectedIndex()).getSectionPath()) {
-            finalPath += section.getRoadID() + "\n";
+        if (vehicleCombobox.getItemCount() != 0) {
+            projectTextfield.setText(listAlgorithms.get(vehicleCombobox.getSelectedIndex()).getProject().getName());
+            vehicleTextfield.setText(listAlgorithms.get(vehicleCombobox.getSelectedIndex()).getVehicle().getName());
+            totalweightTextField.setText(String.valueOf(listAlgorithms.get(vehicleCombobox.getSelectedIndex()).getVehicle().getTotalWeight()) + " kg");
+            distanceTextfield.setText(String.valueOf(listAlgorithms.get(vehicleCombobox.getSelectedIndex()).getDistance()) + " km");
+            traveltimeTextfield.setText(String.valueOf(listAlgorithms.get(vehicleCombobox.getSelectedIndex()).getTravelTime()) + " seg");
+            costTextfield.setText(String.valueOf(listAlgorithms.get(vehicleCombobox.getSelectedIndex()).getCost()) + " €");
+            energyTextfield.setText(String.valueOf(listAlgorithms.get(vehicleCombobox.getSelectedIndex()).getEnergy()) + " J");
+            algorithmTextfield.setText(listAlgorithms.get(vehicleCombobox.getSelectedIndex()).getAlgorithmType());
+            String finalPath = "";
+            for (Section section : listAlgorithms.get(vehicleCombobox.getSelectedIndex()).getSectionPath()) {
+                finalPath += "Begining Junction: " + section.getBeginningJunction().getName() + " " + section.getRoadID() + " " + "Ending Junction: " + section.getEndingJunction().getName() + "\n";
+            }
+            pathTextarea.setText(finalPath);
         }
-        pathTextarea.setText(finalPath);
     }//GEN-LAST:event_vehicleComboboxActionPerformed
 
     private void closeBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeBtnActionPerformed
+        projectTextfield.setText("");
+        vehicleTextfield.setText("");
+        totalweightTextField.setText("");
+        distanceTextfield.setText("");
+        traveltimeTextfield.setText("");
+        costTextfield.setText("");
+        energyTextfield.setText("");
+        algorithmTextfield.setText("");
+        pathTextarea.setText("");
+        vehicleCombobox.removeAllItems();
         this.dispose();
     }//GEN-LAST:event_closeBtnActionPerformed
 
     private void exportBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exportBtnActionPerformed
         try {
-            int returnvalue = m_jfc.showSaveDialog(this);
+            int returnvalue = fileChooser.showSaveDialog(this);
             if (returnvalue == JFileChooser.APPROVE_OPTION) {
-                File file = m_jfc.getSelectedFile();
+                File file = fileChooser.getSelectedFile();
                 String path = file.getPath();
                 if (!(path.contains(".html"))) {
                     path += ".html";
                 }
-                ExportHTML export = new ExportHTML();
-                export.exportAnalysisResult(listAlgorithms.get(vehicleCombobox.getSelectedIndex()), path);
+                controller.exportHTML(path, listAlgorithms.get(vehicleCombobox.getSelectedIndex()));
                 JOptionPane.showMessageDialog(this, "Results exported with success.", "Results Export", JOptionPane.INFORMATION_MESSAGE);
             }
         } catch (NullPointerException n) {
