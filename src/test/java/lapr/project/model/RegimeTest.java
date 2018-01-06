@@ -61,12 +61,13 @@ public class RegimeTest {
     public void testGetTorqueByRPM() {
         System.out.println("testGetTorqueByRPM");
         Regime reg1 = new Regime();
-        reg1.setRpmHigh(10000);
-        reg1.setRpmLow(2000);
-        reg1.setSFC(500);
-        reg1.setTorqueHigh(200);
-        reg1.setTorqueLow(100);
 
+        reg1.setRpmLow(2000);
+        reg1.setRpmHigh(10000);
+        reg1.setSFC(500);
+
+        reg1.setTorqueLow(100);
+        reg1.setTorqueHigh(200);
         try {
             reg1.getTorqueByRPM(100);
         } catch (IllegalArgumentException ex) {
@@ -88,11 +89,11 @@ public class RegimeTest {
         } catch (IllegalArgumentException ex) {
         }
 
-        reg1.getTorqueByRPM(2000);
-        reg1.getTorqueByRPM(4000);
-        reg1.getTorqueByRPM(6000);
-        reg1.getTorqueByRPM(9999);
-        reg1.getTorqueByRPM(10000);
+        assertEquals(reg1.getTorqueByRPM(2000),100,1);
+        assertEquals(reg1.getTorqueByRPM(4000),125,1);
+        assertEquals(reg1.getTorqueByRPM(6000),150,1);
+        assertEquals(reg1.getTorqueByRPM(9999),199.998,1);
+        assertEquals(reg1.getTorqueByRPM(10000),200,1);
 
         reg1.getSFCByRPM(2000);
         reg1.getSFCByRPM(4000);

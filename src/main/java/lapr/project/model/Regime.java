@@ -60,7 +60,10 @@ public class Regime {
             return torqueLow;
         }
         if (rpm > rpmLow && rpm < rpmHigh) {
-            return (torqueHigh + torqueLow) / 2;
+            double m = (torqueHigh - torqueLow) / (rpmHigh - rpmLow);
+            double b = torqueLow - (m * rpmLow);
+            double torque = (m * rpm) + b;
+            return torque;
 
         }
 //        if (Math.abs(rpm - rpmHigh) < 0.0000001) {

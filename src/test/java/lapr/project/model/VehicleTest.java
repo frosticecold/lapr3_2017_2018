@@ -421,7 +421,7 @@ public class VehicleTest {
         double rpm = 2000.0;
         double expResult = 122.5;
         double result = vh1.getTorqueAtThrottle(throttle, rpm);
-        assertEquals(expResult, result, 0.0);
+        assertEquals(expResult, result, 0.5);
     }
 
     /**
