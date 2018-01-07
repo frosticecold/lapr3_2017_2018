@@ -23,6 +23,7 @@ import lapr.project.utils.graphbase.Graph;
 public class TheoreticalEnergyEfficientAlgorithm implements PathAlgorithm {
 
     public static final String ALG_NAME = "Theoretical Most Energy Efficient Path";
+    private static final int RESULTS_SIZE = 6;
 
     @Override
     public AlgorithmResults bestPath(Graph<Junction, Section> graph, Junction start, Junction end, Vehicle v, double acceleration) {
@@ -107,7 +108,7 @@ public class TheoreticalEnergyEfficientAlgorithm implements PathAlgorithm {
                 double results[] = calcEfficientPath(section, vehicle, acceleration, previous_velocity, previous_torque, previous_rpm, previous_gear);
                 if (results[0] != -1) {
                     if (!visited[kAdj] && time[kAdj] > (time[kOrg] + results[1])) {
-                        time[kAdj] = time[kOrg] + results[1];
+                        time[kAdj] = time[kOrg] + results[0];
                         pathKeys[kAdj] = kOrg;
                         energy[kAdj] = energy[kAdj] + results[1];
                     }
@@ -118,8 +119,8 @@ public class TheoreticalEnergyEfficientAlgorithm implements PathAlgorithm {
     }
 
     private static double[] calcEfficientPath(Section section, Vehicle car, double acceleration, double previousVelocity, double previousTorque, double previousRpm, double previousGear) {
-        double fma = car.getTotalWeight() * acceleration;
-        double[] results = new double[6];
+        double[] results = new double[RESULTS_SIZE];
+        double[] tempresults = new double[RESULTS_SIZE];
         //Results
         //0) Time
         //1) Energy
@@ -131,49 +132,132 @@ public class TheoreticalEnergyEfficientAlgorithm implements PathAlgorithm {
             boolean accel = false;
             boolean braking = false;
             double maximumvel = car.getMaximumPermitedVelocity2(seg, section.getRoadID()) / 3.6;
-            double deltatimeaccel = 0;
-            double acceldistance = 0;
-            double segmentLength = seg.getLength() * 1000;
+            //If car needs acceleration
             if (previousVelocity < maximumvel) {
                 braking = false;
                 accel = true;
             } else {
+                //If car needs braking
                 if (previousVelocity > maximumvel) {
                     accel = false;
                     braking = true;
                 }
             }
+            //If car is accelerating
             if (accel) {
-                deltatimeaccel = PhysicsCalculus.calcTimeBasedOnVelocityAndAcceleration(maximumvel, previousVelocity, acceleration);
-                acceldistance = PhysicsCalculus.calcDistance(previousVelocity, acceleration, deltatimeaccel);
+                tempresults = calcAcceleratingSegment(seg, car, previousVelocity, maximumvel, acceleration);
+                double[] calcIdealMotorForceBasedAcceleration = PhysicsCalculus.calcIdealMotorForceBasedAcceleration(section, seg, car, acceleration, previousVelocity);
             } else {
+                //If car is braking
                 if (braking) {
-                    deltatimeaccel = PhysicsCalculus.calcTimeBasedOnVelocityAndAcceleration(maximumvel, previousVelocity, acceleration * -1);
-                    acceldistance = PhysicsCalculus.calcDistance(previousVelocity, acceleration, deltatimeaccel);
+                    tempresults = calcBrakingSegment(seg, car, previousVelocity, maximumvel, acceleration * -1);
+                } else {
+                    tempresults = calcNoAcceleration(seg, car, previousVelocity);
+
                 }
             }
-            //If accel or brake distance is valid
-            if (acceldistance < segmentLength) {
-                double remainingtime = (segmentLength - acceldistance) / maximumvel;
-                results[0] += deltatimeaccel + remainingtime;
-            } else { // Else it is a invalid path
-                if (accel) {
-                    deltatimeaccel = PhysicsCalculus.calcTimeBasedOnDistanceAndAcceleration(previousVelocity, segmentLength, acceleration);
-                    previousVelocity = PhysicsCalculus.calcVelocityBasedOnInitialVelocityAccelerationTime(previousVelocity, acceleration, deltatimeaccel);
-                    results[0] += deltatimeaccel;
-                    continue;
-                }
-                if (braking) {
-                    for (int i = 0; i < results.length; i++) {
-                        results[i] = -1;
-                    }
-                }
-                break;
+            if (tempresults[0] != -1) {
+                results[0] += tempresults[0];
+                results[1] += tempresults[1];
+                results[2] = tempresults[2];
+                previousVelocity = results[2];
             }
         }
         return results;
     }
 
+    private static double[] calcAcceleratingSegment(Segment seg, Vehicle car, double initialvelocity, double maximumvelocity, double acceleration) {
+        double[] results = new double[RESULTS_SIZE];
+        //Results
+        //0) Time
+        //1) Energy
+        //2) Velocity
+        //3) torque
+        //4) rpm
+        //5) gear
+        double deltatimeaccel = PhysicsCalculus.calcTimeBasedOnVelocityAndAcceleration(maximumvelocity, initialvelocity, acceleration);
+        double acceldistance = PhysicsCalculus.calcDistance(initialvelocity, acceleration, deltatimeaccel);
+        double seglength = seg.getLength() * 1000;
+        //If acceleration reaches maximum vel before ending the segment
+        if (acceldistance < seglength) {
+            double remainingtime = (seglength - acceldistance) / maximumvelocity;
+            results[0] += deltatimeaccel + remainingtime;
+            results[2] = maximumvelocity;
+        } else {
+            //Acceleration does not reach maximum vel for the segment
+            double time = PhysicsCalculus.calcTimeBasedOnDistanceAndAcceleration(initialvelocity, seglength, acceleration);
+            double reachablevelocity = PhysicsCalculus.calcVelocityBasedOnInitialVelocityAccelerationTime(initialvelocity, acceleration, time);
+            //If reached vel is bigger than min vel for the segment
+            if (reachablevelocity >= seg.getMinimumVelocity() / 3.6) {
+                results[0] += time;
+                results[2] = reachablevelocity;
+            } else {
+                //Else it breaks acceleration rules
+                for (int i = 0; i < results.length; i++) {
+                    results[i] = -1;
+                }
+
+            }
+        }
+        return results;
+    }
+
+    private static double[] calcNoAcceleration(Segment seg, Vehicle car, double maximumvelocity) {
+        double[] results = new double[RESULTS_SIZE];
+        //Results
+        //0) Time
+        //1) Energy
+        //2) Velocity
+        //3) torque
+        //4) rpm
+        //5) gear
+        double seglength = seg.getLength() * 1000;
+        double deltatime = seglength / maximumvelocity;
+        results[0] = deltatime;
+        results[2] = maximumvelocity;
+        return results;
+
+    }
+
+    private static double[] calcBrakingSegment(Segment seg, Vehicle car, double initialvelocity, double maximumvelocity, double acceleration) {
+        double[] results = new double[RESULTS_SIZE];
+        if (acceleration > 0) {
+            acceleration *= -1;
+        }
+        //Results
+        //0) Time
+        //1) Energy
+        //2) Velocity
+        //3) torque
+        //4) rpm
+        //5) gear
+        double deltatimeaccel = PhysicsCalculus.calcTimeBasedOnVelocityAndAcceleration(maximumvelocity, initialvelocity, acceleration);
+        double brakingdistance = PhysicsCalculus.calcDistance(initialvelocity, acceleration, deltatimeaccel);
+        double seglength = seg.getLength() * 1000;
+
+        //If braking reaches maximum vel before ending the segment
+        if (brakingdistance < seglength) {
+            double remainingtime = (seglength - brakingdistance) / maximumvelocity;
+            results[0] += deltatimeaccel + remainingtime;
+            results[2] = maximumvelocity;
+        } else {
+            //Braking does not reach maximum vel for the segment
+            double time = PhysicsCalculus.calcTimeBasedOnDistanceAndAcceleration(initialvelocity, seglength, acceleration);
+            double reachablevelocity = PhysicsCalculus.calcVelocityBasedOnInitialVelocityAccelerationTime(initialvelocity, acceleration, time);
+            //If reached vel is bigger than min vel for the segment
+            if (reachablevelocity >= seg.getMinimumVelocity() / 3.6) {
+                results[0] += time;
+                results[2] = reachablevelocity;
+            } else {
+                //Else it breaks acceleration rules
+                for (int i = 0; i < results.length; i++) {
+                    results[i] = -1;
+                }
+
+            }
+        }
+        return results;
+    }
     /**
      * Extracts from pathKeys the minimum path between voInf and vdInf The path
      * is constructed from the end to the beginning

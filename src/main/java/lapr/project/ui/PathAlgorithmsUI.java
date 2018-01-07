@@ -378,7 +378,7 @@ public class PathAlgorithmsUI extends javax.swing.JFrame {
 
         }
         if (loadValid == true) {
-            if (Math.abs(Double.parseDouble(accelerationJTextField.getText())) < 0.0005) {
+            if ( !fastestPathCheckbox.isSelected() && Math.abs(Double.parseDouble(accelerationJTextField.getText())) < 0.0005) {
                 JOptionPane.showMessageDialog(this, "The acceleration you inserted is invalid.", "ERROR", JOptionPane.ERROR_MESSAGE);
             } else {
                 if (fastestPathCheckbox.isSelected() || energyEfficientCheckbox.isSelected() || energySavingCheckbox.isSelected()) {

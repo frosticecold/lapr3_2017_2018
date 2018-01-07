@@ -180,7 +180,7 @@ public class FastestPathAlgorithm implements PathAlgorithm {
     }
 
     private static double[] calculateIdealMotorForce(Vehicle car, Segment s, final double neededForce, final double carvelocity) {
-        if (car == null || s == null || neededForce < 0) {
+        if (car == null || s == null ) {
             throw new IllegalArgumentException("Invalid parameter");
         }
 
