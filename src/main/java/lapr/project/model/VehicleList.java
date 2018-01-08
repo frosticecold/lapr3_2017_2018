@@ -67,7 +67,6 @@ public class VehicleList {
             this.mapOfVehicleNames.put(vehicle.getName(), 1);
             return this.listOfVehicles.add(vehicle);
         }
-
         return false;
     }
 
