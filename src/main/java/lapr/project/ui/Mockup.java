@@ -132,6 +132,8 @@ public class Mockup extends javax.swing.JFrame {
         exportHTML = new javax.swing.JMenuItem();
         menuHelp = new javax.swing.JMenu();
         googleMenuItem = new javax.swing.JMenuItem();
+        stackOverflowMenuItem = new javax.swing.JMenuItem();
+        wikipediaMenuItem = new javax.swing.JMenuItem();
 
         jCheckBox1.setText("jCheckBox1");
 
@@ -143,6 +145,7 @@ public class Mockup extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setIconImage(Toolkit.getDefaultToolkit().getImage(Mockup.class.getResource("/traffic_light_icon.png")));
+        setResizable(false);
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/analytics_wallpaper.jpg"))); // NOI18N
 
@@ -240,6 +243,22 @@ public class Mockup extends javax.swing.JFrame {
         });
         menuHelp.add(googleMenuItem);
 
+        stackOverflowMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/stack_overflow_icon.png"))); // NOI18N
+        stackOverflowMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                stackOverflowMenuItemActionPerformed(evt);
+            }
+        });
+        menuHelp.add(stackOverflowMenuItem);
+
+        wikipediaMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/wikipedia_icon.png"))); // NOI18N
+        wikipediaMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                wikipediaMenuItemActionPerformed(evt);
+            }
+        });
+        menuHelp.add(wikipediaMenuItem);
+
         jMenuBar1.add(menuHelp);
 
         setJMenuBar(jMenuBar1);
@@ -336,6 +355,14 @@ public class Mockup extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_vehicleComparisonJMenuItemActionPerformed
 
+    private void stackOverflowMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stackOverflowMenuItemActionPerformed
+        openWebPage("https://stackoverflow.com/");
+    }//GEN-LAST:event_stackOverflowMenuItemActionPerformed
+
+    private void wikipediaMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_wikipediaMenuItemActionPerformed
+        openWebPage("https://en.wikipedia.org/wiki/Main_Page");
+    }//GEN-LAST:event_wikipediaMenuItemActionPerformed
+
     private void openWebPage(String url) {
         try {
             java.awt.Desktop.getDesktop().browse(java.net.URI.create(url));
@@ -396,6 +423,8 @@ public class Mockup extends javax.swing.JFrame {
     private javax.swing.JMenu menuItemFile;
     private javax.swing.JMenuItem menuItemOpenProject;
     private javax.swing.JMenu menuNetworkAnalysis;
+    private javax.swing.JMenuItem stackOverflowMenuItem;
     private javax.swing.JMenuItem vehicleComparisonJMenuItem;
+    private javax.swing.JMenuItem wikipediaMenuItem;
     // End of variables declaration//GEN-END:variables
 }
