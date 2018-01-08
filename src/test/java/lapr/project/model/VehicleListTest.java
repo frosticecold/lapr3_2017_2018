@@ -102,7 +102,7 @@ public class VehicleListTest {
         result = instance.addVehicle(vh2);
         assertEquals(expResult, result);
 
-        assertEquals(vh2.getName(), vh1.getName() + " " + 2);
+        assertEquals(vh2.getName(), vh1.getName() + 2);
 
     }
 
@@ -152,7 +152,7 @@ public class VehicleListTest {
         instance.addVehicle(vh3);
         List<String> expResult = new ArrayList<>();
         expResult.add("Pickup");
-        expResult.add("Pickup 2");
+        expResult.add("Pickup2");
         expResult.add("OtherPickup");
         List<String> result = instance.getVehicleNameList();
         assertEquals(expResult, result);
