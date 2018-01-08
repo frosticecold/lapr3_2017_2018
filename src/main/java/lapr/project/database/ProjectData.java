@@ -50,7 +50,6 @@ public class ProjectData extends DataAccess<Project> {
         Project p = null;
         while (rs.next()) {
             String description = rs.getString("description");
-            System.out.println(description);
             p = new Project();
 
             p.setName(name);
@@ -86,6 +85,8 @@ public class ProjectData extends DataAccess<Project> {
             VehicleList vehicles = v.get(name);
 
             p.setListVehicles(vehicles);
+            
+            
 
         }
         return p;

@@ -59,6 +59,14 @@ public class AlgorithmResults {
 
     }
 
+    public void setCost(double cost) {
+        this.cost = cost;
+    }
+
+    public void setDistance(double distance) {
+        this.distance = distance;
+    }
+
     public Project getProject() {
         return project;
     }

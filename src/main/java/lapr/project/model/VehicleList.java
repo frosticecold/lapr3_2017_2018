@@ -106,6 +106,15 @@ public class VehicleList {
         return vehicleList;
     }
 
+    public Vehicle getVehicleByName(String vName) {
+        for (Vehicle v : listOfVehicles) {
+            if (vName.equalsIgnoreCase(v.getName())) {
+                return v;
+            }
+        }
+        return null;
+    }
+
     public List<Vehicle> getVehicleList() {
         return this.listOfVehicles;
     }

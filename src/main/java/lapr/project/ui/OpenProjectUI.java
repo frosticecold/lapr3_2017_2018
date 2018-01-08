@@ -10,6 +10,9 @@ import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import lapr.project.controller.OpenProjectController;
+import lapr.project.model.Project;
+import lapr.project.utils.Session;
+import oracle.net.aso.s;
 
 /**
  *
@@ -122,6 +125,9 @@ public class OpenProjectUI extends javax.swing.JDialog {
         try {
             String proj = projectComboBox.getSelectedItem().toString();
             controller.setActiveProject(proj);
+            Project p = Session.getActiveProject();
+            String message = String.format("Loaded: %s roads\n %s sections\n %s junctions\n %s vehicles", p.getListRoads().size(), p.getRoadNetwork().numEdges(), p.getRoadNetwork().numVertices(), p.getListVehicles().size());
+            JOptionPane.showMessageDialog(this, message, "Success", JOptionPane.INFORMATION_MESSAGE);
             this.dispose();
         } catch (SQLException ex) {
             Logger.getLogger(OpenProjectUI.class.getName()).log(Level.SEVERE, null, ex);

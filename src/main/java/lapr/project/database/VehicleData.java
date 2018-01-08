@@ -4,7 +4,9 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import lapr.project.model.Accelerator;
 import lapr.project.model.Gearbox;
 import lapr.project.model.Vehicle;
@@ -51,6 +53,22 @@ public class VehicleData extends DataAccess<Vehicle> {
             AcceleratorData a = new AcceleratorData(connection);
             Accelerator vAccelerator = a.get(vName);
 
+            Map<String, Double> mapRoadVelocityLimit = new HashMap<>();
+            List<SQLArgument> args1 = new ArrayList<>();
+            args1.add(new SQLArgument(vName, OracleTypes.VARCHAR));
+
+            ResultSet rs1 = super.callFunction("checkVehicleSpeedLimits", args1);
+            if (rs1.next()) {
+                rs1.close();
+                ResultSet rs2 = super.callFunction("getMaxVelocityVehicle", args1);
+                while (rs2.next()) {
+                    String road = rs2.getString("road");
+                    String road_p = road.substring(0,1).toUpperCase() + road.substring(1).toLowerCase();
+                    double max_speed = rs2.getDouble("speed_limit");
+                    mapRoadVelocityLimit.put(road_p, max_speed);
+                }
+            }
+
             if ("combustion".equalsIgnoreCase(vMotorization)) {
                 VehicleCombustion v = new VehicleCombustion();
                 v.setName(vName);
@@ -70,6 +88,7 @@ public class VehicleData extends DataAccess<Vehicle> {
                 v.setFinalDriveRatio(vFinalDriveRatio);
                 v.setGearbox(vGearbox);
                 v.setAccelerator(vAccelerator);
+                v.setRoadVelocityLimit(mapRoadVelocityLimit);
 
                 list.addVehicle(v);
             } else if ("electric".equalsIgnoreCase(vMotorization)) {
@@ -91,6 +110,7 @@ public class VehicleData extends DataAccess<Vehicle> {
                 ve.setFinalDriveRatio(vFinalDriveRatio);
                 ve.setGearbox(vGearbox);
                 ve.setAccelerator(vAccelerator);
+                ve.setRoadVelocityLimit(mapRoadVelocityLimit);
                 ve.setEnergyRegenerationRatio(vEnergyRegenerationRatio);
 
                 list.addVehicle(ve);
@@ -135,6 +155,15 @@ public class VehicleData extends DataAccess<Vehicle> {
         }
 
         super.callProcedure("insertVehicle", args);
+
+        List<SQLArgument> args1 = new ArrayList<>();
+        for (Map.Entry<String, Double> entry : v.getMapRoadVelocityLimit().entrySet()) {
+            args1.clear();
+            args1.add(new SQLArgument(v.getName(), OracleTypes.VARCHAR));
+            args1.add(new SQLArgument(entry.getKey(), OracleTypes.VARCHAR));
+            args1.add(new SQLArgument(Double.toString(entry.getValue()), OracleTypes.NUMBER));
+            super.callProcedure("insertMaxVelocityVehicle", args1);
+        }
 
         GearboxData gd = new GearboxData(connection);
         gd.insert(v.getName(), v.getGearbox());

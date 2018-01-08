@@ -349,6 +349,10 @@ public abstract class Vehicle {
         return rollingResistanceCoefficient;
     }
 
+    public Map<String, Double> getMapRoadVelocityLimit() {
+        return mapRoadVelocityLimit;
+    }
+    
     /**
      * Abstract method to return the vehicles maximum velocity
      *

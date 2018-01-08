@@ -37,7 +37,6 @@ public class SegmentData extends DataAccess<Segment> {
 
             list.add(s);
         }
-        System.out.println(list.size());
         return list;
     }
 

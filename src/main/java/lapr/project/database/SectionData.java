@@ -27,10 +27,10 @@ public class SectionData extends DataAccess<Section> {
         args.add(new SQLArgument(projectName, OracleTypes.VARCHAR));
         try (ResultSet rs = super.callFunction("getSections", args)) {
             while (rs.next()) {
-                int begginingJunction = rs.getInt("id_BegginingJ");
-                int endingJunction = rs.getInt("id_EndingJ");
-                int directionID = rs.getInt("id_Direction");
-                String roadID = rs.getString("id_Road");
+                int begginingJunction = rs.getInt("ID_BEGGININGJ");
+                int endingJunction = rs.getInt("ID_ENDINGJ");
+                int directionID = rs.getInt("ID_DIRECTION");
+                String roadID = rs.getString("ID_ROAD");
                 
                 JunctionData j = new JunctionData(connection);
                 Junction beginJunction = j.get(Integer.toString(begginingJunction));
@@ -48,7 +48,6 @@ public class SectionData extends DataAccess<Section> {
                 
             }
         }
-        System.out.println(list.size());
         return list;
     }
 

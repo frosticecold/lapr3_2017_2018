@@ -23,7 +23,7 @@ public class JunctionData extends DataAccess<Junction> {
         ResultSet rs = super.callFunction("getJunction", args);
 
         if (rs.next()) {
-            String junctionID = rs.getString("id_Junction");
+            String junctionID = rs.getString("name");
             return new Junction(junctionID);
         }
         return null;

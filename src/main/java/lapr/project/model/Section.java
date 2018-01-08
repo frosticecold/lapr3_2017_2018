@@ -240,7 +240,7 @@ public class Section {
         section.typology = this.typology;
 
         List<Segment> newlist = new ArrayList<>();
-        int index = 0;
+        int index = 1;
         for (int i = listOfSegments.size() - 1; i >= 0; i--) {
             Segment seg = listOfSegments.get(i).reverseSegment(index);
             index++;
