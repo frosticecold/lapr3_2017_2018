@@ -2,6 +2,7 @@ package lapr.project.controller;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -16,6 +17,7 @@ import lapr.project.utils.NetworkXML;
 import lapr.project.utils.Pair;
 import lapr.project.utils.Session;
 import lapr.project.utils.VehicleXML;
+import lapr.project.utils.graphbase.Edge;
 import lapr.project.utils.graphbase.Graph;
 
 public class EditProjectController {
@@ -25,24 +27,28 @@ public class EditProjectController {
     private VehicleList newVehicleList;
     private Graph<Junction, Section> newRoadNetwork;
     private List<Road> newRoadList;
+    private List<Junction> newJunctionList;
+    private List<Section> newSectionList;
 
     public EditProjectController() {
         project = Session.getActiveProject();
         totalVehicleList = project.copyVehicleList();
         newVehicleList = new VehicleList();
+        newJunctionList = new ArrayList<>();
+        newSectionList = new ArrayList<>();
     }
 
     public void editNewProject(String name, String description) {
         project.setName(name);
         project.setDescription(description);
         addVehicles();
+        addRoadNetwork();
     }
 
     private void addVehicles() {
         for (Vehicle vehicle : totalVehicleList.getVehicleList()) {
             if (!(project.getListVehicles().getVehicleList().contains(vehicle))) {
                 newVehicleList.getVehicleList().add(vehicle);
-                System.out.println(vehicle);
             }
         }
         project.setListVehicles(totalVehicleList);
@@ -84,6 +90,29 @@ public class EditProjectController {
         } catch (ImportException ex) {
             Logger.getLogger(EditProjectController.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    public void addRoadNetwork() {
+        List<Road> roadList = project.getListRoads();
+        for (Road road : newRoadList) {
+            if (!roadList.contains(road)) {
+                roadList.add(road);
+            }
+        }
+        Graph<Junction, Section> graph = project.getRoadNetwork().copyGraph();
+        for (Junction junction : newRoadNetwork.vertices()) {
+            if (!graph.validVertex(junction)) {
+                newJunctionList.add(junction);
+            }
+            graph.insertVertex(junction);
+        }
+        for (Edge<Junction, Section> edge : newRoadNetwork.edges()) {
+            if (graph.getEdge(edge.getVOrig(), edge.getVDest()) == null) {
+                newSectionList.add(edge.getElement());
+            }
+            graph.insertEdge(edge.getVOrig(), edge.getVDest(), edge.getElement(), edge.getWeight());
+        }
+        project.setRoadNetwork(graph);
     }
 
     public VehicleList getTotalVehicleList() {
