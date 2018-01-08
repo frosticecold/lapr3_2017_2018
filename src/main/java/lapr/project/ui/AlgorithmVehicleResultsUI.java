@@ -5,6 +5,8 @@
  */
 package lapr.project.ui;
 
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
@@ -49,6 +51,15 @@ public class AlgorithmVehicleResultsUI extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(parent, "Error, there is no vehicles to present results.");
             this.dispose();
         }
+        addWindowListener(new WindowAdapter()
+        {
+            @Override
+            public void windowClosing(WindowEvent e)
+            {
+               listAlgorithms.clear();
+               comboboxModel.removeAllElements();
+            }
+        });
     }
 
     public void initFileChooser() {
@@ -293,6 +304,7 @@ public class AlgorithmVehicleResultsUI extends javax.swing.JDialog {
         vehicleCombobox.removeAllItems();
         comboboxModel.removeAllElements();
         vehicleCombobox.updateUI();
+        listAlgorithms.clear();
         this.dispose();
     }//GEN-LAST:event_closeBtnActionPerformed
 
