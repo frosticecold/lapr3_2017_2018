@@ -5,11 +5,14 @@
  */
 package lapr.project.ui;
 
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -31,21 +34,32 @@ public class AlgorithmVehicleResultsUI extends javax.swing.JDialog {
     private List<AlgorithmResults> listAlgorithms;
     private JFileChooser fileChooser;
     private AlgorithmVehicleResultsController controller;
+    private DefaultComboBoxModel<String> comboboxModel= new DefaultComboBoxModel<>();
 
     public AlgorithmVehicleResultsUI(JFrame parent, List<AlgorithmResults> listAlgorithms) {
         super(parent, true);
-        controller = new AlgorithmVehicleResultsController();
         initComponents();
         initFileChooser();
+        controller = new AlgorithmVehicleResultsController();
+        vehicleCombobox.setModel(comboboxModel);
         this.listAlgorithms = listAlgorithms;
         if (!listAlgorithms.isEmpty()) {
             for (AlgorithmResults listAlgorithm : listAlgorithms) {
-                vehicleCombobox.addItem(listAlgorithm.getVehicle().getName());
+                comboboxModel.addElement(listAlgorithm.getVehicle().getName());
             }
         } else {
             JOptionPane.showMessageDialog(parent, "Error, there is no vehicles to present results.");
             this.dispose();
         }
+        addWindowListener(new WindowAdapter()
+        {
+            @Override
+            public void windowClosing(WindowEvent e)
+            {
+               listAlgorithms.clear();
+               comboboxModel.removeAllElements();
+            }
+        });
     }
 
     public void initFileChooser() {
@@ -288,6 +302,9 @@ public class AlgorithmVehicleResultsUI extends javax.swing.JDialog {
         algorithmTextfield.setText("");
         pathTextarea.setText("");
         vehicleCombobox.removeAllItems();
+        comboboxModel.removeAllElements();
+        vehicleCombobox.updateUI();
+        listAlgorithms.clear();
         this.dispose();
     }//GEN-LAST:event_closeBtnActionPerformed
 

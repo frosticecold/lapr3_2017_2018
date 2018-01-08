@@ -192,4 +192,12 @@ public class Project {
         return this.name;
     }
 
+    
+    public VehicleList copyVehicleList(){
+        VehicleList list = new VehicleList();
+        for (Vehicle vehicle : listOfVehicles.getVehicleList()) {
+            list.addVehicle(vehicle);
+        }
+        return list;
+    }
 }

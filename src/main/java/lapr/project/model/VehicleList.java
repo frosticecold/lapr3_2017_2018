@@ -59,16 +59,14 @@ public class VehicleList {
      */
     public boolean addVehicle(Vehicle vehicle) {
         if (!this.listOfVehicles.contains(vehicle)) {
-            while (this.mapOfVehicleNames.containsKey(vehicle.getName())) {
+            if (this.mapOfVehicleNames.containsKey(vehicle.getName())) {
                 int vehicleCount = this.mapOfVehicleNames.get(vehicle.getName());
-
-                vehicle.setName(vehicle.getName() + " " + ++vehicleCount);
+                this.mapOfVehicleNames.replace(vehicle.getName(), vehicleCount, vehicleCount + 1);
+                vehicle.setName(vehicle.getName() + (vehicleCount + 1));
             }
-
             this.mapOfVehicleNames.put(vehicle.getName(), 1);
             return this.listOfVehicles.add(vehicle);
         }
-
         return false;
     }
 

@@ -140,6 +140,8 @@ public abstract class Vehicle {
 
     public static int vehicleCounter = 0;
 
+    public static final int[] THROTTLES = {25, 50, 100};
+
     /**
      * Empty constructor
      */

@@ -40,6 +40,18 @@ public class Gearbox {
         return lowestGear;
     }
 
+    public Gear getLastGear() {
+        int gear_index = Integer.MIN_VALUE;
+        Gear gear = null;
+        for (Gear g : gearList) {
+            if (g.getGearID() > gear_index) {
+                gear = g;
+            }
+
+        }
+        return gear;
+    }
+
     /**
      *
      *

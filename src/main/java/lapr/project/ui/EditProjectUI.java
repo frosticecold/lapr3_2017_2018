@@ -36,6 +36,8 @@ public class EditProjectUI extends javax.swing.JDialog {
 
         } else {
             jtf_currentProject.setText(controller.getActiveProjectName());
+            jtf_name.setText(controller.getActiveProjectName());
+            jtf_description.setText(controller.getActiveProjectDescription());
         }
     }
 
@@ -150,21 +152,21 @@ public class EditProjectUI extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(52, 52, 52)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jl_name1)
-                            .addComponent(jl_name))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jtf_currentProject, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jtf_name, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(6, 6, 6)
                                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 368, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jl_description))))
+                            .addComponent(jl_description)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(43, 43, 43)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jl_name1)
+                            .addComponent(jl_name))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jtf_name, javax.swing.GroupLayout.DEFAULT_SIZE, 203, Short.MAX_VALUE)
+                            .addComponent(jtf_currentProject))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -208,13 +210,10 @@ public class EditProjectUI extends javax.swing.JDialog {
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
         String nameProject = jtf_name.getText();
         String descriptionProject = jtf_description.getText();
-        if (nameProject.isEmpty() || descriptionProject.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Please fill the project title or description");
-            jtf_name.setText("");
-            jtf_description.setText("");
-        } else {
-            controller.editNewProject(nameProject, descriptionProject);
-        }
+
+        controller.editNewProject(nameProject, descriptionProject);
+        JOptionPane.showMessageDialog(this, "Project edited successfully");
+
         dispose();
     }//GEN-LAST:event_saveButtonActionPerformed
 
