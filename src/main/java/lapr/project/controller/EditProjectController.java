@@ -20,41 +20,70 @@ import lapr.project.utils.VehicleXML;
 import lapr.project.utils.graphbase.Graph;
 
 public class EditProjectController {
-    
+
     private Project project;
     private List<Vehicle> newVehiclesList;
     private Graph<Junction, Section> newRoadNetwork;
     private List<Road> newRoadList;
-    
+
     public EditProjectController() {
         project = Session.getActiveProject();
         newVehiclesList = new ArrayList<>();
     }
-    
+
     public void editNewProject(String name, String description) {
         project.setName(name);
         project.setDescription(description);
         addVehicles();
     }
-    
+
     private void addVehicles() {
+
+//        List<Vehicle> listVehicles = new LinkedList<>();
+//
+//        for (Vehicle vehicle : newVehiclesList) {
+//            for (Vehicle vehicle2 : project.getListVehicles().getVehicleList()) {
+//                String vehicleName = vehicle.getName();
+//                if (vehicleName.equalsIgnoreCase(vehicle2.getName())) {
+//                    try {
+//                        if (!vehicle.equals(vehicle2)) {
+//                            vehicle.setVehicleCounter(vehicle.getVehicleCounter() + 1);
+//                            vehicle.setName(vehicleName + vehicle.getVehicleCounter());
+//                            listVehicles.add(vehicle);
+//                            System.out.println(vehicle);
+//                        }
+//                    } catch (NumberFormatException ex) {
+//                        throw new IllegalArgumentException("Counter is not a number");
+//                    }
+//                }
+//            }
+//        }
+//
+//        for (Vehicle vehicle : listVehicles) {
+//            project.getListVehicles().getVehicleList().add(vehicle);
+//        }
+
         for (Vehicle v : newVehiclesList) {
             project.addVehicle(v);
         }
+    }
+
+    public String getActiveProjectDescription(){
+        return project.getDescription();
     }
     
     public String getActiveProjectName() {
         return project.getName();
     }
-    
+
     public Project getActiveProject() {
         return project;
     }
-    
+
     public void addVehicles(File file) throws FileNotFoundException, ImportException {
         VehicleXML vxml = new VehicleXML();
         List<Vehicle> importVehicles = vxml.importVehicles(file);
-        
+
         if (!importVehicles.isEmpty()) {
             for (Vehicle v : importVehicles) {
                 newVehiclesList.add(v);
@@ -63,7 +92,7 @@ public class EditProjectController {
             throw new ImportException();
         }
     }
-    
+
     public void addRoadNetwork(File file) throws FileNotFoundException, ImportException {
         try {
             NetworkXML xml = new NetworkXML();
@@ -75,17 +104,17 @@ public class EditProjectController {
             Logger.getLogger(EditProjectController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     public List<Vehicle> getNewVehiclesList() {
         return newVehiclesList;
     }
-    
+
     public Graph<Junction, Section> getNewRoadNetwork() {
         return newRoadNetwork;
     }
-    
+
     public List<Road> getNewRoadList() {
         return newRoadList;
     }
-    
+
 }

@@ -36,6 +36,8 @@ public class EditProjectUI extends javax.swing.JDialog {
 
         } else {
             jtf_currentProject.setText(controller.getActiveProjectName());
+            jtf_name.setText(controller.getActiveProjectName());
+            jtf_description.setText(controller.getActiveProjectDescription());
         }
     }
 
@@ -208,13 +210,10 @@ public class EditProjectUI extends javax.swing.JDialog {
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
         String nameProject = jtf_name.getText();
         String descriptionProject = jtf_description.getText();
-        if (nameProject.isEmpty() || descriptionProject.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Please fill the project title or description");
-            jtf_name.setText("");
-            jtf_description.setText("");
-        } else {
-            controller.editNewProject(nameProject, descriptionProject);
-        }
+
+        controller.editNewProject(nameProject, descriptionProject);
+        JOptionPane.showMessageDialog(this, "Project edited successfully");
+
         dispose();
     }//GEN-LAST:event_saveButtonActionPerformed
 
