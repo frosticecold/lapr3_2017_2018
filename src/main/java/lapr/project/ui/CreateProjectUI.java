@@ -71,6 +71,8 @@ public class CreateProjectUI extends JDialog {
         jScrollPane1 = new javax.swing.JScrollPane();
         txtfld_description = new javax.swing.JTextArea();
         labelTitle1 = new javax.swing.JLabel();
+        newRoadNetworkJLabel = new javax.swing.JLabel();
+        newVehiclesJLabel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Create New Project");
@@ -83,13 +85,15 @@ public class CreateProjectUI extends JDialog {
 
         labelTitle.setText("Project title:");
 
-        btnClose.setText("Close");
+        btnClose.setIcon(new javax.swing.ImageIcon(getClass().getResource("/return_icon.png"))); // NOI18N
+        btnClose.setText("Cancel");
         btnClose.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCloseActionPerformed(evt);
             }
         });
 
+        btnCreateProject.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ok_icon.png"))); // NOI18N
         btnCreateProject.setText("Create project");
         btnCreateProject.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -97,6 +101,7 @@ public class CreateProjectUI extends JDialog {
             }
         });
 
+        btnImportRoadNetwork.setIcon(new javax.swing.ImageIcon(getClass().getResource("/roadNetwork_icon.png"))); // NOI18N
         btnImportRoadNetwork.setText("Import Road Network");
         btnImportRoadNetwork.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -104,6 +109,7 @@ public class CreateProjectUI extends JDialog {
             }
         });
 
+        btnImportVehicle.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vehicle_icon.png"))); // NOI18N
         btnImportVehicle.setText("Import Vehicle");
         btnImportVehicle.setToolTipText("");
         btnImportVehicle.addActionListener(new java.awt.event.ActionListener() {
@@ -118,53 +124,68 @@ public class CreateProjectUI extends JDialog {
 
         labelTitle1.setText("Description:");
 
+        newRoadNetworkJLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/check_icon.png"))); // NOI18N
+        newRoadNetworkJLabel.setText("Not Imported");
+        newRoadNetworkJLabel.setEnabled(false);
+
+        newVehiclesJLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/check_icon.png"))); // NOI18N
+        newVehiclesJLabel.setText("Not Imported");
+        newVehiclesJLabel.setEnabled(false);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(btnClose)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnCreateProject))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(labelTitle)
-                                    .addComponent(labelTitle1))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jScrollPane1)
-                                    .addComponent(txtfield_project_title)))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(11, 11, 11)
-                        .addComponent(btnImportVehicle, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 56, Short.MAX_VALUE)
-                        .addComponent(btnImportRoadNetwork)))
+                        .addComponent(btnImportVehicle, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 9, Short.MAX_VALUE)
+                        .addComponent(btnImportRoadNetwork))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(labelTitle)
+                            .addComponent(labelTitle1)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 365, Short.MAX_VALUE)
+                            .addComponent(txtfield_project_title))
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                    .addComponent(btnClose)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGap(44, 44, 44)
+                                    .addComponent(newVehiclesJLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(newRoadNetworkJLabel)
+                                .addComponent(btnCreateProject)))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(17, 17, 17)
+                .addContainerGap(14, Short.MAX_VALUE)
+                .addComponent(labelTitle)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtfield_project_title, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(labelTitle1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(24, 24, 24)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtfield_project_title, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(labelTitle))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(labelTitle1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
+                    .addComponent(btnImportVehicle)
+                    .addComponent(btnImportRoadNetwork))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnImportRoadNetwork)
-                    .addComponent(btnImportVehicle))
-                .addGap(44, 44, 44)
+                    .addComponent(newRoadNetworkJLabel)
+                    .addComponent(newVehiclesJLabel))
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnClose)
-                    .addComponent(btnCreateProject))
+                    .addComponent(btnCreateProject)
+                    .addComponent(btnClose))
                 .addContainerGap())
         );
 
@@ -208,6 +229,8 @@ public class CreateProjectUI extends JDialog {
         if (returnvalue == JFileChooser.APPROVE_OPTION) {
             try {
                 controller.importVehicle(jfc.getSelectedFile());
+                newVehiclesJLabel.setEnabled(true);
+                newVehiclesJLabel.setText("Imported");
                 JOptionPane.showMessageDialog(this, "Vehicles were imported with success.", "Vehicle import", JOptionPane.INFORMATION_MESSAGE);
             } catch (FileNotFoundException ex) {
                 JOptionPane.showMessageDialog(this, "There was an error importing the file", "Error", JOptionPane.ERROR_MESSAGE);
@@ -224,6 +247,8 @@ public class CreateProjectUI extends JDialog {
         if (returnvalue == JFileChooser.APPROVE_OPTION) {
             try {
                 controller.importNetwork(jfc.getSelectedFile());
+                newRoadNetworkJLabel.setEnabled(true);
+                newRoadNetworkJLabel.setText("Imported");
                 JOptionPane.showMessageDialog(this, "Roadnetwork was imported with success.", "Roadnetwork import", JOptionPane.INFORMATION_MESSAGE);
             } catch (FileNotFoundException ex) {
                 JOptionPane.showMessageDialog(this, "There was an error importing the file", "Error", JOptionPane.ERROR_MESSAGE);
@@ -245,6 +270,8 @@ public class CreateProjectUI extends JDialog {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel labelTitle;
     private javax.swing.JLabel labelTitle1;
+    private javax.swing.JLabel newRoadNetworkJLabel;
+    private javax.swing.JLabel newVehiclesJLabel;
     private javax.swing.JTextField txtfield_project_title;
     private javax.swing.JTextArea txtfld_description;
     // End of variables declaration//GEN-END:variables

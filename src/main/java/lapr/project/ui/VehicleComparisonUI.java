@@ -328,6 +328,7 @@ public class VehicleComparisonUI extends javax.swing.JFrame {
 
     private void energyEfficientCheckboxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_energyEfficientCheckboxActionPerformed
         if (energyEfficientCheckbox.isSelected()) {
+            accelerationJTextField.setEnabled(true);
             fastestPathCheckbox.setSelected(false);
             energySavingCheckbox.setSelected(false);
         }
@@ -343,7 +344,6 @@ public class VehicleComparisonUI extends javax.swing.JFrame {
 
     private void fastestPathCheckboxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fastestPathCheckboxActionPerformed
         if (fastestPathCheckbox.isSelected()) {
-            accelerationJTextField.setEnabled(true);
             accelerationJTextField.setEnabled(false);
             energyEfficientCheckbox.setSelected(false);
             energySavingCheckbox.setSelected(false);
