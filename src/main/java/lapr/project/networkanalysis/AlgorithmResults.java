@@ -198,7 +198,7 @@ public class AlgorithmResults {
             i++;
         }
 
-        sb.append("<h1>Fastest Path Results</h1>");
+        //sb.append("<h1>Fastest Path Results</h1>");
         sb.append("<table>\n");
         sb.append("\t<tr><th>Vehicle</th><th>Travel Time</th><th>Consumed Energy</th><th>Cost</th></tr>\n");
 
@@ -215,7 +215,7 @@ public class AlgorithmResults {
         sb.append("<tr>"
                 + "<td>").append(path).append("</td>");
         sb.append("</tr>\n");
-        sb.append("</table>\n");
+        sb.append("</table>");
         return sb.toString();
     }
 
