@@ -107,10 +107,9 @@ public class ExportHTML implements Exportable {
             File file = new File(filePath);
 
             // If the file doesn't exist, create it
-            if (!file.exists()) {
-                if (!file.createNewFile()) {
-                    return;
-                }
+            if (!file.exists() && !file.createNewFile()) {
+                return;
+
             }
 
             try (BufferedWriter bw = new BufferedWriter(new FileWriter(file))) {

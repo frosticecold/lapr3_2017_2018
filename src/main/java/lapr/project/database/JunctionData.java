@@ -28,6 +28,22 @@ public class JunctionData extends DataAccess<Junction> {
         }
         return null;
     }
+    
+    public List<Junction> getAllJunctions(String pName) throws SQLException {
+        if (connection == null) {
+            return null;
+        }
+        List<Junction> list = new ArrayList<>();
+        List<SQLArgument> args = new ArrayList<>();
+        args.add(new SQLArgument(pName, OracleTypes.NUMBER));
+        ResultSet rs = super.callFunction("getAllJunctions", args);
+
+        while (rs.next()) {
+            String junctionID = rs.getString("name");
+            list.add(new Junction(junctionID));
+        }
+        return list;
+    }
 
     public void insert(String pName, Junction j) throws SQLException {
         List<SQLArgument> args = new ArrayList<>();

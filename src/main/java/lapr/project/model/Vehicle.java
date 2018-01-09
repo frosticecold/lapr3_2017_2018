@@ -138,7 +138,7 @@ public abstract class Vehicle {
      */
     public static final String FUEL_ELETRIC = "electric";
 
-    public static int vehicleCounter = 0;
+    private static int vehicleCounter = 0;
 
     public static final int[] THROTTLES = {25, 50, 100};
 
@@ -318,7 +318,7 @@ public abstract class Vehicle {
     public double getMaximumPermitedVelocity(String road) {
         road = road.toUpperCase();
         for (String roadkey : mapRoadVelocityLimit.keySet()) {
-            if (road.contains(roadkey)) {
+            if (road.contains(roadkey.toUpperCase())) {
                 return mapRoadVelocityLimit.get(roadkey);
             }
         }

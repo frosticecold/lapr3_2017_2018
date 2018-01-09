@@ -10,6 +10,9 @@ public class Session {
     private static Project activeProject;
     private static SQLConnection sql;
 
+    public Session() {
+    }
+
     public static Project getActiveProject() {
         return activeProject;
     }

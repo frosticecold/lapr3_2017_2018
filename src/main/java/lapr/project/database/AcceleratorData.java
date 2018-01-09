@@ -4,7 +4,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import lapr.project.model.Accelerator;
@@ -23,7 +23,7 @@ public class AcceleratorData extends DataAccess<Accelerator> {
             return null;
         }
         Accelerator a = new Accelerator();
-        Map<Integer, Throttle> throttleList = new HashMap<>();
+        Map<Integer, Throttle> throttleList = new LinkedHashMap<>();
         List<SQLArgument> args = new ArrayList<>();
         args.add(new SQLArgument(vehicleName, OracleTypes.VARCHAR));
         ResultSet rs = super.callFunction("getThrottle", args);
@@ -31,12 +31,11 @@ public class AcceleratorData extends DataAccess<Accelerator> {
         while (rs.next()) {
             int id = rs.getInt("description");
             RegimeData r = new RegimeData(connection);
-            List<Regime> regimeList = r.get(vehicleName);
+            List<Regime> regimeList = r.get(vehicleName, id);
 
             Throttle t = new Throttle(regimeList);
             throttleList.put(id, t);
         }
-
         a.setThrottleList(throttleList);
         return a;
     }

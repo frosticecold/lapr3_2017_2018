@@ -63,9 +63,9 @@ public class VehicleData extends DataAccess<Vehicle> {
                 ResultSet rs2 = super.callFunction("getMaxVelocityVehicle", args1);
                 while (rs2.next()) {
                     String road = rs2.getString("road");
-                    String road_p = road.substring(0,1).toUpperCase() + road.substring(1).toLowerCase();
+                    String roadP = road.substring(0,1).toUpperCase() + road.substring(1).toLowerCase();
                     double max_speed = rs2.getDouble("speed_limit");
-                    mapRoadVelocityLimit.put(road_p, max_speed);
+                    mapRoadVelocityLimit.put(roadP, max_speed);
                 }
             }
 
