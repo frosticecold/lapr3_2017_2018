@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -319,7 +318,7 @@ public class TheoreticalEnergyEfficientAlgorithmTest {
     public void tearDown() {
     }
 
-=======
+
 ///*
 // * To change this license header, choose License Headers in Project Properties.
 // * To change this template file, choose Tools | Templates
@@ -640,7 +639,7 @@ public class TheoreticalEnergyEfficientAlgorithmTest {
 //    public void tearDown() {
 //    }
 //
->>>>>>> bbea5aa9b4d1b50da9d7206fb03ca94c6d73430e
+
 //    /**
 //     * Test of efficientPath method, of class bestPathAlgorithm.
 //     */
@@ -682,8 +681,5 @@ public class TheoreticalEnergyEfficientAlgorithmTest {
 //        assertEquals(result.getEnergy(), (2.34 * Math.pow(10, 7)), (0.1 * Math.pow(10, 7)));
 //        assertEquals(result.getAlgorithmType(), "best Path");
 //    }
-<<<<<<< HEAD
-}
-=======
 //}
->>>>>>> bbea5aa9b4d1b50da9d7206fb03ca94c6d73430e
+

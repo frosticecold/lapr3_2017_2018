@@ -822,6 +822,7 @@ public class VehicleTest {
       double expResult=471;
       assertEquals(result,expResult,1);
     }
-
+    
+    
     
 }
