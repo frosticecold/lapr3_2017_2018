@@ -13,7 +13,7 @@ import lapr.project.model.Vehicle;
 import lapr.project.networkanalysis.AlgorithmResults;
 import lapr.project.pathalgorithms.FastestPathAlgorithm;
 import lapr.project.pathalgorithms.PathAlgorithm;
-import lapr.project.pathalgorithms.TheoreticalEnergyEfficientAlgorithm;
+import lapr.project.model.TheoreticalEnergyEfficientAlgorithm;
 import lapr.project.utils.Session;
 
 /**

@@ -6,13 +6,14 @@
 package lapr.project.pathalgorithms;
 
 import java.util.LinkedList;
-import lapr.project.calculations.PhysicsCalculus;
-import static lapr.project.calculations.PhysicsCalculus.GEAR_VEC;
-import static lapr.project.calculations.PhysicsCalculus.RPM_VEC;
-import static lapr.project.calculations.PhysicsCalculus.THROTTLE_VEC;
-import static lapr.project.calculations.PhysicsCalculus.TORQUE_VEC;
-import static lapr.project.calculations.PhysicsCalculus.calcVelocityBasedOnRPMandGear;
+
 import lapr.project.model.Junction;
+import lapr.project.model.PhysicsCalculus;
+import static lapr.project.model.PhysicsCalculus.GEAR_VEC;
+import static lapr.project.model.PhysicsCalculus.RPM_VEC;
+import static lapr.project.model.PhysicsCalculus.THROTTLE_VEC;
+import static lapr.project.model.PhysicsCalculus.TORQUE_VEC;
+import static lapr.project.model.PhysicsCalculus.calcVelocityBasedOnRPMandGear;
 import lapr.project.model.Section;
 import lapr.project.model.Segment;
 import lapr.project.model.Vehicle;

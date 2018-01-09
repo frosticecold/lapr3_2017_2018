@@ -5,15 +5,8 @@
  */
 package lapr.project.calculations;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.Iterator;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import lapr.project.model.Project;
-import lapr.project.model.Vehicle;
-import lapr.project.utils.ImportException;
-import lapr.project.utils.VehicleXML;
+
+import lapr.project.model.PhysicsCalculus;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -147,9 +140,9 @@ public class PhysicsCalculusTest {
         double mass = 2020.0;
         double angle = 0.030;
 
-        double expResult = 594.1938613629898;
+        double expResult = 10.372194561234663;
         double result = PhysicsCalculus.gravitationalForceCalculation(mass, angle);
-        assertEquals(expResult, result, 0.0001);
+        assertEquals(expResult, result, 0.5);
         mass = -2020.0;
         angle = 0.030;
         result = PhysicsCalculus.gravitationalForceCalculation(mass, angle);

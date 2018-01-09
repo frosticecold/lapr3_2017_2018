@@ -1,11 +1,6 @@
-package lapr.project.calculations;
+package lapr.project.model;
 
-import lapr.project.model.Gear;
-import lapr.project.model.Section;
-import lapr.project.model.Segment;
-import lapr.project.model.Vehicle;
-import lapr.project.model.VehicleCombustion;
-import lapr.project.model.VehicleElectric;
+import lapr.project.calculations.Constants;
 
 public class PhysicsCalculus {
 
@@ -57,7 +52,7 @@ public class PhysicsCalculus {
         if (mass < 0 || angle < 0) {
             return -1;
         }
-        return mass * GRAVITY * Math.sin(angle);
+        return mass * GRAVITY * Math.sin(Math.toRadians(angle));
     }
 
     public static double airDragCalculation(double velocityRelativeAir, double airDragCoeficient, double frontalArea) {
@@ -137,7 +132,8 @@ public class PhysicsCalculus {
         return velocity;
     }
 
-    public static double calcForceInSegment(Segment segment, Vehicle car, Section section) {
+    public static
+         double calcForceInSegment(Segment segment, Vehicle car, Section section) {
         double force = 0;
         double vel = calcMaximumVelocity(segment, car, section);
         double slope = segment.calculateSlope();
@@ -181,22 +177,28 @@ public class PhysicsCalculus {
     public static double calcRPMBasedOnVelocityGear(double velocity, double gearRatio, double finalDriveRatio, double wheelsize) {
         double numerator = (velocity * 60 * finalDriveRatio * gearRatio);
         double denominator = (Math.PI * wheelsize);
-        return numerator / denominator;
+        double wrpm = numerator / denominator;
+        return Math.round(wrpm);
     }
 
     public static double[] calcIdealMotorForceBasedAcceleration(Section section, Segment segment, Vehicle car, double acceleration, double velocity) {
         double fma = car.getTotalWeight() * acceleration;
         double otherforces = calcForceInSegment(segment, car, section);
-        double results[] = new double[3];
+        double sumforces = fma + otherforces;
+        double results[] = {-1, -1, -1, -1, -1};
         double minimum_force = Double.POSITIVE_INFINITY;
+        double minimum_gear = Double.NEGATIVE_INFINITY;
         //0) Gear
         //1) RPM
         //2) Torque
+        //3) SFC
+        //4) Final drive ratio
         boolean valid = true;
         int throttle_index = 0;
         int gear_index = car.getGearbox().getNumberOfGears();
-        if (Math.abs(velocity) < 0.05) {
-            if (car instanceof VehicleCombustion) {
+
+        if (car instanceof VehicleCombustion) {
+            if (Math.abs(velocity) < 0.05) {
                 velocity = PhysicsCalculus.calcVelocityBasedOnRPMandGear(car, car.getMinRpm(), car.getGearbox().getGear(1).getRatio());
             }
         }
@@ -211,16 +213,27 @@ public class PhysicsCalculus {
             int throttle = Vehicle.THROTTLES[throttle_index];
             double gearRatio = car.getGearbox().getGear(gear_index).getRatio();
             double wrpm = PhysicsCalculus.calcRPMBasedOnVelocityGear(velocity, gearRatio, car.getFinalDriveRatio(), car.getWheelSize());
+            if (Math.abs(wrpm - car.getMinRpm()) <= 0.5) {
+                wrpm = car.getMinRpm();
+            } else {
+                if (Math.abs(wrpm - car.getMaxRpm()) <= 0.5) {
+                    wrpm = car.getMaxRpm();
+                }
+            }
             if (wrpm >= car.getMinRpm() && wrpm <= car.getMaxRpm()) {
                 double torque = car.getTorqueAtThrottle(throttle, wrpm);
                 double motorforce = PhysicsCalculus.motorForceCalculation(torque, car.getFinalDriveRatio(), gearRatio, car.getWheelSize());
 
-                if (motorforce > fma + otherforces) {
-                    if (motorforce < minimum_force) {
+                if (motorforce > sumforces) {
+                    //if (motorforce < minimum_force) {
+                    if (gear_index > minimum_gear) {
                         minimum_force = motorforce;
+                        minimum_gear = gear_index;
                         results[0] = gear_index;
                         results[1] = wrpm;
                         results[2] = torque;
+                        results[3] = car.getThrottles().get(throttle).getSFCByRPM(wrpm);
+                        results[4] = car.getFinalDriveRatio();
                     }
 
                 }
@@ -229,4 +242,19 @@ public class PhysicsCalculus {
         }
         return results;
     }
+
+    public static double calcTimeBasedOnInitialVelocityDesiredVelocityAndAcceleration(double initialVelocity, double desiredVelocity, double acceleration) {
+        return (desiredVelocity - initialVelocity) / acceleration;
+    }
+
+    public static double calcDistanceBasedOnInitialVelocityDesiredVelocityAcceleration(double initialVelocity, double desiredVelocity, double acceleration) {
+        double numerator = (desiredVelocity * desiredVelocity) - (initialVelocity * initialVelocity);
+        return numerator / (2 * acceleration);
+
+    }
+
+    public static double calcFuelComsumption(double sfc, double motorPower, double time) {
+        return sfc * (motorPower *0.001) * (time/3600);
+    }
+
 }

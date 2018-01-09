@@ -3,15 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package lapr.project.pathalgorithms;
+package lapr.project.model;
 
 import java.util.LinkedList;
-import lapr.project.calculations.PhysicsCalculus;
-import lapr.project.model.Junction;
-import lapr.project.model.Section;
-import lapr.project.model.Segment;
-import lapr.project.model.Vehicle;
 import lapr.project.networkanalysis.AlgorithmResults;
+import lapr.project.pathalgorithms.PathAlgorithm;
 import lapr.project.utils.Session;
 import lapr.project.utils.graphbase.Edge;
 import lapr.project.utils.graphbase.Graph;
@@ -23,7 +19,7 @@ import lapr.project.utils.graphbase.Graph;
 public class TheoreticalEnergyEfficientAlgorithm implements PathAlgorithm {
 
     public static final String ALG_NAME = "Theoretical Most Energy Efficient Path";
-    private static final int RESULTS_SIZE = 6;
+    private static final int RESULTS_SIZE = 3;
 
     @Override
     public AlgorithmResults bestPath(Graph<Junction, Section> graph, Junction start, Junction end, Vehicle v, double acceleration) {
@@ -58,8 +54,8 @@ public class TheoreticalEnergyEfficientAlgorithm implements PathAlgorithm {
             pathKeys[key] = -1;
             visited[key] = false;
             time[key] = Double.MAX_VALUE;
-            energy[key] = 0;
-            velocity[key] = 0;
+            energy[key] = Double.MAX_VALUE;
+            velocity[key] = 0;;
             torque[key] = 0;
             rpm[key] = 0;
             gear[key] = 0;
@@ -68,8 +64,8 @@ public class TheoreticalEnergyEfficientAlgorithm implements PathAlgorithm {
         efficientPathLength(graph, vOrig, vertices, visited, pathKeys, time, energy, velocity, torque, rpm, gear, vehicle, acceleration);
 
         //double timePath = time[graph.getKey(vDest)];
-        results[1] = time[graph.getKey(vDest)];
-        results[0] = energy[graph.getKey(vDest)];
+        results[0] = time[graph.getKey(vDest)];
+        results[1] = energy[graph.getKey(vDest)];
 
         if (Double.MAX_VALUE - results[0] > 0) {
             getPath(graph, vOrig, vDest, vertices, pathKeys, shortPath, sectionpath);
@@ -83,6 +79,7 @@ public class TheoreticalEnergyEfficientAlgorithm implements PathAlgorithm {
 
         Section section = new Section();
         int i = g.getKey(vOrig);
+        energy[i] = 0;
         time[i] = 0;
         Junction vOrigin;
         while (i != -1) {
@@ -102,19 +99,17 @@ public class TheoreticalEnergyEfficientAlgorithm implements PathAlgorithm {
                 //0) Time
                 //1) Energy
                 //2) Velocity
-                //3) torque
-                //4) rpm
-                //5) gear
                 double results[] = calcEfficientPath(section, vehicle, acceleration, previous_velocity, previous_torque, previous_rpm, previous_gear);
                 if (results[0] != -1) {
-                    if (!visited[kAdj] && time[kAdj] > (time[kOrg] + results[1])) {
+                    if (!visited[kAdj] && energy[kAdj] > (energy[kOrg] + results[1])) {
                         time[kAdj] = time[kOrg] + results[0];
                         pathKeys[kAdj] = kOrg;
-                        energy[kAdj] = energy[kAdj] + results[1];
+                        energy[kAdj] = energy[kOrg] + results[1];
+                        velocity[kAdj] = results[2];
                     }
                 }
             }
-            i = getVertMinDist(time, visited);
+            i = getVertMinDist(energy, visited);
         }
     }
 
@@ -125,13 +120,10 @@ public class TheoreticalEnergyEfficientAlgorithm implements PathAlgorithm {
         //0) Time
         //1) Energy
         //2) Velocity
-        //3) torque
-        //4) rpm
-        //5) gear
         for (Segment seg : section.getSequenceOfSegments()) {
             boolean accel = false;
             boolean braking = false;
-            double maximumvel = car.getMaximumPermitedVelocity2(seg, section.getRoadID()) / 3.6;
+            double maximumvel = car.getMaximumPermitedVelocity2(seg, section.getTypology()) / 3.6;
             //If car needs acceleration
             if (previousVelocity < maximumvel) {
                 braking = false;
@@ -145,14 +137,13 @@ public class TheoreticalEnergyEfficientAlgorithm implements PathAlgorithm {
             }
             //If car is accelerating
             if (accel) {
-                tempresults = calcAcceleratingSegment(seg, car, previousVelocity, maximumvel, acceleration);
-                double[] calcIdealMotorForceBasedAcceleration = PhysicsCalculus.calcIdealMotorForceBasedAcceleration(section, seg, car, acceleration, previousVelocity);
+                tempresults = calcAcceleratingSegment(section, seg, car, previousVelocity, maximumvel, acceleration);
             } else {
                 //If car is braking
                 if (braking) {
-                    tempresults = calcBrakingSegment(seg, car, previousVelocity, maximumvel, acceleration * -1);
+                    tempresults = calcBrakingSegment(section, seg, car, previousVelocity, maximumvel, acceleration * -1);
                 } else {
-                    tempresults = calcNoAcceleration(seg, car, previousVelocity);
+                    tempresults = calcNoAcceleration(section, seg, car, previousVelocity);
 
                 }
             }
@@ -166,98 +157,156 @@ public class TheoreticalEnergyEfficientAlgorithm implements PathAlgorithm {
         return results;
     }
 
-    private static double[] calcAcceleratingSegment(Segment seg, Vehicle car, double initialvelocity, double maximumvelocity, double acceleration) {
-        double[] results = new double[RESULTS_SIZE];
+    private static double[] calcAcceleratingSegment(Section section, Segment seg, Vehicle car, double initialvelocity, double maximumvelocity, double acceleration) {
+        double[] result = new double[RESULTS_SIZE];
+        double[] tempresults = new double[RESULTS_SIZE];
+        double[] carresult = new double[4];
         //Results
-        //0) Time
-        //1) Energy
-        //2) Velocity
-        //3) torque
-        //4) rpm
-        //5) gear
-        double deltatimeaccel = PhysicsCalculus.calcTimeBasedOnVelocityAndAcceleration(maximumvelocity, initialvelocity, acceleration);
-        double acceldistance = PhysicsCalculus.calcDistance(initialvelocity, acceleration, deltatimeaccel);
-        double seglength = seg.getLength() * 1000;
-        //If acceleration reaches maximum vel before ending the segment
-        if (acceldistance < seglength) {
-            double remainingtime = (seglength - acceldistance) / maximumvelocity;
-            results[0] += deltatimeaccel + remainingtime;
-            results[2] = maximumvelocity;
-        } else {
-            //Acceleration does not reach maximum vel for the segment
-            double time = PhysicsCalculus.calcTimeBasedOnDistanceAndAcceleration(initialvelocity, seglength, acceleration);
-            double reachablevelocity = PhysicsCalculus.calcVelocityBasedOnInitialVelocityAccelerationTime(initialvelocity, acceleration, time);
-            //If reached vel is bigger than min vel for the segment
-            if (reachablevelocity >= seg.getMinimumVelocity() / 3.6) {
-                results[0] += time;
-                results[2] = reachablevelocity;
-            } else {
-                //Else it breaks acceleration rules
-                for (int i = 0; i < results.length; i++) {
-                    results[i] = -1;
-                }
+        //0) Time (s)
+        //1) Energy (g)
+        //2) Velocity (m/s)
 
+        //Car result
+        //0) Gear
+        //1) RPM
+        //2) Torque
+        //3) SFC
+        boolean accelerating = true;
+        double currentspeed = initialvelocity;
+        if (initialvelocity <= 0) {
+            if (car instanceof VehicleCombustion) {
+                currentspeed = PhysicsCalculus.calcVelocityBasedOnRPMandGear(car, car.getMinRpm(), car.getGearbox().getGear(1).getRatio());
             }
         }
-        return results;
+
+        //Do calculations while accelerating
+        while (accelerating) {
+            if (currentspeed >= maximumvelocity) {
+                accelerating = false;
+                result[2] = maximumvelocity;
+                currentspeed = maximumvelocity;
+                break;
+            }
+            for (; currentspeed <= maximumvelocity; currentspeed++) {
+                double[] motoresult = PhysicsCalculus.calcIdealMotorForceBasedAcceleration(section, seg, car, acceleration, currentspeed);
+                //0) Gear
+                //1) RPM
+                //2) Torque
+                //3) SFC
+                if (motoresult[0] != -1) {
+                    carresult = motoresult;
+                    result[0] += 1 / acceleration;
+                    double enginepower = PhysicsCalculus.calcEnginePower(carresult[2], carresult[1]);
+                    double fuelComsumption = PhysicsCalculus.calcFuelComsumption(carresult[3], enginepower, 1 / acceleration);
+                    result[1] += fuelComsumption;
+                    result[2] = currentspeed;
+                }
+
+                if (motoresult[0] == -1) {
+                    currentspeed--;
+                    result[2] = currentspeed;
+                    accelerating = false;
+                    break;
+                }
+            }
+        }
+        //Do calculations with no acceleration
+        double seglengthaccel = PhysicsCalculus.calcDistanceBasedOnInitialVelocityDesiredVelocityAcceleration(initialvelocity, currentspeed, acceleration);
+        double segremaining = (seg.getLength() * 1000) - seglengthaccel;
+        double deltatime = segremaining / currentspeed;
+        double carpower = PhysicsCalculus.calcEnginePower(carresult[2], carresult[1]);
+
+        result[0] += deltatime;
+        result[1] += PhysicsCalculus.calcFuelComsumption(carresult[3], carpower, deltatime);
+        result[2] = currentspeed;
+
+        return result;
     }
 
-    private static double[] calcNoAcceleration(Segment seg, Vehicle car, double maximumvelocity) {
+    private static double[] calcNoAcceleration(Section section, Segment seg, Vehicle car, double maximumvelocity) {
         double[] results = new double[RESULTS_SIZE];
         //Results
         //0) Time
         //1) Energy
         //2) Velocity
-        //3) torque
-        //4) rpm
-        //5) gear
         double seglength = seg.getLength() * 1000;
         double deltatime = seglength / maximumvelocity;
+        double[] carresult = PhysicsCalculus.calcIdealMotorForceBasedAcceleration(section, seg, car, 0, maximumvelocity);
+        //0) Gear
+        //1) RPM
+        //2) Torque
+        //3) SFC
+
+        double enginepower = PhysicsCalculus.calcEnginePower(carresult[2], carresult[1]);
+        double fuelComsumption = PhysicsCalculus.calcFuelComsumption(carresult[3], enginepower, deltatime);
         results[0] = deltatime;
+        results[1] += fuelComsumption;
         results[2] = maximumvelocity;
         return results;
 
     }
 
-    private static double[] calcBrakingSegment(Segment seg, Vehicle car, double initialvelocity, double maximumvelocity, double acceleration) {
-        double[] results = new double[RESULTS_SIZE];
-        if (acceleration > 0) {
-            acceleration *= -1;
-        }
+    private static double[] calcBrakingSegment(Section section, Segment seg, Vehicle car, double initialvelocity, double maximumvelocity, double acceleration) {
+        double[] result = new double[RESULTS_SIZE];
+        double[] tempresults = new double[RESULTS_SIZE];
+        double[] carresult = new double[4];
         //Results
-        //0) Time
-        //1) Energy
-        //2) Velocity
-        //3) torque
-        //4) rpm
-        //5) gear
-        double deltatimeaccel = PhysicsCalculus.calcTimeBasedOnVelocityAndAcceleration(maximumvelocity, initialvelocity, acceleration);
-        double brakingdistance = PhysicsCalculus.calcDistance(initialvelocity, acceleration, deltatimeaccel);
-        double seglength = seg.getLength() * 1000;
+        //0) Time (s)
+        //1) Energy (g)
+        //2) Velocity (m/s)
 
-        //If braking reaches maximum vel before ending the segment
-        if (brakingdistance < seglength) {
-            double remainingtime = (seglength - brakingdistance) / maximumvelocity;
-            results[0] += deltatimeaccel + remainingtime;
-            results[2] = maximumvelocity;
-        } else {
-            //Braking does not reach maximum vel for the segment
-            double time = PhysicsCalculus.calcTimeBasedOnDistanceAndAcceleration(initialvelocity, seglength, acceleration);
-            double reachablevelocity = PhysicsCalculus.calcVelocityBasedOnInitialVelocityAccelerationTime(initialvelocity, acceleration, time);
-            //If reached vel is bigger than min vel for the segment
-            if (reachablevelocity >= seg.getMinimumVelocity() / 3.6) {
-                results[0] += time;
-                results[2] = reachablevelocity;
-            } else {
-                //Else it breaks acceleration rules
-                for (int i = 0; i < results.length; i++) {
-                    results[i] = -1;
+        //Car result
+        //0) Gear
+        //1) RPM
+        //2) Torque
+        //3) SFC
+        boolean braking = true;
+        double currentspeed = initialvelocity;
+
+        //Do calculations while accelerating
+        while (braking) {
+            if (currentspeed <= maximumvelocity) {
+                braking = false;
+                result[2] = maximumvelocity;
+                currentspeed = maximumvelocity;
+                break;
+            }
+            for (; currentspeed >= maximumvelocity; currentspeed--) {
+                double[] motoresult = PhysicsCalculus.calcIdealMotorForceBasedAcceleration(section, seg, car, acceleration, currentspeed);
+                //0) Gear
+                //1) RPM
+                //2) Torque
+                //3) SFC
+                if (motoresult[0] != -1) {
+                    carresult = motoresult;
+                    result[0] += 1 / Math.abs(acceleration);
+                    double enginepower = PhysicsCalculus.calcEnginePower(carresult[2], carresult[1]);
+                    double fuelComsumption = PhysicsCalculus.calcFuelComsumption(carresult[3], enginepower, 1 / Math.abs(acceleration));
+                    result[1] += fuelComsumption;
+                    result[2] = currentspeed;
                 }
 
+                if (motoresult[0] == -1) {
+                    currentspeed++;
+                    result[2] = currentspeed;
+                    braking = false;
+                    break;
+                }
             }
         }
-        return results;
+        //Do calculations with no acceleration
+        double seglengthaccel = PhysicsCalculus.calcDistanceBasedOnInitialVelocityDesiredVelocityAcceleration(initialvelocity, currentspeed, acceleration);
+        double segremaining = (seg.getLength() * 1000) - seglengthaccel;
+        double deltatime = segremaining / currentspeed;
+        double carpower = PhysicsCalculus.calcEnginePower(carresult[2], carresult[1]);
+
+        result[0] += deltatime;
+        result[1] += PhysicsCalculus.calcFuelComsumption(carresult[3], carpower, deltatime);
+        result[2] = currentspeed;
+
+        return result;
     }
+
     /**
      * Extracts from pathKeys the minimum path between voInf and vdInf The path
      * is constructed from the end to the beginning
