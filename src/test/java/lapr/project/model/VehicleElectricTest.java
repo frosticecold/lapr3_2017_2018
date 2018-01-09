@@ -291,5 +291,49 @@ public class VehicleElectricTest {
             System.out.println("erro");}
             
         
-    }
+        }
+        
+        @Test
+        public void testSetFinalDriveRatio(){
+            double ratio=0.0;
+            VehicleElectric instance = new VehicleElectric();
+        try {
+            instance.setFinalDriveRatio(ratio);
+        } catch (IllegalArgumentException e) {
+            System.out.println("erro");}
+        }
+        
+        
+        @Test
+        public void test2SetFinalDriveRatio(){
+            double ratio=-10.0;
+            VehicleElectric instance = new VehicleElectric();
+        try {
+            instance.setFinalDriveRatio(ratio);
+        } catch (IllegalArgumentException e) {
+            System.out.println("erro");}
+        }
+        
+        
+        @Test
+        public void testSetGearbox(){
+            Gearbox g=new Gearbox();
+            VehicleElectric instance = new VehicleElectric();
+        try {
+            instance.setGearbox(g);
+        } catch (IllegalArgumentException e) {
+            System.out.println("erro");}
+        }
+        
+        @Test
+        public void testSetAccelerator(){
+            Accelerator a=new Accelerator();
+            VehicleElectric instance = new VehicleElectric();
+        try {
+            instance.setAccelerator(a);
+        } catch (IllegalArgumentException e) {
+            System.out.println("erro");}
+        }
+        
+        
 }
