@@ -89,6 +89,7 @@ public class Mockup extends javax.swing.JFrame {
                     for (Vehicle v : importVehicles) {
                         p.addVehicle(v);
                     }
+                    System.out.println(p.getRoadNetwork());
                     JOptionPane.showMessageDialog(Mockup.this, "Dummy project imported successfully", "Loading dummy project", JOptionPane.INFORMATION_MESSAGE);
                 } catch (FileNotFoundException ex) {
                     Logger.getLogger(Mockup.class.getName()).log(Level.SEVERE, null, ex);

@@ -41,7 +41,13 @@ public class EditProjectController {
     public void editNewProject(String name, String description) {
         project.setName(name);
         project.setDescription(description);
+    }
+
+    public void editNewListVehicles() {
         addVehicles();
+    }
+
+    public void editNewListRoadNetwork() {
         addRoadNetwork();
     }
 
@@ -52,7 +58,6 @@ public class EditProjectController {
             }
         }
         project.setListVehicles(totalVehicleList);
-
     }
 
     public String getActiveProjectDescription() {
@@ -70,10 +75,11 @@ public class EditProjectController {
     public void addVehicles(File file) throws FileNotFoundException, ImportException {
         VehicleXML vxml = new VehicleXML();
         List<Vehicle> importVehicles = vxml.importVehicles(file);
-
         if (!importVehicles.isEmpty()) {
             for (Vehicle v : importVehicles) {
-                totalVehicleList.addVehicle(v);
+                if (!totalVehicleList.getVehicleList().contains(v)) {
+                    totalVehicleList.addVehicle(v);
+                }
             }
         } else {
             throw new ImportException();
