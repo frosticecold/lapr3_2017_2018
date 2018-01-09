@@ -265,7 +265,7 @@ public class VehicleElectricTest {
         VehicleElectric instance = new VehicleElectric();
         instance.setMaxRPM(m_max_rpm);
         double expResult = 200.0;
-        double result = instance.getMinRpm();
+        double result = instance.getMaxRpm();
         assertEquals(expResult, result, 0.0);
     }
         @Test
