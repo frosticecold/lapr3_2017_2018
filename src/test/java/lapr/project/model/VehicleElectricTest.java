@@ -336,4 +336,30 @@ public class VehicleElectricTest {
         }
         
         
+        @Test
+        public void testSetEnergyRegenerationRatio(){
+            System.out.println("setEnergyRegenerationRatio");
+            double eer= 0.0;
+            VehicleElectric instance = new VehicleElectric();
+            try {
+                instance.setEnergyRegenerationRatio(eer);
+            } catch (IllegalArgumentException e) {
+                System.out.println("erro");}
+            
+        
+        }
+        
+         
+        @Test
+        public void test2SetEnergyRegenerationRatio(){
+            System.out.println("setEnergyRegenerationRatio");
+            double eer= 1.1;
+            VehicleElectric instance = new VehicleElectric();
+            try {
+                instance.setEnergyRegenerationRatio(eer);
+            } catch (IllegalArgumentException e) {
+                System.out.println("erro");}
+            
+        
+        }
 }
