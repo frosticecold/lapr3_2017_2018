@@ -40,6 +40,7 @@ public class VehicleTest {
     public void setUp() {
         Map<String, Double> mapRoadVelocityLimit = new HashMap<>();
         mapRoadVelocityLimit.put("HIGHWAY", 110.0);
+        mapRoadVelocityLimit.put("TEST", 600.0);
         mapRoadVelocityLimit.put("ROAD", 80.0);
 
         Gear g1 = new Gear(1, 2.3);
@@ -410,7 +411,7 @@ public class VehicleTest {
             System.out.println("Error inserting Class");
         }
     }
-
+ 
     /**
      * Test of getTorqueAtThrottle method, of class Vehicle.
      */
@@ -675,12 +676,18 @@ public class VehicleTest {
         sb.append("\t<li>Wheel Size: ").append(vh1.getWheelSize()).append(" m</li>\n");
 
         sb.append("\t<li>Velocity Limits:<ul>\n");
+        
         sb.append("\t\t<li>").append("HIGHWAY").append(": ")
                 .append("110.0").append(" m/s</li>\n");
 
+         sb.append("\t\t<li>").append("TEST").append(": ")
+                .append("600.0").append(" m/s</li>\n");
+        
         sb.append("\t\t<li>").append("ROAD").append(": ")
                 .append("80.0").append(" m/s</li>\n");
 
+       
+        
         sb.append("\t</ul></li>\n");
 
         expResult = sb.toString();
@@ -802,6 +809,18 @@ public class VehicleTest {
         assertFalse(vh1.equals(vh2));
         vh2.setMotorization(vh1.getMotorization());
         
+    }
+    @Test
+    public void testGetMaximumPermitedVelocity2(){
+        Segment segment= new Segment(1, 10, 20, 15, 0, 20, 500, 80);
+        String id = "E01";
+        String name = "E01";
+        String typology = "Test";
+
+        Road road = new Road(id, name, typology);
+      double result=vh1.getMaximumPermitedVelocity2(segment, road.getName());
+      double expResult=471;
+      assertEquals(result,expResult,1);
     }
 
     

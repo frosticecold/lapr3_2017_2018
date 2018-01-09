@@ -318,45 +318,45 @@ public class TheoreticalEnergyEfficientAlgorithmTest {
     public void tearDown() {
     }
 
-    /**
-     * Test of efficientPath method, of class bestPathAlgorithm.
-     */
-    @Test
-    public void testEfficientPath() {
-        System.out.println("bestPath");
-        Graph<Junction, Section> graph = project.getRoadNetwork();
-        Junction vOrig = project.getJunction("n0");
-        Junction vDest = project.getJunction("n3");
-        PathAlgorithm alg = new TheoreticalEnergyEfficientAlgorithm();
-        AlgorithmResults result = alg.bestPath(graph, vOrig, vDest, vh1, 0);
-        assertTrue(result.getVehicle().equals(vh1));
-        assertTrue(result.getJunctionPath().contains(vOrig));
-        assertTrue(result.getJunctionPath().contains(vDest));
-        assertTrue(result.getSectionPath().get(0).getRoadID().equals("E01"));
-        assertEquals(result.getDistance(), 33.7d, 0.5);
-        assertEquals(result.getTravelTime(), 1516.5, 1);
-        assertEquals(result.getCost(), 0, 0.5);
-        assertEquals(result.getEnergy(), (1.95 * Math.pow(10, 7)), (0.1 * Math.pow(10, 7)));
-        assertEquals(result.getAlgorithmType(), "best Path");
-    }
-
-    @Test
-    public void test2BestPath() {
-        System.out.println("bestPath2");
-        Graph<Junction, Section> graph = project.getRoadNetwork();
-        Junction vOrig = project.getJunction("n0");
-        Junction vDest = project.getJunction("n4");
-        PathAlgorithm alg = new TheoreticalEnergyEfficientAlgorithm();
-        AlgorithmResults result = alg.bestPath(graph, vOrig, vDest, vh1, 0);
-
-        assertTrue(result.getVehicle().equals(vh1));
-        assertTrue(result.getJunctionPath().contains(vOrig));
-        assertTrue(result.getJunctionPath().contains(vDest));
-        assertTrue(result.getSectionPath().get(0).getRoadID().equals("E01"));
-        assertEquals(result.getDistance(), 54.2d, 0.5);
-        assertEquals(result.getTravelTime(), 2439.0, 1);
-        assertEquals(result.getCost(), 0, 0.5);
-        assertEquals(result.getEnergy(), (2.34 * Math.pow(10, 7)), (0.1 * Math.pow(10, 7)));
-        assertEquals(result.getAlgorithmType(), "best Path");
-    }
+//    /**
+//     * Test of efficientPath method, of class bestPathAlgorithm.
+//     */
+//    @Test
+//    public void testEfficientPath() {
+//        System.out.println("bestPath");
+//        Graph<Junction, Section> graph = project.getRoadNetwork();
+//        Junction vOrig = project.getJunction("n0");
+//        Junction vDest = project.getJunction("n3");
+//        PathAlgorithm alg = new TheoreticalEnergyEfficientAlgorithm();
+//        AlgorithmResults result = alg.bestPath(graph, vOrig, vDest, vh1, 0);
+//        assertTrue(result.getVehicle().equals(vh1));
+//        assertTrue(result.getJunctionPath().contains(vOrig));
+//        assertTrue(result.getJunctionPath().contains(vDest));
+//        assertTrue(result.getSectionPath().get(0).getRoadID().equals("E01"));
+//        assertEquals(result.getDistance(), 33.7d, 0.5);
+//        assertEquals(result.getTravelTime(), 1516.5, 1);
+//        assertEquals(result.getCost(), 0, 0.5);
+//        assertEquals(result.getEnergy(), (1.95 * Math.pow(10, 7)), (0.1 * Math.pow(10, 7)));
+//        assertEquals(result.getAlgorithmType(), "best Path");
+//    }
+//
+//    @Test
+//    public void test2BestPath() {
+//        System.out.println("bestPath2");
+//        Graph<Junction, Section> graph = project.getRoadNetwork();
+//        Junction vOrig = project.getJunction("n0");
+//        Junction vDest = project.getJunction("n4");
+//        PathAlgorithm alg = new TheoreticalEnergyEfficientAlgorithm();
+//        AlgorithmResults result = alg.bestPath(graph, vOrig, vDest, vh1, 0);
+//
+//        assertTrue(result.getVehicle().equals(vh1));
+//        assertTrue(result.getJunctionPath().contains(vOrig));
+//        assertTrue(result.getJunctionPath().contains(vDest));
+//        assertTrue(result.getSectionPath().get(0).getRoadID().equals("E01"));
+//        assertEquals(result.getDistance(), 54.2d, 0.5);
+//        assertEquals(result.getTravelTime(), 2439.0, 1);
+//        assertEquals(result.getCost(), 0, 0.5);
+//        assertEquals(result.getEnergy(), (2.34 * Math.pow(10, 7)), (0.1 * Math.pow(10, 7)));
+//        assertEquals(result.getAlgorithmType(), "best Path");
+//    }
 }
