@@ -234,7 +234,7 @@ public class VehicleElectric extends Vehicle {
      */
     public boolean validateElectricVehicle() {
 
-        if (this.minRPM <= 0) {
+        if (this.minRPM < 0) {
             throw new IllegalArgumentException("The mimimum rounds per minute "
                     + "of the vehicle should be positive.");
         }

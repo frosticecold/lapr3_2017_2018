@@ -189,6 +189,21 @@ public class VehicleElectricTest {
     }
 
     /**
+     * Test of setMinRPM method, of class VehicleElectric.
+     */
+    @Test
+    public void test2SetMinRPM() {
+        System.out.println("setMinRPM");
+        double m_min_rpm = -200.0;
+        VehicleElectric instance = new VehicleElectric();
+        try {
+            instance.setMinRPM(m_min_rpm);
+        } catch (IllegalArgumentException e) {
+            System.out.println("erro");}
+            
+        
+    }
+    /**
      * Test of toString method, of class VehicleElectric.
      */
     @Test
@@ -241,5 +256,40 @@ public class VehicleElectricTest {
         expResult.setName("pick_up");
         Vehicle result = instance.copy();
         assertEquals(expResult, result);
+    }
+    
+    @Test
+    public void testSetMaxRPM() {
+        System.out.println("setMaxRPM");
+        double m_max_rpm = 200.0;
+        VehicleElectric instance = new VehicleElectric();
+        instance.setMaxRPM(m_max_rpm);
+        double expResult = 200.0;
+        double result = instance.getMinRpm();
+        assertEquals(expResult, result, 0.0);
+    }
+        @Test
+        public void test2SetMaxRPM() {
+        System.out.println("setMaxRPM");
+        double m_max_rpm = -200.0;
+        VehicleElectric instance = new VehicleElectric();
+        try {
+            instance.setMaxRPM(m_max_rpm);
+        } catch (IllegalArgumentException e) {
+            System.out.println("erro");}
+            
+        
+        }
+        @Test
+        public void test3SetMaxRPM() {
+        System.out.println("setMaxRPM");
+        double m_max_rpm = 0.0;
+        VehicleElectric instance = new VehicleElectric();
+        try {
+            instance.setMaxRPM(m_max_rpm);
+        } catch (IllegalArgumentException e) {
+            System.out.println("erro");}
+            
+        
     }
 }
