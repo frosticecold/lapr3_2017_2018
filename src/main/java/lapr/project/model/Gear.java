@@ -2,6 +2,7 @@ package lapr.project.model;
 
 public class Gear {
 
+
     private int id;
     private double ratio;
 

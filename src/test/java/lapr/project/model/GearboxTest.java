@@ -5,7 +5,6 @@
  */
 package lapr.project.model;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.After;
@@ -191,4 +190,23 @@ public class GearboxTest {
         assertNotEquals(expResult, result);
     }
 
+    @Test
+    public void testGetLastGear(){
+        int gear_index=Integer.MIN_VALUE;
+        
+        Gear g1 = new Gear(1, 2.3);
+        Gear g2 = new Gear(2, 3.3);
+        Gear g3 = new Gear(3, 1.7);
+        Gear g4 = new Gear(4, 0.65);
+        Gear g5 = new Gear(5, 0.4);
+        Gearbox instance = new Gearbox();
+        instance.addGear(g1);
+        instance.addGear(g2);
+        instance.addGear(g3);
+        instance.addGear(g4);
+        instance.addGear(g5);
+        Gear expResult=g5;
+        Gear result=instance.getLastGear();
+        assertEquals(result,expResult);
+    }
 }
