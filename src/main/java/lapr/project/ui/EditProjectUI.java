@@ -222,7 +222,7 @@ public class EditProjectUI extends javax.swing.JDialog {
         if (!newRoadNetworkJLabel.getText().equalsIgnoreCase("Imported")) {
             roadUpdate = false;
         }
-        boolean check = updateProject(nameChanges, nameProject, descriptionProject, vehicleUpdate, roadUpdate);
+        boolean check = controller.updateProject(nameChanges, nameProject, descriptionProject, vehicleUpdate, roadUpdate);
         if (check) {
             JOptionPane.showMessageDialog(this, "Project edited successfully");
             dispose();
@@ -231,21 +231,7 @@ public class EditProjectUI extends javax.swing.JDialog {
             dispose();
         }
     }//GEN-LAST:event_saveButtonActionPerformed
-    private boolean updateProject(boolean nameChanges, String nameProject, String descriptionProject, boolean vehicleUpdate, boolean roadUpdate) {
-        if (nameChanges) {
-            controller.editNewProject(nameProject, descriptionProject);
-        }
-        if (vehicleUpdate) {
-            controller.editNewListVehicles();
-        }
-        if (roadUpdate) {
-            controller.editNewListRoadNetwork();
-        }
-        if (roadUpdate || vehicleUpdate || nameChanges) {
-            return true;
-        }
-        return false;
-    }
+
     private void newVehiclesButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newVehiclesButtonActionPerformed
         jfc.setDialogTitle(IMPORT_VEHICLE_TITLE);
         int returnvalue = jfc.showOpenDialog(this);

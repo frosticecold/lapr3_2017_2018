@@ -133,4 +133,19 @@ public class EditProjectController {
         return newRoadList;
     }
 
+    public boolean updateProject(boolean nameChanges, String nameProject, String descriptionProject, boolean vehicleUpdate, boolean roadUpdate) {
+        if (nameChanges) {
+            editNewProject(nameProject, descriptionProject);
+        }
+        if (vehicleUpdate) {
+            editNewListVehicles();
+        }
+        if (roadUpdate) {
+            editNewListRoadNetwork();
+        }
+        if (roadUpdate || vehicleUpdate || nameChanges) {
+            return true;
+        }
+        return false;
+    }
 }
