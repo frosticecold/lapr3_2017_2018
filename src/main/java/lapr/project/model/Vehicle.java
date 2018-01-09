@@ -289,15 +289,7 @@ public abstract class Vehicle {
         return vehicleClass;
     }
 
-    public int getVehicleCounter() {
-        return vehicleCounter;
-    }
-
-    public void setVehicleCounter(int vehicleCounter) {
-        Vehicle.vehicleCounter = vehicleCounter;
-    }
-
-    public double getTorqueAtThrottle(int throttle, double rpm) {
+     public double getTorqueAtThrottle(int throttle, double rpm) {
         double torque = -1;
         if (throttle == 25 || throttle == 50 || throttle == 100) {
             Accelerator a = this.getAccelerator();

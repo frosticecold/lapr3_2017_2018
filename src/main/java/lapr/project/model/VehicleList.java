@@ -64,8 +64,10 @@ public class VehicleList {
                 this.mapOfVehicleNames.replace(vehicle.getName(), vehicleCount, vehicleCount + 1);
                 vehicle.setName(vehicle.getName() + (vehicleCount + 1));
             }
-            this.mapOfVehicleNames.put(vehicle.getName(), 1);
-            return this.listOfVehicles.add(vehicle);
+            if (!this.listOfVehicles.contains(vehicle)) {
+                this.mapOfVehicleNames.put(vehicle.getName(), 1);
+                return this.listOfVehicles.add(vehicle);
+            }
         }
         return false;
     }

@@ -9,6 +9,7 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import lapr.project.controller.EditProjectController;
+import lapr.project.model.Vehicle;
 import lapr.project.utils.ImportException;
 
 /**
@@ -33,7 +34,6 @@ public class EditProjectUI extends javax.swing.JDialog {
         controller = new EditProjectController();
         if (controller.getActiveProject() == null) {
             JOptionPane.showMessageDialog(this, "There is not an active project at the moment.\nPress OK to close");
-
         } else {
             jtf_currentProject.setText(controller.getActiveProjectName());
             jtf_name.setText(controller.getActiveProjectName());
@@ -210,11 +210,17 @@ public class EditProjectUI extends javax.swing.JDialog {
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
         String nameProject = jtf_name.getText();
         String descriptionProject = jtf_description.getText();
-
-        controller.editNewProject(nameProject, descriptionProject);
-        JOptionPane.showMessageDialog(this, "Project edited successfully");
-
-        dispose();
+        boolean nameChanges = controller.updateProjectFields(nameProject, descriptionProject);
+        boolean roadUpdate = controller.updateProjectFiles(newRoadNetworkJLabel.getText());
+        boolean vehicleUpdate = controller.updateProjectFiles(newVehiclesJLabel.getText());
+        boolean check = controller.updateProject(nameChanges, nameProject, descriptionProject, vehicleUpdate, roadUpdate);
+        if (check) {
+            JOptionPane.showMessageDialog(this, "Project edited successfully");
+            dispose();
+        } else {
+            JOptionPane.showMessageDialog(this, "Project was not changed");
+            dispose();
+        }
     }//GEN-LAST:event_saveButtonActionPerformed
 
     private void newVehiclesButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newVehiclesButtonActionPerformed

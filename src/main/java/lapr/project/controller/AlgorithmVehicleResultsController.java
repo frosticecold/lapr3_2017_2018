@@ -6,6 +6,7 @@
 package lapr.project.controller;
 
 import java.io.IOException;
+import java.util.List;
 import lapr.project.model.Project;
 import lapr.project.networkanalysis.AlgorithmResults;
 import lapr.project.utils.ExportHTML;
@@ -29,8 +30,8 @@ public class AlgorithmVehicleResultsController {
      * @param path (String) The file path.
      * @throws java.io.IOException
      */
-    public void exportHTML(String path, AlgorithmResults result) throws IOException {
+    public void exportHTML(String path, List<AlgorithmResults> results) throws IOException {
         ExportHTML export = new ExportHTML();
-        export.exportAnalysisResult(result, path);
+        export.exportListOfResults(results, path);
     }
 }

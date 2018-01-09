@@ -9,6 +9,7 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.List;
 import lapr.project.model.Junction;
 import lapr.project.model.Project;
 import lapr.project.model.Road;
@@ -27,6 +28,25 @@ public class ExportHTML implements Exportable {
         StringBuilder sb = new StringBuilder();
         sb.append(openHTML());
         sb.append(results.toStringHTML());
+        sb.append(closeHTML());
+        writeFileHTML(sb, filePath);
+    }
+    
+    public void exportListOfResults(List<AlgorithmResults> results, String filePath) throws IOException{
+        StringBuilder sb = new StringBuilder();
+        sb.append(openHTML());
+        sb.append("<table>");
+        sb.append("\t<tr>");
+        for (AlgorithmResults result : results) {
+            sb.append("<th>" + result.getVehicle().getName() + "</th>");
+        }
+        sb.append("</tr>");
+        
+        sb.append("<tr>");
+        for (AlgorithmResults result : results) {
+            sb.append("<td>"+ result.toStringHTML() + "</td>");
+        }
+        sb.append("</tr>");
         sb.append(closeHTML());
         writeFileHTML(sb, filePath);
     }

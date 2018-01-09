@@ -209,5 +209,18 @@ public class VehicleListTest {
         result = instance.validateVehicleList();
         assertEquals(expResult, result);
     }
+    
+    @Test
+    public void testGetVehicleByName(){
+         System.out.println("getVehicleByName");
+         String name="Pickup";
+         VehicleList instance = new VehicleList();
+         instance.addVehicle(vh1);
+         instance.addVehicle(vh2);
+         Vehicle expResult=vh1;
+         Vehicle result;
+        result = instance.getVehicleByName(name);
+        assertEquals(expResult,result);
+    }
 
 }
