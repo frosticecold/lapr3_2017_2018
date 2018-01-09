@@ -270,6 +270,7 @@ public class Section {
                 + "<td>").append(this.roadID).append("</td>"
                 + "<td>").append(this.endingJunction.toStringHTML()).append("</td>"
                 + "</tr>\n");
+        sb.append("</table>\n");
         return sb.toString();
     }
 

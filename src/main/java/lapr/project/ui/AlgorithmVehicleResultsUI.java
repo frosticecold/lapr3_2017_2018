@@ -317,7 +317,7 @@ public class AlgorithmVehicleResultsUI extends javax.swing.JDialog {
                 if (!(path.contains(".html"))) {
                     path += ".html";
                 }
-                controller.exportHTML(path, listAlgorithms.get(vehicleCombobox.getSelectedIndex()));
+                controller.exportHTML(path, listAlgorithms);
                 JOptionPane.showMessageDialog(this, "Results exported with success.", "Results Export", JOptionPane.INFORMATION_MESSAGE);
             }
         } catch (NullPointerException n) {
