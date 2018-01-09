@@ -1,10 +1,7 @@
 package lapr.project.model;
 
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
-import lapr.project.networkanalysis.AlgorithmResults;
 import lapr.project.utils.graphbase.Edge;
 import lapr.project.utils.graphbase.Graph;
 
@@ -122,6 +119,10 @@ public class Project {
         this.description = description;
     }
 
+    public void setListOfResults(ListOfResults listOfResults) {
+        this.listOfResults = listOfResults;
+    }
+
     public boolean addRoad(Road r) {
         boolean added = false;
         if (!listRoads.contains(r)) {
@@ -192,8 +193,7 @@ public class Project {
         return this.name;
     }
 
-    
-    public VehicleList copyVehicleList(){
+    public VehicleList copyVehicleList() {
         VehicleList list = new VehicleList();
         for (Vehicle vehicle : listOfVehicles.getVehicleList()) {
             list.addVehicle(vehicle);

@@ -31,6 +31,7 @@ public class SectionData extends DataAccess<Section> {
                 int endingJunction = rs.getInt("ID_ENDINGJ");
                 int directionID = rs.getInt("ID_DIRECTION");
                 String roadID = rs.getString("ID_ROAD");
+                String typology = rs.getString("TYPOLOGY");
                 
                 JunctionData j = new JunctionData(connection);
                 Junction beginJunction = j.get(Integer.toString(begginingJunction));
@@ -44,6 +45,7 @@ public class SectionData extends DataAccess<Section> {
                 s.setEndJunction(endJunction);
                 s.setDirection(direction);
                 s.setRoadID(roadID);
+                s.setTypology(typology);
                 list.add(s);
                 
             }
@@ -62,6 +64,7 @@ public class SectionData extends DataAccess<Section> {
         }
         args1.add(new SQLArgument(s.getBeginningJunction().getName(), OracleTypes.VARCHAR));
         args1.add(new SQLArgument(s.getEndingJunction().getName(), OracleTypes.VARCHAR));
+        args1.add(new SQLArgument(s.getTypology(), OracleTypes.VARCHAR));
         args1.add(new SQLArgument(s.getRoadID(), OracleTypes.VARCHAR));
         args1.add(new SQLArgument(pName, OracleTypes.VARCHAR));
         args1.add(new SQLArgument(s.getDirection().toString(), OracleTypes.VARCHAR));

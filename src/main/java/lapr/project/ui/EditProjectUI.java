@@ -210,18 +210,9 @@ public class EditProjectUI extends javax.swing.JDialog {
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
         String nameProject = jtf_name.getText();
         String descriptionProject = jtf_description.getText();
-        boolean nameChanges = true;
-        boolean roadUpdate = true;
-        boolean vehicleUpdate = true;
-        if (nameProject.equals(controller.getActiveProjectName()) && descriptionProject.equals(controller.getActiveProjectDescription())) {
-            nameChanges = false;
-        }
-        if (!newVehiclesJLabel.getText().equalsIgnoreCase("Imported")) {
-            vehicleUpdate = false;
-        }
-        if (!newRoadNetworkJLabel.getText().equalsIgnoreCase("Imported")) {
-            roadUpdate = false;
-        }
+        boolean nameChanges = controller.updateProjectFields(nameProject, descriptionProject);
+        boolean roadUpdate = controller.updateProjectFiles(newRoadNetworkJLabel.getText());
+        boolean vehicleUpdate = controller.updateProjectFiles(newVehiclesJLabel.getText());
         boolean check = controller.updateProject(nameChanges, nameProject, descriptionProject, vehicleUpdate, roadUpdate);
         if (check) {
             JOptionPane.showMessageDialog(this, "Project edited successfully");

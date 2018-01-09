@@ -16,13 +16,15 @@ public class RegimeData extends DataAccess<Regime> {
         super(connection);
     }
 
-    public List<Regime> get(String vehicleName) throws SQLException {
+    public List<Regime> get(String vehicleName, int t) throws SQLException {
         if (connection == null) {
             return new ArrayList<>();
         }
         List<Regime> list = new LinkedList<>();
+
         List<SQLArgument> args = new ArrayList<>();
         args.add(new SQLArgument(vehicleName, OracleTypes.VARCHAR));
+        args.add(new SQLArgument(Integer.toString(t), OracleTypes.NUMBER));
         ResultSet rs = super.callFunction("getRegime", args);
         while (rs.next()) {
             double vTorqueLow = rs.getDouble("torque_low");
@@ -38,7 +40,7 @@ public class RegimeData extends DataAccess<Regime> {
 
     public void insert(int throttleID, String vName, Throttle t) throws SQLException {
         List<SQLArgument> args = new ArrayList<>();
-        for(int i = 0; i < t.getRegimeList().size(); i++) {
+        for (int i = 0; i < t.getRegimeList().size(); i++) {
             Regime r = t.getRegimeList().get(i);
             args.clear();
             args.add(new SQLArgument(vName, OracleTypes.VARCHAR));
@@ -48,7 +50,7 @@ public class RegimeData extends DataAccess<Regime> {
             args.add(new SQLArgument(Double.toString(r.getRpmLow()), OracleTypes.NUMBER));
             args.add(new SQLArgument(Double.toString(r.getRpmHigh()), OracleTypes.NUMBER));
             args.add(new SQLArgument(Double.toString(r.getSFC()), OracleTypes.NUMBER));
-            
+
             super.callProcedure("insertRegime", args);
         }
     }

@@ -25,14 +25,14 @@ public class SegmentData extends DataAccess<Segment> {
         ResultSet rs = super.callFunction("getSegments", args);
         while (rs.next()) {
             int segmentID = rs.getInt("id_Segment");
-            double initialHeight = rs.getFloat("initial_height");
-            double finalHeight = rs.getFloat("final_height");
-            double length = rs.getFloat("length");
-            double windDirection = rs.getFloat("wind_direction");
-            double windSpeed = rs.getFloat("wind");
-            double maximumVelocity = rs.getFloat("maximum_v");
-            double minimumVelocity = rs.getFloat("minimum_v");
-
+            double initialHeight = rs.getDouble("initial_height");
+            double finalHeight = rs.getDouble("final_height");
+            double length = rs.getDouble("length");
+            double windDirection = rs.getDouble("wind_direction");
+            double windSpeed = rs.getDouble("wind");
+            double maximumVelocity = rs.getDouble("maximum_v");
+            double minimumVelocity = rs.getDouble("minimum_v");
+            
             Segment s = new Segment(segmentID, initialHeight, finalHeight, length, windDirection, windSpeed, maximumVelocity, minimumVelocity);
 
             list.add(s);
