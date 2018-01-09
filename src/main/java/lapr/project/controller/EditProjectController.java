@@ -148,4 +148,18 @@ public class EditProjectController {
         }
         return false;
     }
+
+    public boolean updateProjectFields(String nameProject, String descriptionProject) {
+        if (nameProject.equals(getActiveProjectName()) && descriptionProject.equals(getActiveProjectDescription())) {
+            return false;
+        }
+        return true;
+    }
+
+    public boolean updateProjectFiles(String filename) {
+        if (!filename.equalsIgnoreCase("Imported")) {
+            return false;
+        }
+        return true;
+    }
 }
