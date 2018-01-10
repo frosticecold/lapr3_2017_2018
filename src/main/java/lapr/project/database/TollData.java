@@ -11,11 +11,12 @@ public class TollData extends DataAccess<Double> {
     public TollData(Connection connection) {
         super(connection);
     }
-    
-    public void insert(int tollClass, int sectionID, double price) throws SQLException {
+
+    public void insert(String pName, int tollClass, int sectionID, double price) throws SQLException {
         List<SQLArgument> args1 = new ArrayList<>();
-        
-        args1.add(new SQLArgument(Integer.toString(tollClass),OracleTypes.NUMBER));
+
+        args1.add(new SQLArgument(pName, OracleTypes.VARCHAR));
+        args1.add(new SQLArgument(Integer.toString(tollClass), OracleTypes.NUMBER));
         args1.add(new SQLArgument(Integer.toString(sectionID), OracleTypes.NUMBER));
         args1.add(new SQLArgument(Double.toString(price), OracleTypes.NUMBER));
         super.callProcedure("insertToll", args1);

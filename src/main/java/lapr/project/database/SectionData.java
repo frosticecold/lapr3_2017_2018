@@ -33,14 +33,14 @@ public class SectionData extends DataAccess<Section> {
                 int directionID = rs.getInt("ID_DIRECTION");
                 String roadID = rs.getString("ID_ROAD");
                 String typology = rs.getString("TYPOLOGY");
-                
+
                 JunctionData j = new JunctionData(connection);
                 Junction beginJunction = j.get(Integer.toString(begginingJunction));
                 Junction endJunction = j.get(Integer.toString(endingJunction));
-                
+
                 DirectionData d = new DirectionData(connection);
                 Section.Direction direction = d.get(directionID);
-                
+
                 Section s = new Section();
                 s.setSectionID(sectionID);
                 s.setBeginJunction(beginJunction);
@@ -49,7 +49,7 @@ public class SectionData extends DataAccess<Section> {
                 s.setRoadID(roadID);
                 s.setTypology(typology);
                 list.add(s);
-                
+
             }
         }
         return list;
@@ -58,6 +58,7 @@ public class SectionData extends DataAccess<Section> {
     public void insert(String pName, Section s) throws SQLException {
         List<SQLArgument> args1 = new ArrayList<>();
 
+        args1.add(new SQLArgument(pName, OracleTypes.VARCHAR));
         args1.add(new SQLArgument(String.valueOf(s.getSectionID()), OracleTypes.NUMBER));
         ResultSet rs = super.callFunction("getSectionByID", args1);
         if (rs.next()) {
@@ -68,19 +69,18 @@ public class SectionData extends DataAccess<Section> {
         args1.add(new SQLArgument(s.getEndingJunction().getName(), OracleTypes.VARCHAR));
         args1.add(new SQLArgument(s.getTypology(), OracleTypes.VARCHAR));
         args1.add(new SQLArgument(s.getRoadID(), OracleTypes.VARCHAR));
-        args1.add(new SQLArgument(pName, OracleTypes.VARCHAR));
         args1.add(new SQLArgument(s.getDirection().toString(), OracleTypes.VARCHAR));
         super.callProcedure("insertSection", args1);
 
         SegmentData sd = new SegmentData(connection);
         for (int i = 0; i < s.getSequenceOfSegments().size(); i++) {
             Segment seg = s.getSequenceOfSegments().get(i);
-            sd.insert(s.getSectionID(), seg);
+            sd.insert(pName, s.getSectionID(), seg);
         }
 
         TollData td = new TollData(connection);
         for (int i : s.getToll().keySet()) {
-            td.insert(i, s.getSectionID(), s.getToll().get(i));
+            td.insert(pName, i, s.getSectionID(), s.getToll().get(i));
         }
 
     }

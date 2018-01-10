@@ -21,13 +21,13 @@ public class VehicleData extends DataAccess<Vehicle> {
         super(connection);
     }
 
-    public VehicleList get(String name) throws SQLException {
+    public VehicleList get(String pName) throws SQLException {
         if (connection == null) {
             return null;
         }
         VehicleList list = new VehicleList();
         List<SQLArgument> args = new ArrayList<>();
-        args.add(new SQLArgument(name, OracleTypes.VARCHAR));
+        args.add(new SQLArgument(pName, OracleTypes.VARCHAR));
         ResultSet rs = super.callFunction("getVehicle", args);
         while (rs.next()) {
             String vName = rs.getString("name");
@@ -126,6 +126,7 @@ public class VehicleData extends DataAccess<Vehicle> {
     public void insert(String pName, Vehicle v) throws SQLException {
         List<SQLArgument> args = new ArrayList<>();
 
+        args.add(new SQLArgument(pName, OracleTypes.VARCHAR));
         args.add(new SQLArgument(v.getName(), OracleTypes.VARCHAR));
         ResultSet rs = super.callFunction("getVehicleByName", args);
         if (rs.next()) {
@@ -133,9 +134,6 @@ public class VehicleData extends DataAccess<Vehicle> {
             return;
         }
 
-        args.clear();
-        args.add(new SQLArgument(pName, OracleTypes.VARCHAR));
-        args.add(new SQLArgument(v.getName(), OracleTypes.VARCHAR));
         args.add(new SQLArgument(v.getDescription(), OracleTypes.VARCHAR));
         args.add(new SQLArgument(v.getType(), OracleTypes.VARCHAR));
         args.add(new SQLArgument(v.getFuel(), OracleTypes.VARCHAR));
@@ -161,6 +159,7 @@ public class VehicleData extends DataAccess<Vehicle> {
         List<SQLArgument> args1 = new ArrayList<>();
         for (Map.Entry<String, Double> entry : v.getMapRoadVelocityLimit().entrySet()) {
             args1.clear();
+            args1.add(new SQLArgument(pName, OracleTypes.VARCHAR));
             args1.add(new SQLArgument(v.getName(), OracleTypes.VARCHAR));
             args1.add(new SQLArgument(entry.getKey(), OracleTypes.VARCHAR));
             args1.add(new SQLArgument(Double.toString(entry.getValue()), OracleTypes.NUMBER));
@@ -168,10 +167,10 @@ public class VehicleData extends DataAccess<Vehicle> {
         }
 
         GearboxData gd = new GearboxData(connection);
-        gd.insert(v.getName(), v.getGearbox());
+        gd.insert(pName, v.getName(), v.getGearbox());
 
         AcceleratorData ad = new AcceleratorData(connection);
-        ad.insert(v.getName(), v.getAccelerator());
+        ad.insert(pName, v.getName(), v.getAccelerator());
 
     }
 

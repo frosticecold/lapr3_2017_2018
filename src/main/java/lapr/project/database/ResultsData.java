@@ -26,15 +26,6 @@ public class ResultsData extends DataAccess<Map<Vehicle, List<AlgorithmResults>>
 
         return rs.next();
     }
-    
-    private boolean existsInTable(String pName, String vName) throws SQLException {
-        List<SQLArgument> args = new ArrayList<>();
-        args.add(new SQLArgument(pName, OracleTypes.VARCHAR));
-        args.add(new SQLArgument(vName, OracleTypes.VARCHAR));
-        ResultSet rs = super.callFunction("existsResults", args);
-        
-        return rs.next();
-    }
 
     public ListOfResults get(Project p, String pName) throws SQLException {
         if (connection == null) {
@@ -110,28 +101,30 @@ public class ResultsData extends DataAccess<Map<Vehicle, List<AlgorithmResults>>
                 if (!exists(args1)) {
                     super.callProcedure("insertResults", args1);
 
-                    insertResultsSection(ar.getSectionPath());
+                    insertResultsSection(p.getName(), ar.getSectionPath());
 
-                    insertResultsJunction(ar.getJunctionPath());
+                    insertResultsJunction(p.getName(), ar.getJunctionPath());
                 }
             }
         }
     }
 
-    private void insertResultsSection(LinkedList<Section> list) throws SQLException {
+    private void insertResultsSection(String pName, LinkedList<Section> list) throws SQLException {
         List<SQLArgument> args = new ArrayList<>();
 
         for (Section section : list) {
             args.clear();
+            args.add(new SQLArgument(pName, OracleTypes.VARCHAR));
             args.add(new SQLArgument(Integer.toString(section.getSectionID()), OracleTypes.NUMBER));
             super.callProcedure("insertResultsSection", args);
         }
     }
 
-    private void insertResultsJunction(LinkedList<Junction> list) throws SQLException {
+    private void insertResultsJunction(String pName, LinkedList<Junction> list) throws SQLException {
         List<SQLArgument> args = new ArrayList<>();
         for (Junction junction : list) {
             args.clear();
+            args.add(new SQLArgument(pName, OracleTypes.VARCHAR));
             args.add(new SQLArgument(junction.getName(), OracleTypes.VARCHAR));
             super.callProcedure("insertResultsJunction", args);
         }

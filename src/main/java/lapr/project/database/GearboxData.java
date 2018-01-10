@@ -31,9 +31,10 @@ public class GearboxData extends DataAccess<Gearbox> {
         return g;
     }
 
-    public void insert(String vName, Gearbox gearbox) throws SQLException {
+    public void insert(String pName, String vName, Gearbox gearbox) throws SQLException {
         List<SQLArgument> args = new ArrayList<>();
 
+        args.add(new SQLArgument(pName, OracleTypes.VARCHAR));
         args.add(new SQLArgument(vName, OracleTypes.VARCHAR));
         ResultSet rs = super.callFunction("getGearboxByVehicleName", args);
         if (rs.next()) {
@@ -45,6 +46,7 @@ public class GearboxData extends DataAccess<Gearbox> {
         for (int i = 1; i <= gearbox.getNumberOfGears(); i++) {
             Gear g = gearbox.getGear(i);
             args.clear();
+            args.add(new SQLArgument(pName, OracleTypes.VARCHAR));
             args.add(new SQLArgument(vName, OracleTypes.VARCHAR));
             args.add(new SQLArgument(Integer.toString(g.getGearID()), OracleTypes.NUMBER));
             args.add(new SQLArgument(Double.toString(g.getRatio()), OracleTypes.NUMBER));

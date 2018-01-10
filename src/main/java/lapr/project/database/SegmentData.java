@@ -15,12 +15,13 @@ public class SegmentData extends DataAccess<Segment> {
         super(connection);
     }
 
-    public List<Segment> get(String sectionID) throws SQLException {
+    public List<Segment> get(String pName, String sectionID) throws SQLException {
         if (connection == null) {
             return new ArrayList<>();
         }
         List<Segment> list = new LinkedList<>();
         List<SQLArgument> args = new ArrayList<>();
+        args.add(new SQLArgument(pName, OracleTypes.VARCHAR));
         args.add(new SQLArgument(sectionID, OracleTypes.VARCHAR));
         ResultSet rs = super.callFunction("getSegments", args);
         while (rs.next()) {
@@ -40,9 +41,10 @@ public class SegmentData extends DataAccess<Segment> {
         return list;
     }
 
-    public void insert(int sectionID, Segment s) throws SQLException {
+    public void insert(String pName, int sectionID, Segment s) throws SQLException {
         List<SQLArgument> args1 = new ArrayList<>();
 
+        args1.add(new SQLArgument(pName, OracleTypes.VARCHAR));
         args1.add(new SQLArgument(Integer.toString(s.getSegmentIndex()), OracleTypes.VARCHAR));
         args1.add(new SQLArgument(Integer.toString(sectionID), OracleTypes.VARCHAR));
         ResultSet rs = super.callFunction("getSegmentByIndex", args1);

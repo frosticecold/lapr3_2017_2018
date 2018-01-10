@@ -75,7 +75,7 @@ public class ProjectData extends DataAccess<Project> {
                 Junction j2 = section.getEndingJunction();
 
                 SegmentData sd = new SegmentData(connection);
-                List<Segment> segments = sd.get(String.valueOf(section.getSectionID()));
+                List<Segment> segments = sd.get(name, String.valueOf(section.getSectionID()));
                 section.setSegmentList(segments);
                 double distance = section.getSectionLength();
 

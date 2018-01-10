@@ -40,9 +40,10 @@ public class AcceleratorData extends DataAccess<Accelerator> {
         return a;
     }
 
-    public void insert(String vName, Accelerator accelerator) throws SQLException {
+    public void insert(String pName, String vName, Accelerator accelerator) throws SQLException {
         List<SQLArgument> args = new ArrayList<>();
 
+        args.add(new SQLArgument(pName, OracleTypes.VARCHAR));
         args.add(new SQLArgument(vName, OracleTypes.VARCHAR));
         ResultSet rs = super.callFunction("getAcceleratorByVehicleName", args);
         if (rs.next()) {
@@ -55,10 +56,11 @@ public class AcceleratorData extends DataAccess<Accelerator> {
 
         for (Integer i : accelerator.getThrottleList().keySet()) {
             args.clear();
+            args.add(new SQLArgument(pName, OracleTypes.VARCHAR));
             args.add(new SQLArgument(vName, OracleTypes.VARCHAR));
             args.add(new SQLArgument(Integer.toString(i), OracleTypes.NUMBER));
             super.callProcedure("insertThrottle", args);
-            rd.insert(i, vName, accelerator.getThrottleList().get(i));
+            rd.insert(pName, i, vName, accelerator.getThrottleList().get(i));
         }
     }
 

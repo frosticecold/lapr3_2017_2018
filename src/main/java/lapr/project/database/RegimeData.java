@@ -38,11 +38,12 @@ public class RegimeData extends DataAccess<Regime> {
         return list;
     }
 
-    public void insert(int throttleID, String vName, Throttle t) throws SQLException {
+    public void insert(String pName, int throttleID, String vName, Throttle t) throws SQLException {
         List<SQLArgument> args = new ArrayList<>();
         for (int i = 0; i < t.getRegimeList().size(); i++) {
             Regime r = t.getRegimeList().get(i);
             args.clear();
+            args.add(new SQLArgument(pName, OracleTypes.VARCHAR));
             args.add(new SQLArgument(vName, OracleTypes.VARCHAR));
             args.add(new SQLArgument(Integer.toString(throttleID), OracleTypes.NUMBER));
             args.add(new SQLArgument(Double.toString(r.getTorqueLow()), OracleTypes.NUMBER));
