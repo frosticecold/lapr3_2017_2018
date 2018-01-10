@@ -2,10 +2,16 @@ package lapr.project.controller;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import lapr.project.database.JunctionData;
+import lapr.project.database.ProjectData;
+import lapr.project.database.RoadData;
+import lapr.project.database.SectionData;
+import lapr.project.database.VehicleData;
 import lapr.project.model.Junction;
 import lapr.project.model.Project;
 import lapr.project.model.Road;
@@ -15,6 +21,7 @@ import lapr.project.model.VehicleList;
 import lapr.project.utils.ImportException;
 import lapr.project.utils.NetworkXML;
 import lapr.project.utils.Pair;
+import lapr.project.utils.SQLConnection;
 import lapr.project.utils.Session;
 import lapr.project.utils.VehicleXML;
 import lapr.project.utils.graphbase.Edge;
@@ -29,6 +36,7 @@ public class EditProjectController {
     private List<Road> newRoadList;
     private List<Junction> newJunctionList;
     private List<Section> newSectionList;
+    private SQLConnection connection;
 
     public EditProjectController() {
         project = Session.getActiveProject();
@@ -36,24 +44,29 @@ public class EditProjectController {
         newVehicleList = new VehicleList();
         newJunctionList = new ArrayList<>();
         newSectionList = new ArrayList<>();
+        connection = Session.getConnection();
     }
 
-    public void editNewProject(String name, String description) {
+    public void editNewProject(String name, String description) throws SQLException {
+        ProjectData pd = new ProjectData(connection.getConnection());
+        pd.editProject(project, name, description);
         project.setName(name);
         project.setDescription(description);
     }
 
-    public void editNewListVehicles() {
+    public void editNewListVehicles() throws SQLException {
         addVehicles();
     }
 
-    public void editNewListRoadNetwork() {
+    public void editNewListRoadNetwork() throws SQLException {
         addRoadNetwork();
     }
 
-    private void addVehicles() {
+    private void addVehicles() throws SQLException {
+        VehicleData vd = new VehicleData(connection.getConnection());
         for (Vehicle vehicle : totalVehicleList.getVehicleList()) {
             if (!(project.getListVehicles().getVehicleList().contains(vehicle))) {
+                vd.insert(project.getName(), vehicle);
                 newVehicleList.getVehicleList().add(vehicle);
             }
         }
@@ -98,22 +111,29 @@ public class EditProjectController {
         }
     }
 
-    public void addRoadNetwork() {
+    public void addRoadNetwork() throws SQLException {
         List<Road> roadList = project.getListRoads();
+        RoadData rd = new RoadData(connection.getConnection());
         for (Road road : newRoadList) {
             if (!roadList.contains(road)) {
+                rd.insert(project.getName(), road);
                 roadList.add(road);
             }
         }
+        JunctionData jd = new JunctionData(connection.getConnection());
         Graph<Junction, Section> graph = project.getRoadNetwork().copyGraph();
         for (Junction junction : newRoadNetwork.vertices()) {
             if (!graph.validVertex(junction)) {
+                jd.insert(project.getName(), junction);
                 newJunctionList.add(junction);
             }
             graph.insertVertex(junction);
         }
+
+        SectionData sd = new SectionData(connection.getConnection());
         for (Edge<Junction, Section> edge : newRoadNetwork.edges()) {
             if (graph.getEdge(edge.getVOrig(), edge.getVDest()) == null) {
+                sd.insert(project.getName(), edge.getElement());
                 newSectionList.add(edge.getElement());
             }
             graph.insertEdge(edge.getVOrig(), edge.getVDest(), edge.getElement(), edge.getWeight());
@@ -133,7 +153,7 @@ public class EditProjectController {
         return newRoadList;
     }
 
-    public boolean updateProject(boolean nameChanges, String nameProject, String descriptionProject, boolean vehicleUpdate, boolean roadUpdate) {
+    public boolean updateProject(boolean nameChanges, String nameProject, String descriptionProject, boolean vehicleUpdate, boolean roadUpdate) throws SQLException {
         if (nameChanges) {
             editNewProject(nameProject, descriptionProject);
         }
@@ -143,23 +163,14 @@ public class EditProjectController {
         if (roadUpdate) {
             editNewListRoadNetwork();
         }
-        if (roadUpdate || vehicleUpdate || nameChanges) {
-            return true;
-        }
-        return false;
+        return roadUpdate || vehicleUpdate || nameChanges;
     }
 
     public boolean updateProjectFields(String nameProject, String descriptionProject) {
-        if (nameProject.equals(getActiveProjectName()) && descriptionProject.equals(getActiveProjectDescription())) {
-            return false;
-        }
-        return true;
+        return !(nameProject.equals(getActiveProjectName()) && descriptionProject.equals(getActiveProjectDescription()));
     }
 
     public boolean updateProjectFiles(String filename) {
-        if (!filename.equalsIgnoreCase("Imported")) {
-            return false;
-        }
-        return true;
+        return filename.equalsIgnoreCase("Imported");
     }
 }

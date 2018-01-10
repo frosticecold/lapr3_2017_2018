@@ -138,9 +138,7 @@ public abstract class Vehicle {
      */
     public static final String FUEL_ELETRIC = "electric";
 
-    private static int vehicleCounter = 0;
-
-    public static final int[] THROTTLES = {25, 50, 100};
+    protected static final int[] THROTTLES = {25, 50, 100};
 
     /**
      * Empty constructor

@@ -5,13 +5,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import lapr.project.model.Project;
 
-public class Session {
+public abstract class Session {
 
     private static Project activeProject;
     private static SQLConnection sql;
-
-    public Session() {
-    }
 
     public static Project getActiveProject() {
         return activeProject;

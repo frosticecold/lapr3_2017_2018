@@ -4,6 +4,9 @@ package lapr.project.ui;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -26,6 +29,7 @@ public class EditProjectUI extends javax.swing.JDialog {
 
     /**
      * Creates new form EditProjectUI
+     * @param parent
      */
     public EditProjectUI(JFrame parent) {
         super(parent, true);
@@ -213,7 +217,12 @@ public class EditProjectUI extends javax.swing.JDialog {
         boolean nameChanges = controller.updateProjectFields(nameProject, descriptionProject);
         boolean roadUpdate = controller.updateProjectFiles(newRoadNetworkJLabel.getText());
         boolean vehicleUpdate = controller.updateProjectFiles(newVehiclesJLabel.getText());
-        boolean check = controller.updateProject(nameChanges, nameProject, descriptionProject, vehicleUpdate, roadUpdate);
+        boolean check = false;
+        try {
+            check = controller.updateProject(nameChanges, nameProject, descriptionProject, vehicleUpdate, roadUpdate);
+        } catch (SQLException ex) {
+            Logger.getLogger(EditProjectUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
         if (check) {
             JOptionPane.showMessageDialog(this, "Project edited successfully");
             dispose();
@@ -232,9 +241,7 @@ public class EditProjectUI extends javax.swing.JDialog {
                 newVehiclesJLabel.setEnabled(true);
                 newVehiclesJLabel.setText("Imported");
                 JOptionPane.showMessageDialog(this, "Vehicles were imported with success.", "Vehicle import", JOptionPane.INFORMATION_MESSAGE);
-            } catch (FileNotFoundException ex) {
-                JOptionPane.showMessageDialog(this, "There was an error importing the file", "Error", JOptionPane.ERROR_MESSAGE);
-            } catch (ImportException ex) {
+            } catch (FileNotFoundException | ImportException ex) {
                 JOptionPane.showMessageDialog(this, "There was an error importing the file", "Error", JOptionPane.ERROR_MESSAGE);
             }
 
@@ -250,9 +257,7 @@ public class EditProjectUI extends javax.swing.JDialog {
                 newRoadNetworkJLabel.setEnabled(true);
                 newRoadNetworkJLabel.setText("Imported");
                 JOptionPane.showMessageDialog(this, "Roadnetwork was imported with success.", "Roadnetwork import", JOptionPane.INFORMATION_MESSAGE);
-            } catch (FileNotFoundException ex) {
-                JOptionPane.showMessageDialog(this, "There was an error importing the file", "Error", JOptionPane.ERROR_MESSAGE);
-            } catch (ImportException ex) {
+            } catch (FileNotFoundException | ImportException ex) {
                 JOptionPane.showMessageDialog(this, "There was an error importing the file", "Error", JOptionPane.ERROR_MESSAGE);
             }
         }
