@@ -112,7 +112,7 @@ public class VehicleElectric extends Vehicle {
      */
     @Override
     public double getMaximumEngineVelocity() {
-        double velocity = (Math.PI * this.getWheelSize() * maxRPM) / (60 * finalDriveRatio * this.getGearbox().getLowestGear());
+        double velocity = (Math.PI * this.getWheelSize() * maxRPM) / (60 * finalDriveRatio * this.getGearbox().getLowestGearRatio());
         return velocity * 3.6;
     }
 

@@ -126,7 +126,7 @@ public class GearboxTest {
         assertNull(instance.getGear(0));
         assertNull(instance.getGear(7));
 
-        assertTrue(instance.getLowestGear() == instance.getGear(5).getRatio());
+        assertTrue(instance.getLowestGearRatio() == instance.getGear(5).getRatio());
 
     }
 

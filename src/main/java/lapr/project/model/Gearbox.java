@@ -30,7 +30,7 @@ public class Gearbox {
         gearList.add(g);
     }
 
-    public double getLowestGear() {
+    public double getLowestGearRatio() {
         double lowestGear = Double.POSITIVE_INFINITY;
         for (Gear g : gearList) {
             if (g.getRatio() < lowestGear) {

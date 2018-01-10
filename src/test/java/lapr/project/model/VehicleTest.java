@@ -553,7 +553,7 @@ public class VehicleTest {
         Gearbox result = vh1.getGearbox();
         assertEquals(expResult.toString(), result.toString());
         assertEquals(expResult.getNumberOfGears(), result.getNumberOfGears());
-        assertEquals(expResult.getLowestGear(), result.getLowestGear(), 0.5);
+        assertEquals(expResult.getLowestGearRatio(), result.getLowestGearRatio(), 0.5);
 
         try {
             vh1.setGearbox(null);

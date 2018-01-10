@@ -108,6 +108,20 @@ public class PhysicsCalculus {
 
         return result;
     }
+    
+    public static double[] calcVelocityHighestGearLowestThrotlle(Vehicle car){
+        Regime lowestSFCRegime = car.getThrottles().get(25).getRegimeList().get(0);
+        for (Regime regime : car.getThrottles().get(25).getRegimeList()) {
+            if(regime.getSFC()< lowestSFCRegime.getSFC()){
+                lowestSFCRegime = regime;
+            }
+        }
+        double gearRatio = car.getGearbox().getLowestGearRatio();
+        double minvelocity = calcVelocityBasedOnRPMandGear(car, lowestSFCRegime.getRpmLow(), gearRatio);
+        double velocity =  calcVelocityBasedOnRPMandGear(car, lowestSFCRegime.getRpmHigh(), gearRatio);
+        double result[] = {minvelocity,velocity};
+        return result;
+    }
 
     public static double calcEnginePower(double torque, double rpm) {
         if (torque <= 0 || rpm <= 0) {
