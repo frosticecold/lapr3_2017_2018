@@ -32,29 +32,27 @@
                       <EmptySpace pref="9" max="32767" attributes="0"/>
                       <Component id="btnImportRoadNetwork" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <Group type="103" alignment="1" groupAlignment="0" attributes="0">
-                      <Group type="103" alignment="1" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="labelTitle" min="-2" max="-2" attributes="0"/>
-                          <Component id="labelTitle1" min="-2" max="-2" attributes="0"/>
-                          <Component id="jScrollPane1" alignment="0" pref="365" max="32767" attributes="0"/>
-                          <Component id="txtfield_project_title" alignment="0" max="32767" attributes="0"/>
+                  <Group type="103" alignment="1" groupAlignment="0" max="-2" attributes="0">
+                      <Component id="labelTitle" min="-2" max="-2" attributes="0"/>
+                      <Component id="labelTitle1" min="-2" max="-2" attributes="0"/>
+                      <Component id="jScrollPane1" alignment="0" pref="365" max="32767" attributes="0"/>
+                      <Component id="txtfield_project_title" alignment="0" max="32767" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="1" attributes="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" alignment="1" attributes="0">
+                              <Component id="btnClose" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace min="-2" pref="44" max="-2" attributes="0"/>
+                              <Component id="newVehiclesJLabel" min="-2" pref="118" max="-2" attributes="0"/>
+                              <EmptySpace max="32767" attributes="0"/>
+                          </Group>
                       </Group>
-                      <Group type="102" alignment="1" attributes="0">
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="102" alignment="1" attributes="0">
-                                  <Component id="btnClose" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
-                              </Group>
-                              <Group type="102" alignment="0" attributes="0">
-                                  <EmptySpace min="-2" pref="44" max="-2" attributes="0"/>
-                                  <Component id="newVehiclesJLabel" min="-2" pref="118" max="-2" attributes="0"/>
-                                  <EmptySpace max="32767" attributes="0"/>
-                              </Group>
-                          </Group>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="newRoadNetworkJLabel" min="-2" max="-2" attributes="0"/>
-                              <Component id="btnCreateProject" min="-2" max="-2" attributes="0"/>
-                          </Group>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="newRoadNetworkJLabel" min="-2" max="-2" attributes="0"/>
+                          <Component id="btnCreateProject" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
@@ -95,9 +93,6 @@
   </Layout>
   <SubComponents>
     <Component class="javax.swing.JTextField" name="txtfield_project_title">
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtfield_project_titleActionPerformed"/>
-      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="labelTitle">
       <Properties>

@@ -8,7 +8,6 @@ package lapr.project.ui;
 import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.IOException;
-import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
@@ -398,6 +397,7 @@ public class PathAlgorithmsUI extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "Results exported with success.", "Results Export", JOptionPane.INFORMATION_MESSAGE);
             }
         } catch (NullPointerException n) {
+            Logger.getLogger(Mockup.class.getName()).log(Level.SEVERE, null, n);
             JOptionPane.showMessageDialog(this, "No active project to export", "Error", JOptionPane.ERROR_MESSAGE);
         } catch (IOException ex) {
             Logger.getLogger(Mockup.class.getName()).log(Level.SEVERE, null, ex);

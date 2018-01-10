@@ -63,12 +63,10 @@ public class ProjectData extends DataAccess<Project> {
 
             JunctionData j = new JunctionData(connection);
             List<Junction> junctions = j.getAllJunctions(name);
-            System.out.println(junctions);
 
             for (Junction junction : junctions) {
                 if (junction.validate()) {
                     g.insertVertex(junction);
-                    System.out.println(junction);
                 }
             }
             
@@ -78,10 +76,7 @@ public class ProjectData extends DataAccess<Project> {
 
                 SegmentData sd = new SegmentData(connection);
                 List<Segment> segments = sd.get(String.valueOf(section.getSectionID()));
-                System.out.println(j1);
-                System.out.println(j2);
                 section.setSegmentList(segments);
-                System.out.println(segments);
                 double distance = section.getSectionLength();
 
                 if (section.getDirection().compareTo(Direction.REVERSE) == 0) {
@@ -90,7 +85,6 @@ public class ProjectData extends DataAccess<Project> {
                     g.insertEdge(j1, j2, section, distance);
                 }
             }
-            System.out.println(g);
             p.setRoadNetwork(g);
 
             RoadData r = new RoadData(connection);
@@ -104,7 +98,7 @@ public class ProjectData extends DataAccess<Project> {
             p.setListVehicles(vehicles);
 
             ResultsData rd = new ResultsData(connection);
-            ListOfResults listOfResults = rd.get(name);
+            ListOfResults listOfResults = rd.get(p, name);
 
             p.setListOfResults(listOfResults);
 
@@ -157,6 +151,18 @@ public class ProjectData extends DataAccess<Project> {
             vd.insert(pName, v);
         }
 
+    }
+
+    public void editProject(Project project, String name, String description) throws SQLException {
+        if(connection == null) {
+            return;
+        }
+        
+        List<SQLArgument> args = new ArrayList<>();
+        args.add(new SQLArgument(project.getName(), OracleTypes.VARCHAR));
+        args.add(new SQLArgument(name, OracleTypes.VARCHAR));
+        args.add(new SQLArgument(description, OracleTypes.VARCHAR));
+        super.callProcedure("editProject", args);
     }
 
 }

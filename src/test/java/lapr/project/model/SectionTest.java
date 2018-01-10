@@ -17,10 +17,10 @@ import static org.junit.Assert.*;
  * @author MarioDias
  */
 public class SectionTest {
-    
+
     public SectionTest() {
     }
-    
+
     @Test
     public void testConstructor() {
         System.out.println("constructor");
@@ -32,22 +32,22 @@ public class SectionTest {
         s1.setRoadID("E01");
         s1.setTypology("Regular Road");
         s1.setDirection(Section.Direction.BIDIRECTIONAL);
-        
+
         Segment seg1 = new Segment(1, 100, 200, 10, 30, 5, 100, 50);
         Segment seg2 = new Segment(1, 100, 200, 10, -30, 5, 100, 50);
         s1.getSequenceOfSegments().add(seg1);
         s1.getSequenceOfSegments().add(seg2);
-        
+
         s1.addToll(1, 2.5);
         s1.addToll(2, 3);
         s1.addToll(3, 3.5);
         s1.addToll(4, 4);
-        
+
         Section s2 = new Section(s1);
         assertEquals(s1.getBeginningJunction(), s2.getBeginningJunction());
         assertEquals(s1.getEndingJunction(), s2.getEndingJunction());
         assertEquals(s1.getRoadID(), s2.getRoadID());
-        assertEquals(s1.getSectionID(), s2.getSectionID()-1);
+        assertEquals(s1.getSectionID(), s2.getSectionID() - 1);
         assertEquals(s1.getTypology(), s2.getTypology());
     }
 
@@ -81,7 +81,7 @@ public class SectionTest {
             instance.addToll(vehic_id, value);
         } catch (IllegalArgumentException ex) {
         }
-        
+
         try {
             vehic_id = 1;
             value = -5.3;
@@ -95,7 +95,7 @@ public class SectionTest {
         } catch (IllegalArgumentException ex) {
         }
         assertFalse(result);
-        
+
         try {
             vehic_id = 0;
             value = 0;
@@ -103,7 +103,7 @@ public class SectionTest {
         } catch (IllegalArgumentException ex) {
         }
         assertFalse(result);
-        
+
         try {
             value = instance.getTollValue(0);
         } catch (IllegalArgumentException ex) {
@@ -137,7 +137,7 @@ public class SectionTest {
         instance.addToll(vehic_id, value);
         expResult.put(vehic_id, value);
         assertEquals(expResult, result);
-        
+
     }
 
     /**
@@ -157,7 +157,7 @@ public class SectionTest {
         instance.setBeginJunction(j);
         result = instance.getBeginningJunction();
         assertNotEquals(expResult, result);
-        
+
     }
 
     /**
@@ -172,13 +172,13 @@ public class SectionTest {
         instance.setEndJunction(j);
         Junction result = instance.getEndingJunction();
         assertEquals(expResult, result);
-        
+
         expResult = new Junction("JunctionTest2");
         j = new Junction("JunctionTest2123");
         instance.setEndJunction(j);
         result = instance.getEndingJunction();
         assertNotEquals(expResult, result);
-        
+
     }
 
     /**
@@ -203,7 +203,7 @@ public class SectionTest {
         instance.setSectionID(1);
         int result = instance.getSectionID();
         assertEquals(expResult, result);
-        
+
         expResult = 3;
         instance.setSectionID(3);
         result = instance.getSectionID();
@@ -221,13 +221,13 @@ public class SectionTest {
         Segment s2 = new Segment(2, 10, 10, 15, 0, 20, 100, 80);
         Segment s3 = new Segment(3, 10, 10, 15, 0, 20, 100, 80);
         Segment s4 = new Segment(4, 10, 10, 15, 0, 20, 100, 80);
-        
+
         List<Segment> expResult = new ArrayList<>();
         expResult.add(s1);
         expResult.add(s2);
         expResult.add(s3);
         expResult.add(s4);
-        
+
         List<Segment> segmentList = new ArrayList<>();
         segmentList.add(s1);
         segmentList.add(s2);
@@ -236,9 +236,9 @@ public class SectionTest {
         instance.setSegmentList(segmentList);
         List<Segment> result = instance.getSequenceOfSegments();
         assertEquals(expResult, result);
-        
+
     }
-    
+
     @Test
     public void testHashCode() {
         Section instance = new Section();
@@ -258,7 +258,7 @@ public class SectionTest {
         segmentList.add(s3);
         segmentList.add(s4);
         instance.setSegmentList(segmentList);
-        
+
         assertNotNull(instance.hashCode());
     }
 
@@ -308,17 +308,17 @@ public class SectionTest {
         String expResult = "Regular road";
         String result = instance.getTypology();
         assertEquals(expResult, result);
-        
+
         instance.setTypology("Highway");
         expResult = "Highway";
         result = instance.getTypology();
         assertEquals(expResult, result);
-        
+
         instance.setTypology("Normal road");
         expResult = "Highway";
         result = instance.getTypology();
         assertNotEquals(expResult, result);
-        
+
         try {
             instance.setDirection(null);
         } catch (IllegalArgumentException ex) {
@@ -353,7 +353,7 @@ public class SectionTest {
         expResult = 2.95;
         result = instance.getTollValue(toll_key);
         assertEquals(expResult, result, 0.0005);
-        
+
         result = instance.getTollValue(6);
         assertEquals(result, -1, 0.05);
     }
@@ -364,42 +364,42 @@ public class SectionTest {
     @Test
     public void testEquals() {
         System.out.println("equals");
-        
+
         Section result = new Section();
         Section expResult = new Section();
         assertTrue(expResult.equals(result));
-        
+
         assertTrue(result.equals(result));
-        
+
         Object obj = new Object();
         assertFalse(expResult.equals(obj));
-        
+
         obj = null;
         assertFalse(expResult.equals(obj));
-        
+
         result.setBeginJunction(new Junction("kJunction"));
         expResult.setBeginJunction(new Junction("jJunction"));
         assertFalse(expResult.equals(result));
         result.setBeginJunction(new Junction("ASD"));
         expResult.setBeginJunction(new Junction("CVB"));
         assertFalse(result.equals(expResult));
-        
+
         result.setEndJunction(new Junction("lJunction"));
         expResult.setEndJunction(new Junction("pJunction"));
         assertFalse(expResult.equals(result));
         result.setEndJunction(new Junction("ERT"));
         expResult.setEndJunction(new Junction("FGH"));
         assertFalse(result.equals(expResult));
-        
+
         result.setBeginJunction(expResult.getBeginningJunction());
         result.setEndJunction(expResult.getEndingJunction());
-        
+
         result.setRoadID("road 1");
         expResult.setRoadID("Road 5");
         assertFalse(expResult.equals(result));
-        
+
         result.setRoadID(expResult.getRoadID());
-        
+
         List<Segment> segmentList = new ArrayList<>();
         Segment s1 = new Segment(1, 10, 10, 15, 0, 20, 100, 80);
         Segment s2 = new Segment(2, 10, 10, 15, 0, 20, 100, 80);
@@ -415,29 +415,29 @@ public class SectionTest {
         segmentList2.add(s4);
         expResult.setSegmentList(segmentList2);
         assertFalse(expResult.equals(result));
-        
+
         result.setTypology("Highway");
         expResult.setTypology("Regular");
         assertFalse(expResult.equals(result));
         result.setTypology("Test1");
         expResult.setTypology("Test2");
         assertFalse(result.equals(expResult));
-        
+
         result.setTypology(expResult.getTypology());
         result.setDirection(Section.Direction.DIRECT);
         expResult.setDirection(Section.Direction.DIRECT);
         assertFalse(result.equals(expResult));
         expResult.setSegmentList(segmentList);
         assertEquals(expResult, result);
-        
+
         result.setDirection(Section.Direction.BIDIRECTIONAL);
         assertNotEquals(expResult, result);
-        
+
         result.setDirection(Section.Direction.DIRECT);
         result.setEndJunction(new Junction("Top"));
         assertNotEquals(expResult, result);
     }
-    
+
     @Test
     public void testToString() {
         System.out.println("TestToString");
@@ -458,13 +458,13 @@ public class SectionTest {
         segmentList.add(s3);
         segmentList.add(s4);
         instance.setSegmentList(segmentList);
-        
+
         String expResult = "Road 1 Junction Begin junction Junction End junction";
         String result = instance.toString();
-        
+
         assertEquals(expResult, result);
     }
-    
+
     @Test
     public void testValidate() {
         Section instance = new Section();
@@ -472,7 +472,7 @@ public class SectionTest {
             instance.validate();
         } catch (IllegalArgumentException ex) {
         }
-        
+
         try {
             instance.setBeginJunction(null);
             instance.validate();
@@ -498,7 +498,12 @@ public class SectionTest {
             instance.validate();
         } catch (IllegalArgumentException ex) {
         }
-        
+        try {
+            instance.setSegmentList(new ArrayList<>());
+            instance.validate();
+        } catch (IllegalArgumentException ex) {
+        }
+
         instance.setBeginJunction(new Junction("Begin junction"));
         try {
             instance.validate();
@@ -514,7 +519,7 @@ public class SectionTest {
             instance.validate();
         } catch (IllegalArgumentException ex) {
         }
-        
+
         try {
             instance.setSectionID(-1);
             instance.validate();
@@ -525,7 +530,7 @@ public class SectionTest {
             instance.validate();
         } catch (IllegalArgumentException ex) {
         }
-        
+
         try {
             instance.setRoadID("");
             instance.validate();
@@ -536,7 +541,7 @@ public class SectionTest {
             instance.validate();
         } catch (IllegalArgumentException ex) {
         }
-        
+
         try {
             instance.setTypology("");
             instance.validate();
@@ -556,15 +561,20 @@ public class SectionTest {
         segmentList.add(s2);
         segmentList.add(s3);
         segmentList.add(s4);
-        instance.setSegmentList(segmentList);
         boolean validate = false;
+        try {
+            validate = instance.validate();
+        } catch (IllegalArgumentException ex) {
+        }
+        assertFalse(validate);
+        instance.setSegmentList(segmentList);
         try {
             validate = instance.validate();
         } catch (IllegalArgumentException ex) {
         }
         assertTrue(validate);
     }
-    
+
     @Test
     public void testReverseSegment() {
         System.out.println("testReverseSegment");
@@ -585,11 +595,11 @@ public class SectionTest {
         segmentList.add(s3);
         segmentList.add(s4);
         instance.setSegmentList(segmentList);
-        
+
         Section reverse = instance.reverseSection();
         assertEquals(s1.getFinalHeight(), reverse.getSequenceOfSegments().get(3).getInitialHeight(), 0.05);
     }
-    
+
     @Test
     public void toStringHTML() {
         Section instance = new Section();
@@ -609,10 +619,10 @@ public class SectionTest {
         segmentList.add(s3);
         segmentList.add(s4);
         instance.setSegmentList(segmentList);
-        
+
         String tohtml = instance.toStringHTML();
         assertNotNull(tohtml);
-        
+
     }
-    
+
 }

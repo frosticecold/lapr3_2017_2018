@@ -13,7 +13,6 @@ import lapr.project.model.Project;
 import lapr.project.model.Section;
 import lapr.project.model.Vehicle;
 import lapr.project.networkanalysis.AlgorithmResults;
-import lapr.project.utils.Session;
 import oracle.jdbc.OracleTypes;
 
 public class ResultsData extends DataAccess<Map<Vehicle, List<AlgorithmResults>>> {
@@ -27,8 +26,17 @@ public class ResultsData extends DataAccess<Map<Vehicle, List<AlgorithmResults>>
 
         return rs.next();
     }
+    
+    private boolean existsInTable(String pName, String vName) throws SQLException {
+        List<SQLArgument> args = new ArrayList<>();
+        args.add(new SQLArgument(pName, OracleTypes.VARCHAR));
+        args.add(new SQLArgument(vName, OracleTypes.VARCHAR));
+        ResultSet rs = super.callFunction("existsResults", args);
+        
+        return rs.next();
+    }
 
-    public ListOfResults get(String pName) throws SQLException {
+    public ListOfResults get(Project p, String pName) throws SQLException {
         if (connection == null) {
             return new ListOfResults();
         }
@@ -46,7 +54,7 @@ public class ResultsData extends DataAccess<Map<Vehicle, List<AlgorithmResults>>
                 double distance = rs.getDouble("DISTANCE");
                 String algorithm = rs.getString("ALGORITHM");
 
-                Vehicle v = Session.getActiveProject().getListVehicles().getVehicleByName(vName);
+                Vehicle v = p.getListVehicles().getVehicleByName(vName);
 
                 LinkedList<Junction> junctionPath = new LinkedList<>();
 
@@ -54,24 +62,24 @@ public class ResultsData extends DataAccess<Map<Vehicle, List<AlgorithmResults>>
                 argsR.add(new SQLArgument(Integer.toString(idRes), OracleTypes.NUMBER));
                 ResultSet rs1 = super.callFunction("getResultadosJunction", argsR);
                 while (rs1.next()) {
-                    String junc = rs1.getString("ID_JUNCTION");
+                    String junc = rs1.getString("NAME");
 
-                    junctionPath.add(Session.getActiveProject().getJunction(junc));
+                    junctionPath.add(p.getJunction(junc));
                 }
 
                 LinkedList<Section> fastestPath = new LinkedList<>();
 
                 ResultSet rs2 = super.callFunction("getResultadosSection", argsR);
                 while (rs2.next()) {
-                    Junction j1 = Session.getActiveProject().getJunction(rs2.getString("bJUNC"));
-                    Junction j2 = Session.getActiveProject().getJunction(rs2.getString("eJUNC"));
+                    Junction j1 = p.getJunction(rs2.getString("bJUNC"));
+                    Junction j2 = p.getJunction(rs2.getString("eJUNC"));
 
-                    fastestPath.add(Session.getActiveProject().getSection(j1, j2));
+                    fastestPath.add(p.getSection(j1, j2));
                 }
 
                 double[] results = {travelTime, energy};
 
-                AlgorithmResults ar = new AlgorithmResults(Session.getActiveProject(), junctionPath, fastestPath, v, results, algorithm);
+                AlgorithmResults ar = new AlgorithmResults(p, junctionPath, fastestPath, v, results, algorithm);
                 ar.setCost(cost);
                 ar.setDistance(distance);
 

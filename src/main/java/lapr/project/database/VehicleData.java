@@ -63,9 +63,9 @@ public class VehicleData extends DataAccess<Vehicle> {
                 ResultSet rs2 = super.callFunction("getMaxVelocityVehicle", args1);
                 while (rs2.next()) {
                     String road = rs2.getString("road");
-                    String roadP = road.substring(0,1).toUpperCase() + road.substring(1).toLowerCase();
-                    double max_speed = rs2.getDouble("speed_limit");
-                    mapRoadVelocityLimit.put(roadP, max_speed);
+                    String roadP = road.substring(0, 1).toUpperCase() + road.substring(1).toLowerCase();
+                    double maxSpeed = rs2.getDouble("speed_limit");
+                    mapRoadVelocityLimit.put(roadP, maxSpeed);
                 }
             }
 
@@ -88,6 +88,7 @@ public class VehicleData extends DataAccess<Vehicle> {
                 v.setFinalDriveRatio(vFinalDriveRatio);
                 v.setGearbox(vGearbox);
                 v.setAccelerator(vAccelerator);
+                v.setThrottlesList(vAccelerator.getThrottleList());
                 v.setRoadVelocityLimit(mapRoadVelocityLimit);
 
                 list.addVehicle(v);
@@ -110,6 +111,7 @@ public class VehicleData extends DataAccess<Vehicle> {
                 ve.setFinalDriveRatio(vFinalDriveRatio);
                 ve.setGearbox(vGearbox);
                 ve.setAccelerator(vAccelerator);
+                ve.setThrottlesList(vAccelerator.getThrottleList());
                 ve.setRoadVelocityLimit(mapRoadVelocityLimit);
                 ve.setEnergyRegenerationRatio(vEnergyRegenerationRatio);
 

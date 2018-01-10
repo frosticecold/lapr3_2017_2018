@@ -27,6 +27,7 @@ public class SectionData extends DataAccess<Section> {
         args.add(new SQLArgument(projectName, OracleTypes.VARCHAR));
         try (ResultSet rs = super.callFunction("getSections", args)) {
             while (rs.next()) {
+                int sectionID = rs.getInt("ID_SECTION");
                 int begginingJunction = rs.getInt("ID_BEGGININGJ");
                 int endingJunction = rs.getInt("ID_ENDINGJ");
                 int directionID = rs.getInt("ID_DIRECTION");
@@ -41,6 +42,7 @@ public class SectionData extends DataAccess<Section> {
                 Section.Direction direction = d.get(directionID);
                 
                 Section s = new Section();
+                s.setSectionID(sectionID);
                 s.setBeginJunction(beginJunction);
                 s.setEndJunction(endJunction);
                 s.setDirection(direction);
