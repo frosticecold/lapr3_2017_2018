@@ -61,7 +61,7 @@ public class TheoreticalEnergyEfficientAlgorithm implements PathAlgorithm {
             gear[key] = 0;
         }
 
-        efficientPathLength(graph, vOrig, vertices, visited, pathKeys, time, energy, velocity, torque, rpm, gear, vehicle, acceleration);
+        efficientPathLength(graph, vOrig, vDest, vertices, visited, pathKeys, time, energy, velocity, torque, rpm, gear, vehicle, acceleration);
 
         //double timePath = time[graph.getKey(vDest)];
         results[0] = time[graph.getKey(vDest)];
@@ -74,7 +74,7 @@ public class TheoreticalEnergyEfficientAlgorithm implements PathAlgorithm {
         return results;
     }
 
-    private static <V, E> void efficientPathLength(Graph<Junction, Section> g, Junction vOrig, Junction[] vertices,
+    private static <V, E> void efficientPathLength(Graph<Junction, Section> g, Junction vOrig, Junction vDest, Junction[] vertices,
             boolean[] visited, int[] pathKeys, double[] time, double[] energy, double[] velocity, double[] torque, double[] rpm, double[] gear, Vehicle vehicle, double acceleration) {
 
         Section section = new Section();
@@ -82,6 +82,7 @@ public class TheoreticalEnergyEfficientAlgorithm implements PathAlgorithm {
         energy[i] = 0;
         time[i] = 0;
         Junction vOrigin;
+        int kDest = g.getKey(vDest);
         while (i != -1) {
 
             vOrigin = vertices[i];
@@ -92,14 +93,19 @@ public class TheoreticalEnergyEfficientAlgorithm implements PathAlgorithm {
                 int kAdj = g.getKey(vAdj);
                 section = edg.getElement();
                 double previous_velocity = velocity[kOrg];
-                double previous_torque = torque[kOrg];
-                double previous_rpm = rpm[kOrg];
-                double previous_gear = gear[kOrg];
+//                double previous_torque = torque[kOrg];
+//                double previous_rpm = rpm[kOrg];
+//                double previous_gear = gear[kOrg];
+                boolean finishline = false;
+                if (g.getKey(edg.getVDest()) == kDest) {
+                    finishline = true;
+
+                }
                 //Results
                 //0) Time
                 //1) Energy
                 //2) Velocity
-                double results[] = calcEfficientPath(section, vehicle, acceleration, previous_velocity, previous_torque, previous_rpm, previous_gear);
+                double results[] = calcEfficientPath(section, vehicle, acceleration, previous_velocity, finishline);
                 if (results[0] != -1) {
                     if (!visited[kAdj] && energy[kAdj] > (energy[kOrg] + results[1])) {
                         time[kAdj] = time[kOrg] + results[0];
@@ -113,7 +119,7 @@ public class TheoreticalEnergyEfficientAlgorithm implements PathAlgorithm {
         }
     }
 
-    private static double[] calcEfficientPath(Section section, Vehicle car, double acceleration, double previousVelocity, double previousTorque, double previousRpm, double previousGear) {
+    private static double[] calcEfficientPath(Section section, Vehicle car, double acceleration, double previousVelocity, boolean finishline) {
         double[] results = new double[RESULTS_SIZE];
         double[] tempresults = new double[RESULTS_SIZE];
         //Results
@@ -124,6 +130,10 @@ public class TheoreticalEnergyEfficientAlgorithm implements PathAlgorithm {
             boolean accel = false;
             boolean braking = false;
             double maximumvel = car.getMaximumPermitedVelocity2(seg, section.getTypology()) / 3.6;
+            boolean islastSegment = false;
+            if (finishline) {
+                islastSegment = section.isLastSegment(seg);
+            }
             //If car needs acceleration
             if (previousVelocity < maximumvel) {
                 braking = false;
@@ -137,13 +147,13 @@ public class TheoreticalEnergyEfficientAlgorithm implements PathAlgorithm {
             }
             //If car is accelerating
             if (accel) {
-                tempresults = calcAcceleratingSegment(section, seg, car, previousVelocity, maximumvel, acceleration);
+                tempresults = calcAcceleratingSegment(section, seg, car, previousVelocity, maximumvel, acceleration, islastSegment);
             } else {
                 //If car is braking
                 if (braking) {
-                    tempresults = calcBrakingSegment(section, seg, car, previousVelocity, maximumvel, acceleration * -1);
+                    tempresults = calcBrakingSegment(section, seg, car, previousVelocity, maximumvel, acceleration * -1, islastSegment);
                 } else {
-                    tempresults = calcNoAcceleration(section, seg, car, previousVelocity);
+                    tempresults = calcNoAcceleration(section, seg, car, previousVelocity, acceleration, islastSegment);
 
                 }
             }
@@ -165,7 +175,7 @@ public class TheoreticalEnergyEfficientAlgorithm implements PathAlgorithm {
         return results;
     }
 
-    private static double[] calcAcceleratingSegment(Section section, Segment seg, Vehicle car, double initialvelocity, double maximumvelocity, double acceleration) {
+    private static double[] calcAcceleratingSegment(Section section, Segment seg, Vehicle car, double initialvelocity, double maximumvelocity, double acceleration, boolean isLastSegment) {
         double[] result = new double[RESULTS_SIZE];
         double[] tempresults = new double[RESULTS_SIZE];
         double[] carresult = new double[4];
@@ -218,7 +228,7 @@ public class TheoreticalEnergyEfficientAlgorithm implements PathAlgorithm {
                 }
             }
         }
-        //Do calculations with no acceleration
+        //Do calculations when reached no acceleration
         double seglengthaccel = PhysicsCalculus.calcDistanceBasedOnInitialVelocityDesiredVelocityAcceleration(initialvelocity, currentspeed, acceleration);
         double segremaining = (seg.getLength() * 1000) - seglengthaccel;
         double deltatime = segremaining / currentspeed;
@@ -237,15 +247,23 @@ public class TheoreticalEnergyEfficientAlgorithm implements PathAlgorithm {
         return result;
     }
 
-    private static double[] calcNoAcceleration(Section section, Segment seg, Vehicle car, double maximumvelocity) {
-        double[] results = new double[RESULTS_SIZE];
+    private static double[] calcNoAcceleration(Section section, Segment seg, Vehicle car, double currentspeed, double acceleration, boolean isLastSegment) {
+        double[] result = new double[RESULTS_SIZE];
         //Results
         //0) Time
         //1) Energy
         //2) Velocity
+        double breakingresults[] = {-1,-1,-1};
+        if (isLastSegment) {
+            breakingresults = calcBrakingLastSegment(section, seg, car, acceleration, acceleration);
+            //0) Time        
+            //1) Distance
+            //2) FuelComsumption
+        }
+
         double seglength = seg.getLength() * 1000;
-        double deltatime = seglength / maximumvelocity;
-        double[] carresult = PhysicsCalculus.calcIdealMotorForceBasedAcceleration(section, seg, car, 0, maximumvelocity);
+        double deltatime = seglength / currentspeed;
+        double[] carresult = PhysicsCalculus.calcIdealMotorForceBasedAcceleration(section, seg, car, 0, currentspeed);
         //0) Gear
         //1) RPM
         //2) Torque
@@ -253,14 +271,48 @@ public class TheoreticalEnergyEfficientAlgorithm implements PathAlgorithm {
 
         double enginepower = PhysicsCalculus.calcEnginePower(carresult[2], carresult[1]);
         double fuelComsumption = PhysicsCalculus.calcFuelComsumption(carresult[3], enginepower, deltatime);
-        results[0] = deltatime;
-        results[1] += fuelComsumption;
-        results[2] = maximumvelocity;
-        return results;
+        result[0] = deltatime;
+        result[1] += fuelComsumption;
+        result[2] = currentspeed;
+        return result;
 
     }
 
-    private static double[] calcBrakingSegment(Section section, Segment seg, Vehicle car, double initialvelocity, double maximumvelocity, double acceleration) {
+    private static double[] calcBrakingLastSegment(Section section, Segment seg, Vehicle car, double initialVelocity, double acceleration) {
+        double result[] = {-1,-1,-1};
+        //0) Time        
+        //1) Distance
+        //2) FuelComsumption
+        if (acceleration > 0) {
+            acceleration = acceleration * -1;
+        }
+        double brakingspace = PhysicsCalculus.calcDistanceBasedOnInitialVelocityDesiredVelocityAcceleration(initialVelocity, 0, acceleration);
+        double brakingtime = PhysicsCalculus.calcTimeBasedOnInitialVelocityDesiredVelocityAndAcceleration(initialVelocity, 0, acceleration);
+        double minvel = PhysicsCalculus.calcVelocityBasedOnRPMandGear(car, car.getMinRpm(), car.getGearbox().getLowestGear());
+        double deltatimeaccel = Math.abs(1 / acceleration);
+        for (double vel = initialVelocity; vel >= minvel; vel--) {
+            double[] motoresult = PhysicsCalculus.calcIdealMotorForceBasedAcceleration(section, seg, car, acceleration, vel);
+            //0) Gear
+            //1) RPM
+            //2) Torque
+            //3) SFC
+            if (motoresult[0] != -1) {
+                //result[0] += 1 / Math.abs(acceleration);
+                double enginepower = PhysicsCalculus.calcEnginePower(motoresult[2], motoresult[1]);
+                double fuelComsumption = PhysicsCalculus.calcFuelComsumption(motoresult[3], enginepower, deltatimeaccel);
+                result[2] += fuelComsumption;
+            }
+
+            if (motoresult[0] == -1) {
+                result[0] = brakingtime;
+                result[1] = brakingspace;
+                break;
+            }
+        }
+        return result;
+    }
+
+    private static double[] calcBrakingSegment(Section section, Segment seg, Vehicle car, double initialvelocity, double maximumvelocity, double acceleration, boolean isLastSegment) {
         double[] result = new double[RESULTS_SIZE];
         double[] tempresults = new double[RESULTS_SIZE];
         double[] carresult = new double[4];

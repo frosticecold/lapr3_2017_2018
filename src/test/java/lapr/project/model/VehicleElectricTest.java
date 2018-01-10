@@ -199,10 +199,11 @@ public class VehicleElectricTest {
         try {
             instance.setMinRPM(m_min_rpm);
         } catch (IllegalArgumentException e) {
-            System.out.println("erro");}
-            
-        
+            System.out.println("erro");
+        }
+
     }
+
     /**
      * Test of toString method, of class VehicleElectric.
      */
@@ -243,33 +244,42 @@ public class VehicleElectricTest {
 //        assertEquals(expResult, result);
     }
 
-    
     @Test
     public void test2ValidateElectricVehicle() {
         System.out.println("validateElectricVehicle");
         VehicleElectric instance = new VehicleElectric();
-        instance.setMinRPM(-200);
+        try {
+            instance.setMinRPM(-200);
+        } catch (IllegalArgumentException e) {
+        }
         instance.setMaxRPM(500);
         instance.setFinalDriveRatio(1.3);
         instance.setEnergyRegenerationRatio(0.8);
-        try{ instance.validateElectricVehicle();
+        try {
+            instance.validateElectricVehicle();
         } catch (IllegalArgumentException e) {
-            System.out.println("erro");}
+            System.out.println("erro");
+        }
     }
-    
+
     @Test
     public void test3ValidateElectricVehicle() {
         System.out.println("validateElectricVehicle");
         VehicleElectric instance = new VehicleElectric();
         instance.setMinRPM(200);
-        instance.setMaxRPM(-500);
+        try {
+            instance.setMaxRPM(-500);
+        } catch (IllegalArgumentException ex) {
+        }
         instance.setFinalDriveRatio(1.3);
         instance.setEnergyRegenerationRatio(0.8);
-        try{ instance.validateElectricVehicle();
+        try {
+            instance.validateElectricVehicle();
         } catch (IllegalArgumentException e) {
-            System.out.println("erro");}
+            System.out.println("erro");
+        }
     }
-    
+
     @Test
     public void test4ValidateElectricVehicle() {
         System.out.println("validateElectricVehicle");
@@ -278,24 +288,31 @@ public class VehicleElectricTest {
         instance.setMaxRPM(50);
         instance.setFinalDriveRatio(1.3);
         instance.setEnergyRegenerationRatio(0.8);
-        try{ instance.validateElectricVehicle();
+        try {
+            instance.validateElectricVehicle();
         } catch (IllegalArgumentException e) {
-            System.out.println("erro");}
+            System.out.println("erro");
+        }
     }
-    
+
     @Test
     public void test5ValidateElectricVehicle() {
         System.out.println("validateElectricVehicle");
         VehicleElectric instance = new VehicleElectric();
         instance.setMinRPM(200);
         instance.setMaxRPM(500);
-        instance.setFinalDriveRatio(-1.3);
+        try {
+            instance.setFinalDriveRatio(-1.3);
+        } catch (IllegalArgumentException ex) {
+        }
         instance.setEnergyRegenerationRatio(0.8);
-        try{ instance.validateElectricVehicle();
+        try {
+            instance.validateElectricVehicle();
         } catch (IllegalArgumentException e) {
-            System.out.println("erro");}
+            System.out.println("erro");
+        }
     }
-    
+
     @Test
     public void test6ValidateElectricVehicle() {
         System.out.println("validateElectricVehicle");
@@ -303,26 +320,35 @@ public class VehicleElectricTest {
         instance.setMinRPM(200);
         instance.setMaxRPM(500);
         instance.setFinalDriveRatio(1.3);
-        instance.setEnergyRegenerationRatio(-0.8);
-        try{ instance.validateElectricVehicle();
+        try{
+        instance.setEnergyRegenerationRatio(-0.8);}catch(IllegalArgumentException ex){}
+        try {
+            instance.validateElectricVehicle();
         } catch (IllegalArgumentException e) {
-            System.out.println("erro");}
+            System.out.println("erro");
+        }
     }
-    
+
     @Test
     public void test7ValidateElectricVehicle() {
         System.out.println("validateElectricVehicle");
         VehicleElectric instance = new VehicleElectric();
-        instance.setMinRPM(-200);
+        try {
+            instance.setMinRPM(-200);
+        } catch (IllegalArgumentException ex) {
+        }
         instance.setMaxRPM(500);
         instance.setFinalDriveRatio(1.3);
+        try{
         instance.setEnergyRegenerationRatio(1.8);
-        try{ instance.validateElectricVehicle();
+        }catch(IllegalArgumentException ex){}
+        try {
+            instance.validateElectricVehicle();
         } catch (IllegalArgumentException e) {
-            System.out.println("erro");}
+            System.out.println("erro");
         }
-        
-    
+    }
+
     /**
      * Test of copy method, of class VehicleElectric.
      */
@@ -331,13 +357,13 @@ public class VehicleElectricTest {
         System.out.println("copy");
         VehicleElectric instance = new VehicleElectric();
         instance.setName("pick_up");
-        
+
         Vehicle expResult = new VehicleElectric();
         expResult.setName("pick_up");
         Vehicle result = instance.copy();
         assertEquals(expResult, result);
     }
-    
+
     @Test
     public void testSetMaxRPM() {
         System.out.println("setMaxRPM");
@@ -348,120 +374,124 @@ public class VehicleElectricTest {
         double result = instance.getMaxRpm();
         assertEquals(expResult, result, 0.0);
     }
-        @Test
-        public void test2SetMaxRPM() {
+
+    @Test
+    public void test2SetMaxRPM() {
         System.out.println("setMaxRPM");
         double m_max_rpm = -200.0;
         VehicleElectric instance = new VehicleElectric();
         try {
             instance.setMaxRPM(m_max_rpm);
         } catch (IllegalArgumentException e) {
-            System.out.println("erro");}
-            
-        
+            System.out.println("erro");
         }
-        @Test
-        public void test3SetMaxRPM() {
+
+    }
+
+    @Test
+    public void test3SetMaxRPM() {
         System.out.println("setMaxRPM");
         double m_max_rpm = 0.0;
         VehicleElectric instance = new VehicleElectric();
         try {
             instance.setMaxRPM(m_max_rpm);
         } catch (IllegalArgumentException e) {
-            System.out.println("erro");}
-            
-        
+            System.out.println("erro");
         }
-        
-        @Test
-        public void testSetFinalDriveRatio(){
-            double ratio=0.0;
-            VehicleElectric instance = new VehicleElectric();
+
+    }
+
+    @Test
+    public void testSetFinalDriveRatio() {
+        double ratio = 0.0;
+        VehicleElectric instance = new VehicleElectric();
         try {
             instance.setFinalDriveRatio(ratio);
         } catch (IllegalArgumentException e) {
-            System.out.println("erro");}
+            System.out.println("erro");
         }
-        
-        
-        @Test
-        public void test2SetFinalDriveRatio(){
-            double ratio=-10.0;
-            VehicleElectric instance = new VehicleElectric();
+    }
+
+    @Test
+    public void test2SetFinalDriveRatio() {
+        double ratio = -10.0;
+        VehicleElectric instance = new VehicleElectric();
         try {
             instance.setFinalDriveRatio(ratio);
         } catch (IllegalArgumentException e) {
-            System.out.println("erro");}
+            System.out.println("erro");
         }
-        
-        
-        @Test
-        public void testSetGearbox(){
-            
-            VehicleElectric instance = new VehicleElectric();
+    }
+
+    @Test
+    public void testSetGearbox() {
+
+        VehicleElectric instance = new VehicleElectric();
         try {
             instance.setGearbox(null);
         } catch (IllegalArgumentException e) {
-            System.out.println("erro");}
+            System.out.println("erro");
         }
-        
-        @Test
-        public void testSetAccelerator(){
-            
-            VehicleElectric instance = new VehicleElectric();
+    }
+
+    @Test
+    public void testSetAccelerator() {
+
+        VehicleElectric instance = new VehicleElectric();
         try {
             instance.setAccelerator(null);
         } catch (IllegalArgumentException e) {
-            System.out.println("erro");}
+            System.out.println("erro");
         }
-        
-        
-        @Test
-        public void testSetEnergyRegenerationRatio(){
-            System.out.println("setEnergyRegenerationRatio");
-            double eer= 0.0;
-            VehicleElectric instance = new VehicleElectric();
-            try {
-                instance.setEnergyRegenerationRatio(eer);
-            } catch (IllegalArgumentException e) {
-                System.out.println("erro");}
-            
-        
+    }
+
+    @Test
+    public void testSetEnergyRegenerationRatio() {
+        System.out.println("setEnergyRegenerationRatio");
+        double eer = 0.0;
+        VehicleElectric instance = new VehicleElectric();
+        try {
+            instance.setEnergyRegenerationRatio(eer);
+        } catch (IllegalArgumentException e) {
+            System.out.println("erro");
         }
-        
-         
-        @Test
-        public void test2SetEnergyRegenerationRatio(){
-            System.out.println("setEnergyRegenerationRatio");
-            double eer= 1.1;
-            VehicleElectric instance = new VehicleElectric();
-            try {
-                instance.setEnergyRegenerationRatio(eer);
-            } catch (IllegalArgumentException e) {
-                System.out.println("erro");}
-            
-        
+
+    }
+
+    @Test
+    public void test2SetEnergyRegenerationRatio() {
+        System.out.println("setEnergyRegenerationRatio");
+        double eer = 1.1;
+        VehicleElectric instance = new VehicleElectric();
+        try {
+            instance.setEnergyRegenerationRatio(eer);
+        } catch (IllegalArgumentException e) {
+            System.out.println("erro");
         }
-        
-         @Test
-        public void test3SetEnergyRegenerationRatio(){
-            System.out.println("setEnergyRegenerationRatio");
-            double eer= -0.1;
-            VehicleElectric instance = new VehicleElectric();
-            try {
-                instance.setEnergyRegenerationRatio(eer);
-            } catch (IllegalArgumentException e) {
-                System.out.println("erro");}
+
+    }
+
+    @Test
+    public void test3SetEnergyRegenerationRatio() {
+        System.out.println("setEnergyRegenerationRatio");
+        double eer = -0.1;
+        VehicleElectric instance = new VehicleElectric();
+        try {
+            instance.setEnergyRegenerationRatio(eer);
+        } catch (IllegalArgumentException e) {
+            System.out.println("erro");
         }
-        
-        @Test
-        public void test4SetEnergyRegenerationRatio(){
-            System.out.println("setEnergyRegenerationRatio");
-            double eer= 1.0;
-            VehicleElectric instance = new VehicleElectric();
-            try {
-                instance.setEnergyRegenerationRatio(eer);
-            } catch (IllegalArgumentException e) {
-                System.out.println("erro");}
+    }
+
+    @Test
+    public void test4SetEnergyRegenerationRatio() {
+        System.out.println("setEnergyRegenerationRatio");
+        double eer = 1.0;
+        VehicleElectric instance = new VehicleElectric();
+        try {
+            instance.setEnergyRegenerationRatio(eer);
+        } catch (IllegalArgumentException e) {
+            System.out.println("erro");
         }
+    }
 }

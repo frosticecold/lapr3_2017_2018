@@ -230,6 +230,13 @@ public class Section {
         return !listOfSegments.isEmpty();
     }
 
+    public boolean isLastSegment(Segment seg) {
+        if (listOfSegments.get(listOfSegments.size() - 1).getSegmentIndex() == seg.getSegmentIndex()) {
+            return true;
+        }
+        return false;
+    }
+
     public Section reverseSection() {
         Section section = new Section();
         section.beginningJunction = this.endingJunction;
