@@ -9,18 +9,46 @@ import javax.sql.rowset.CachedRowSet;
 import javax.sql.rowset.RowSetProvider;
 import oracle.jdbc.OracleTypes;
 
+/**
+ *
+ *
+ * @param <T> Type of data
+ */
 public abstract class DataAccess<T> {
 
+    /**
+     * Connection to the database
+     */
     protected Connection connection;
 
+    /**
+     * Creates a connection
+     *
+     * @param connection SQL Connection (Must be open)
+     */
     protected DataAccess(Connection connection) {
         this.connection = connection;
     }
 
+    /**
+     * Executes a stored SQL function.
+     *
+     * @param function Name of the function.
+     * @return ResultSet
+     * @throws SQLException
+     */
     protected CachedRowSet callFunction(String function) throws SQLException {
         return this.callFunction(function, new ArrayList<>());
     }
 
+    /**
+     * Executes a SQL function
+     *
+     * @param function Name of the function.
+     * @param args Arguments of the function
+     * @return ResultSet
+     * @throws SQLException
+     */
     protected CachedRowSet callFunction(String function, Iterable<SQLArgument> args) throws SQLException {
         StringBuilder arg = new StringBuilder();
 
@@ -49,7 +77,14 @@ public abstract class DataAccess<T> {
 
         return c;
     }
-    
+
+    /**
+     * Executes a stores SQL Procedures
+     *
+     * @param procedure Procedure name
+     * @param args Procedures arguments
+     * @throws SQLException
+     */
     protected void callProcedure(String procedure, Iterable<SQLArgument> args) throws SQLException {
         StringBuilder arg = new StringBuilder();
 

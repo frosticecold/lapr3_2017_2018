@@ -18,20 +18,26 @@ public class AcceleratorData extends DataAccess<Accelerator> {
         super(connection);
     }
 
-    public Accelerator get(String vehicleName) throws SQLException {
+    /**
+     * Get the accelerator for the specified vehicle.
+     * @param vehicleID ID of the vehicle
+     * @return Accelerator of the vehicle
+     * @throws SQLException
+     */
+    public Accelerator get(int vehicleID) throws SQLException {
         if (connection == null) {
             return null;
         }
         Accelerator a = new Accelerator();
         Map<Integer, Throttle> throttleList = new LinkedHashMap<>();
         List<SQLArgument> args = new ArrayList<>();
-        args.add(new SQLArgument(vehicleName, OracleTypes.VARCHAR));
+        args.add(new SQLArgument(Integer.toString(vehicleID), OracleTypes.NUMBER));
         ResultSet rs = super.callFunction("getThrottle", args);
 
         while (rs.next()) {
             int id = rs.getInt("description");
             RegimeData r = new RegimeData(connection);
-            List<Regime> regimeList = r.get(vehicleName, id);
+            List<Regime> regimeList = r.get(vehicleID, id);
 
             Throttle t = new Throttle(regimeList);
             throttleList.put(id, t);
@@ -40,6 +46,14 @@ public class AcceleratorData extends DataAccess<Accelerator> {
         return a;
     }
 
+    /**
+     *
+     * Inserts the accelerator of a specified vehicle in the project
+     * @param pName Project name
+     * @param vName Vehicle name
+     * @param accelerator Accelerator
+     * @throws SQLException
+     */
     public void insert(String pName, String vName, Accelerator accelerator) throws SQLException {
         List<SQLArgument> args = new ArrayList<>();
 

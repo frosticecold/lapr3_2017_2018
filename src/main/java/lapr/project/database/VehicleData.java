@@ -17,10 +17,20 @@ import oracle.jdbc.OracleTypes;
 
 public class VehicleData extends DataAccess<Vehicle> {
 
+    /**
+     *
+     * @param connection
+     */
     public VehicleData(Connection connection) {
         super(connection);
     }
 
+    /**
+     *
+     * @param pName
+     * @return
+     * @throws SQLException
+     */
     public VehicleList get(String pName) throws SQLException {
         if (connection == null) {
             return null;
@@ -30,6 +40,7 @@ public class VehicleData extends DataAccess<Vehicle> {
         args.add(new SQLArgument(pName, OracleTypes.VARCHAR));
         ResultSet rs = super.callFunction("getVehicle", args);
         while (rs.next()) {
+            int vID = rs.getInt("id_vehicle");
             String vName = rs.getString("name");
             String vDescription = rs.getString("description");
             String vType = rs.getString("vtype");
@@ -48,14 +59,14 @@ public class VehicleData extends DataAccess<Vehicle> {
             double vEnergyRegenerationRatio = rs.getDouble("energy_regen");
 
             GearboxData g = new GearboxData(connection);
-            Gearbox vGearbox = g.get(vName);
+            Gearbox vGearbox = g.get(vID);
 
             AcceleratorData a = new AcceleratorData(connection);
-            Accelerator vAccelerator = a.get(vName);
+            Accelerator vAccelerator = a.get(vID);
 
             Map<String, Double> mapRoadVelocityLimit = new HashMap<>();
             List<SQLArgument> args1 = new ArrayList<>();
-            args1.add(new SQLArgument(vName, OracleTypes.VARCHAR));
+            args1.add(new SQLArgument(Integer.toString(vID), OracleTypes.NUMBER));
 
             ResultSet rs1 = super.callFunction("checkVehicleSpeedLimits", args1);
             if (rs1.next()) {
@@ -123,6 +134,12 @@ public class VehicleData extends DataAccess<Vehicle> {
         return list;
     }
 
+    /**
+     *
+     * @param pName
+     * @param v
+     * @throws SQLException
+     */
     public void insert(String pName, Vehicle v) throws SQLException {
         List<SQLArgument> args = new ArrayList<>();
 

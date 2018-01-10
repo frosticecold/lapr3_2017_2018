@@ -14,8 +14,15 @@ public class DirectionData extends DataAccess<Section.Direction> {
         super(connection);
     }
 
+    /**
+     * Get the directions present in the database.
+     * 
+     * @param directionID Direction ID
+     * @return Direction
+     * @throws SQLException
+     */
     public Section.Direction get(int directionID) throws SQLException {
-        if(connection == null) {
+        if (connection == null) {
             return null;
         }
         List<SQLArgument> args = new ArrayList<>();
@@ -28,6 +35,12 @@ public class DirectionData extends DataAccess<Section.Direction> {
         return null;
     }
 
+    /**
+     * Inserts directions in the database
+     * 
+     * @param name Direction name
+     * @throws SQLException
+     */
     public void insert(String name) throws SQLException {
         List<SQLArgument> args = new ArrayList<>();
 

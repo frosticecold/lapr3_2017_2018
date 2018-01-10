@@ -11,12 +11,26 @@ import lapr.project.model.Section;
 import lapr.project.model.Segment;
 import oracle.jdbc.OracleTypes;
 
+/**
+ *
+ * @author pc asus
+ */
 public class SectionData extends DataAccess<Section> {
 
+    /**
+     *
+     * @param connection
+     */
     public SectionData(Connection connection) {
         super(connection);
     }
 
+    /**
+     *
+     * @param projectName
+     * @return
+     * @throws SQLException
+     */
     public List<Section> get(String projectName) throws SQLException {
         if (connection == null) {
             return new ArrayList<>();
@@ -55,6 +69,12 @@ public class SectionData extends DataAccess<Section> {
         return list;
     }
 
+    /**
+     *
+     * @param pName
+     * @param s
+     * @throws SQLException
+     */
     public void insert(String pName, Section s) throws SQLException {
         List<SQLArgument> args1 = new ArrayList<>();
 

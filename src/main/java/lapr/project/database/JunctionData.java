@@ -14,6 +14,13 @@ public class JunctionData extends DataAccess<Junction> {
         super(connection);
     }
 
+    /**
+     * Get the junctions with the specified id
+     * 
+     * @param junctionId Junction id
+     * @return Junction
+     * @throws SQLException
+     */
     public Junction get(String junctionId) throws SQLException {
         if (connection == null) {
             return null;
@@ -29,6 +36,13 @@ public class JunctionData extends DataAccess<Junction> {
         return null;
     }
     
+    /**
+     * Returns the list of junctions of a project in the database.
+     *
+     * @param pName Project name
+     * @return List of the junctions of a project
+     * @throws SQLException
+     */
     public List<Junction> getAllJunctions(String pName) throws SQLException {
         if (connection == null) {
             return null;
@@ -45,6 +59,13 @@ public class JunctionData extends DataAccess<Junction> {
         return list;
     }
 
+    /**
+     * Insert junction in the specified project
+     *
+     * @param pName Project name
+     * @param j Junction
+     * @throws SQLException
+     */
     public void insert(String pName, Junction j) throws SQLException {
         List<SQLArgument> args = new ArrayList<>();
 

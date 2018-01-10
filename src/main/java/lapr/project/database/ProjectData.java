@@ -24,6 +24,12 @@ public class ProjectData extends DataAccess<Project> {
         super(connection);
     }
 
+    /**
+     * Get all project names in the database
+     *
+     * @return List of project names
+     * @throws SQLException
+     */
     public List<String> getAllProjectsNames() throws SQLException {
         if (connection == null) {
             return new ArrayList<>();
@@ -40,6 +46,13 @@ public class ProjectData extends DataAccess<Project> {
         return list;
     }
 
+    /**
+     * Get the project with the specified name
+     *
+     * @param name Project name
+     * @return Project
+     * @throws SQLException
+     */
     public Project get(String name) throws SQLException {
         if (connection == null) {
             return null;
@@ -106,6 +119,12 @@ public class ProjectData extends DataAccess<Project> {
         return p;
     }
 
+    /**
+     * Insert the specified project in the database
+     *
+     * @param p Project
+     * @throws SQLException
+     */
     public void insertProject(Project p) throws SQLException {
         if (connection == null) {
             return;
@@ -153,6 +172,14 @@ public class ProjectData extends DataAccess<Project> {
 
     }
 
+    /**
+     * Edit a project
+     *
+     * @param project Project to edit
+     * @param name New name
+     * @param description New description
+     * @throws SQLException
+     */
     public void editProject(Project project, String name, String description) throws SQLException {
         if(connection == null) {
             return;

@@ -9,12 +9,26 @@ import java.util.List;
 import lapr.project.model.Road;
 import oracle.jdbc.OracleTypes;
 
+/**
+ *
+ * @author pc asus
+ */
 public class RoadData extends DataAccess<Road> {
 
+    /**
+     *
+     * @param connection
+     */
     public RoadData(Connection connection) {
         super(connection);
     }
 
+    /**
+     *
+     * @param projectName
+     * @return
+     * @throws SQLException
+     */
     public List<Road> get(String projectName) throws SQLException {
         if (connection == null) {
             return new ArrayList<>();
@@ -33,6 +47,12 @@ public class RoadData extends DataAccess<Road> {
         return list;
     }
 
+    /**
+     *
+     * @param pName
+     * @param r
+     * @throws SQLException
+     */
     public void insert(String pName, Road r) throws SQLException {
         List<SQLArgument> args1 = new ArrayList<>();
 

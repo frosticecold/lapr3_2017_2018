@@ -9,12 +9,27 @@ import java.util.List;
 import lapr.project.model.Segment;
 import oracle.jdbc.OracleTypes;
 
+/**
+ *
+ * @author pc asus
+ */
 public class SegmentData extends DataAccess<Segment> {
 
+    /**
+     *
+     * @param connection
+     */
     public SegmentData(Connection connection) {
         super(connection);
     }
 
+    /**
+     *
+     * @param pName
+     * @param sectionID
+     * @return
+     * @throws SQLException
+     */
     public List<Segment> get(String pName, String sectionID) throws SQLException {
         if (connection == null) {
             return new ArrayList<>();
@@ -41,6 +56,13 @@ public class SegmentData extends DataAccess<Segment> {
         return list;
     }
 
+    /**
+     *
+     * @param pName
+     * @param sectionID
+     * @param s
+     * @throws SQLException
+     */
     public void insert(String pName, int sectionID, Segment s) throws SQLException {
         List<SQLArgument> args1 = new ArrayList<>();
 

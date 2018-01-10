@@ -10,20 +10,35 @@ import lapr.project.model.Regime;
 import lapr.project.model.Throttle;
 import oracle.jdbc.OracleTypes;
 
+/**
+ *
+ * @author pc asus
+ */
 public class RegimeData extends DataAccess<Regime> {
 
+    /**
+     *
+     * @param connection
+     */
     public RegimeData(Connection connection) {
         super(connection);
     }
 
-    public List<Regime> get(String vehicleName, int t) throws SQLException {
+    /**
+     *
+     * @param vehicleID
+     * @param t
+     * @return
+     * @throws SQLException
+     */
+    public List<Regime> get(int vehicleID, int t) throws SQLException {
         if (connection == null) {
             return new ArrayList<>();
         }
         List<Regime> list = new LinkedList<>();
 
         List<SQLArgument> args = new ArrayList<>();
-        args.add(new SQLArgument(vehicleName, OracleTypes.VARCHAR));
+        args.add(new SQLArgument(Integer.toString(vehicleID), OracleTypes.NUMBER));
         args.add(new SQLArgument(Integer.toString(t), OracleTypes.NUMBER));
         ResultSet rs = super.callFunction("getRegime", args);
         while (rs.next()) {
@@ -38,6 +53,14 @@ public class RegimeData extends DataAccess<Regime> {
         return list;
     }
 
+    /**
+     *
+     * @param pName
+     * @param throttleID
+     * @param vName
+     * @param t
+     * @throws SQLException
+     */
     public void insert(String pName, int throttleID, String vName, Throttle t) throws SQLException {
         List<SQLArgument> args = new ArrayList<>();
         for (int i = 0; i < t.getRegimeList().size(); i++) {

@@ -15,8 +15,16 @@ import lapr.project.model.Vehicle;
 import lapr.project.networkanalysis.AlgorithmResults;
 import oracle.jdbc.OracleTypes;
 
+/**
+ *
+ * @author pc asus
+ */
 public class ResultsData extends DataAccess<Map<Vehicle, List<AlgorithmResults>>> {
 
+    /**
+     *
+     * @param connection
+     */
     public ResultsData(Connection connection) {
         super(connection);
     }
@@ -27,6 +35,13 @@ public class ResultsData extends DataAccess<Map<Vehicle, List<AlgorithmResults>>
         return rs.next();
     }
 
+    /**
+     *
+     * @param p
+     * @param pName
+     * @return
+     * @throws SQLException
+     */
     public ListOfResults get(Project p, String pName) throws SQLException {
         if (connection == null) {
             return new ListOfResults();
@@ -81,6 +96,12 @@ public class ResultsData extends DataAccess<Map<Vehicle, List<AlgorithmResults>>
         return list;
     }
 
+    /**
+     *
+     * @param p
+     * @param mapOfResults
+     * @throws SQLException
+     */
     public void insertResults(Project p, Map<Vehicle, List<AlgorithmResults>> mapOfResults) throws SQLException {
         if (connection == null) {
             return;
