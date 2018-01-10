@@ -317,20 +317,20 @@ public class VehicleElectricTest {
         
         @Test
         public void testSetGearbox(){
-            Gearbox g=new Gearbox();
+            
             VehicleElectric instance = new VehicleElectric();
         try {
-            instance.setGearbox(g);
+            instance.setGearbox(null);
         } catch (IllegalArgumentException e) {
             System.out.println("erro");}
         }
         
         @Test
         public void testSetAccelerator(){
-            Accelerator a=new Accelerator();
+            
             VehicleElectric instance = new VehicleElectric();
         try {
-            instance.setAccelerator(a);
+            instance.setAccelerator(null);
         } catch (IllegalArgumentException e) {
             System.out.println("erro");}
         }
@@ -360,6 +360,18 @@ public class VehicleElectricTest {
             } catch (IllegalArgumentException e) {
                 System.out.println("erro");}
             
+        
+        }
+        
+         @Test
+        public void test3SetEnergyRegenerationRatio(){
+            System.out.println("setEnergyRegenerationRatio");
+            double eer= 0.5;
+            VehicleElectric instance = new VehicleElectric();
+            instance.setEnergyRegenerationRatio(eer);
+            double expResult=eer;
+            double result=instance.getEnergyRegenerationRatio();
+            assertEquals(expResult,result,1);
         
         }
 }
