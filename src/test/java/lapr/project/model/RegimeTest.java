@@ -77,6 +77,8 @@ public class RegimeTest {
             reg1.getTorqueByRPM(400000);
         } catch (IllegalArgumentException ex) {
         }
+        reg1.getTorqueByRPM(2000);
+        reg1.getTorqueByRPM(10000);
 
         System.out.println("testGetSFCbyRPM");
         try {
