@@ -132,8 +132,7 @@ public class PhysicsCalculus {
         return velocity;
     }
 
-    public static
-         double calcForceInSegment(Segment segment, Vehicle car, Section section) {
+    public static double calcForceInSegment(Segment segment, Vehicle car, Section section) {
         double force = 0;
         double vel = calcMaximumVelocity(segment, car, section);
         double slope = segment.calculateSlope();
@@ -254,7 +253,22 @@ public class PhysicsCalculus {
     }
 
     public static double calcFuelComsumption(double sfc, double motorPower, double time) {
-        return sfc * (motorPower *0.001) * (time/3600);
+        return sfc * (motorPower * time) / (36 * Math.pow(10, 5));
     }
 
+    public static double calcEnergySpentPerGramOfFuel(Vehicle car, double energy) {
+        if (car instanceof VehicleCombustion) {
+            String typeOfFuel = ((VehicleCombustion) car).getFuel();
+            if (typeOfFuel.equalsIgnoreCase(Vehicle.FUEL_DIESEL)) {
+                return energy * (Constants.FUEL_DIESEL * 1000);
+            } else {
+                if (typeOfFuel.equalsIgnoreCase(Vehicle.FUEL_GASOLINE)) {
+                    return energy * Constants.FUEL_GASOLINE * 1000;
+                }
+
+            }
+
+        }
+        return energy;
+    }
 }

@@ -148,11 +148,19 @@ public class TheoreticalEnergyEfficientAlgorithm implements PathAlgorithm {
                 }
             }
             if (tempresults[0] != -1) {
+                //Results
+                //0) Time
+                //1) Energy
+                //2) Velocity
                 results[0] += tempresults[0];
                 results[1] += tempresults[1];
                 results[2] = tempresults[2];
                 previousVelocity = results[2];
             }
+        }
+        //1) Energy
+        if (results[1] != -1) {
+            results[1] = PhysicsCalculus.calcEnergySpentPerGramOfFuel(car, results[1]);
         }
         return results;
     }
@@ -214,10 +222,16 @@ public class TheoreticalEnergyEfficientAlgorithm implements PathAlgorithm {
         double seglengthaccel = PhysicsCalculus.calcDistanceBasedOnInitialVelocityDesiredVelocityAcceleration(initialvelocity, currentspeed, acceleration);
         double segremaining = (seg.getLength() * 1000) - seglengthaccel;
         double deltatime = segremaining / currentspeed;
-        double carpower = PhysicsCalculus.calcEnginePower(carresult[2], carresult[1]);
+        double[] motoresult = PhysicsCalculus.calcIdealMotorForceBasedAcceleration(section, seg, car, 0, currentspeed);
+        //0) Gear
+        //1) RPM
+        //2) Torque
+        //3) SFC
+        double carpower = PhysicsCalculus.calcEnginePower(motoresult[2], motoresult[1]);
 
         result[0] += deltatime;
-        result[1] += PhysicsCalculus.calcFuelComsumption(carresult[3], carpower, deltatime);
+        double fuelcompsumption = PhysicsCalculus.calcFuelComsumption(motoresult[3], carpower, deltatime);
+        result[1] += fuelcompsumption;
         result[2] = currentspeed;
 
         return result;
@@ -298,10 +312,11 @@ public class TheoreticalEnergyEfficientAlgorithm implements PathAlgorithm {
         double seglengthaccel = PhysicsCalculus.calcDistanceBasedOnInitialVelocityDesiredVelocityAcceleration(initialvelocity, currentspeed, acceleration);
         double segremaining = (seg.getLength() * 1000) - seglengthaccel;
         double deltatime = segremaining / currentspeed;
-        double carpower = PhysicsCalculus.calcEnginePower(carresult[2], carresult[1]);
+        double[] motoresult = PhysicsCalculus.calcIdealMotorForceBasedAcceleration(section, seg, car, 0, currentspeed);
+        double carpower = PhysicsCalculus.calcEnginePower(motoresult[2], motoresult[1]);
 
         result[0] += deltatime;
-        result[1] += PhysicsCalculus.calcFuelComsumption(carresult[3], carpower, deltatime);
+        result[1] += PhysicsCalculus.calcFuelComsumption(motoresult[3], carpower, deltatime);
         result[2] = currentspeed;
 
         return result;
