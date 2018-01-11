@@ -310,7 +310,10 @@ public class ProjectTest {
         project.addSection(section2);
         project.addSection(section3);
     }
-    
+    @Test
+    public void TestProject(){
+      Project novoprojeto = new Project(project.getRoadNetwork(), project.getListVehicles().getVehicleList(),project.getListRoads());  
+    }
     @After
     public void tearDown() {
     }
@@ -336,6 +339,17 @@ public class ProjectTest {
         Junction result=instance.getJunction("a");
         assertEquals(expResult,result);
     }
+    
+    @Test
+    public void test3GetJunction(){
+        System.out.println("getJunction");
+        Project instance=new Project();
+        try {
+            instance.getJunction("");
+        } catch (IllegalArgumentException e) {
+            System.out.println("erro");}
+        } 
+    
     
     @Test
     public void testGetRoadByRoadID(){
@@ -467,5 +481,61 @@ public class ProjectTest {
         ListOfResults result=instance.getResults();
         assertEquals(expResult,result);
     }
+    
+    @Test
+    public void testGetSection(){
+        System.out.println("getSection");
+        Junction j1=project.getJunction("n0");
+        Junction j2=project.getJunction("n1");
+        Section s4 = new Section();
+        s4.setBeginJunction(j1);
+        s4.setEndJunction(j2);
+        s4.setRoadID("E01");
+        s4.setTypology("regular road");
+        s4.setDirection(Section.Direction.BIDIRECTIONAL);
+        Segment segment = new Segment(1, 100, 200, 1.2, 20, 5, 90, 0);
+        Segment segment1 = new Segment(2, 200, 150, 6.5, -10, 2, 90, 0);
+        Segment segment2 = new Segment(3, 150, 350, 4, -10, 2.5, 90, 0);
+        Segment segment3 = new Segment(4, 350, 150, 10, -60, 2.7, 90, 0);
+        List<Segment> listSegment = new ArrayList<>();
+        listSegment.add(segment);
+        listSegment.add(segment1);
+        listSegment.add(segment2);
+        listSegment.add(segment3);
+        project.addSection(s4);
+        Section expResult=s4;
+        Section result=project.getSection(j1, j2);
+        assertEquals(expResult,result);
+    }
+    @Test
+    public void test2GetSection(){
+        System.out.println("getSection");
+        System.out.println("getSection");
+        Junction j1=project.getJunction("n0");
+        Junction j2=project.getJunction("n1");
+        Junction j3=project.getJunction("n2");
+        Section s4 = new Section();
+        s4.setBeginJunction(j1);
+        s4.setEndJunction(j2);
+        s4.setRoadID("E01");
+        s4.setTypology("regular road");
+        s4.setDirection(Section.Direction.BIDIRECTIONAL);
+        Segment segment = new Segment(1, 100, 200, 1.2, 20, 5, 90, 0);
+        Segment segment1 = new Segment(2, 200, 150, 6.5, -10, 2, 90, 0);
+        Segment segment2 = new Segment(3, 150, 350, 4, -10, 2.5, 90, 0);
+        Segment segment3 = new Segment(4, 350, 150, 10, -60, 2.7, 90, 0);
+        List<Segment> listSegment = new ArrayList<>();
+        listSegment.add(segment);
+        listSegment.add(segment1);
+        listSegment.add(segment2);
+        listSegment.add(segment3);
+        project.addSection(s4);
+        try {
+            project.getSection(j1,j3);
+        } catch (IllegalArgumentException e) {
+            System.out.println("erro");
+        }
+    }
+    
     
 }
