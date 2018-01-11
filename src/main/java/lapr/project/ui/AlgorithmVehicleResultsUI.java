@@ -292,7 +292,7 @@ public class AlgorithmVehicleResultsUI extends javax.swing.JDialog {
             distanceTextfield.setText(String.valueOf(listAlgorithms.get(vehicleCombobox.getSelectedIndex()).getDistance()) + " km");
             traveltimeTextfield.setText(String.valueOf(listAlgorithms.get(vehicleCombobox.getSelectedIndex()).getTravelTime()) + " seg");
             costTextfield.setText(String.valueOf(listAlgorithms.get(vehicleCombobox.getSelectedIndex()).getCost()) + " €");
-            energyTextfield.setText(String.valueOf(listAlgorithms.get(vehicleCombobox.getSelectedIndex()).getEnergy()) + " J");
+            energyTextfield.setText(String.format("%.3f J",listAlgorithms.get(vehicleCombobox.getSelectedIndex()).getEnergy()));
             algorithmTextfield.setText(listAlgorithms.get(vehicleCombobox.getSelectedIndex()).getAlgorithmType());
             String finalPath = "";
             for (Section section : listAlgorithms.get(vehicleCombobox.getSelectedIndex()).getSectionPath()) {
@@ -342,9 +342,9 @@ public class AlgorithmVehicleResultsUI extends javax.swing.JDialog {
         double energy = listAlgorithms.get(vehicleCombobox.getSelectedIndex()).getEnergy();
         String fuel = listAlgorithms.get(vehicleCombobox.getSelectedIndex()).getVehicle().getFuel();
         if (!fuel.equalsIgnoreCase("electric")) {
-            energyTextfield.setText(String.valueOf(UnitConversion.convertJoulesToLitres(fuel, energy)) + " Litres");
+            energyTextfield.setText(String.format("%.3f Litres ",UnitConversion.convertJoulesToLitres(fuel, energy)));
         } else {
-            energyTextfield.setText(String.valueOf(UnitConversion.convertJoulesToLitres(fuel, energy)) + " MJ");
+            energyTextfield.setText(String.format("%.3f MJ",UnitConversion.convertJoulesToLitres(fuel, energy)));
         }
     }//GEN-LAST:event_convertBtnActionPerformed
 
