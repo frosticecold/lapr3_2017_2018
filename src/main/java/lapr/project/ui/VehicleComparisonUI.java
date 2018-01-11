@@ -313,7 +313,7 @@ public class VehicleComparisonUI extends javax.swing.JFrame {
         }
 
         for (int i = 0; i < comparisonVehiclesModel.size(); i++) {
-            controller.bestPath(fastestPathCheckbox.isEnabled(), energyEfficientCheckbox.isEnabled(), energySavingCheckbox.isEnabled(), (Junction) beginJunctionJCombobox.getSelectedItem(), (Junction) endJunctionComboBox.getSelectedItem(), comparisonVehiclesModel.get(i), Double.parseDouble(accelerationJTextField.getText()));
+            controller.bestPath(fastestPathCheckbox.isSelected(), energyEfficientCheckbox.isSelected(), energySavingCheckbox.isSelected(), (Junction) beginJunctionJCombobox.getSelectedItem(), (Junction) endJunctionComboBox.getSelectedItem(), comparisonVehiclesModel.get(i), Double.parseDouble(accelerationJTextField.getText()));
             controller.addResult();
         }
         if (valid) {
