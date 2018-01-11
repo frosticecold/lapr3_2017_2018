@@ -41,10 +41,10 @@ public class Gearbox {
     }
 
     public Gear getLastGear() {
-        int gear_index = Integer.MIN_VALUE;
+        int gearIndex = Integer.MIN_VALUE;
         Gear gear = null;
         for (Gear g : gearList) {
-            if (g.getGearID() > gear_index) {
+            if (g.getGearID() > gearIndex) {
                 gear = g;
             }
 

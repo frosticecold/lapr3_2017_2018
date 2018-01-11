@@ -231,10 +231,7 @@ public class Section {
     }
 
     public boolean isLastSegment(Segment seg) {
-        if (listOfSegments.get(listOfSegments.size() - 1).getSegmentIndex() == seg.getSegmentIndex()) {
-            return true;
-        }
-        return false;
+        return listOfSegments.get(listOfSegments.size() - 1).getSegmentIndex() == seg.getSegmentIndex();
     }
 
     public Section reverseSection() {

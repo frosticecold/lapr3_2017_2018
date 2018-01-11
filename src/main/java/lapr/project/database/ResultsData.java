@@ -108,11 +108,11 @@ public class ResultsData extends DataAccess<Map<Vehicle, List<AlgorithmResults>>
         }
 
         List<SQLArgument> args1 = new ArrayList<>();
-        for (Vehicle vehicle : mapOfResults.keySet()) {
-            for (AlgorithmResults ar : mapOfResults.get(vehicle)) {
+        for (Map.Entry<Vehicle, List<AlgorithmResults>> entry : mapOfResults.entrySet()) {
+            for (AlgorithmResults ar : entry.getValue()) {
                 args1.clear();
                 args1.add(new SQLArgument(p.getName(), OracleTypes.VARCHAR));
-                args1.add(new SQLArgument(vehicle.getName(), OracleTypes.VARCHAR));
+                args1.add(new SQLArgument(entry.getKey().getName(), OracleTypes.VARCHAR));
                 args1.add(new SQLArgument(Double.toString(ar.getCost()), OracleTypes.NUMBER));
                 args1.add(new SQLArgument(Double.toString(ar.getTravelTime()), OracleTypes.NUMBER));
                 args1.add(new SQLArgument(Double.toString(ar.getEnergy()), OracleTypes.NUMBER));

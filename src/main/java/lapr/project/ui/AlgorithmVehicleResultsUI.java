@@ -17,6 +17,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import lapr.project.calculations.UnitConversion;
 import lapr.project.controller.AlgorithmVehicleResultsController;
 import lapr.project.model.Section;
 import lapr.project.networkanalysis.AlgorithmResults;
@@ -34,7 +35,7 @@ public class AlgorithmVehicleResultsUI extends javax.swing.JDialog {
     private List<AlgorithmResults> listAlgorithms;
     private JFileChooser fileChooser;
     private AlgorithmVehicleResultsController controller;
-    private DefaultComboBoxModel<String> comboboxModel= new DefaultComboBoxModel<>();
+    private DefaultComboBoxModel<String> comboboxModel = new DefaultComboBoxModel<>();
 
     public AlgorithmVehicleResultsUI(JFrame parent, List<AlgorithmResults> listAlgorithms) {
         super(parent, true);
@@ -51,13 +52,11 @@ public class AlgorithmVehicleResultsUI extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(parent, "Error, there is no vehicles to present results.");
             this.dispose();
         }
-        addWindowListener(new WindowAdapter()
-        {
+        addWindowListener(new WindowAdapter() {
             @Override
-            public void windowClosing(WindowEvent e)
-            {
-               listAlgorithms.clear();
-               comboboxModel.removeAllElements();
+            public void windowClosing(WindowEvent e) {
+                listAlgorithms.clear();
+                comboboxModel.removeAllElements();
             }
         });
     }
@@ -101,6 +100,7 @@ public class AlgorithmVehicleResultsUI extends javax.swing.JDialog {
         pathTextarea = new javax.swing.JTextArea();
         vehicleCombobox = new javax.swing.JComboBox<>();
         jLabel10 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -167,6 +167,13 @@ public class AlgorithmVehicleResultsUI extends javax.swing.JDialog {
 
         jLabel10.setText("Vehicle:");
 
+        jButton1.setText("Convert");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                convertBtnActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -203,12 +210,15 @@ public class AlgorithmVehicleResultsUI extends javax.swing.JDialog {
                                     .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 330, Short.MAX_VALUE)
                                     .addComponent(distanceTextfield)
                                     .addComponent(traveltimeTextfield)
-                                    .addComponent(costTextfield)
-                                    .addComponent(energyTextfield)
                                     .addComponent(totalweightTextField)
-                                    .addComponent(vehicleCombobox, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
+                                    .addComponent(vehicleCombobox, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(energyTextfield)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jButton1))
+                                    .addComponent(costTextfield)))))
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap(20, Short.MAX_VALUE)
                         .addComponent(jLabel9)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(algorithmTextfield, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -253,7 +263,8 @@ public class AlgorithmVehicleResultsUI extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
-                    .addComponent(energyTextfield, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(energyTextfield, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel4)
@@ -327,6 +338,16 @@ public class AlgorithmVehicleResultsUI extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_exportBtnActionPerformed
 
+    private void convertBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_convertBtnActionPerformed
+        double energy = listAlgorithms.get(vehicleCombobox.getSelectedIndex()).getEnergy();
+        String fuel = listAlgorithms.get(vehicleCombobox.getSelectedIndex()).getVehicle().getFuel();
+        if (!fuel.equalsIgnoreCase("electric")) {
+            energyTextfield.setText(String.valueOf(UnitConversion.convertJoulesToLitres(fuel, energy)) + " Litres");
+        } else {
+            energyTextfield.setText(String.valueOf(UnitConversion.convertJoulesToLitres(fuel, energy)) + " MJ");
+        }
+    }//GEN-LAST:event_convertBtnActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField algorithmTextfield;
@@ -335,6 +356,7 @@ public class AlgorithmVehicleResultsUI extends javax.swing.JDialog {
     private javax.swing.JTextField distanceTextfield;
     private javax.swing.JTextField energyTextfield;
     private javax.swing.JButton exportBtn;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;

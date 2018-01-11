@@ -145,6 +145,7 @@ public class Mockup extends javax.swing.JFrame {
         jMenuItem3.setText("jMenuItem3");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("LAPR3 - G019");
         setIconImage(Toolkit.getDefaultToolkit().getImage(Mockup.class.getResource("/traffic_light_icon.png")));
         setResizable(false);
 

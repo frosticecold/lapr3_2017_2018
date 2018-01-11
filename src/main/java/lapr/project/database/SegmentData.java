@@ -40,7 +40,7 @@ public class SegmentData extends DataAccess<Segment> {
         args.add(new SQLArgument(sectionID, OracleTypes.VARCHAR));
         ResultSet rs = super.callFunction("getSegments", args);
         while (rs.next()) {
-            int segmentID = rs.getInt("id_Segment");
+            int segmentID = rs.getInt("id_segment");
             double initialHeight = rs.getDouble("initial_height");
             double finalHeight = rs.getDouble("final_height");
             double length = rs.getDouble("length");
@@ -65,20 +65,20 @@ public class SegmentData extends DataAccess<Segment> {
      */
     public void insert(String pName, int sectionID, Segment s) throws SQLException {
         List<SQLArgument> args1 = new ArrayList<>();
-
+        
         args1.add(new SQLArgument(pName, OracleTypes.VARCHAR));
-        args1.add(new SQLArgument(Integer.toString(s.getSegmentIndex()), OracleTypes.VARCHAR));
-        args1.add(new SQLArgument(Integer.toString(sectionID), OracleTypes.VARCHAR));
-        ResultSet rs = super.callFunction("getSegmentByIndex", args1);
-        if (rs.next()) {
-            rs.close();
-            return;
-        }
+        args1.add(new SQLArgument(String.valueOf(s.getSegmentIndex()), OracleTypes.NUMBER));
+        args1.add(new SQLArgument(String.valueOf(sectionID), OracleTypes.NUMBER));
         args1.add(new SQLArgument(Double.toString(s.getInitialHeight()), OracleTypes.NUMBER));
         args1.add(new SQLArgument(Double.toString(s.getFinalHeight()), OracleTypes.NUMBER));
         args1.add(new SQLArgument(Double.toString(s.getLength()), OracleTypes.NUMBER));
         args1.add(new SQLArgument(Double.toString(s.getWindSpeed()), OracleTypes.NUMBER));
         args1.add(new SQLArgument(Double.toString(s.getWindDirection()), OracleTypes.NUMBER));
+        ResultSet rs = super.callFunction("getSegmentByIndex", args1);
+        if (rs.next()) {
+            rs.close();
+            return;
+        }
         args1.add(new SQLArgument(Double.toString(s.getMaximumVelocity()), OracleTypes.NUMBER));
         args1.add(new SQLArgument(Double.toString(s.getMinimumVelocity()), OracleTypes.NUMBER));
         

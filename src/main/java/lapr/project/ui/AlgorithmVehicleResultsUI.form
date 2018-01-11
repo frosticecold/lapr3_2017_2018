@@ -62,16 +62,20 @@
                                   <Component id="jScrollPane1" alignment="1" pref="330" max="32767" attributes="0"/>
                                   <Component id="distanceTextfield" alignment="0" max="32767" attributes="0"/>
                                   <Component id="traveltimeTextfield" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="costTextfield" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="energyTextfield" alignment="0" max="32767" attributes="0"/>
                                   <Component id="totalweightTextField" max="32767" attributes="0"/>
                                   <Component id="vehicleCombobox" alignment="1" max="32767" attributes="0"/>
+                                  <Group type="102" attributes="0">
+                                      <Component id="energyTextfield" max="32767" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="jButton1" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Component id="costTextfield" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
                   </Group>
                   <Group type="102" attributes="0">
-                      <EmptySpace max="32767" attributes="0"/>
+                      <EmptySpace pref="20" max="32767" attributes="0"/>
                       <Component id="jLabel9" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="algorithmTextfield" min="-2" pref="330" max="-2" attributes="0"/>
@@ -129,6 +133,7 @@
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jLabel8" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="energyTextfield" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jButton1" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
@@ -291,6 +296,14 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Vehicle:"/>
       </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="jButton1">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Convert"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="convertBtnActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

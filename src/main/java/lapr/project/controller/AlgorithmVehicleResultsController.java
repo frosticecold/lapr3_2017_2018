@@ -7,10 +7,8 @@ package lapr.project.controller;
 
 import java.io.IOException;
 import java.util.List;
-import lapr.project.model.Project;
 import lapr.project.networkanalysis.AlgorithmResults;
 import lapr.project.utils.ExportHTML;
-import lapr.project.utils.Session;
 
 /**
  *
@@ -18,16 +16,11 @@ import lapr.project.utils.Session;
  */
 public class AlgorithmVehicleResultsController {
 
-    private Project p;
-
-    public AlgorithmVehicleResultsController() {
-        this.p = Session.getActiveProject();
-    }
-
     /**
      * Exports the results of the selected vehicles into the specified path.
      *
      * @param path (String) The file path.
+     * @param results
      * @throws java.io.IOException
      */
     public void exportHTML(String path, List<AlgorithmResults> results) throws IOException {
