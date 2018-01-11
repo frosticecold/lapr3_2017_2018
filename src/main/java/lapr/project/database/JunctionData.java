@@ -45,7 +45,7 @@ public class JunctionData extends DataAccess<Junction> {
      */
     public List<Junction> getAllJunctions(String pName) throws SQLException {
         if (connection == null) {
-            return null;
+            return new ArrayList<>();
         }
         List<Junction> list = new ArrayList<>();
         List<SQLArgument> args = new ArrayList<>();

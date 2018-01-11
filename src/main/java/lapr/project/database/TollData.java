@@ -1,9 +1,12 @@
 package lapr.project.database;
 
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import oracle.jdbc.OracleTypes;
 
 /**
@@ -36,6 +39,46 @@ public class TollData extends DataAccess<Double> {
         args1.add(new SQLArgument(Integer.toString(sectionID), OracleTypes.NUMBER));
         args1.add(new SQLArgument(Double.toString(price), OracleTypes.NUMBER));
         super.callProcedure("insertToll", args1);
+    }
+
+    public Map<Integer, Double> getRoadToll(int id) throws SQLException {
+        List<SQLArgument> args = new ArrayList<>();
+        Map<Integer, Double> map = new HashMap<>();
+
+        args.add(new SQLArgument(Integer.toString(id), OracleTypes.VARCHAR));
+
+        ResultSet rs = super.callFunction("getRoadToll", args);
+        if (!rs.next()) {
+            return map;
+        } else {
+            rs.previous();
+            while (rs.next()) {
+                int tClass = rs.getInt("TOLL_CLASS");
+                double price = rs.getDouble("PRICE");
+                map.put(tClass, price);
+            }
+        }
+        return map;
+    }
+    
+    public Map<Integer, Double> getSectionToll(int id) throws SQLException {
+        List<SQLArgument> args = new ArrayList<>();
+        Map<Integer, Double> map = new HashMap<>();
+
+        args.add(new SQLArgument(Integer.toString(id), OracleTypes.VARCHAR));
+
+        ResultSet rs = super.callFunction("getSectionToll", args);
+        if (!rs.next()) {
+            return map;
+        } else {
+            rs.previous();
+            while (rs.next()) {
+                int tClass = rs.getInt("TOLL_CLASS");
+                double price = rs.getDouble("PRICE");
+                map.put(tClass, price);
+            }
+        }
+        return map;
     }
 
 }

@@ -171,6 +171,6 @@ public class EditProjectController {
     }
 
     public boolean updateProjectFiles(String filename) {
-        return filename.equalsIgnoreCase("Imported");
+        return "Imported".equalsIgnoreCase(filename);
     }
 }

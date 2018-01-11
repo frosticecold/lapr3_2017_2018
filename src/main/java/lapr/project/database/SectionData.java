@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import lapr.project.model.Junction;
 import lapr.project.model.Section;
 import lapr.project.model.Segment;
@@ -41,6 +42,7 @@ public class SectionData extends DataAccess<Section> {
         args.add(new SQLArgument(projectName, OracleTypes.VARCHAR));
         try (ResultSet rs = super.callFunction("getSections", args)) {
             while (rs.next()) {
+                int id = rs.getInt("ID");
                 int sectionID = rs.getInt("ID_SECTION");
                 int begginingJunction = rs.getInt("ID_BEGGININGJ");
                 int endingJunction = rs.getInt("ID_ENDINGJ");
@@ -62,6 +64,11 @@ public class SectionData extends DataAccess<Section> {
                 s.setDirection(direction);
                 s.setRoadID(roadID);
                 s.setTypology(typology);
+                TollData td = new TollData(connection);
+                Map<Integer, Double> map = td.getSectionToll(id);
+                for (Map.Entry<Integer, Double> entry : map.entrySet()) {
+                    s.addToll(entry.getKey(), entry.getValue());
+                }
                 list.add(s);
 
             }
@@ -93,8 +100,7 @@ public class SectionData extends DataAccess<Section> {
         super.callProcedure("insertSection", args1);
 
         SegmentData sd = new SegmentData(connection);
-        for (int i = 0; i < s.getSequenceOfSegments().size(); i++) {
-            Segment seg = s.getSequenceOfSegments().get(i);
+        for (Segment seg : s.getSequenceOfSegments()) {
             sd.insert(pName, s.getSectionID(), seg);
         }
 

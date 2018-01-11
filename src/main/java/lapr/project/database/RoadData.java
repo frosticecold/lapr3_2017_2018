@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import lapr.project.model.Road;
 import oracle.jdbc.OracleTypes;
 
@@ -38,10 +39,20 @@ public class RoadData extends DataAccess<Road> {
         args.add(new SQLArgument(projectName, OracleTypes.VARCHAR));
         try (ResultSet rs = super.callFunction("getRoad", args)) {
             while (rs.next()) {
+                Road r = new Road();
+                int rID = rs.getInt("id");
                 String roadID = rs.getString("id_road");
                 String roadName = rs.getString("name");
-                String roadType = rs.getString("Tipology");
-                list.add(new Road(roadID, roadName, roadType));
+                String roadType = rs.getString("tipology");
+                
+                TollData td = new TollData(connection);
+                Map<Integer, Double> map = td.getRoadToll(rID);
+                
+                r.setRoadID(roadID);
+                r.setName(roadName);
+                r.setTypology(roadType);
+                r.setTollFare(map);
+                list.add(r);
             }
         }
         return list;
