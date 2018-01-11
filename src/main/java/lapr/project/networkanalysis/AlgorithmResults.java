@@ -1,7 +1,10 @@
 package lapr.project.networkanalysis;
 
+import java.text.DecimalFormat;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.Objects;
+import lapr.project.calculations.UnitConversion;
 import lapr.project.model.Junction;
 import lapr.project.model.Project;
 import lapr.project.model.Road;
@@ -162,6 +165,7 @@ public class AlgorithmResults {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("Project: ").append(project.getName()).append("\n");
+        sb.append("\nAlgorithm: ").append(algorithmType);
         sb.append("\n");
         sb.append("Vehicle: ").append(vehicle.getName()).append("\n");
         sb.append("Vehicle total weight: ").append(vehicle.getTotalWeight()).append(("\n"));
@@ -176,10 +180,9 @@ public class AlgorithmResults {
 //            sb.append("\n");
 //        }
         sb.append("\nDistance:").append(distance).append(" Km");
-        sb.append("\nTravel time:").append(travelTime).append(" s");
-        sb.append("\nCost:").append(cost).append(" €");
-        sb.append("\nEnergy:").append(energy).append(" J");
-        sb.append("\nAlgorithm: ").append(algorithmType);
+        sb.append("\nTravel time:").append(UnitConversion.convertSecondstoHoursMinSec(travelTime)).append("h");
+        sb.append("\nCost:").append(new DecimalFormat("#.##").format(cost)).append(" €");
+        sb.append("\nEnergy:").append(String.format("%.2e",energy)).append(" J");
         return sb.toString();
     }
 
