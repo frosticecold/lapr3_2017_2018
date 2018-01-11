@@ -137,4 +137,14 @@ public class UnitConversion {
         }
         return Double.parseDouble(numberSplit[0]);
     }
+
+    public static String convertSecondstoHoursMinSec(double seconds) {
+        String fullTime = "";
+
+        int hours = ((int) seconds / 3600);
+        int min = ((int)seconds % 3600) / 60;
+        int sec = (int)seconds % 60;
+        fullTime = String.format("%02d:%02d:%02d", hours,min,sec);
+        return fullTime;
+    }
 }
