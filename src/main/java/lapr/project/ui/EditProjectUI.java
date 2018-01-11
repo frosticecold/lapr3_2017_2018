@@ -222,6 +222,7 @@ public class EditProjectUI extends javax.swing.JDialog {
             check = controller.updateProject(nameChanges, nameProject, descriptionProject, vehicleUpdate, roadUpdate);
         } catch (SQLException ex) {
             Logger.getLogger(EditProjectUI.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(this, "Error accessing database");
         }
         if (check) {
             JOptionPane.showMessageDialog(this, "Project edited successfully");

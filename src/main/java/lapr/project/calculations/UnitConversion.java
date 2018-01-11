@@ -19,11 +19,27 @@ public class UnitConversion {
     private static final String GRAMS = "g";
     private static final String KILOMETERS_PER_HOUR = "km/h";
     private static final String METERS_PER_SECOND = "m/s";
+    private static final double MEGA_JOULE = Math.pow(10, 6);
 
     public static double convertKilometersToMeters(String distance) {
         double lengthKilometers = Double.parseDouble(
                 distance.replaceAll("[^0-9.]", ""));
         return lengthKilometers * 1000;
+    }
+
+    public static double convertJoulesToMegaJoules(double energy) {
+        return energy / MEGA_JOULE;
+    }
+
+    public static double convertJoulesToLitres(String fuel, double energy) {
+        if (fuel.equalsIgnoreCase("gasoline")) {
+            return convertJoulesToMegaJoules(energy) / Constants.GASOLINE_ENERGY_PER_LITRE;
+        } else {
+            if (fuel.equalsIgnoreCase("diesel")) {
+                return convertJoulesToMegaJoules(energy) / Constants.DIESEL_ENERGY_PER_LITRE;
+            }
+        }
+        return convertJoulesToMegaJoules(energy);
     }
 
     public static double convertKilometersPerHourToMetersPerSecond(String velocity) {
