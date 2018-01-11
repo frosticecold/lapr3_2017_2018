@@ -8,10 +8,17 @@ package lapr.project.model;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import lapr.project.networkanalysis.AlgorithmResults;
 import lapr.project.utils.Session;
 import lapr.project.utils.graphbase.Graph;
+import org.junit.After;
+import org.junit.AfterClass;
+import static org.junit.Assert.assertEquals;
+import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 /**
  *
@@ -20,8 +27,20 @@ import org.junit.Test;
 public class ProjectTest {
    Project project;
    Vehicle vh1;
-    @Test
-    public void TestProject(){
+   Vehicle vh2;
+   Vehicle vh3;
+   Vehicle vh4;
+   Vehicle vh5;
+   
+     @BeforeClass
+    public static void setUpClass() {
+    }
+
+    @AfterClass
+    public static void tearDownClass() {
+    }
+    @Before
+    public void setUp(){
   
        Graph<Junction, Section> roadNetwork;
 
@@ -185,7 +204,19 @@ public class ProjectTest {
         acc.setThrottleList(throttleList);
 
         vh1 = new VehicleCombustion(1000, 5000, 4, gearbox1, acc, "Pickup", "Super duper pickup", "Car", Vehicle.FUEL_GASOLINE, 1, "Combustion", 2400, 1200, 0.39, 0.8, 2.4, 0.015, mapRoadVelocityLimit, throttleList);
+        vh2 = new VehicleCombustion(1000, 5000, 4, gearbox1, acc, "Pickup", "Super duper pickup", "Car", Vehicle.FUEL_GASOLINE, 1, "Combustion", 2400, 1200, 0.39, 0.8, 2.4, 0.015, mapRoadVelocityLimit, throttleList);
+        vh3 = new VehicleCombustion(1000, 5000, 4, gearbox1, acc, "Pickup", "Super duper pickup", "Car", Vehicle.FUEL_GASOLINE, 1, "Combustion", 2400, 1200, 0.39, 0.8, 2.4, 0.015, mapRoadVelocityLimit, throttleList);
+        vh4 = new VehicleCombustion(1000, 5000, 4, gearbox1, acc, "Pickup", "Super duper pickup", "Car", Vehicle.FUEL_GASOLINE, 1, "Combustion", 2400, 1200, 0.39, 0.8, 2.4, 0.015, mapRoadVelocityLimit, throttleList);
+        vh5 = new VehicleCombustion(1000, 5000, 4, gearbox1, acc, "Pickup", "Super duper pickup", "Car", Vehicle.FUEL_GASOLINE, 1, "Combustion", 2400, 1200, 0.39, 0.8, 2.4, 0.015, mapRoadVelocityLimit, throttleList);
 
+        VehicleList Vlist = new VehicleList();
+        Vlist.addVehicle(vh1);
+        Vlist.addVehicle(vh2);
+        Vlist.addVehicle(vh3);
+        Vlist.addVehicle(vh4);
+        Vlist.addVehicle(vh5);
+        
+        
         Junction j1 = new Junction("n0");
         Junction j2 = new Junction("n1");
         Junction j3 = new Junction("n2");
@@ -279,6 +310,10 @@ public class ProjectTest {
         project.addSection(section2);
         project.addSection(section3);
     }
+    
+    @After
+    public void tearDown() {
+    }
         
     
     
@@ -286,11 +321,151 @@ public class ProjectTest {
     public void testGetJunction(){
         System.out.println("getJunction");
         Project instance=new Project();
- try {
+        try {
             instance.getJunction(null);
         } catch (IllegalArgumentException e) {
             System.out.println("erro");}
         }        
         
+    @Test
+    public void test2GetJunction(){
+        System.out.println("getJunction");
+        Project instance=new Project();
+        
+        Junction expResult=null;
+        Junction result=instance.getJunction("a");
+        assertEquals(expResult,result);
+    }
+    
+    @Test
+    public void testGetRoadByRoadID(){
+        System.out.println("getRoadByRoadID");
+        Project instance=new Project();
+        
+        Road expResult=null;
+        Road result=instance.getRoadByRoadID("a");
+        assertEquals(expResult,result);
+    }
+    
+    @Test
+    public void testGetListVehicles(){
+        System.out.println("getListVehicles");
+        Project instance=new Project();
+        vh1 = new VehicleCombustion();
+        vh2 = new VehicleCombustion();
+        vh3 = new VehicleCombustion();
+        vh4 = new VehicleCombustion();
+        vh5 = new VehicleCombustion();
+        
+        VehicleList Vlist = new VehicleList();
+        Vlist.addVehicle(vh1);
+        Vlist.addVehicle(vh2);
+        Vlist.addVehicle(vh3);
+        Vlist.addVehicle(vh4);
+        Vlist.addVehicle(vh5);
+        instance.setListVehicles(Vlist);
+        VehicleList expResult=Vlist;
+        VehicleList result=instance.getListVehicles();
+        assertEquals(expResult,result);
+    }
+    
+    @Test
+    public void testGetName(){
+        System.out.println("getName");
+        Project instance=new Project();
+        String expResult="a";
+        instance.setName("a");
+        String result=instance.getName();
+        assertEquals(expResult,result);
+        
+    }
+    
+    @Test
+    public void testGetDescription(){
+        System.out.println("getDescription");
+        Project instance=new Project();
+        String expResult="a";
+        instance.setDescription("a");
+        String result=instance.getDescription();
+        assertEquals(expResult,result);
+        
+    }
+    
+    @Test
+    public void testGetResults(){
+        System.out.println("getResults");
+        LinkedList <Junction>jlist = new LinkedList<Junction>();
+        Junction j1 = new Junction("n0");
+        Junction j2 = new Junction("n1");
+        Junction j3 = new Junction("n2");
+        Junction j4 = new Junction("n3");
+        Junction j5 = new Junction("n4");
+        Junction j6 = new Junction("n5");
+        Junction j7 = new Junction("n6");
+        Junction j8 = new Junction("n7");
+        jlist.addFirst(j1);
+        jlist.addLast(j2);
+        
+        LinkedList<Section>slist= new LinkedList<Section>();
+         Section s1 = new Section();
+        s1.setBeginJunction(j1);
+        s1.setEndJunction(j3);
+        s1.setRoadID("E01");
+        s1.setTypology("regular road");
+        s1.setDirection(Section.Direction.BIDIRECTIONAL);
+        Segment segment = new Segment(1, 100, 200, 1.2, 20, 5, 90, 0);
+        Segment segment1 = new Segment(2, 200, 150, 6.5, -10, 2, 90, 0);
+        Segment segment2 = new Segment(3, 150, 350, 4, -10, 2.5, 90, 0);
+        Segment segment3 = new Segment(4, 350, 150, 10, -60, 2.7, 90, 0);
+        List<Segment> listSegment = new ArrayList<>();
+        listSegment.add(segment);
+        listSegment.add(segment1);
+        listSegment.add(segment2);
+        listSegment.add(segment3);
+        s1.setSegmentList(listSegment);
+
+        Section s2 = new Section();
+        s2.setBeginJunction(j3);
+        s2.setEndJunction(j4);
+        s2.setRoadID("E01");
+        s2.setTypology("regular road");
+        s2.setDirection(Section.Direction.BIDIRECTIONAL);
+        Segment segment4 = new Segment(1, 150, 250, 1.5, 120, 1.5, 90, 0);
+        Segment segment5 = new Segment(2, 250, 450, 6.5, -170, 2, 90, 0);
+        Segment segment6 = new Segment(3, 450, 250, 4, -80, 2.5, 90, 0);
+        List<Segment> listSegment2 = new ArrayList<>();
+        listSegment2.add(segment4);
+        listSegment2.add(segment5);
+        listSegment2.add(segment6);
+        s2.setSegmentList(listSegment2);
+
+        Section s3 = new Section();
+        s3.setBeginJunction(j4);
+        s3.setEndJunction(j5);
+        s3.setRoadID("E01");
+        s3.setTypology("regular road");
+        s3.setDirection(Section.Direction.BIDIRECTIONAL);
+        Segment segment7 = new Segment(1, 250, 350, 10.5, 40, 2.5, 90, 0);
+        Segment segment8 = new Segment(2, 350, 550, 4, -120, 2, 90, 0);
+        Segment segment9 = new Segment(3, 550, 350, 6, -10, 2, 90, 0);
+        List<Segment> listSegment3 = new ArrayList<>();
+        listSegment3.add(segment7);
+        listSegment3.add(segment8);
+        listSegment3.add(segment9);
+        s3.setSegmentList(listSegment3);
+        slist.addFirst(s1);
+        slist.addLast(s2);
+        double results[]={1,2,3,4};
+        String alg="abc";
+       AlgorithmResults r1 =new AlgorithmResults(project,jlist,slist,vh1,results,alg);
+       
+        ListOfResults listOfResults= new ListOfResults();
+        listOfResults.addResult(vh1,r1);
+        Project instance=new Project();
+        instance.setListOfResults(listOfResults);
+        ListOfResults expResult=listOfResults;
+        ListOfResults result=instance.getResults();
+        assertEquals(expResult,result);
+    }
     
 }
