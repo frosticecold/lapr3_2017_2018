@@ -178,6 +178,7 @@ public class TheoreticalEnergyEfficientAlgorithm implements PathAlgorithm {
         double[] result = new double[RESULTS_SIZE];
         double[] tempresults = new double[RESULTS_SIZE];
         double[] carresult = new double[4];
+        double[] brakingresult = {0, 0, 0};
         //Results
         //0) Time (s)
         //1) Energy (g)
@@ -227,9 +228,16 @@ public class TheoreticalEnergyEfficientAlgorithm implements PathAlgorithm {
                 }
             }
         }
+        if (isLastSegment) {
+            brakingresult = calcBrakingLastSegment(section, seg, car, currentspeed, acceleration);
+            //0) Time        
+            //1) Distance
+            //2) FuelComsumption
+
+        }
         //Do calculations when reached no acceleration
         double seglengthaccel = PhysicsCalculus.calcDistanceBasedOnInitialVelocityDesiredVelocityAcceleration(initialvelocity, currentspeed, acceleration);
-        double segremaining = (seg.getLength() * 1000) - seglengthaccel;
+        double segremaining = (seg.getLength() * 1000) - seglengthaccel - brakingresult[1];
         double deltatime = segremaining / currentspeed;
         double[] motoresult = PhysicsCalculus.calcIdealMotorForceBasedAcceleration(section, seg, car, 0, currentspeed);
         //0) Gear
@@ -237,9 +245,9 @@ public class TheoreticalEnergyEfficientAlgorithm implements PathAlgorithm {
         //2) Torque
         //3) SFC
         double carpower = PhysicsCalculus.calcEnginePower(motoresult[2], motoresult[1]);
-        result[0] += deltatime;
+        result[0] += deltatime + brakingresult[0];
         double fuelcompsumption = PhysicsCalculus.calcFuelComsumption(motoresult[3], carpower, deltatime);
-        result[1] += fuelcompsumption;
+        result[1] += fuelcompsumption + brakingresult[2];
         result[2] = currentspeed;
 
         return result;
@@ -276,53 +284,24 @@ public class TheoreticalEnergyEfficientAlgorithm implements PathAlgorithm {
 
     }
 
-    private static double[] calcBrakingLastSegment(Section section, Segment seg, Vehicle car, double initialVelocity, double acceleration) {
-        double result[] = {0, 0, 0};
-        //0) Time        
-        //1) Distance
-        //2) FuelComsumption
-        if (acceleration > 0) {
-            acceleration = acceleration * -1;
-        }
-        double brakingspace = PhysicsCalculus.calcDistanceBasedOnInitialVelocityDesiredVelocityAcceleration(initialVelocity, 0, acceleration);
-        double brakingtime = PhysicsCalculus.calcTimeBasedOnInitialVelocityDesiredVelocityAndAcceleration(initialVelocity, 0, acceleration);
-        double minvel = PhysicsCalculus.calcVelocityBasedOnRPMandGear(car, car.getMinRpm(), car.getGearbox().getLowestGearRatio());
-        double deltatimeaccel = Math.abs(1 / acceleration);
-        for (double vel = initialVelocity; vel >= minvel; vel--) {
-            double[] motoresult = PhysicsCalculus.calcIdealMotorForceBasedAcceleration(section, seg, car, acceleration, vel);
-            //0) Gear
-            //1) RPM
-            //2) Torque
-            //3) SFC
-            if (motoresult[0] != -1) {
-                double enginepower = PhysicsCalculus.calcEnginePower(motoresult[2], motoresult[1]);
-                double fuelComsumption = PhysicsCalculus.calcFuelComsumption(motoresult[3], enginepower, deltatimeaccel);
-                result[2] += fuelComsumption;
-            }
-
-            if (motoresult[0] == -1) {
-                break;
-            }
-        }
-        result[0] = brakingtime;
-        result[1] = brakingspace;
-        return result;
-    }
-
     private static double[] calcBrakingSegment(Section section, Segment seg, Vehicle car, double initialvelocity, double maximumvelocity, double acceleration, boolean isLastSegment) {
         double[] result = new double[RESULTS_SIZE];
         double[] tempresults = new double[RESULTS_SIZE];
-        double[] carresult = new double[4];
+
         //Results
         //0) Time (s)
         //1) Energy (g)
         //2) Velocity (m/s)
-
+        double[] carresult = new double[4];
         //Car result
         //0) Gear
         //1) RPM
         //2) Torque
         //3) SFC
+        double[] brakinglastsegment = {0, 0, 0};
+        //0) Time        
+        //1) Distance
+        //2) FuelComsumption
         boolean braking = true;
         double currentspeed = initialvelocity;
 
@@ -357,17 +336,56 @@ public class TheoreticalEnergyEfficientAlgorithm implements PathAlgorithm {
                 }
             }
         }
+        if (isLastSegment) {
+            brakinglastsegment = calcBrakingLastSegment(section, seg, car, currentspeed, acceleration);
+            //0) Time        
+            //1) Distance
+            //2) FuelComsumption
+        }
         //Do calculations with no acceleration
         double seglengthaccel = PhysicsCalculus.calcDistanceBasedOnInitialVelocityDesiredVelocityAcceleration(initialvelocity, currentspeed, acceleration);
-        double segremaining = (seg.getLength() * 1000) - seglengthaccel;
+        double segremaining = (seg.getLength() * 1000) - seglengthaccel - brakinglastsegment[1];
         double deltatime = segremaining / currentspeed;
         double[] motoresult = PhysicsCalculus.calcIdealMotorForceBasedAcceleration(section, seg, car, 0, currentspeed);
         double carpower = PhysicsCalculus.calcEnginePower(motoresult[2], motoresult[1]);
 
-        result[0] += deltatime;
-        result[1] += PhysicsCalculus.calcFuelComsumption(motoresult[3], carpower, deltatime);
+        result[0] += deltatime + brakinglastsegment[0];
+        result[1] += PhysicsCalculus.calcFuelComsumption(motoresult[3], carpower, deltatime) + brakinglastsegment[2];
         result[2] = currentspeed;
 
+        return result;
+    }
+
+    private static double[] calcBrakingLastSegment(Section section, Segment seg, Vehicle car, double initialVelocity, double acceleration) {
+        double result[] = {0, 0, 0};
+        //0) Time        
+        //1) Distance
+        //2) FuelComsumption
+        if (acceleration > 0) {
+            acceleration = acceleration * -1;
+        }
+        double brakingspace = PhysicsCalculus.calcDistanceBasedOnInitialVelocityDesiredVelocityAcceleration(initialVelocity, 0, acceleration);
+        double brakingtime = PhysicsCalculus.calcTimeBasedOnInitialVelocityDesiredVelocityAndAcceleration(initialVelocity, 0, acceleration);
+        double minvel = PhysicsCalculus.calcVelocityBasedOnRPMandGear(car, car.getMinRpm(), car.getGearbox().getLowestGearRatio());
+        double deltatimeaccel = Math.abs(1 / acceleration);
+        for (double vel = initialVelocity; vel >= minvel; vel--) {
+            double[] motoresult = PhysicsCalculus.calcIdealMotorForceBasedAcceleration(section, seg, car, acceleration, vel);
+            //0) Gear
+            //1) RPM
+            //2) Torque
+            //3) SFC
+            if (motoresult[0] != -1) {
+                double enginepower = PhysicsCalculus.calcEnginePower(motoresult[2], motoresult[1]);
+                double fuelComsumption = PhysicsCalculus.calcFuelComsumption(motoresult[3], enginepower, deltatimeaccel);
+                result[2] += fuelComsumption;
+            }
+
+            if (motoresult[0] == -1) {
+                break;
+            }
+        }
+        result[0] = brakingtime;
+        result[1] = brakingspace;
         return result;
     }
 
