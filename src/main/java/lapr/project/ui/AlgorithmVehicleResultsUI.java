@@ -36,6 +36,7 @@ public class AlgorithmVehicleResultsUI extends javax.swing.JDialog {
     private JFileChooser fileChooser;
     private AlgorithmVehicleResultsController controller;
     private DefaultComboBoxModel<String> comboboxModel = new DefaultComboBoxModel<>();
+    private boolean button = false;
 
     public AlgorithmVehicleResultsUI(JFrame parent, List<AlgorithmResults> listAlgorithms) {
         super(parent, true);
@@ -103,6 +104,7 @@ public class AlgorithmVehicleResultsUI extends javax.swing.JDialog {
         jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Results");
 
         closeBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/return_icon.png"))); // NOI18N
         closeBtn.setText("Close");
@@ -179,9 +181,14 @@ public class AlgorithmVehicleResultsUI extends javax.swing.JDialog {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
+                        .addGap(0, 14, Short.MAX_VALUE)
+                        .addComponent(jLabel9)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(algorithmTextfield, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(27, 27, 27)
@@ -216,17 +223,12 @@ public class AlgorithmVehicleResultsUI extends javax.swing.JDialog {
                                         .addComponent(energyTextfield)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(jButton1))
-                                    .addComponent(costTextfield)))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap(20, Short.MAX_VALUE)
-                        .addComponent(jLabel9)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(algorithmTextfield, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(135, 135, 135)
-                        .addComponent(closeBtn)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(exportBtn)))
+                                    .addComponent(costTextfield)))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(closeBtn)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(exportBtn)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap(14, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -292,7 +294,7 @@ public class AlgorithmVehicleResultsUI extends javax.swing.JDialog {
             distanceTextfield.setText(String.valueOf(listAlgorithms.get(vehicleCombobox.getSelectedIndex()).getDistance()) + " km");
             traveltimeTextfield.setText(String.valueOf(listAlgorithms.get(vehicleCombobox.getSelectedIndex()).getTravelTime()) + " seg");
             costTextfield.setText(String.valueOf(listAlgorithms.get(vehicleCombobox.getSelectedIndex()).getCost()) + " €");
-            energyTextfield.setText(String.format("%.3f J",listAlgorithms.get(vehicleCombobox.getSelectedIndex()).getEnergy()));
+            energyTextfield.setText(String.format("%.3f J", listAlgorithms.get(vehicleCombobox.getSelectedIndex()).getEnergy()));
             algorithmTextfield.setText(listAlgorithms.get(vehicleCombobox.getSelectedIndex()).getAlgorithmType());
             String finalPath = "";
             for (Section section : listAlgorithms.get(vehicleCombobox.getSelectedIndex()).getSectionPath()) {
@@ -339,12 +341,17 @@ public class AlgorithmVehicleResultsUI extends javax.swing.JDialog {
     }//GEN-LAST:event_exportBtnActionPerformed
 
     private void convertBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_convertBtnActionPerformed
-        double energy = listAlgorithms.get(vehicleCombobox.getSelectedIndex()).getEnergy();
-        String fuel = listAlgorithms.get(vehicleCombobox.getSelectedIndex()).getVehicle().getFuel();
-        if (!fuel.equalsIgnoreCase("electric")) {
-            energyTextfield.setText(String.format("%.3f Litres ",UnitConversion.convertJoulesToLitres(fuel, energy)));
+        button =controller.checkConvertBtn(button);
+        if (button) {
+            double energy = listAlgorithms.get(vehicleCombobox.getSelectedIndex()).getEnergy();
+            String fuel = listAlgorithms.get(vehicleCombobox.getSelectedIndex()).getVehicle().getFuel();
+            if (!fuel.equalsIgnoreCase("electric")) {
+                energyTextfield.setText(String.format("%.3f Litres ", UnitConversion.convertJoulesToLitres(fuel, energy)));
+            } else {
+                energyTextfield.setText(String.format("%.3f MJ", UnitConversion.convertJoulesToLitres(fuel, energy)));
+            }
         } else {
-            energyTextfield.setText(String.format("%.3f MJ",UnitConversion.convertJoulesToLitres(fuel, energy)));
+            energyTextfield.setText(String.format("%.3f J", listAlgorithms.get(vehicleCombobox.getSelectedIndex()).getEnergy()));
         }
     }//GEN-LAST:event_convertBtnActionPerformed
 
