@@ -1,7 +1,5 @@
 package lapr.project.model;
 
-import lapr.project.calculations.UnitConversion;
-
 public class Segment {
 
     private int segmentIndex;

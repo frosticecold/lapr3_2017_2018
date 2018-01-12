@@ -3,8 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package lapr.project.pathalgorithms;
+package lapr.project.model;
 
+import lapr.project.model.PathAlgorithm;
+import lapr.project.model.FastestPathAlgorithm;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;

@@ -3,7 +3,7 @@ package lapr.project.networkanalysis;
 import java.text.DecimalFormat;
 import java.util.LinkedList;
 import java.util.Objects;
-import lapr.project.calculations.UnitConversion;
+import lapr.project.model.UnitConversion;
 import lapr.project.model.Junction;
 import lapr.project.model.Project;
 import lapr.project.model.Road;

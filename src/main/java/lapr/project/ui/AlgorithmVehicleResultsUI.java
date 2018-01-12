@@ -17,7 +17,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import lapr.project.calculations.UnitConversion;
+import lapr.project.model.UnitConversion;
 import lapr.project.controller.AlgorithmVehicleResultsController;
 import lapr.project.model.Section;
 import lapr.project.networkanalysis.AlgorithmResults;

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package lapr.project.pathalgorithms;
+package lapr.project.model;
 
 import java.util.LinkedList;
 

@@ -1,7 +1,5 @@
 package lapr.project.model;
 
-import lapr.project.calculations.Constants;
-
 public class PhysicsCalculus {
 
     public final static double GRAVITY = Constants.GRAVITY;

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package lapr.project.pathalgorithms;
+package lapr.project.model;
 
 import java.util.LinkedList;
 import lapr.project.model.Junction;
@@ -14,7 +14,6 @@ import lapr.project.model.Segment;
 import lapr.project.model.Vehicle;
 import lapr.project.model.VehicleCombustion;
 import lapr.project.networkanalysis.AlgorithmResults;
-import lapr.project.pathalgorithms.PathAlgorithm;
 import lapr.project.utils.Session;
 import lapr.project.utils.graphbase.Edge;
 import lapr.project.utils.graphbase.Graph;

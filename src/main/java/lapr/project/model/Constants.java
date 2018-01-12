@@ -1,4 +1,4 @@
-package lapr.project.calculations;
+package lapr.project.model;
 
 public final class Constants {
 

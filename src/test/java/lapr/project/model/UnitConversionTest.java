@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package lapr.project.calculations;
+package lapr.project.model;
 
+import lapr.project.model.UnitConversion;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;

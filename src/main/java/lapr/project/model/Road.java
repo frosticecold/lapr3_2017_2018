@@ -3,7 +3,6 @@ package lapr.project.model;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Objects;
-import lapr.project.calculations.Constants;
 
 public class Road {
 
