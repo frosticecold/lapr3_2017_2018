@@ -6,19 +6,8 @@
 package lapr.project.model;
 
 import java.util.LinkedList;
-import lapr.project.model.Junction;
-import lapr.project.model.PhysicsCalculus;
-import lapr.project.model.Regime;
-import lapr.project.model.Section;
-import lapr.project.model.Segment;
-import lapr.project.model.Vehicle;
-import lapr.project.model.VehicleCombustion;
-<<<<<<< HEAD:src/main/java/lapr/project/model/EnergySavingModeAlgorithm.java
-import lapr.project.networkanalysis.AlgorithmResults;
-=======
-import lapr.project.model.AlgorithmResults;
-import lapr.project.pathalgorithms.PathAlgorithm;
->>>>>>> 7c5420ed46e4ab92171dd0fd27424a9cf3fd2340:src/main/java/lapr/project/pathalgorithms/EnergySavingModeAlgorithm.java
+import lapr.project.model.PathAlgorithm;
+
 import lapr.project.utils.Session;
 import lapr.project.utils.graphbase.Edge;
 import lapr.project.utils.graphbase.Graph;

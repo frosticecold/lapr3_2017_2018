@@ -5,17 +5,13 @@
  */
 package lapr.project.utils;
 
-import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.text.DecimalFormat;
 import java.util.Arrays;
-<<<<<<< HEAD
+
 import lapr.project.model.UnitConversion;
-import lapr.project.networkanalysis.AlgorithmResults;
-=======
-import lapr.project.calculations.UnitConversion;
 import lapr.project.model.AlgorithmResults;
->>>>>>> 7c5420ed46e4ab92171dd0fd27424a9cf3fd2340
+
 
 /**
  *
