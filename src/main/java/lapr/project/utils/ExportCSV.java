@@ -10,7 +10,7 @@ import java.io.FileWriter;
 import java.text.DecimalFormat;
 import java.util.Arrays;
 import lapr.project.calculations.UnitConversion;
-import lapr.project.networkanalysis.AlgorithmResults;
+import lapr.project.model.AlgorithmResults;
 
 /**
  *

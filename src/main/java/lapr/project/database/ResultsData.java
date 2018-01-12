@@ -12,7 +12,7 @@ import lapr.project.model.ListOfResults;
 import lapr.project.model.Project;
 import lapr.project.model.Section;
 import lapr.project.model.Vehicle;
-import lapr.project.networkanalysis.AlgorithmResults;
+import lapr.project.model.AlgorithmResults;
 import oracle.jdbc.OracleTypes;
 
 /**

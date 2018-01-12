@@ -7,7 +7,7 @@ import lapr.project.database.ProjectData;
 import lapr.project.database.ResultsData;
 import lapr.project.model.Project;
 import lapr.project.model.Vehicle;
-import lapr.project.networkanalysis.AlgorithmResults;
+import lapr.project.model.AlgorithmResults;
 import oracle.jdbc.pool.OracleDataSource;
 
 public class SQLConnection {

@@ -17,7 +17,7 @@ import static lapr.project.model.PhysicsCalculus.calcVelocityBasedOnRPMandGear;
 import lapr.project.model.Section;
 import lapr.project.model.Segment;
 import lapr.project.model.Vehicle;
-import lapr.project.networkanalysis.AlgorithmResults;
+import lapr.project.model.AlgorithmResults;
 import lapr.project.utils.Session;
 import lapr.project.utils.graphbase.Edge;
 import lapr.project.utils.graphbase.Graph;

@@ -22,7 +22,7 @@ import lapr.project.model.Segment;
 import lapr.project.model.Throttle;
 import lapr.project.model.Vehicle;
 import lapr.project.model.VehicleCombustion;
-import lapr.project.networkanalysis.AlgorithmResults;
+import lapr.project.model.AlgorithmResults;
 import lapr.project.utils.Session;
 import lapr.project.utils.graphbase.Graph;
 import org.junit.After;

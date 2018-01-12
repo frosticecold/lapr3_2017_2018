@@ -1,4 +1,4 @@
-package lapr.project.networkanalysis;
+package lapr.project.model;
 
 import java.text.DecimalFormat;
 import java.util.LinkedList;
