@@ -17,32 +17,36 @@ import lapr.project.utils.graphbase.Graph;
 import org.junit.After;
 import org.junit.AfterClass;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+
 /**
  *
  * @author Car
  */
 public class ProjectTest {
-   Project project;
-   Vehicle vh1;
-   Vehicle vh2;
-   Vehicle vh3;
-   Vehicle vh4;
-   Vehicle vh5;
-   
-     @BeforeClass
+
+    Project project;
+    Vehicle vh1;
+    Vehicle vh2;
+    Vehicle vh3;
+    Vehicle vh4;
+    Vehicle vh5;
+
+    @BeforeClass
     public static void setUpClass() {
     }
 
     @AfterClass
     public static void tearDownClass() {
     }
+
     @Before
-    public void setUp(){
-  
-       Graph<Junction, Section> roadNetwork;
+    public void setUp() {
+
+        Graph<Junction, Section> roadNetwork;
 
         roadNetwork = new Graph<>(true);
         project = new Project("Project 1", "Test");
@@ -215,8 +219,7 @@ public class ProjectTest {
         Vlist.addVehicle(vh3);
         Vlist.addVehicle(vh4);
         Vlist.addVehicle(vh5);
-        
-        
+
         Junction j1 = new Junction("n0");
         Junction j2 = new Junction("n1");
         Junction j3 = new Junction("n2");
@@ -310,67 +313,68 @@ public class ProjectTest {
         project.addSection(section2);
         project.addSection(section3);
     }
+
     @Test
-    public void TestProject(){
-      Project novoprojeto = new Project(project.getRoadNetwork(), project.getListVehicles().getVehicleList(),project.getListRoads());  
+    public void TestProject() {
+        Project novoprojeto = new Project(project.getRoadNetwork(), project.getListVehicles().getVehicleList(), project.getListRoads());
     }
+
     @After
     public void tearDown() {
     }
-        
-    
-    
+
     @Test
-    public void testGetJunction(){
+    public void testGetJunction() {
         System.out.println("getJunction");
-        Project instance=new Project();
+        Project instance = new Project();
         try {
             instance.getJunction(null);
         } catch (IllegalArgumentException e) {
-            System.out.println("erro");}
-        }        
-        
-    @Test
-    public void test2GetJunction(){
-        System.out.println("getJunction");
-        Project instance=new Project();
-        
-        Junction expResult=null;
-        Junction result=instance.getJunction("a");
-        assertEquals(expResult,result);
+            System.out.println("erro");
+        }
     }
-    
+
     @Test
-    public void test3GetJunction(){
+    public void test2GetJunction() {
         System.out.println("getJunction");
-        Project instance=new Project();
+        Project instance = new Project();
+
+        Junction expResult = null;
+        Junction result = instance.getJunction("a");
+        assertEquals(expResult, result);
+    }
+
+    @Test
+    public void test3GetJunction() {
+        System.out.println("getJunction");
+        Project instance = new Project();
         try {
             instance.getJunction("");
         } catch (IllegalArgumentException e) {
-            System.out.println("erro");}
-        } 
-    
-    
-    @Test
-    public void testGetRoadByRoadID(){
-        System.out.println("getRoadByRoadID");
-        Project instance=new Project();
-        
-        Road expResult=null;
-        Road result=instance.getRoadByRoadID("a");
-        assertEquals(expResult,result);
+            System.out.println("erro");
+        }
     }
-    
+
     @Test
-    public void testGetListVehicles(){
+    public void testGetRoadByRoadID() {
+        System.out.println("getRoadByRoadID");
+        Project instance = new Project();
+
+        Road expResult = null;
+        Road result = instance.getRoadByRoadID("a");
+        assertEquals(expResult, result);
+    }
+
+    @Test
+    public void testGetListVehicles() {
         System.out.println("getListVehicles");
-        Project instance=new Project();
+        Project instance = new Project();
         vh1 = new VehicleCombustion();
         vh2 = new VehicleCombustion();
         vh3 = new VehicleCombustion();
         vh4 = new VehicleCombustion();
         vh5 = new VehicleCombustion();
-        
+
         VehicleList Vlist = new VehicleList();
         Vlist.addVehicle(vh1);
         Vlist.addVehicle(vh2);
@@ -378,37 +382,37 @@ public class ProjectTest {
         Vlist.addVehicle(vh4);
         Vlist.addVehicle(vh5);
         instance.setListVehicles(Vlist);
-        VehicleList expResult=Vlist;
-        VehicleList result=instance.getListVehicles();
-        assertEquals(expResult,result);
+        VehicleList expResult = Vlist;
+        VehicleList result = instance.getListVehicles();
+        assertEquals(expResult, result);
     }
-    
+
     @Test
-    public void testGetName(){
+    public void testGetName() {
         System.out.println("getName");
-        Project instance=new Project();
-        String expResult="a";
+        Project instance = new Project();
+        String expResult = "a";
         instance.setName("a");
-        String result=instance.getName();
-        assertEquals(expResult,result);
-        
+        String result = instance.getName();
+        assertEquals(expResult, result);
+
     }
-    
+
     @Test
-    public void testGetDescription(){
+    public void testGetDescription() {
         System.out.println("getDescription");
-        Project instance=new Project();
-        String expResult="a";
+        Project instance = new Project();
+        String expResult = "a";
         instance.setDescription("a");
-        String result=instance.getDescription();
-        assertEquals(expResult,result);
-        
+        String result = instance.getDescription();
+        assertEquals(expResult, result);
+
     }
-    
+
     @Test
-    public void testGetResults(){
+    public void testGetResults() {
         System.out.println("getResults");
-        LinkedList <Junction>jlist = new LinkedList<Junction>();
+        LinkedList<Junction> jlist = new LinkedList<Junction>();
         Junction j1 = new Junction("n0");
         Junction j2 = new Junction("n1");
         Junction j3 = new Junction("n2");
@@ -419,9 +423,9 @@ public class ProjectTest {
         Junction j8 = new Junction("n7");
         jlist.addFirst(j1);
         jlist.addLast(j2);
-        
-        LinkedList<Section>slist= new LinkedList<Section>();
-         Section s1 = new Section();
+
+        LinkedList<Section> slist = new LinkedList<Section>();
+        Section s1 = new Section();
         s1.setBeginJunction(j1);
         s1.setEndJunction(j3);
         s1.setRoadID("E01");
@@ -469,24 +473,24 @@ public class ProjectTest {
         s3.setSegmentList(listSegment3);
         slist.addFirst(s1);
         slist.addLast(s2);
-        double results[]={1,2,3,4};
-        String alg="abc";
-       AlgorithmResults r1 =new AlgorithmResults(project,jlist,slist,vh1,results,alg);
-       
-        ListOfResults listOfResults= new ListOfResults();
-        listOfResults.addResult(vh1,r1);
-        Project instance=new Project();
+        double results[] = {1, 2, 3, 4};
+        String alg = "abc";
+        AlgorithmResults r1 = new AlgorithmResults(project, jlist, slist, vh1, results, alg);
+
+        ListOfResults listOfResults = new ListOfResults();
+        listOfResults.addResult(vh1, r1);
+        Project instance = new Project();
         instance.setListOfResults(listOfResults);
-        ListOfResults expResult=listOfResults;
-        ListOfResults result=instance.getResults();
-        assertEquals(expResult,result);
+        ListOfResults expResult = listOfResults;
+        ListOfResults result = instance.getResults();
+        assertEquals(expResult, result);
     }
-    
+
     @Test
-    public void testGetSection(){
+    public void testGetSection() {
         System.out.println("getSection");
-        Junction j1=project.getJunction("n0");
-        Junction j2=project.getJunction("n1");
+        Junction j1 = project.getJunction("n0");
+        Junction j2 = project.getJunction("n1");
         Section s4 = new Section();
         s4.setBeginJunction(j1);
         s4.setEndJunction(j2);
@@ -503,48 +507,18 @@ public class ProjectTest {
         listSegment.add(segment2);
         listSegment.add(segment3);
         project.addSection(s4);
-        Section expResult=s4;
-        Section result=project.getSection(j1, j2);
-        assertEquals(expResult,result);
+        Section expResult = s4;
+        Section result = project.getSection(j1, j2);
+        assertEquals(expResult, result);
     }
+
     @Test
-    public void test2GetSection(){
+    public void test2GetSection() {
         System.out.println("getSection");
         System.out.println("getSection");
-        Junction j1=project.getJunction("n0");
-        Junction j2=project.getJunction("n1");
-        Junction j3=project.getJunction("n2");
-        Section s4 = new Section();
-        s4.setBeginJunction(j1);
-        s4.setEndJunction(j2);
-        s4.setRoadID("E01");
-        s4.setTypology("regular road");
-        s4.setDirection(Section.Direction.BIDIRECTIONAL);
-        Segment segment = new Segment(1, 100, 200, 1.2, 20, 5, 90, 0);
-        Segment segment1 = new Segment(2, 200, 150, 6.5, -10, 2, 90, 0);
-        Segment segment2 = new Segment(3, 150, 350, 4, -10, 2.5, 90, 0);
-        Segment segment3 = new Segment(4, 350, 150, 10, -60, 2.7, 90, 0);
-        List<Segment> listSegment = new ArrayList<>();
-        listSegment.add(segment);
-        listSegment.add(segment1);
-        listSegment.add(segment2);
-        listSegment.add(segment3);
-        project.addSection(s4);
-        try {
-            project.getSection(j1,j3);
-        } catch (IllegalArgumentException e) {
-            System.out.println(e);
-        }
-    }
-    
-    @Test
-    public void test3GetSection(){
-        System.out.println("getSection");
-        System.out.println("getSection");
-        Junction j1=project.getJunction("n0");
-        Junction j2=project.getJunction("n1");
-        Junction j3=project.getJunction("n2");
-        Junction j6=project.getJunction("n3");
+        Junction j1 = project.getJunction("n0");
+        Junction j2 = project.getJunction("n1");
+        Junction j3 = project.getJunction("n2");
         Section s4 = new Section();
         s4.setBeginJunction(j1);
         s4.setEndJunction(j2);
@@ -562,49 +536,79 @@ public class ProjectTest {
         listSegment.add(segment3);
         project.addSection(s4);
         try {
-            project.getSection(j3,j6);
+            project.getSection(j1, j3);
         } catch (IllegalArgumentException e) {
             System.out.println(e);
         }
     }
+
     @Test
-    public void testAddSection(){
+    public void test3GetSection() {
+        System.out.println("getSection");
+        System.out.println("getSection");
+        Junction j1 = project.getJunction("n0");
+        Junction j2 = project.getJunction("n1");
+        Junction j3 = project.getJunction("n2");
+        Junction j6 = project.getJunction("n3");
+        Section s4 = new Section();
+        s4.setBeginJunction(j1);
+        s4.setEndJunction(j2);
+        s4.setRoadID("E01");
+        s4.setTypology("regular road");
+        s4.setDirection(Section.Direction.BIDIRECTIONAL);
+        Segment segment = new Segment(1, 100, 200, 1.2, 20, 5, 90, 0);
+        Segment segment1 = new Segment(2, 200, 150, 6.5, -10, 2, 90, 0);
+        Segment segment2 = new Segment(3, 150, 350, 4, -10, 2.5, 90, 0);
+        Segment segment3 = new Segment(4, 350, 150, 10, -60, 2.7, 90, 0);
+        List<Segment> listSegment = new ArrayList<>();
+        listSegment.add(segment);
+        listSegment.add(segment1);
+        listSegment.add(segment2);
+        listSegment.add(segment3);
+        project.addSection(s4);
+        try {
+            project.getSection(j3, j6);
+        } catch (IllegalArgumentException e) {
+            System.out.println(e);
+        }
+    }
+
+    @Test
+    public void testAddSection() {
         System.out.println("addSection");
-        
-        Junction j1=project.getJunction("n0");
-        Junction j2=project.getJunction("n1");
-        Junction j3=project.getJunction("n2");
+
+        Junction j1 = project.getJunction("n0");
+        Junction j2 = project.getJunction("n1");
+        Junction j3 = project.getJunction("n2");
         Section s4 = new Section();
         s4.setEndJunction(j2);
         boolean result = project.addSection(s4);
-        boolean expResult=false;
-        assertEquals(expResult,result);
+        boolean expResult = false;
+        assertEquals(expResult, result);
     }
-    
-    
+
     @Test
-    public void test2AddSection(){
-        
+    public void test2AddSection() {
+
         System.out.println("addSection");
-        Junction j1=project.getJunction("n0");
-        Junction j2=project.getJunction("n1");
-        Junction j3=project.getJunction("n2");
+        Junction j1 = project.getJunction("n0");
+        Junction j2 = project.getJunction("n1");
+        Junction j3 = project.getJunction("n2");
         Section s4 = new Section();
         s4.setBeginJunction(j1);
         boolean result = project.addSection(s4);
-        boolean expResult=false;
-        assertEquals(expResult,result);
+        boolean expResult = false;
+        assertEquals(expResult, result);
     }
-    
-    
+
     @Test
-    public void test3AddSection(){
+    public void test3AddSection() {
         System.out.println("addSection");
-        
-        Junction j1=project.getJunction("n0");
-        Junction j2=project.getJunction("n1");
-        Junction j3=project.getJunction("n2");
-        Junction j9=new Junction("test");
+
+        Junction j1 = project.getJunction("n0");
+        Junction j2 = project.getJunction("n1");
+        Junction j3 = project.getJunction("n2");
+        Junction j9 = new Junction("test");
         Section s4 = new Section();
         s4.setBeginJunction(j1);
         s4.setEndJunction(j9);
@@ -621,19 +625,19 @@ public class ProjectTest {
         listSegment.add(segment2);
         listSegment.add(segment3);
         boolean result = project.addSection(s4);
-        boolean expResult=false;
-        assertEquals(expResult,result);
+        boolean expResult = false;
+        assertEquals(expResult, result);
     }
-    
+
     @Test
-    public void test4AddSection(){
+    public void test4AddSection() {
         System.out.println("addSection");
-        
-        Junction j1=project.getJunction("n0");
-        Junction j2=project.getJunction("n1");
-        Junction j3=project.getJunction("n2");
-        Junction j9=new Junction("test");
-        Junction j10=new Junction("test1");
+
+        Junction j1 = project.getJunction("n0");
+        Junction j2 = project.getJunction("n1");
+        Junction j3 = project.getJunction("n2");
+        Junction j9 = new Junction("test");
+        Junction j10 = new Junction("test1");
         Section s4 = new Section();
         s4.setBeginJunction(j9);
         s4.setEndJunction(j10);
@@ -650,18 +654,19 @@ public class ProjectTest {
         listSegment.add(segment2);
         listSegment.add(segment3);
         boolean result = project.addSection(s4);
-        boolean expResult=false;
-        assertEquals(expResult,result);
+        boolean expResult = false;
+        assertEquals(expResult, result);
     }
+
     @Test
-    public void test5AddSection(){
+    public void test5AddSection() {
         System.out.println("addSection");
-        
-        Junction j1=project.getJunction("n0");
-        Junction j2=project.getJunction("n1");
-        Junction j3=project.getJunction("n2");
-        Junction j9=new Junction("test");
-        Junction j10=new Junction("test1");
+
+        Junction j1 = project.getJunction("n0");
+        Junction j2 = project.getJunction("n1");
+        Junction j3 = project.getJunction("n2");
+        Junction j9 = new Junction("test");
+        Junction j10 = new Junction("test1");
         Section s4 = new Section();
         s4.setBeginJunction(j1);
         s4.setEndJunction(j2);
@@ -679,19 +684,19 @@ public class ProjectTest {
         listSegment.add(segment3);
         project.addSection(s4);
         boolean result = project.addSection(s4);
-        boolean expResult=false;
-        assertEquals(expResult,result);
+        boolean expResult = false;
+        assertEquals(expResult, result);
     }
-    
+
     @Test
-    public void test6AddSection(){
+    public void test6AddSection() {
         System.out.println("addSection");
-        
-        Junction j1=project.getJunction("n0");
-        Junction j2=project.getJunction("n1");
-        Junction j3=project.getJunction("n2");
-        Junction j9=new Junction("test");
-        Junction j10=new Junction("test1");
+
+        Junction j1 = project.getJunction("n0");
+        Junction j2 = project.getJunction("n1");
+        Junction j3 = project.getJunction("n2");
+        Junction j9 = new Junction("test");
+        Junction j10 = new Junction("test1");
         Section s4 = new Section();
         s4.setBeginJunction(j1);
         s4.setEndJunction(j2);
@@ -707,9 +712,118 @@ public class ProjectTest {
         listSegment.add(segment1);
         listSegment.add(segment2);
         listSegment.add(segment3);
-        
-        boolean result = project.getRoadNetwork().insertEdge(s4.getEndingJunction(),s4.getBeginningJunction(),s4,s4.getSectionLength());
-        boolean expResult=true;
-        assertEquals(expResult,result);
+        boolean result = project.addSection(s4);
+        project.getRoadNetwork().insertEdge(s4.getEndingJunction(), s4.getBeginningJunction(), s4, s4.getSectionLength());
+
+        boolean expResult = true;
+        assertEquals(expResult, result);
+    }
+
+    @Test
+    public void test7AddSection() {
+        System.out.println("addSection");
+
+        Junction j1 = project.getJunction("n0");
+        Junction j2 = project.getJunction("n1");
+        Junction j3 = project.getJunction("n2");
+        Junction j9 = new Junction("test");
+        Junction j10 = new Junction("test1");
+        Section s5 = new Section();
+        s5.setBeginJunction(j1);
+        s5.setEndJunction(j2);
+        s5.setRoadID("E01");
+        s5.setTypology("regular road");
+        s5.setDirection(Section.Direction.BIDIRECTIONAL);
+        Segment segment = new Segment(1, 100, 200, 1.2, 20, 5, 90, 0);
+        Segment segment1 = new Segment(2, 200, 150, 6.5, -10, 2, 90, 0);
+        Segment segment2 = new Segment(3, 150, 350, 4, -10, 2.5, 90, 0);
+        Segment segment3 = new Segment(4, 350, 150, 10, -60, 2.7, 90, 0);
+        List<Segment> listSegment = new ArrayList<>();
+        listSegment.add(segment);
+        listSegment.add(segment1);
+        listSegment.add(segment2);
+        listSegment.add(segment3);
+        boolean result = project.addSection(s5);
+        project.getRoadNetwork().insertEdge(s5.getBeginningJunction(), s5.getEndingJunction(), s5, s5.getSectionLength());
+        Section sec = s5.reverseSection();
+        project.getRoadNetwork().insertEdge(s5.getEndingJunction(), s5.getBeginningJunction(), sec, s5.getSectionLength());
+        boolean expResult = true;
+        assertEquals(expResult, result);
+    }
+
+    @Test
+    public void testValidate() {
+        System.out.println("validate");
+        Project p = new Project();
+        p.setName(null);
+        p.setDescription("a");
+        p.setRoadNetwork(project.getRoadNetwork());
+        try {
+            p.validate();
+        } catch (IllegalArgumentException e) {
+            System.out.println("erro");
+        }
+
+    }
+
+    @Test
+
+    public void test2Validate() {
+        System.out.println("validate");
+        Project p = new Project();
+        p.setName("a");
+        p.setDescription(null);
+        p.setRoadNetwork(project.getRoadNetwork());
+        try {
+            p.validate();
+        } catch (IllegalArgumentException e) {
+            System.out.println("erro");
+        }
+
+    }
+
+    @Test
+
+    public void test3Validate() {
+        System.out.println("validate");
+        Project p = new Project();
+        Graph<Junction, Section> roadNetwork2;
+        roadNetwork2 = new Graph<>(true);
+        p.setName("a");
+        p.setDescription("b");
+        p.setRoadNetwork(roadNetwork2);
+        try {
+            p.validate();
+        } catch (IllegalArgumentException e) {
+            System.out.println("erro");
+        }
+
+    }
+
+    @Test
+
+    public void test4Validate() {
+        System.out.println("validate");
+        boolean expresult = true;
+        boolean result = project.validate();
+        assertEquals(expresult, result);
+    }
+
+    @Test
+    public void testToString() {
+        System.out.println("toString");
+        Project p = new Project();
+        p.setName("a");
+        String result = p.toString();
+        String expResult = "a";
+        assertEquals(expResult, result);
+    }
+
+    @Test
+    public void testCopyVehicleList() {
+        System.out.println("copyVehicleList");
+        VehicleList expResult = project.getListVehicles();
+        VehicleList result = project.copyVehicleList();
+        assertTrue(result.getVehicleNameList().equals(expResult.getVehicleNameList()));
     }
 }
