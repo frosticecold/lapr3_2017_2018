@@ -7,7 +7,9 @@ package lapr.project.utils;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
+import java.text.DecimalFormat;
 import java.util.Arrays;
+import lapr.project.calculations.UnitConversion;
 import lapr.project.networkanalysis.AlgorithmResults;
 
 /**
@@ -29,7 +31,7 @@ public class ExportCSV {
         FileWriter writer = new FileWriter(path + format);
 
         CSVUtils.writeLine(writer, Arrays.asList("Project", "Path", "Vehicle", "Travel Time", "Cost", "Energy", "Distance"));
-        CSVUtils.writeLine(writer, Arrays.asList(results.getProject().toString(), results.getSectionPath().toString(), results.getVehicle().toString(), String.valueOf(results.getTravelTime()), String.valueOf(results.getCost()), String.valueOf(results.getEnergy()), String.valueOf(results.getDistance())), ',');
+        CSVUtils.writeLine(writer, Arrays.asList("\n" + results.getProject().toString(), results.getSectionPath().toString(), results.getVehicle().toString(), UnitConversion.convertSecondstoHoursMinSec(results.getTravelTime()) + " h", String.valueOf(new DecimalFormat("#.##").format(results.getCost()) + " €"), String.valueOf(String.format("%.2f",results.getEnergy() / 1000000)) + " MJ", String.valueOf(results.getDistance()) + "km"), ',');
 
         writer.flush();
         writer.close();
