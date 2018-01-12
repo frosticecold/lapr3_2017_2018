@@ -60,7 +60,7 @@ public class TollData extends DataAccess<Double> {
 
     }
 
-    private Map<Integer, Double> getToMapDatabase(ResultSet rs) throws SQLException {
+    private static Map<Integer, Double> getToMapDatabase(ResultSet rs) throws SQLException {
         Map<Integer, Double> map = new HashMap<>();
         if (!rs.next()) {
             return map;

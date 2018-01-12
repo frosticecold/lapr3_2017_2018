@@ -174,6 +174,7 @@ public class RoadTest {
         } catch (IllegalArgumentException ex) {
             System.out.println(ex.getMessage());
         }
+        assertTrue(!instance.getTollFare().isEmpty());
 
         Road anotherRoad = new Road(instance);
 
@@ -237,6 +238,15 @@ public class RoadTest {
         } catch (IllegalArgumentException ex) {
             System.out.println(ex.getMessage());
         }
+        
+        vehicle_id = -1;
+        try {
+            instance.addTollFare(vehicle_id, toll_value);
+        } catch (IllegalArgumentException ex) {
+            System.out.println(ex.getMessage());
+        }
+        
+        vehicle_id = 0;
 
         try {
             instance.getTollValue(0);

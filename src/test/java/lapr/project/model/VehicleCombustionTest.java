@@ -50,6 +50,11 @@ public class VehicleCombustionTest {
     public void testGetMinRpm() {
         System.out.println("getMinRpm");
         VehicleCombustion instance = new VehicleCombustion();
+        try {
+            instance.setMinRPM(-200);
+        } catch (IllegalArgumentException e) {
+            System.out.println(e);
+        }
         double expResult = 1200.0;
         instance.setMinRPM(1200.0);
         double result = instance.getMinRpm();
@@ -64,6 +69,11 @@ public class VehicleCombustionTest {
     public void testGetMaxRpm() {
         System.out.println("getMaxRpm");
         VehicleCombustion instance = new VehicleCombustion();
+        try {
+            instance.setMaxRPM(-200);
+        } catch (IllegalArgumentException e) {
+            System.out.println(e);
+        }
         double expResult = 5000.0;
         instance.setMaxRPM(5000);
         double result = instance.getMaxRpm();
@@ -78,6 +88,11 @@ public class VehicleCombustionTest {
     public void testGetFinalDriveRatio() {
         System.out.println("getFinalDriveRatio");
         VehicleCombustion instance = new VehicleCombustion();
+        try {
+            instance.setFinalDriveRatio(-2);
+        } catch (IllegalArgumentException e) {
+            System.out.println(e);
+        }
         double expResult = 0.25;
         instance.setFinalDriveRatio(0.25);
         double result = instance.getFinalDriveRatio();
@@ -214,6 +229,12 @@ public class VehicleCombustionTest {
         }
         try {
             instance.setMinRPM(1000);
+            boolean result = instance.validateCombustionVehicle();
+        } catch (IllegalArgumentException e) {
+            System.out.println("Error");
+        }
+        try {
+            instance.setMaxRPM(-100);
             boolean result = instance.validateCombustionVehicle();
         } catch (IllegalArgumentException e) {
             System.out.println("Error");

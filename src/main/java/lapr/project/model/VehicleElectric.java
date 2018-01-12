@@ -128,63 +128,63 @@ public class VehicleElectric extends Vehicle {
     /**
      * Sets the minimum RPM of the vehicle's engine.
      *
-     * @param m_min_rpm The new minimum RPM of the vehicle's engine.
+     * @param mMinRpm The new minimum RPM of the vehicle's engine.
      */
     @Override
-    public void setMinRPM(double m_min_rpm) {
-        if (m_min_rpm < 0) {
+    public void setMinRPM(double mMinRpm) {
+        if (mMinRpm < 0) {
             throw new IllegalArgumentException("The mimimum rounds per minute "
                     + "of the vehicle should be positive.");
         }
 
-        this.minRPM = m_min_rpm;
+        this.minRPM = mMinRpm;
     }
 
     /**
      * Sets the maximum RPM of the vehicle's engine.
      *
-     * @param m_max_rpm The new maximum RPM of the vehicle's engine.
+     * @param mMaxRpm The new maximum RPM of the vehicle's engine.
      */
     @Override
-    public void setMaxRPM(double m_max_rpm) {
-        if (m_max_rpm <= 0) {
+    public void setMaxRPM(double mMaxRpm) {
+        if (mMaxRpm <= 0) {
             throw new IllegalArgumentException("The maximum rounds per minute "
                     + "of the vehicle should be positive.");
         }
 
-        this.maxRPM = m_max_rpm;
+        this.maxRPM = mMaxRpm;
     }
 
     /**
      * Sets the final drive ratio of the vehicle.
      *
-     * @param m_final_drive_ratio The new final drive ratio of the vehicle.
+     * @param mFinalDriveRatio The new final drive ratio of the vehicle.
      */
     @Override
-    public void setFinalDriveRatio(double m_final_drive_ratio) {
-        if (m_final_drive_ratio <= 0) {
+    public void setFinalDriveRatio(double mFinalDriveRatio) {
+        if (mFinalDriveRatio <= 0) {
             throw new IllegalArgumentException("The final drive of the vehicle "
                     + "should be positive.");
         }
 
-        this.finalDriveRatio = m_final_drive_ratio;
+        this.finalDriveRatio = mFinalDriveRatio;
     }
 
     @Override
-    public void setGearbox(Gearbox m_gearbox) {
-        if (m_gearbox == null) {
+    public void setGearbox(Gearbox mGearbox) {
+        if (mGearbox == null) {
             throw new IllegalArgumentException("The vehicle should have a gearbox. ");
         }
 
-        this.gearbox = m_gearbox;
+        this.gearbox = mGearbox;
     }
 
-    public void setAccelerator(Accelerator m_accelerator) {
-        if (m_accelerator == null) {
+    public void setAccelerator(Accelerator mAccelerator) {
+        if (mAccelerator == null) {
             throw new IllegalArgumentException("The vehicle should have a gearbox. ");
         }
 
-        this.acceleratorPedal = m_accelerator;
+        this.acceleratorPedal = mAccelerator;
     }
 
     /**
@@ -192,14 +192,14 @@ public class VehicleElectric extends Vehicle {
      * <p>
      * The ratio must lie between 0 and 1.
      *
-     * @param m_energy_regeneration_ratio (double) The new value for the energy
+     * @param mEnergyRegenerationRatio (double) The new value for the energy
      * regeneration ratio.
      */
-    public void setEnergyRegenerationRatio(double m_energy_regeneration_ratio) {
-        if (m_energy_regeneration_ratio < 0 || m_energy_regeneration_ratio > 1) {
+    public void setEnergyRegenerationRatio(double mEnergyRegenerationRatio) {
+        if (mEnergyRegenerationRatio < 0 || mEnergyRegenerationRatio > 1) {
             throw new IllegalArgumentException("Energy regeneration ratio must lie between 0 and 1!");
         }
-        this.energyRegenerationRatio = m_energy_regeneration_ratio;
+        this.energyRegenerationRatio = mEnergyRegenerationRatio;
     }
 
     /**
@@ -212,17 +212,6 @@ public class VehicleElectric extends Vehicle {
      */
     @Override
     public String toString() {
-//        StringBuilder sb = new StringBuilder();
-//
-//        sb.append(super.toString());
-//        sb.append("\tRPM Minimum: ").append(this.m_min_rpm).append("\n");
-//        sb.append("\tRPM Maximum: ").append(this.m_max_rpm).append("\n");
-//        sb.append("\tFinal Drive: ").append(this.m_final_drive_ratio).append(" m\n");
-//        sb.append("\tEnergy Regeneration Ratio: ").append(this.m_energy_regeneration_ratio).append(" \n");
-//        sb.append(this.m_gearbox.toString());
-//        sb.append(this.m_accelerator.toString());
-//
-//        return sb.toString();
 
         return super.toString();
     }

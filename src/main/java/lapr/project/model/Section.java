@@ -208,10 +208,7 @@ public class Section {
         if (this.direction != other.direction) {
             return false;
         }
-        if (!Objects.equals(this.listOfSegments, other.listOfSegments)) {
-            return false;
-        }
-        return true;
+        return Objects.equals(this.listOfSegments, other.listOfSegments);
     }
 
     public boolean validate() {

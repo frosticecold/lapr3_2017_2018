@@ -224,10 +224,7 @@ public class Road {
         if (!this.name.equalsIgnoreCase(other.name)) {
             return false;
         }
-        if (!this.typology.equalsIgnoreCase(other.typology)) {
-            return false;
-        }
-        return true;
+        return this.typology.equalsIgnoreCase(other.typology);
     }
 
     /**
