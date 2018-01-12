@@ -8,7 +8,7 @@ package lapr.project.model;
 import lapr.project.model.Junction;
 import lapr.project.model.Section;
 import lapr.project.model.Vehicle;
-import lapr.project.networkanalysis.AlgorithmResults;
+import lapr.project.model.AlgorithmResults;
 import lapr.project.utils.graphbase.Graph;
 
 /**

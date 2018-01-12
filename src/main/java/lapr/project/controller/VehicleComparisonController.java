@@ -10,9 +10,15 @@ import java.util.List;
 import lapr.project.model.Junction;
 import lapr.project.model.Project;
 import lapr.project.model.Vehicle;
+<<<<<<< HEAD
 import lapr.project.networkanalysis.AlgorithmResults;
 import lapr.project.model.FastestPathAlgorithm;
 import lapr.project.model.PathAlgorithm;
+=======
+import lapr.project.model.AlgorithmResults;
+import lapr.project.pathalgorithms.FastestPathAlgorithm;
+import lapr.project.pathalgorithms.PathAlgorithm;
+>>>>>>> 7c5420ed46e4ab92171dd0fd27424a9cf3fd2340
 import lapr.project.model.TheoreticalEnergyEfficientAlgorithm;
 import lapr.project.model.EnergySavingModeAlgorithm;
 import lapr.project.utils.Session;

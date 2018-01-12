@@ -8,7 +8,12 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+<<<<<<< HEAD
 import lapr.project.networkanalysis.AlgorithmResults;
+=======
+import lapr.project.pathalgorithms.FastestPathAlgorithm;
+import lapr.project.pathalgorithms.PathAlgorithm;
+>>>>>>> 7c5420ed46e4ab92171dd0fd27424a9cf3fd2340
 import lapr.project.utils.Session;
 import lapr.project.utils.graphbase.Graph;
 import org.junit.Test;

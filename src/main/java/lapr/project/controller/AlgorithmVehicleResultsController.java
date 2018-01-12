@@ -7,7 +7,7 @@ package lapr.project.controller;
 
 import java.io.IOException;
 import java.util.List;
-import lapr.project.networkanalysis.AlgorithmResults;
+import lapr.project.model.AlgorithmResults;
 import lapr.project.utils.ExportHTML;
 
 /**

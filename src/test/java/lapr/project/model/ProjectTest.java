@@ -11,7 +11,6 @@ import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import lapr.project.networkanalysis.AlgorithmResults;
 import lapr.project.utils.Session;
 import lapr.project.utils.graphbase.Graph;
 import org.junit.After;

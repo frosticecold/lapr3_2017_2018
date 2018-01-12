@@ -106,18 +106,18 @@ public class PhysicsCalculus {
 
         return result;
     }
-    
-    public static double[] calcVelocityHighestGearLowestThrotlle(Vehicle car){
+
+    public static double[] calcVelocityHighestGearLowestThrotlle(Vehicle car) {
         Regime lowestSFCRegime = car.getThrottles().get(25).getRegimeList().get(0);
         for (Regime regime : car.getThrottles().get(25).getRegimeList()) {
-            if(regime.getSFC()< lowestSFCRegime.getSFC()){
+            if (regime.getSFC() < lowestSFCRegime.getSFC()) {
                 lowestSFCRegime = regime;
             }
         }
         double gearRatio = car.getGearbox().getLowestGearRatio();
         double minvelocity = calcVelocityBasedOnRPMandGear(car, lowestSFCRegime.getRpmLow(), gearRatio);
-        double velocity =  calcVelocityBasedOnRPMandGear(car, lowestSFCRegime.getRpmHigh(), gearRatio);
-        double result[] = {minvelocity,velocity};
+        double velocity = calcVelocityBasedOnRPMandGear(car, lowestSFCRegime.getRpmHigh(), gearRatio);
+        double result[] = {minvelocity, velocity};
         return result;
     }
 
@@ -243,8 +243,11 @@ public class PhysicsCalculus {
                         results[0] = gear_index;
                         results[1] = wrpm;
                         results[2] = torque;
-                        results[3] = car.getThrottles().get(throttle).getSFCByRPM(wrpm);
+
                         results[4] = car.getFinalDriveRatio();
+                        if (car instanceof VehicleCombustion) {
+                            results[3] = car.getThrottles().get(throttle).getSFCByRPM(wrpm);
+                        }
                     }
 
                 }
