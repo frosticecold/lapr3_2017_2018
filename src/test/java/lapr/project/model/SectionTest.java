@@ -576,6 +576,29 @@ public class SectionTest {
     }
 
     @Test
+    public void testIsLastSegment() {
+        Section instance = new Section();
+        instance.setBeginJunction(new Junction("Begin junction"));
+        instance.setEndJunction(new Junction("End junction"));
+        instance.setDirection(Section.Direction.DIRECT);
+        instance.setSectionID(1);
+        instance.setRoadID("Road 1");
+        instance.setTypology("Regular");
+        List<Segment> segmentList = new ArrayList<>();
+        Segment s1 = new Segment(1, 10, 10, 15, 0, 20, 100, 80);
+        Segment s2 = new Segment(2, 10, 10, 15, 0, 20, 100, 80);
+        Segment s3 = new Segment(3, 10, 10, 15, 0, 20, 100, 80);
+        Segment s4 = new Segment(4, 10, 10, 15, 0, 20, 100, 80);
+        segmentList.add(s1);
+        segmentList.add(s2);
+        segmentList.add(s3);
+        segmentList.add(s4);
+        instance.setSegmentList(segmentList);
+        assertTrue(instance.isLastSegment(s4));
+        assertFalse(instance.isLastSegment(s2));
+    }
+
+    @Test
     public void testReverseSegment() {
         System.out.println("testReverseSegment");
         Section instance = new Section();

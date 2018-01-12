@@ -250,6 +250,7 @@ public class VehicleElectricTest {
         try {
             instance.setMinRPM(-200);
         } catch (IllegalArgumentException e) {
+            System.out.println("erro");
         }
         instance.setMaxRPM(500);
         instance.setFinalDriveRatio(1.3);
@@ -302,14 +303,15 @@ public class VehicleElectricTest {
         instance.setMaxRPM(500);
         try {
             instance.setFinalDriveRatio(-1.3);
-        } catch (IllegalArgumentException ex) {
-        }
-        instance.setEnergyRegenerationRatio(0.8);
-        try {
             instance.validateElectricVehicle();
-        } catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException ex) {
             System.out.println("erro");
         }
+        instance.setEnergyRegenerationRatio(0.8);
+        instance.setFinalDriveRatio(1.3);
+
+        instance.validateElectricVehicle();
+
     }
 
     @Test
@@ -319,8 +321,10 @@ public class VehicleElectricTest {
         instance.setMinRPM(200);
         instance.setMaxRPM(500);
         instance.setFinalDriveRatio(1.3);
-        try{
-        instance.setEnergyRegenerationRatio(-0.8);}catch(IllegalArgumentException ex){}
+        try {
+            instance.setEnergyRegenerationRatio(-0.8);
+        } catch (IllegalArgumentException ex) {
+        }
         try {
             instance.validateElectricVehicle();
         } catch (IllegalArgumentException e) {
@@ -338,9 +342,10 @@ public class VehicleElectricTest {
         }
         instance.setMaxRPM(500);
         instance.setFinalDriveRatio(1.3);
-        try{
-        instance.setEnergyRegenerationRatio(1.8);
-        }catch(IllegalArgumentException ex){}
+        try {
+            instance.setEnergyRegenerationRatio(1.8);
+        } catch (IllegalArgumentException ex) {
+        }
         try {
             instance.validateElectricVehicle();
         } catch (IllegalArgumentException e) {
