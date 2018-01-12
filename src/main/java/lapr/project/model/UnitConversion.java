@@ -144,9 +144,34 @@ public class UnitConversion {
         String fullTime = "";
 
         int hours = ((int) seconds / 3600);
-        int min = ((int)seconds % 3600) / 60;
-        int sec = (int)seconds % 60;
-        fullTime = String.format("%02d:%02d:%02d", hours,min,sec);
+        int min = ((int) seconds % 3600) / 60;
+        int sec = (int) seconds % 60;
+        fullTime = String.format("%02d:%02d:%02d", hours, min, sec);
         return fullTime;
     }
+
+    public static double convertGramsOfFuelToLiters(String fuel, double fuelGrams) {
+        double density = -1;
+        if ("gasoline".equalsIgnoreCase(fuel)) {
+            density = Constants.DENSITY_GASOLINE;
+        } else {
+            if ("diesel".equalsIgnoreCase(fuel)) {
+                density = Constants.DENSITY_DIESEL;
+            }
+        }
+        return (fuelGrams / 1000) / density;
+    }
+
+    public static double convertLitersToLiterPer100KM(double liters, double distance) {
+        if (distance > 0) {
+            return (liters * 100) / distance;
+        }
+        return -1;
+    }
+
+    public static double convertJoulesToKilowattHour(double energyJoule) {
+        return energyJoule / (36 * Math.pow(10, 5));
+
+    }
+
 }

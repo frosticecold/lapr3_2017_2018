@@ -3,12 +3,6 @@ package lapr.project.model;
 import java.text.DecimalFormat;
 import java.util.LinkedList;
 import java.util.Objects;
-import lapr.project.model.UnitConversion;
-import lapr.project.model.Junction;
-import lapr.project.model.Project;
-import lapr.project.model.Road;
-import lapr.project.model.Section;
-import lapr.project.model.Vehicle;
 
 public class AlgorithmResults {
 
@@ -22,6 +16,7 @@ public class AlgorithmResults {
     private final double energy;
     private final double vehicleLoad;
     private final String algorithmType;
+    private final double fuelGrams;
 
     public AlgorithmResults(Project project, LinkedList<Junction> junctionPath, LinkedList<Section> fastestPath, Vehicle vehicle, double[] results, String algorithmType) {
         this.project = project;
@@ -32,6 +27,11 @@ public class AlgorithmResults {
         this.energy = results[1];
         this.vehicleLoad = vehicle.getCurrentLoad();
         this.algorithmType = algorithmType;
+        if (results.length > 2) {
+            this.fuelGrams = results[2];
+        } else {
+            fuelGrams = -1;
+        }
     }
 
     public void calculate() {
@@ -108,6 +108,10 @@ public class AlgorithmResults {
         return algorithmType;
     }
 
+    public double getFuelGrams() {
+        return fuelGrams;
+    }
+
     @Override
     public int hashCode() {
         int hash = 5;
@@ -172,8 +176,23 @@ public class AlgorithmResults {
         sb.append("\nDistance:").append(distance).append(" km");
         sb.append("\nTravel time:").append(UnitConversion.convertSecondstoHoursMinSec(travelTime)).append(" h");
         sb.append("\nCost:").append(new DecimalFormat("#.##").format(cost)).append(" €");
-        sb.append("\nEnergy:").append(String.format("%.2f",energy / 1000000)).append(" MJ");
-        sb.append("\nConsumption:").append(new DecimalFormat("#.##").format(UnitConversion.convertJoulesToLitres(vehicle.getFuel(), energy))).append(" liters/100km");
+        sb.append("\nEnergy:").append(String.format("%.2f", UnitConversion.convertJoulesToMegaJoules(energy))).append(" MJ");
+
+        if (vehicle instanceof VehicleCombustion) {
+            if (fuelGrams > 0) {
+                double liters = UnitConversion.convertGramsOfFuelToLiters(vehicle.getFuel(), fuelGrams);
+                double km100 = UnitConversion.convertLitersToLiterPer100KM(liters, distance);
+                sb.append(("\nFuel liters:")).append(new DecimalFormat("#.##").format(liters)).append((" (l)"));
+                sb.append("\nConsumption:").append(new DecimalFormat("#.##").format(km100)).append(" liters/100km");
+            }
+        } else {
+            if (vehicle instanceof VehicleElectric) {
+                double kwh = UnitConversion.convertJoulesToKilowattHour(energy);
+                sb.append("\nComsumption:").append(new DecimalFormat("#.##").format(kwh)).append(" kW/h");
+
+            }
+        }
+
         return sb.toString();
     }
 
@@ -200,7 +219,7 @@ public class AlgorithmResults {
                 + "<td>").append(this.algorithmType).append("</td>"
                 + "<td>").append(this.vehicle.getName()).append("</td>"
                 + "<td>").append(UnitConversion.convertSecondstoHoursMinSec(this.travelTime)).append(" h</td>"
-                + "<td>").append(String.format("%.2f",this.energy / 1000000)).append(" MJ</td>"
+                + "<td>").append(String.format("%.2f", UnitConversion.convertJoulesToMegaJoules(energy))).append(" MJ</td>"
                 + "<td>").append(new DecimalFormat("#.##").format(this.cost)).append(" €</td>"
                 + "<td>").append(new DecimalFormat("#.##").format(UnitConversion.convertJoulesToLitres(vehicle.getFuel(), energy))).append(" liters/100km</td>");
         sb.append("</tr>\n");
