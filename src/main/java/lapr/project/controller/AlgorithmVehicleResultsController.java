@@ -29,9 +29,6 @@ public class AlgorithmVehicleResultsController {
     }
 
     public boolean checkConvertBtn(boolean button) {
-        if (button == false) {
-            return true;
-        }
-        return false;
+        return button == false;
     }
 }

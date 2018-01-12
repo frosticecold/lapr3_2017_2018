@@ -306,9 +306,9 @@ public abstract class Vehicle {
      * @return
      */
     public double getMaximumPermitedVelocity(String road) {
-        road = road.toUpperCase();
+        String roadU = road.toUpperCase();
         for (String roadkey : mapRoadVelocityLimit.keySet()) {
-            if (road.contains(roadkey.toUpperCase())) {
+            if (roadU.contains(roadkey.toUpperCase())) {
                 return mapRoadVelocityLimit.get(roadkey);
             }
         }
@@ -463,25 +463,25 @@ public abstract class Vehicle {
     /**
      * Method that changes the wheel size of the vehicle(m)
      *
-     * @param wheel_size
+     * @param wheelSize
      */
-    public void setWheelSize(double wheel_size) {
-        if (wheel_size <= 0) {
+    public void setWheelSize(double wheelSize) {
+        if (wheelSize <= 0) {
             throw new IllegalArgumentException("The wheel size of the vehicle must be greater than 0");
         }
-        this.wheelSize = wheel_size;
+        this.wheelSize = wheelSize;
     }
 
     /**
      * Method that changes the frontal area of the vehicle (m^2)
      *
-     * @param frontal_area
+     * @param frontalArea
      */
-    public void setFrontalArea(double frontal_area) {
-        if (frontal_area <= 0) {
+    public void setFrontalArea(double frontalArea) {
+        if (frontalArea <= 0) {
             throw new IllegalArgumentException("The frontal area of the vehicle must be greater than 0");
         }
-        this.frontalArea = frontal_area;
+        this.frontalArea = frontalArea;
     }
 
     /**
@@ -499,13 +499,13 @@ public abstract class Vehicle {
     /**
      * Method that changes the Drag Coefficient of a vehicle
      *
-     * @param drag_coefficient
+     * @param dragCoefficient
      */
-    public void setDragCoefficient(double drag_coefficient) {
-        if (drag_coefficient <= 0) {
+    public void setDragCoefficient(double dragCoefficient) {
+        if (dragCoefficient <= 0) {
             throw new IllegalArgumentException("The drag coefficient of the vehicle must be greater than 0");
         }
-        this.dragCoefficient = drag_coefficient;
+        this.dragCoefficient = dragCoefficient;
     }
 
     /**
@@ -571,13 +571,13 @@ public abstract class Vehicle {
     /**
      * Method that changes the vehicles class
      *
-     * @param vehicle_class
+     * @param vehicleClass
      */
-    public void setVehicleClass(int vehicle_class) {
-        if (vehicle_class < 0) {
+    public void setVehicleClass(int vehicleClass) {
+        if (vehicleClass < 0) {
             throw new IllegalArgumentException("The vehicle_class of the vehicle must positive");
         }
-        this.vehicleClass = vehicle_class;
+        this.vehicleClass = vehicleClass;
     }
 
     /**
@@ -701,10 +701,7 @@ public abstract class Vehicle {
         if (!this.fuel.equalsIgnoreCase(other.fuel)) {
             return false;
         }
-        if (!this.motorization.equalsIgnoreCase(other.motorization)) {
-            return false;
-        }
-        return true;
+        return this.motorization.equalsIgnoreCase(other.motorization);
     }
 
 }

@@ -1,7 +1,6 @@
 package lapr.project.networkanalysis;
 
 import java.text.DecimalFormat;
-import java.util.Date;
 import java.util.LinkedList;
 import java.util.Objects;
 import lapr.project.calculations.UnitConversion;
@@ -24,7 +23,6 @@ public class AlgorithmResults {
     private final double vehicleLoad;
     private final String algorithmType;
 
-    
     public AlgorithmResults(Project project, LinkedList<Junction> junctionPath, LinkedList<Section> fastestPath, Vehicle vehicle, double[] results, String algorithmType) {
         this.project = project;
         this.junctionpath = junctionPath;
@@ -37,28 +35,28 @@ public class AlgorithmResults {
     }
 
     public void calculate() {
-        double temp_cost = 0;
-        double toll_value = 0;
-        double temp_distance = 0;
+        double tempCost = 0;
+        double tollValue;
+        double tempDistance = 0;
         for (Section section : sectionpath) {
-            temp_distance += section.getSectionLength();
+            tempDistance += section.getSectionLength();
             String sectionID = section.getRoadID();
             Road rd = project.getRoadByRoadID(sectionID);
-            if (rd.getTypology().equalsIgnoreCase("toll highway")) {
+            if ("toll highway".equalsIgnoreCase(rd.getTypology())) {
                 if (rd.getTollValue(vehicle.getVehicleClass()) > 0) {
-                    toll_value = rd.getTollValue(vehicle.getVehicleClass());
-                    temp_cost += toll_value * section.getSectionLength();
+                    tollValue = rd.getTollValue(vehicle.getVehicleClass());
+                    tempCost += tollValue * section.getSectionLength();
                 }
 
             }
-            if (rd.getTypology().equalsIgnoreCase("gantry toll highway")) {
+            if ("gantry toll highway".equalsIgnoreCase(rd.getTypology())) {
                 if (section.getTollValue(vehicle.getVehicleClass()) > 0) {
-                    temp_cost += section.getTollValue(vehicle.getVehicleClass());
+                    tempCost += section.getTollValue(vehicle.getVehicleClass());
                 }
             }
         }
-        cost = temp_cost;
-        distance = temp_distance;
+        cost = tempCost;
+        distance = tempDistance;
 
     }
 
@@ -155,12 +153,9 @@ public class AlgorithmResults {
         if (!Objects.equals(this.sectionpath, other.sectionpath)) {
             return false;
         }
-        if (!Objects.equals(this.vehicle, other.vehicle)) {
-            return false;
-        }
-        return true;
+        return Objects.equals(this.vehicle, other.vehicle);
     }
-    
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -174,15 +169,10 @@ public class AlgorithmResults {
             sb.append(s);
             sb.append("\n");
         }
-//        sb.append("\nJunctions:\n");
-//        for (Junction j : junctionpath) {
-//            sb.append(j);
-//            sb.append("\n");
-//        }
         sb.append("\nDistance:").append(distance).append(" km");
         sb.append("\nTravel time:").append(UnitConversion.convertSecondstoHoursMinSec(travelTime)).append("h");
         sb.append("\nCost:").append(new DecimalFormat("#.##").format(cost)).append(" €");
-        sb.append("\nEnergy:").append(String.format("%.2e",energy)).append(" J");
+        sb.append("\nEnergy:").append(String.format("%.2e", energy)).append(" J");
         return sb.toString();
     }
 
@@ -197,27 +187,23 @@ public class AlgorithmResults {
         StringBuilder path = new StringBuilder();
         int i = 1;
         for (Section section : sectionpath) {
-            path.append(section.toStringHTML() + "\n").append("Section " + i + ":");
+            path.append(section.toStringHTML()).append("\n").append("Section ").append(i).append(":");
             i++;
         }
 
-        //sb.append("<h1>Fastest Path Results</h1>");
+        String td = "<td>";
+
         sb.append("<table>\n");
         sb.append("\t<tr><th>Vehicle</th><th>Vehicle</th><th>Travel Time</th><th>Consumed Energy</th><th>Cost</th></tr>\n");
 
-        sb.append("<tr>"
-                + "<td>").append(this.algorithmType).append("</td>"
-                + "<td>").append(this.vehicle.getName()).append("</td>"
-                + "<td>").append(UnitConversion.convertSecondstoHoursMinSec(this.travelTime)).append(" h</td>"
-                + "<td>").append(String.format("%.2e",this.energy)).append(" J</td>"
-                + "<td>").append(new DecimalFormat("#.##").format(this.cost)).append(" €</td>");
+        sb.append("<tr>").append(td).append(this.algorithmType).append("</td>").append(td).append(this.vehicle.getName()).append("</td>").append(td).append(UnitConversion.convertSecondstoHoursMinSec(this.travelTime)).append(" h</td>"
+                + td).append(String.format("%.2e", this.energy)).append(" J</td>").append(td).append(new DecimalFormat("#.##").format(this.cost)).append(" €</td>");
         sb.append("</tr>\n");
         sb.append("</table>\n");
         sb.append("<h2> </h2>");
         sb.append("<table>\n");
         sb.append("\t<tr><th>Path</th></tr>\n");
-        sb.append("<tr>"
-                + "<td>").append(path).append("</td>");
+        sb.append("<tr>").append(td).append(path).append("</td>");
         sb.append("</tr>\n");
         sb.append("</table>");
         return sb.toString();

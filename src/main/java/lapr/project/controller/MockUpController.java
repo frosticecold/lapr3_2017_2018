@@ -7,10 +7,6 @@ import lapr.project.utils.Session;
 
 public class MockUpController {
 
-    public MockUpController() {
-
-    }
-
     public Project getActiveProject() {
         return Session.getActiveProject();
     }

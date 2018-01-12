@@ -208,5 +208,8 @@ public class GearboxTest {
         Gear expResult=g5;
         Gear result=instance.getLastGear();
         assertEquals(result,expResult);
+        g1.setGearID(Integer.MIN_VALUE);
+        instance.getLastGear();
+        
     }
 }

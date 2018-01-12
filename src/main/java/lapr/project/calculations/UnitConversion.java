@@ -32,10 +32,10 @@ public class UnitConversion {
     }
 
     public static double convertJoulesToLitres(String fuel, double energy) {
-        if (fuel.equalsIgnoreCase("gasoline")) {
+        if ("gasoline".equalsIgnoreCase(fuel)) {
             return convertJoulesToMegaJoules(energy) / Constants.GASOLINE_ENERGY_PER_LITRE;
         } else {
-            if (fuel.equalsIgnoreCase("diesel")) {
+            if ("diesel".equalsIgnoreCase(fuel)) {
                 return convertJoulesToMegaJoules(energy) / Constants.DIESEL_ENERGY_PER_LITRE;
             }
         }

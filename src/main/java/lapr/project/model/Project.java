@@ -47,21 +47,21 @@ public class Project {
         listOfResults = new ListOfResults();
     }
 
-    public Junction getJunction(String junction_id) {
-        if (junction_id == null || junction_id.trim().isEmpty()) {
+    public Junction getJunction(String junctionID) {
+        if (junctionID == null || junctionID.trim().isEmpty()) {
             throw new IllegalArgumentException("Junction name is invalid");
         }
         for (Junction j : roadNetwork.vertices()) {
-            if (j.getName().equalsIgnoreCase(junction_id)) {
+            if (j.getName().equalsIgnoreCase(junctionID)) {
                 return j;
             }
         }
         return null;
     }
 
-    public Road getRoadByRoadID(String road_id) {
+    public Road getRoadByRoadID(String roadID) {
         for (Road r : listRoads) {
-            if (r.getRoadID().equals(road_id)) {
+            if (r.getRoadID().equals(roadID)) {
                 return r;
             }
         }
@@ -99,12 +99,12 @@ public class Project {
         return roadNetwork.getEdge(j1, j2).getElement();
     }
 
-    public void setRoadNetwork(Graph<Junction, Section> m_road_network) {
-        this.roadNetwork = m_road_network;
+    public void setRoadNetwork(Graph<Junction, Section> mRoadNetwork) {
+        this.roadNetwork = mRoadNetwork;
     }
 
-    public void setListVehicles(VehicleList vehicle_list) {
-        this.listOfVehicles = vehicle_list;
+    public void setListVehicles(VehicleList vehicleList) {
+        this.listOfVehicles = vehicleList;
     }
 
     public void setListRoads(List<Road> listOfRoads) {

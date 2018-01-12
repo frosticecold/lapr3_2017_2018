@@ -62,14 +62,10 @@ public class Regime {
         if (rpm > rpmLow && rpm < rpmHigh) {
             double m = (torqueHigh - torqueLow) / (rpmHigh - rpmLow);
             double b = torqueLow - (m * rpmLow);
-            double torque = (m * rpm) + b;
-            return torque;
+            return (m * rpm) + b;
 
         }
-//        if (Math.abs(rpm - rpmHigh) < 0.0000001) {
         return torqueHigh;
-//        }
-//        return -1;
     }
 
     public double getSFCByRPM(double rpm) {

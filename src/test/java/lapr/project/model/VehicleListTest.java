@@ -221,6 +221,7 @@ public class VehicleListTest {
          Vehicle result;
         result = instance.getVehicleByName(name);
         assertEquals(expResult,result);
+        assertNull(instance.getVehicleByName("Ferrari"));
     }
 
 }

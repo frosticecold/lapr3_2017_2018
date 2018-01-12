@@ -20,6 +20,7 @@ public class DataBaseConnectionUI extends javax.swing.JFrame {
 
     /**
      * Creates new form DataBaseConnectionUI2
+     * @param parent
      */
     public DataBaseConnectionUI(java.awt.Frame parent) {
         initComponents();
@@ -50,7 +51,7 @@ public class DataBaseConnectionUI extends javax.swing.JFrame {
         cancelButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Database Login");
+        setTitle("Test Connection");
         setResizable(false);
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/login.jpg"))); // NOI18N
@@ -73,8 +74,8 @@ public class DataBaseConnectionUI extends javax.swing.JFrame {
 
         urlTextField.setText("jdbc:oracle:thin://@vsrvbd1.dei.isep.ipp.pt:1521/pdborcl");
 
-        okButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ok_icon.png"))); // NOI18N
-        okButton.setText("Ok");
+        okButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/db_connect.png"))); // NOI18N
+        okButton.setText("Test");
         okButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 okButtonActionPerformed(evt);
@@ -82,7 +83,7 @@ public class DataBaseConnectionUI extends javax.swing.JFrame {
         });
 
         cancelButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/return_icon.png"))); // NOI18N
-        cancelButton.setText("Cancel");
+        cancelButton.setText("Close");
         cancelButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cancelButtonActionPerformed(evt);
@@ -109,9 +110,8 @@ public class DataBaseConnectionUI extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(0, 0, Short.MAX_VALUE)))))
+                                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(0, 0, Short.MAX_VALUE)))
                         .addGap(93, 93, 93))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -175,12 +175,15 @@ public class DataBaseConnectionUI extends javax.swing.JFrame {
                 String username = usernameJTextField.getText();
                 String password = String.valueOf(passwordJTextField.getPassword());
                 String url = urlTextField.getText();
-                controller.connectToDatabase(username, password, url);
-                JOptionPane.showMessageDialog(this, "Connected to Database with Success!", "Welcome", JOptionPane.INFORMATION_MESSAGE);
-                dispose();
+                if (controller.connectToDatabase(username, password, url) != null) {
+                    JOptionPane.showMessageDialog(this, "Connection established.", "Success", JOptionPane.INFORMATION_MESSAGE);
+                    dispose();
+                } else {
+                    JOptionPane.showMessageDialog(this, "Couldn't establish the connection to the specified server.");
+                }
             } else {
                 JOptionPane.showMessageDialog(this, "Please insert all necessary information", "Error!", JOptionPane.ERROR_MESSAGE);
-            }         
+            }
         } catch (IllegalArgumentException e) {
             JOptionPane.showMessageDialog(this, "Wrong username or password!", "Error!", JOptionPane.INFORMATION_MESSAGE);
         }

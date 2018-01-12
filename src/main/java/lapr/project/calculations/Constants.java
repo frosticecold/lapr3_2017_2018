@@ -1,6 +1,11 @@
 package lapr.project.calculations;
 
-public class Constants {
+public final class Constants {
+
+    private Constants() {
+        // Throw an exception if this ever *is* called
+        throw new AssertionError("Instantiating utility class.");
+    }
 
     public static final float GRAVITY = 9.80665f;
     public static final float FUEL_GASOLINE = 44.4f;

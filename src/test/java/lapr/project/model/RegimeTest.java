@@ -71,24 +71,28 @@ public class RegimeTest {
         try {
             reg1.getTorqueByRPM(100);
         } catch (IllegalArgumentException ex) {
+            System.out.println("erro");
         }
-        reg1.getTorqueByRPM(5000);
+        assertTrue(reg1.getTorqueByRPM(5000) != 0);
         try {
             reg1.getTorqueByRPM(400000);
         } catch (IllegalArgumentException ex) {
+            System.out.println("erro");
         }
-        reg1.getTorqueByRPM(2000);
-        reg1.getTorqueByRPM(10000);
+        assertTrue(reg1.getTorqueByRPM(2000) != 0);
+        assertTrue(reg1.getTorqueByRPM(10000) != 0);
 
         System.out.println("testGetSFCbyRPM");
         try {
             reg1.getSFCByRPM(100);
         } catch (IllegalArgumentException ex) {
+            System.out.println("invalid param");
         }
         reg1.getSFCByRPM(5000);
         try {
             reg1.getSFCByRPM(50000);
         } catch (IllegalArgumentException ex) {
+            System.out.println("invalid param");
         }
 
         assertEquals(reg1.getTorqueByRPM(2000),100,1);
