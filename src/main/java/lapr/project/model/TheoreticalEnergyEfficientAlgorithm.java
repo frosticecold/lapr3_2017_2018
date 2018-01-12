@@ -6,7 +6,6 @@
 package lapr.project.model;
 
 import java.util.LinkedList;
-import lapr.project.networkanalysis.AlgorithmResults;
 import lapr.project.pathalgorithms.PathAlgorithm;
 import lapr.project.utils.Session;
 import lapr.project.utils.graphbase.Edge;

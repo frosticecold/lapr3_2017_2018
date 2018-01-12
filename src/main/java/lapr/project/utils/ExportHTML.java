@@ -14,7 +14,7 @@ import lapr.project.model.Junction;
 import lapr.project.model.Project;
 import lapr.project.model.Road;
 import lapr.project.model.Vehicle;
-import lapr.project.networkanalysis.AlgorithmResults;
+import lapr.project.model.AlgorithmResults;
 
 public class ExportHTML implements Exportable {
 
