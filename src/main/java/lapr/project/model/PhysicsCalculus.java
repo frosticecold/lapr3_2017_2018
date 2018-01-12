@@ -123,7 +123,7 @@ public class PhysicsCalculus {
 
     public static double calcEnginePower(double torque, double rpm) {
         if (torque <= 0 || rpm <= 0) {
-            throw new IllegalArgumentException(("Invalid paratemeter."));
+            return -1;
         }
         double result = (2 * Math.PI * torque * rpm) / 60;
         return result;
