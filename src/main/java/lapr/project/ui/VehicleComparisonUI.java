@@ -80,6 +80,7 @@ public class VehicleComparisonUI extends javax.swing.JFrame {
         accelerationUnitLabel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Vehicle Comparison");
 
         jScrollPane1.setViewportView(projectVehicleJList);
 

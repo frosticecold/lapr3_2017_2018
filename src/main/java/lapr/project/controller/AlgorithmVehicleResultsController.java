@@ -27,4 +27,11 @@ public class AlgorithmVehicleResultsController {
         ExportHTML export = new ExportHTML();
         export.exportListOfResults(results, path);
     }
+
+    public boolean checkConvertBtn(boolean button) {
+        if (button == false) {
+            return true;
+        }
+        return false;
+    }
 }

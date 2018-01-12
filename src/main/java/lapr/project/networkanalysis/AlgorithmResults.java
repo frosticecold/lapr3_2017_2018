@@ -1,7 +1,10 @@
 package lapr.project.networkanalysis;
 
+import java.text.DecimalFormat;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.Objects;
+import lapr.project.calculations.UnitConversion;
 import lapr.project.model.Junction;
 import lapr.project.model.Project;
 import lapr.project.model.Road;
@@ -162,9 +165,10 @@ public class AlgorithmResults {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("Project: ").append(project.getName()).append("\n");
+        sb.append("\nAlgorithm: ").append(algorithmType);
         sb.append("\n");
         sb.append("Vehicle: ").append(vehicle.getName()).append("\n");
-        sb.append("Vehicle total weight: ").append(vehicle.getTotalWeight()).append(("\n"));
+        sb.append("Vehicle total weight: ").append(vehicle.getTotalWeight()).append((" kg\n"));
         sb.append("\nPath:\n");
         for (Section s : sectionpath) {
             sb.append(s);
@@ -175,11 +179,10 @@ public class AlgorithmResults {
 //            sb.append(j);
 //            sb.append("\n");
 //        }
-        sb.append("\nDistance:").append(distance).append(" Km");
-        sb.append("\nTravel time:").append(travelTime).append(" s");
-        sb.append("\nCost:").append(cost).append(" €");
-        sb.append("\nEnergy:").append(energy).append(" J");
-        sb.append("\nAlgorithm: ").append(algorithmType);
+        sb.append("\nDistance:").append(distance).append(" km");
+        sb.append("\nTravel time:").append(UnitConversion.convertSecondstoHoursMinSec(travelTime)).append("h");
+        sb.append("\nCost:").append(new DecimalFormat("#.##").format(cost)).append(" €");
+        sb.append("\nEnergy:").append(String.format("%.2e",energy)).append(" J");
         return sb.toString();
     }
 
@@ -200,13 +203,14 @@ public class AlgorithmResults {
 
         //sb.append("<h1>Fastest Path Results</h1>");
         sb.append("<table>\n");
-        sb.append("\t<tr><th>Vehicle</th><th>Travel Time</th><th>Consumed Energy</th><th>Cost</th></tr>\n");
+        sb.append("\t<tr><th>Vehicle</th><th>Vehicle</th><th>Travel Time</th><th>Consumed Energy</th><th>Cost</th></tr>\n");
 
         sb.append("<tr>"
+                + "<td>").append(this.algorithmType).append("</td>"
                 + "<td>").append(this.vehicle.getName()).append("</td>"
-                + "<td>").append(this.travelTime).append(" s</td>"
-                + "<td>").append(this.energy).append(" J</td>"
-                + "<td>").append(this.cost).append(" €</td>");
+                + "<td>").append(UnitConversion.convertSecondstoHoursMinSec(this.travelTime)).append(" h</td>"
+                + "<td>").append(String.format("%.2e",this.energy)).append(" J</td>"
+                + "<td>").append(new DecimalFormat("#.##").format(this.cost)).append(" €</td>");
         sb.append("</tr>\n");
         sb.append("</table>\n");
         sb.append("<h2> </h2>");
