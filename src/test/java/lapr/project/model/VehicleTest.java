@@ -106,6 +106,13 @@ public class VehicleTest {
         acc.setThrottleList(throttleList);
 
         vh1 = new VehicleCombustion(1000, 5000, 4, gearbox1, acc, "Pickup", "Super duper pickup", "Car", Vehicle.FUEL_GASOLINE, 1, "Combustion", 2400, 1200, 0.39, 0.8, 2.4, 0.015, mapRoadVelocityLimit, throttleList);
+        try {
+            vh1.setRoadVelocityLimit(new HashMap<>());
+        } catch (IllegalArgumentException e) {
+            System.out.println("erro");
+        }
+        vh1.setRoadVelocityLimit(mapRoadVelocityLimit);
+        vh1.setCurrentLoad(0);
     }
 
     @After
@@ -411,7 +418,7 @@ public class VehicleTest {
             System.out.println("Error inserting Class");
         }
     }
- 
+
     /**
      * Test of getTorqueAtThrottle method, of class Vehicle.
      */
@@ -676,25 +683,22 @@ public class VehicleTest {
         sb.append("\t<li>Wheel Size: ").append(vh1.getWheelSize()).append(" m</li>\n");
 
         sb.append("\t<li>Velocity Limits:<ul>\n");
-        
+
         sb.append("\t\t<li>").append("HIGHWAY").append(": ")
                 .append("110.0").append(" m/s</li>\n");
 
-         sb.append("\t\t<li>").append("TEST").append(": ")
+        sb.append("\t\t<li>").append("TEST").append(": ")
                 .append("600.0").append(" m/s</li>\n");
-        
+
         sb.append("\t\t<li>").append("ROAD").append(": ")
                 .append("80.0").append(" m/s</li>\n");
 
-       
-        
         sb.append("\t</ul></li>\n");
 
         expResult = sb.toString();
         assertEquals(expResult, result);
     }
 
-    
     /**
      * Test of Equals, of class Vehicle.
      */
@@ -770,59 +774,63 @@ public class VehicleTest {
         Vehicle vh2 = new VehicleCombustion(1000, 5000, 4, gearbox1, acc, "Pickup", "Super duper pickup", "Car", Vehicle.FUEL_GASOLINE, 1, "Combustion", 2400, 1200, 0.39, 0.8, 2.4, 0.015, mapRoadVelocityLimit, throttleList);
         assertTrue(vh1.equals(vh2));
 
-        
         assertFalse(vh1.equals(null));
 
         vh2.setMass(500);
         assertFalse(vh1.equals(vh2));
         vh2.setMass(vh1.getMass());
-                
+
         vh2.setMaxLoad(895);
         assertFalse(vh1.equals(vh2));
         vh2.setMaxLoad(vh1.getMaxLoad());
-        
+
         vh2.setDragCoefficient(0.98);
         assertFalse(vh1.equals(vh2));
         vh2.setDragCoefficient(vh1.getDragCoefficient());
-        
+
         vh2.setFrontalArea(123);
         assertFalse(vh1.equals(vh2));
         vh2.setFrontalArea(vh1.getFrontalArea());
-        
+
         vh2.setRCC(3.26);
         assertFalse(vh1.equals(vh2));
         vh2.setRCC(vh1.getRCC());
-        
+
         vh2.setDescription("Very Good CAR");
         assertFalse(vh1.equals(vh2));
         vh2.setDescription(vh1.getDescription());
-        
+
         vh2.setType("Booster");
         assertFalse(vh1.equals(vh2));
         vh2.setType(vh1.getType());
-        
+
         vh2.setFuel("Crazy Fast");
         assertFalse(vh1.equals(vh2));
         vh2.setFuel(vh1.getFuel());
-        
+
         vh2.setMotorization("Rocket");
         assertFalse(vh1.equals(vh2));
         vh2.setMotorization(vh1.getMotorization());
-        
+
     }
+
     @Test
-    public void testGetMaximumPermitedVelocity2(){
-        Segment segment= new Segment(1, 10, 20, 15, 0, 20, 500, 80);
+    public void testGetMaximumPermitedVelocity2() {
+        Segment segment = new Segment(1, 10, 20, 15, 0, 20, 500, 80);
         String id = "E01";
         String name = "E01";
         String typology = "Test";
 
         Road road = new Road(id, name, typology);
-      double result=vh1.getMaximumPermitedVelocity2(segment, road.getName());
-      double expResult=471;
-      assertEquals(result,expResult,1);
+        double result = vh1.getMaximumPermitedVelocity2(segment, road.getName());
+        double expResult = 471;
+        assertEquals(result, expResult, 1);
     }
-    
-    
-    
+
+    @Test
+    public void testGetMapRoadVelocityLimit() {
+        System.out.println("TestGetMapRoadVelocityLimit");
+        assertTrue(!vh1.getMapRoadVelocityLimit().isEmpty());
+    }
+
 }

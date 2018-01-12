@@ -43,31 +43,25 @@ public class TollData extends DataAccess<Double> {
 
     public Map<Integer, Double> getRoadToll(int id) throws SQLException {
         List<SQLArgument> args = new ArrayList<>();
-        Map<Integer, Double> map = new HashMap<>();
 
         args.add(new SQLArgument(Integer.toString(id), OracleTypes.VARCHAR));
 
         ResultSet rs = super.callFunction("getRoadToll", args);
-        if (!rs.next()) {
-            return map;
-        } else {
-            rs.previous();
-            while (rs.next()) {
-                int tClass = rs.getInt("TOLL_CLASS");
-                double price = rs.getDouble("PRICE");
-                map.put(tClass, price);
-            }
-        }
-        return map;
+        return getToMapDatabase(rs);
     }
-    
+
     public Map<Integer, Double> getSectionToll(int id) throws SQLException {
         List<SQLArgument> args = new ArrayList<>();
-        Map<Integer, Double> map = new HashMap<>();
 
         args.add(new SQLArgument(Integer.toString(id), OracleTypes.VARCHAR));
 
         ResultSet rs = super.callFunction("getSectionToll", args);
+        return getToMapDatabase(rs);
+
+    }
+
+    private Map<Integer, Double> getToMapDatabase(ResultSet rs) throws SQLException {
+        Map<Integer, Double> map = new HashMap<>();
         if (!rs.next()) {
             return map;
         } else {
