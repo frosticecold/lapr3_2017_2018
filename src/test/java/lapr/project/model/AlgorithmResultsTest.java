@@ -372,7 +372,7 @@ public class AlgorithmResultsTest {
                 + "Distance:0.0 km\n"
                 + "Travel time:00:13:20 h\n"
                 + "Cost:0 €\n"
-                + "Energy:2,00 MJ";
+                + "Energy:2.00 MJ";
         String result = instance.toString();
         assertEquals(expResult, result);
 
