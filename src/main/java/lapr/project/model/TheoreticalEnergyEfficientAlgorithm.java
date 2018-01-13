@@ -519,7 +519,7 @@ public class TheoreticalEnergyEfficientAlgorithm implements PathAlgorithm {
                 //1) RPM
                 //2) Torque
                 //3) SFC
-                if (motoresult[0] != -1) {
+                if (motoresult[0] > 0) {
                     carresult = motoresult;
                     result[0] += deltatime;
                     if (motoresult[1] > 0) {
@@ -529,7 +529,7 @@ public class TheoreticalEnergyEfficientAlgorithm implements PathAlgorithm {
                     result[2] = currentspeed;
                 }
 
-                if (motoresult[0] == -1) {
+                if (motoresult[0] < 0) {
                     currentspeed++;
                     result[2] = currentspeed;
                     braking = false;

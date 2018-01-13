@@ -116,7 +116,7 @@ public class EnergySavingModeAlgorithm implements PathAlgorithm {
 //                        fuelcomsumption[kAdj]=results[3];
 //                    }
 //                }
-                if (results[0] != -1) {
+                if (results[0] > 0) {
                     if (!visited[kAdj] && energy[kAdj] > (energy[kOrg] + results[1])) {
                         time[kAdj] = time[kOrg] + results[0];
                         pathKeys[kAdj] = kOrg;
@@ -208,7 +208,7 @@ public class EnergySavingModeAlgorithm implements PathAlgorithm {
 
             }
 
-            if (tempresults[0] != -1) {
+            if (tempresults[0] > 0) {
                 //Results
                 //0) Time
                 //1) Energy
@@ -509,7 +509,7 @@ public class EnergySavingModeAlgorithm implements PathAlgorithm {
                 //1) RPM
                 //2) Torque
                 //3) SFC
-                if (motoresult[0] <0) {
+                if (motoresult[0] < 0) {
                     carresult = motoresult;
                     result[0] += deltatimeacel;
                     double enginepower = PhysicsCalculus.calcEnginePower(carresult[2], carresult[1]);
@@ -518,7 +518,7 @@ public class EnergySavingModeAlgorithm implements PathAlgorithm {
                     result[3] += PhysicsCalculus.calcFuelComsumption(carresult[3], enginepower, deltatimeacel);
                 }
 
-                if (motoresult[0] >0 ) {
+                if (motoresult[0] > 0) {
                     currentspeed++;
                     result[2] = currentspeed;
                     braking = false;
@@ -584,7 +584,7 @@ public class EnergySavingModeAlgorithm implements PathAlgorithm {
                 //1) RPM
                 //2) Torque
                 //3) SFC
-                if (motoresult[0] >0) {
+                if (motoresult[0] > 0) {
                     carresult = motoresult;
                     result[0] += deltatime;
                     if (motoresult[1] > 0) {
@@ -594,7 +594,7 @@ public class EnergySavingModeAlgorithm implements PathAlgorithm {
                     result[2] = currentspeed;
                 }
 
-                if (motoresult[0] <0) {
+                if (motoresult[0] < 0) {
                     currentspeed++;
                     result[2] = currentspeed;
                     braking = false;
@@ -655,13 +655,13 @@ public class EnergySavingModeAlgorithm implements PathAlgorithm {
             //1) RPM
             //2) Torque
             //3) SFC
-            if (motoresult[0] >0) {
+            if (motoresult[0] > 0) {
                 double enginepower = PhysicsCalculus.calcEnginePower(motoresult[2], motoresult[1]);
                 result[2] += (enginepower * deltatimeaccel);
                 result[3] += PhysicsCalculus.calcFuelComsumption(motoresult[3], enginepower, deltatimeaccel);
             }
 
-            if (motoresult[0] <0) {
+            if (motoresult[0] < 0) {
                 break;
             }
         }
