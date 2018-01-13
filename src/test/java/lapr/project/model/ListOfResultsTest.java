@@ -9,10 +9,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import lapr.project.model.AlgorithmResults;
-
-import lapr.project.model.FastestPathAlgorithm;
-import lapr.project.model.PathAlgorithm;
 
 import lapr.project.utils.Session;
 import lapr.project.utils.graphbase.Graph;

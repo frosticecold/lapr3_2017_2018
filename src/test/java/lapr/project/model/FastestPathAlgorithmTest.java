@@ -5,26 +5,11 @@
  */
 package lapr.project.model;
 
-import lapr.project.model.PathAlgorithm;
-import lapr.project.model.FastestPathAlgorithm;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import lapr.project.model.Accelerator;
-import lapr.project.model.Gear;
-import lapr.project.model.Gearbox;
-import lapr.project.model.Junction;
-import lapr.project.model.Project;
-import lapr.project.model.Regime;
-import lapr.project.model.Road;
-import lapr.project.model.Section;
-import lapr.project.model.Segment;
-import lapr.project.model.Throttle;
-import lapr.project.model.Vehicle;
-import lapr.project.model.VehicleCombustion;
-import lapr.project.model.AlgorithmResults;
 import lapr.project.utils.Session;
 import lapr.project.utils.graphbase.Graph;
 import org.junit.After;

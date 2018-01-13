@@ -106,7 +106,7 @@ public class AlgorithmResultsTest {
 
         project.addVehicle(vehicle);
 
-        double[] results = {800, 2000000};
+        double[] results = {800, 2000000, 2000};
 
         instance = new AlgorithmResults(project, junctionsList, fastestPath, vehicle, results, "Fastest Path");
 
@@ -220,8 +220,32 @@ public class AlgorithmResultsTest {
         System.out.println("getEnergy");
         double expResult = 2000000.0;
         double result = instance.getEnergy();
-        assertEquals(expResult, result, 0.0);
+        assertEquals(expResult, result, 0.5);
 
+    }
+
+    /**
+     * Test of getFuelGrams method, of class AlgorithmResults.
+     */
+    public void testGetFuelGrams() {
+
+        System.out.println("getFuelGrams");
+        double expResult = 2000;
+        double result = instance.getFuelGrams();
+        assertEquals(expResult, result, 0.5);
+    }
+
+    /**
+     * Test of getVehicleLoad method, of class AlgorithmResults.
+     */
+    public void testGetVehicleLoad() {
+        System.out.println("getVehicleLoad");
+        double expResult = 2000;
+        double result = vehicle.getCurrentLoad();
+        assertEquals(expResult, result, 0.5);
+        
+        expResult = 1000;
+        assertNotEquals(expResult, result, 0.5);
     }
 
     /**
@@ -295,19 +319,6 @@ public class AlgorithmResultsTest {
         Vehicle expResult = vehicle;
         Vehicle result = instance.getVehicle();
         assertEquals(expResult, result);
-
-    }
-
-    /**
-     * Test of getVehicleLoad method, of class AlgorithmResults.
-     */
-    @Test
-    public void testGetVehicleLoad() {
-        System.out.println("getVehicleLoad");
-
-        double expResult = vehicle.getCurrentLoad();
-        double result = instance.getVehicleLoad();
-        assertEquals(expResult, result, 0.0);
 
     }
 
