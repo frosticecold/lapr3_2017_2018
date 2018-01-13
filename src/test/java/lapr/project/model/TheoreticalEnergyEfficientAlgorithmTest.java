@@ -30,7 +30,8 @@ import org.junit.Test;
  * @author Car
  */
 public class TheoreticalEnergyEfficientAlgorithmTest {
-   Project project;
+
+    Project project;
     private static final String FX_NETWORK = "TestSet02_Network_v2.xml";
     private static final String FX_VEHICLE = "TestSet02_Vehicles_v2.xml";
 
@@ -48,7 +49,7 @@ public class TheoreticalEnergyEfficientAlgorithmTest {
     Graph<Junction, Section> roadNetwork;
 
     Vehicle vh1;
-    
+
     VehicleElectric eletricCar;
 
     @Before
@@ -280,7 +281,7 @@ public class TheoreticalEnergyEfficientAlgorithmTest {
         Segment segment7 = new Segment(1, 250, 350, 10.5, 40, 2.5, 90, 0);
         Segment segment8 = new Segment(2, 350, 550, 4, -120, 2, 90, 0);
         Segment segment9 = new Segment(3, 550, 350, 6, -10, 2, 90, 0);
-        Segment segment10 = new Segment(4,550,350,20,30,3,60,0);
+        Segment segment10 = new Segment(4, 550, 350, 20, 30, 3, 60, 0);
         List<Segment> listSegment3 = new ArrayList<>();
         listSegment3.add(segment7);
         listSegment3.add(segment8);
@@ -309,13 +310,15 @@ public class TheoreticalEnergyEfficientAlgorithmTest {
         project.addSection(section2);
         project.addSection(section3);
 
+        createEletricCar();
     }
 
     @After
     public void tearDown() {
     }
-    
-    private void createEletricCar(){
+
+    private void createEletricCar() {
+        eletricCar = new VehicleElectric();
         eletricCar.setName("EletricDummy");
         eletricCar.setDescription("Electric Dummy teste vehicle");
         eletricCar.setVehicleClass(1);
@@ -326,14 +329,218 @@ public class TheoreticalEnergyEfficientAlgorithmTest {
         eletricCar.setFrontalArea(1.8);
         eletricCar.setRCC(0.01);
         eletricCar.setWheelSize(0.6);
-        
-        Gear gear = new Gear(1,1);
+
+        Gear gear = new Gear(1, 1);
         eletricCar.getGearbox().addGear(gear);
         eletricCar.setEnergyRegenerationRatio(0.8);
         eletricCar.setFinalDriveRatio(10.6);
-    
-    
-    
+        eletricCar.setMinRPM(0);
+        eletricCar.setMaxRPM(12500);
+
+        Map<Integer, Throttle> throttleList = new LinkedHashMap<>();
+        {
+            Throttle throttle25 = new Throttle();
+            //Throttle 25 of Pickup in files Vehicles_v2.xml
+            Regime reg1 = new Regime();
+
+            reg1.setTorqueLow(185);
+            reg1.setTorqueHigh(175);
+            reg1.setRpmLow(0);
+            reg1.setRpmHigh(3499);
+            throttle25.getRegimeList().add(reg1);
+
+            Regime reg2 = new Regime();
+
+            reg2.setTorqueLow(175);
+            reg2.setTorqueHigh(166);
+            reg2.setRpmLow(3500);
+            reg2.setRpmHigh(4499);
+            throttle25.getRegimeList().add(reg2);
+
+            Regime reg3 = new Regime();
+
+            reg3.setTorqueLow(166);
+            reg3.setTorqueHigh(158);
+            reg3.setRpmLow(4500);
+            reg3.setRpmHigh(5499);
+            throttle25.getRegimeList().add(reg3);
+
+            Regime reg4 = new Regime();
+
+            reg4.setTorqueLow(143);
+            reg4.setTorqueHigh(129);
+            reg4.setRpmLow(6500);
+            reg4.setRpmHigh(7499);
+            throttle25.getRegimeList().add(reg4);
+
+            Regime reg5 = new Regime();
+
+            reg5.setTorqueLow(129);
+            reg5.setTorqueHigh(116);
+            reg5.setRpmLow(7500);
+            reg5.setRpmHigh(8499);
+            throttle25.getRegimeList().add(reg5);
+
+            Regime reg6 = new Regime();
+
+            reg6.setTorqueLow(116);
+            reg6.setTorqueHigh(104);
+            reg6.setRpmLow(8500);
+            reg5.setRpmHigh(9499);
+
+            throttle25.getRegimeList().add(reg6);
+
+            Regime reg7 = new Regime();
+            reg7.setTorqueLow(104);
+            reg7.setTorqueHigh(81);
+            reg7.setRpmLow(9500);
+            reg7.setRpmHigh(12500);
+
+            throttle25.getRegimeList().add(reg7);
+
+            throttleList.put(25, throttle25);
+        }
+        {
+            Throttle throttle50 = new Throttle();
+            //Throttle 25 of Pickup in files Vehicles_v2.xml
+            Regime reg1 = new Regime();
+
+            reg1.setTorqueLow(250);
+            reg1.setTorqueHigh(237);
+            reg1.setRpmLow(0);
+            reg1.setRpmHigh(3499);
+            throttle50.getRegimeList().add(reg1);
+
+            Regime reg2 = new Regime();
+
+            reg2.setTorqueLow(237);
+            reg2.setTorqueHigh(224);
+            reg2.setRpmLow(3500);
+            reg2.setRpmHigh(4499);
+            throttle50.getRegimeList().add(reg2);
+
+            Regime reg3 = new Regime();
+
+            reg3.setTorqueLow(224);
+            reg3.setTorqueHigh(213);
+            reg3.setRpmLow(4500);
+            reg3.setRpmHigh(5499);
+            throttle50.getRegimeList().add(reg3);
+
+            Regime reg4 = new Regime();
+
+            reg4.setTorqueLow(213);
+            reg4.setTorqueHigh(192);
+            reg4.setRpmLow(5500);
+            reg4.setRpmHigh(6499);
+            throttle50.getRegimeList().add(reg4);
+
+            Regime reg5 = new Regime();
+
+            reg5.setTorqueLow(192);
+            reg5.setTorqueHigh(174);
+            reg5.setRpmLow(6500);
+            reg5.setRpmHigh(7499);
+            throttle50.getRegimeList().add(reg5);
+
+            Regime reg6 = new Regime();
+
+            reg6.setTorqueLow(174);
+            reg6.setTorqueHigh(156);
+            reg6.setRpmLow(7500);
+            reg5.setRpmHigh(8499);
+
+            throttle50.getRegimeList().add(reg6);
+
+            Regime reg7 = new Regime();
+            reg7.setTorqueLow(156);
+            reg7.setTorqueHigh(140);
+            reg7.setRpmLow(8500);
+            reg7.setRpmHigh(9499);
+
+            throttle50.getRegimeList().add(reg7);
+
+            Regime reg8 = new Regime();
+            reg8.setTorqueLow(140);
+            reg8.setTorqueLow(112);
+            reg8.setRpmLow(9500);
+            reg8.setRpmHigh(12500);
+
+            throttleList.put(50, throttle50);
+        }
+        {
+            Throttle throttle100 = new Throttle();
+            //Throttle 25 of Pickup in files Vehicles_v2.xml
+            Regime reg1 = new Regime();
+
+            reg1.setTorqueLow(350);
+            reg1.setTorqueHigh(332);
+            reg1.setRpmLow(0);
+            reg1.setRpmHigh(3499);
+            throttle100.getRegimeList().add(reg1);
+
+            Regime reg2 = new Regime();
+
+            reg2.setTorqueLow(332);
+            reg2.setTorqueHigh(315);
+            reg2.setRpmLow(3500);
+            reg2.setRpmHigh(4499);
+            throttle100.getRegimeList().add(reg2);
+
+            Regime reg3 = new Regime();
+
+            reg3.setTorqueLow(315);
+            reg3.setTorqueHigh(299);
+            reg3.setRpmLow(4500);
+            reg3.setRpmHigh(5499);
+            throttle100.getRegimeList().add(reg3);
+
+            Regime reg4 = new Regime();
+
+            reg4.setTorqueLow(299);
+            reg4.setTorqueHigh(270);
+            reg4.setRpmLow(5500);
+            reg4.setRpmHigh(6499);
+            throttle100.getRegimeList().add(reg4);
+
+            Regime reg5 = new Regime();
+
+            reg5.setTorqueLow(270);
+            reg5.setTorqueHigh(243);
+            reg5.setRpmLow(6500);
+            reg5.setRpmHigh(7499);
+            throttle100.getRegimeList().add(reg5);
+
+            Regime reg6 = new Regime();
+
+            reg6.setTorqueLow(243);
+            reg6.setTorqueHigh(222);
+            reg6.setRpmLow(7500);
+            reg5.setRpmHigh(8499);
+
+            throttle100.getRegimeList().add(reg6);
+
+            Regime reg7 = new Regime();
+            reg7.setTorqueLow(222);
+            reg7.setTorqueHigh(200);
+            reg7.setRpmLow(8500);
+            reg7.setRpmHigh(9499);
+
+            throttle100.getRegimeList().add(reg7);
+
+            Regime reg8 = new Regime();
+            reg8.setTorqueLow(200);
+            reg8.setTorqueLow(160);
+            reg8.setRpmLow(9500);
+            reg8.setRpmHigh(12500);
+
+            throttleList.put(100, throttle100);
+        }
+        Accelerator acc = new Accelerator();
+        acc.setThrottleList(throttleList);
+
+        eletricCar.setAccelerator(acc);
+        eletricCar.setThrottlesList(throttleList);
     }
 
     /**
@@ -377,6 +584,25 @@ public class TheoreticalEnergyEfficientAlgorithmTest {
         assertEquals(result.getEnergy(), (4.50 * Math.pow(10, 8)), (0.1 * Math.pow(10, 7)));
         assertEquals(result.getAlgorithmType(), "Theoretical Most Energy Efficient Path");
     }
+
+    @Test
+    public void testEletricTheoreticalEnergyEfficientPath() {
+        System.out.println("TheoreticalEnergyEfficientPath");
+        Graph<Junction, Section> graph = project.getRoadNetwork();
+        Junction vOrig = project.getJunction("n0");
+        Junction vDest = project.getJunction("n4");
+        PathAlgorithm alg = new TheoreticalEnergyEfficientAlgorithm();
+        AlgorithmResults result = alg.bestPath(graph, vOrig, vDest, eletricCar, 1);
+
+        assertTrue(result.getVehicle().equals(eletricCar));
+        assertTrue(result.getJunctionPath().contains(vOrig));
+        assertTrue(result.getJunctionPath().contains(vDest));
+        assertTrue(result.getSectionPath().get(0).getRoadID().equals("E01"));
+        assertEquals(result.getDistance(), 74, 0.5);
+        assertEquals(result.getTravelTime(),3404, 1);
+        assertEquals(result.getCost(), 0, 0.5);
+        assertEquals(result.getEnergy(), (2.35 * Math.pow(10, 8)), (0.1 * Math.pow(10, 7)));
+        assertEquals(result.getAlgorithmType(), "Theoretical Most Energy Efficient Path");
+
+    }
 }
-
-
