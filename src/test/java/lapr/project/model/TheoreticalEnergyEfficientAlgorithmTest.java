@@ -280,10 +280,12 @@ public class TheoreticalEnergyEfficientAlgorithmTest {
         Segment segment7 = new Segment(1, 250, 350, 10.5, 40, 2.5, 90, 0);
         Segment segment8 = new Segment(2, 350, 550, 4, -120, 2, 90, 0);
         Segment segment9 = new Segment(3, 550, 350, 6, -10, 2, 90, 0);
+        Segment segment10 = new Segment(4,550,350,20,30,3,60,0);
         List<Segment> listSegment3 = new ArrayList<>();
         listSegment3.add(segment7);
         listSegment3.add(segment8);
         listSegment3.add(segment9);
+        listSegment3.add(segment10);
         section3.setSegmentList(listSegment3);
 
         Session.setActiveProject(project);
@@ -313,18 +315,26 @@ public class TheoreticalEnergyEfficientAlgorithmTest {
     public void tearDown() {
     }
     
-//    private void createEletricCar(){
-//        eletricCar.setName("EletricDummy");
-//        eletricCar.setDescription("Electric Dummy teste vehicle");
-//        eletricCar.setVehicleClass(1);
-//        eletricCar.setMotorization("electric");
-//        eletricCar.setMass(1400);
-//        eletricCar.setMaxLoad(420);
-//        eletricCar.setDragCoefficient(0.31);
-//    
-//    
-//    
-//    }
+    private void createEletricCar(){
+        eletricCar.setName("EletricDummy");
+        eletricCar.setDescription("Electric Dummy teste vehicle");
+        eletricCar.setVehicleClass(1);
+        eletricCar.setMotorization("electric");
+        eletricCar.setMass(1400);
+        eletricCar.setMaxLoad(420);
+        eletricCar.setDragCoefficient(0.31);
+        eletricCar.setFrontalArea(1.8);
+        eletricCar.setRCC(0.01);
+        eletricCar.setWheelSize(0.6);
+        
+        Gear gear = new Gear(1,1);
+        eletricCar.getGearbox().addGear(gear);
+        eletricCar.setEnergyRegenerationRatio(0.8);
+        eletricCar.setFinalDriveRatio(10.6);
+    
+    
+    
+    }
 
     /**
      * Test of shortestPath method, of class TheoreticalEnergyEfficientPath.
@@ -361,10 +371,10 @@ public class TheoreticalEnergyEfficientAlgorithmTest {
         assertTrue(result.getJunctionPath().contains(vOrig));
         assertTrue(result.getJunctionPath().contains(vDest));
         assertTrue(result.getSectionPath().get(0).getRoadID().equals("E01"));
-        assertEquals(result.getDistance(), 54.2d, 0.5);
-        assertEquals(result.getTravelTime(), 2466.8299956194223, 1);
+        assertEquals(result.getDistance(), 74, 0.5);
+        assertEquals(result.getTravelTime(), 3663.57, 1);
         assertEquals(result.getCost(), 0, 0.5);
-        assertEquals(result.getEnergy(), (8.31 * Math.pow(10, 7)), (0.1 * Math.pow(10, 7)));
+        assertEquals(result.getEnergy(), (4.50 * Math.pow(10, 8)), (0.1 * Math.pow(10, 7)));
         assertEquals(result.getAlgorithmType(), "Theoretical Most Energy Efficient Path");
     }
 }
