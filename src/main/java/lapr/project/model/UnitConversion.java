@@ -9,6 +9,9 @@ import lapr.project.model.Constants;
 
 public class UnitConversion {
 
+    private UnitConversion() {
+    }
+
     public static final double MILES_TO_KM = 1.609344;
     public static final double KM_PER_HOUR_TO_M_PER_SECOND = 0.277777778;
     public static final double M_PER_SECOND_TO_KM_PER_HOUR = 3.6;
@@ -43,7 +46,6 @@ public class UnitConversion {
         }
         return convertJoulesToMegaJoules(energy);
     }
-
     public static double convertKilometersPerHourToMetersPerSecond(String velocity) {
         double velocityKilometersPerHour = Double.parseDouble(
                 velocity.replaceAll("[^0-9.]", ""));
@@ -136,6 +138,8 @@ public class UnitConversion {
                 }
                 break;
             }
+            default:
+                return Double.parseDouble(numberSplit[0]);
         }
         return Double.parseDouble(numberSplit[0]);
     }

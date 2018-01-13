@@ -5,6 +5,7 @@
  */
 package lapr.project.model;
 
+import java.text.DecimalFormat;
 import java.util.LinkedList;
 import java.util.List;
 import lapr.project.utils.graphbase.Graph;
@@ -101,13 +102,14 @@ public class AlgorithmResultsTest {
         vehicle.setName("Pick_up");
         vehicle.setType("car");
         vehicle.setVehicleClass(2);
+        vehicle.setMaxLoad(2000);
 
         project.addVehicle(vehicle);
 
         double[] results = {800, 2000000};
 
         instance = new AlgorithmResults(project, junctionsList, fastestPath, vehicle, results, "Fastest Path");
-        
+
     }
 
     @After
@@ -162,7 +164,7 @@ public class AlgorithmResultsTest {
         Project expResult = new Project("TestProject", "Best Test Ever!");
         Graph<Junction, Section> roadNetwork = new Graph<>(true);
         expResult.setRoadNetwork(roadNetwork);
-        
+
         Junction j1 = new Junction("j1");
         Junction j2 = new Junction("j2");
         Junction j3 = new Junction("j3");
@@ -219,7 +221,7 @@ public class AlgorithmResultsTest {
         double expResult = 2000000.0;
         double result = instance.getEnergy();
         assertEquals(expResult, result, 0.0);
-        
+
     }
 
     /**
@@ -231,7 +233,7 @@ public class AlgorithmResultsTest {
         double expResult = 0.0;
         double result = instance.getTravelTime();
         assertNotEquals(expResult, result, 0.0);
-        
+
     }
 
     /**
@@ -244,148 +246,202 @@ public class AlgorithmResultsTest {
         double expResult = 20.0;
         double result = instance.getCost();
         assertEquals(expResult, result, 0.0);
-        
+
     }
 
-//    /**
-//     * Test of getDistance method, of class AlgorithmResults.
-//     */
-//    @Test
-//    public void testGetDistance() {
-//        System.out.println("getDistance");
-//        AlgorithmResults instance = null;
-//        double expResult = 0.0;
-//        double result = instance.getDistance();
-//        assertEquals(expResult, result, 0.0);
-//        // TODO review the generated test code and remove the default call to fail.
-//        fail("The test case is a prototype.");
-//    }
+    /**
+     * Test of getDistance method, of class AlgorithmResults.
+     */
+    @Test
+    public void testGetDistance() {
+        System.out.println("getDistance");
+        instance.setDistance(20.0);
+        double expResult = 20.0;
+        double result = instance.getDistance();
+        assertEquals(expResult, result, 0.0);
+
+    }
+
+    /**
+     * Test of getSectionPath method, of class AlgorithmResults.
+     */
+    @Test
+    public void testGetSectionPath() {
+        System.out.println("getSectionPath");
+        LinkedList<Section> expResult = fastestPath;
+        LinkedList<Section> result = instance.getSectionPath();
+        assertEquals(expResult, result);
+
+    }
+
+    /**
+     * Test of getJunctionPath method, of class AlgorithmResults.
+     */
+    @Test
+    public void testGetJunctionPath() {
+        System.out.println("getJunctionPath");
+        LinkedList<Junction> expResult = junctionsList;
+        LinkedList<Junction> result = instance.getJunctionPath();
+        assertEquals(expResult, result);
+
+    }
+
+    /**
+     * Test of getVehicle method, of class AlgorithmResults.
+     */
+    @Test
+    public void testGetVehicle() {
+        System.out.println("getVehicle");
+        Vehicle expResult = vehicle;
+        Vehicle result = instance.getVehicle();
+        assertEquals(expResult, result);
+
+    }
+
+    /**
+     * Test of getVehicleLoad method, of class AlgorithmResults.
+     */
+    @Test
+    public void testGetVehicleLoad() {
+        System.out.println("getVehicleLoad");
+
+        double expResult = vehicle.getCurrentLoad();
+        double result = instance.getVehicleLoad();
+        assertEquals(expResult, result, 0.0);
+
+    }
+
+    /**
+     * Test of getAlgorithmType method, of class AlgorithmResults.
+     */
+    @Test
+    public void testGetAlgorithmType() {
+        System.out.println("getAlgorithmType");
+        String expResult = "Fastest Path";
+        String result = instance.getAlgorithmType();
+        assertEquals(expResult, result);
+
+    }
+
+    /**
+     * Test of hashCode method, of class AlgorithmResults.
+     */
+    @Test
+    public void testHashCode() {
+        System.out.println("hashCode");
+        double[] results = {800, 2000000};
+        AlgorithmResults expected = new AlgorithmResults(project, junctionsList, fastestPath, vehicle, results, "Fastest Path");
+        int expResult = expected.hashCode();
+        int result = instance.hashCode();
+        assertEquals(expResult, result);
+
+    }
+
+    /**
+     * Test of equals method, of class AlgorithmResults.
+     */
+    @Test
+    public void testEquals() {
+        System.out.println("equals");
+        double[] results = {800, 2000000};
+        AlgorithmResults expected = new AlgorithmResults(project, junctionsList, fastestPath, vehicle, results, "Fastest Path");
+        Object obj = expected;
+        boolean expResult = true;
+        boolean result = instance.equals(obj);
+        assertEquals(expResult, result);
+
+    }
+
+    /**
+     * Test of toString method, of class AlgorithmResults.
+     */
+    @Test
+    public void testToString() {
+        System.out.println("toString");
+        String expResult = "Project: TestProject\n"
+                + "\n"
+                + "Algorithm: Fastest Path\n"
+                + "Vehicle: Pick_up\n"
+                + "Vehicle total weight: 0.0 kg\n"
+                + "\n"
+                + "Path:\n"
+                + "1 Junction j1 Junction j3\n"
+                + "1 Junction j2 Junction j3\n"
+                + "2 Junction j4 Junction j5\n"
+                + "\n"
+                + "Distance:0.0 km\n"
+                + "Travel time:00:13:20 h\n"
+                + "Cost:0 €\n"
+                + "Energy:2,00 MJ";
+        String result = instance.toString();
+        assertEquals(expResult, result);
+
+    }
+
+    /**
+     * Test of toStringHTML method, of class AlgorithmResults.
+     */
+    @Test
+    public void testToStringHTML() {
+        System.out.println("toStringHTML");
+        StringBuilder sb = new StringBuilder();
+
+        StringBuilder path = new StringBuilder();
+        int i = 1;
+        for (Section section : fastestPath) {
+            path.append(section.toStringHTML() + "\n").append("Section " + i + ":");
+            i++;
+        }
+
+        //sb.append("<h1>Fastest Path Results</h1>");
+//        sb.append("<table>\n");
+//        sb.append("\t<tr><th>Vehicle</th><th>Vehicle</th><th>Travel Time</th><th>Consumed Energy</th><th>Cost</th><th>Consumption</th></tr>\n");
 //
-//    /**
-//     * Test of getSectionPath method, of class AlgorithmResults.
-//     */
-//    @Test
-//    public void testGetSectionPath() {
-//        System.out.println("getSectionPath");
-//        AlgorithmResults instance = null;
-//        LinkedList<Section> expResult = null;
-//        LinkedList<Section> result = instance.getSectionPath();
-//        assertEquals(expResult, result);
-//        // TODO review the generated test code and remove the default call to fail.
-//        fail("The test case is a prototype.");
-//    }
-//
-//    /**
-//     * Test of getJunctionPath method, of class AlgorithmResults.
-//     */
-//    @Test
-//    public void testGetJunctionPath() {
-//        System.out.println("getJunctionPath");
-//        AlgorithmResults instance = null;
-//        LinkedList<Junction> expResult = null;
-//        LinkedList<Junction> result = instance.getJunctionPath();
-//        assertEquals(expResult, result);
-//        // TODO review the generated test code and remove the default call to fail.
-//        fail("The test case is a prototype.");
-//    }
-//
-//    /**
-//     * Test of getVehicle method, of class AlgorithmResults.
-//     */
-//    @Test
-//    public void testGetVehicle() {
-//        System.out.println("getVehicle");
-//        AlgorithmResults instance = null;
-//        Vehicle expResult = null;
-//        Vehicle result = instance.getVehicle();
-//        assertEquals(expResult, result);
-//        // TODO review the generated test code and remove the default call to fail.
-//        fail("The test case is a prototype.");
-//    }
-//
-//    /**
-//     * Test of getVehicleLoad method, of class AlgorithmResults.
-//     */
-//    @Test
-//    public void testGetVehicleLoad() {
-//        System.out.println("getVehicleLoad");
-//        AlgorithmResults instance = null;
-//        double expResult = 0.0;
-//        double result = instance.getVehicleLoad();
-//        assertEquals(expResult, result, 0.0);
-//        // TODO review the generated test code and remove the default call to fail.
-//        fail("The test case is a prototype.");
-//    }
-//
-//    /**
-//     * Test of getAlgorithmType method, of class AlgorithmResults.
-//     */
-//    @Test
-//    public void testGetAlgorithmType() {
-//        System.out.println("getAlgorithmType");
-//        AlgorithmResults instance = null;
-//        String expResult = "";
-//        String result = instance.getAlgorithmType();
-//        assertEquals(expResult, result);
-//        // TODO review the generated test code and remove the default call to fail.
-//        fail("The test case is a prototype.");
-//    }
-//
-//    /**
-//     * Test of hashCode method, of class AlgorithmResults.
-//     */
-//    @Test
-//    public void testHashCode() {
-//        System.out.println("hashCode");
-//        AlgorithmResults instance = null;
-//        int expResult = 0;
-//        int result = instance.hashCode();
-//        assertEquals(expResult, result);
-//        // TODO review the generated test code and remove the default call to fail.
-//        fail("The test case is a prototype.");
-//    }
-//
-//    /**
-//     * Test of equals method, of class AlgorithmResults.
-//     */
-//    @Test
-//    public void testEquals() {
-//        System.out.println("equals");
-//        Object obj = null;
-//        AlgorithmResults instance = null;
-//        boolean expResult = false;
-//        boolean result = instance.equals(obj);
-//        assertEquals(expResult, result);
-//        // TODO review the generated test code and remove the default call to fail.
-//        fail("The test case is a prototype.");
-//    }
-//
-//    /**
-//     * Test of toString method, of class AlgorithmResults.
-//     */
-//    @Test
-//    public void testToString() {
-//        System.out.println("toString");
-//        AlgorithmResults instance = null;
-//        String expResult = "";
-//        String result = instance.toString();
-//        assertEquals(expResult, result);
-//        // TODO review the generated test code and remove the default call to fail.
-//        fail("The test case is a prototype.");
-//    }
-//
-//    /**
-//     * Test of toStringHTML method, of class AlgorithmResults.
-//     */
-//    @Test
-//    public void testToStringHTML() {
-//        System.out.println("toStringHTML");
-//        AlgorithmResults instance = null;
-//        String expResult = "";
-//        String result = instance.toStringHTML();
-//        assertEquals(expResult, result);
-//        // TODO review the generated test code and remove the default call to fail.
-//        fail("The test case is a prototype.");
-//    }
-//    
+//        sb.append("<tr>"
+//                + "<td>").append(instance.getAlgorithmType()).append("</td>"
+//                + "<td>").append(this.vehicle.getName()).append("</td>"
+//                + "<td>").append(UnitConversion.convertSecondstoHoursMinSec(instance.getTravelTime())).append(" h</td>"
+//                + "<td>").append(String.format("%.2f", UnitConversion.convertJoulesToMegaJoules(instance.getEnergy()))).append(" MJ</td>"
+//                + "<td>").append(new DecimalFormat("#.##").format(instance.getCost())).append(" €</td>"
+//                + "<td>").append(new DecimalFormat("#.##").format(UnitConversion.convertJoulesToLitres(vehicle.getFuel(), instance.getEnergy()))).append(" liters/100km</td>");
+//        sb.append("</tr>\n");
+//        sb.append("</table>\n");
+//        sb.append("<h2> </h2>");
+//        sb.append("<table>\n");
+//        sb.append("\t<tr><th>Path</th></tr>\n");
+//        sb.append("<tr>"
+//                + "<td>").append(path).append("</td>");
+//        sb.append("</tr>\n");
+//        sb.append("</table>");
+//        
+//        
+        sb.append("<table>\n");
+        sb.append("\t<tr><th>Vehicle</th><th>Vehicle</th><th>Travel Time</th><th>Consumed Energy</th><th>Cost</th><th>Consumption</th></tr>\n");
+        
+        double liters = UnitConversion.convertGramsOfFuelToLiters(vehicle.getFuel(), instance.getFuelGrams());
+        double lper100 = UnitConversion.convertLitersToLiterPer100KM(liters, instance.getDistance());
+        sb.append("<tr>"
+                + "<td>").append(instance.getAlgorithmType()).append("</td>"
+                + "<td>").append(this.vehicle.getName()).append("</td>"
+                + "<td>").append(UnitConversion.convertSecondstoHoursMinSec(instance.getTravelTime())).append(" h</td>"
+                + "<td>").append(String.format("%.2f", UnitConversion.convertJoulesToMegaJoules(instance.getEnergy()))).append(" MJ</td>"
+                + "<td>").append(new DecimalFormat("#.##").format(instance.getCost())).append(" €</td>"
+                + "<td>").append(new DecimalFormat("#.##").format(lper100)).append(" liters/100km</td>");
+        sb.append("</tr>\n");
+        sb.append("</table>\n");
+        sb.append("<h2> </h2>");
+        sb.append("<table>\n");
+        sb.append("\t<tr><th>Path</th></tr>\n");
+        sb.append("<tr>"
+                + "<td>").append(path).append("</td>");
+        sb.append("</tr>\n");
+        sb.append("</table>");
+        
+
+        String expResult = sb.toString();
+        String result = instance.toStringHTML();
+        assertEquals(expResult, result);
+
+    }
+
 }

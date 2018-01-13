@@ -31,7 +31,7 @@ public class TheoreticalEnergyEfficientAlgorithm implements PathAlgorithm {
     }
 
     private static double[] efficientPath(Graph<Junction, Section> graph, Junction vOrig, Junction vDest, Vehicle vehicle, LinkedList<Junction> shortPath, LinkedList<Section> sectionpath, double acceleration) {
-        double results[] = {-1, -1,-1};//Results 0)Energy 1) Time 2)Grams
+        double results[] = {-1, -1, -1};//Results 0)Energy 1) Time 2)Grams
         if (!graph.validVertex(vOrig) || !graph.validVertex(vDest)) {
             return results;
         }
@@ -57,13 +57,12 @@ public class TheoreticalEnergyEfficientAlgorithm implements PathAlgorithm {
 
         efficientPathLength(graph, vOrig, vDest, vertices, visited, pathKeys, time, energy, velocity, fuelcomsumption, vehicle, acceleration);
 
-        
         //double timePath = time[graph.getKey(vDest)];
         int key = graph.getKey(vDest);
         double timeresult = time[key];
         double energyresult = energy[key];
         double fuel = fuelcomsumption[key];
-        
+
         results[0] = timeresult;
         results[1] = energyresult;
         results[2] = fuel;
@@ -117,13 +116,13 @@ public class TheoreticalEnergyEfficientAlgorithm implements PathAlgorithm {
 //                        fuelcomsumption[kAdj]=results[3];
 //                    }
 //                }
-                if (results[0] != -1) {
+                if (results[0] > 0) {
                     if (!visited[kAdj] && energy[kAdj] > (energy[kOrg] + results[1])) {
                         time[kAdj] = time[kOrg] + results[0];
                         pathKeys[kAdj] = kOrg;
                         energy[kAdj] = energy[kOrg] + results[1];
                         velocity[kAdj] = results[2];
-                        fuelcomsumption[kAdj]=fuelcomsumption[kOrg] + results[3];
+                        fuelcomsumption[kAdj] = fuelcomsumption[kOrg] + results[3];
                     }
                 }
             }
@@ -181,7 +180,7 @@ public class TheoreticalEnergyEfficientAlgorithm implements PathAlgorithm {
 
             }
 
-            if (tempresults[0] != -1) {
+            if (tempresults[0] > 0) {
                 //Results
                 //0) Time
                 //1) Energy
@@ -205,7 +204,7 @@ public class TheoreticalEnergyEfficientAlgorithm implements PathAlgorithm {
         double[] result = new double[RESULTS_SIZE];
         double[] tempresults = new double[RESULTS_SIZE];
         double[] carresult = new double[4];
-        double[] brakingresult = {0, 0, 0,0};
+        double[] brakingresult = {0, 0, 0, 0};
         //Results
         //0) Time (s)
         //1) Energy (g)
@@ -240,7 +239,7 @@ public class TheoreticalEnergyEfficientAlgorithm implements PathAlgorithm {
                 //1) RPM
                 //2) Torque
                 //3) SFC
-                if (motoresult[0] != -1) {
+                if (motoresult[0] > 0) {
                     carresult = motoresult;
                     result[0] += 1 / acceleration;
                     double enginepower = PhysicsCalculus.calcEnginePower(carresult[2], carresult[1]);
@@ -250,7 +249,7 @@ public class TheoreticalEnergyEfficientAlgorithm implements PathAlgorithm {
                     result[3] += fuelComsumption;
                 }
 
-                if (motoresult[0] == -1) {
+                if (motoresult[0] < 0) {
                     currentspeed--;
                     result[2] = currentspeed;
                     accelerating = false;
@@ -289,7 +288,7 @@ public class TheoreticalEnergyEfficientAlgorithm implements PathAlgorithm {
     private static double[] calcAcceleratingSegmentEletricCar(Section section, Segment seg, VehicleElectric car, double initialvelocity, double maximumvelocity, double acceleration, boolean isLastSegment) {
         double[] result = new double[RESULTS_SIZE];
         double[] carresult = new double[4];
-        double[] brakingresult = {0, 0, 0,0};
+        double[] brakingresult = {0, 0, 0, 0};
         double currentspeed = initialvelocity;
         //Results
         //0) Time (s)
@@ -318,15 +317,17 @@ public class TheoreticalEnergyEfficientAlgorithm implements PathAlgorithm {
                 //1) RPM
                 //2) Torque
                 //3) SFC
-                if (motoresult[0] != -1 && motoresult[1] > 0) {
-                    carresult = motoresult;
-                    result[0] += deltatime;
-                    double enginepower = PhysicsCalculus.calcEnginePower(carresult[2], carresult[1]);
-                    result[1] += enginepower * deltatime;
-                    result[2] = currentspeed;
+                if (motoresult[0] > 0) {
+                    if (motoresult[1] > 0) {
+                        carresult = motoresult;
+                        result[0] += deltatime;
+                        double enginepower = PhysicsCalculus.calcEnginePower(carresult[2], carresult[1]);
+                        result[1] += enginepower * deltatime;
+                        result[2] = currentspeed;
+                    }
                 }
 
-                if (motoresult[0] == -1) {
+                if (motoresult[0] < 0) {
                     currentspeed--;
                     result[2] = currentspeed;
                     accelerating = false;
@@ -370,7 +371,7 @@ public class TheoreticalEnergyEfficientAlgorithm implements PathAlgorithm {
         //0) Time
         //1) Energy
         //2) Velocity
-        double brakingresults[] = {0, 0, 0,0};
+        double brakingresults[] = {0, 0, 0, 0};
         if (isLastSegment) {
             //0) Time        
             //1) Distance
@@ -401,7 +402,7 @@ public class TheoreticalEnergyEfficientAlgorithm implements PathAlgorithm {
         result[0] = deltatime + brakingresults[0];
         result[1] += energy + brakingresults[2];
         result[2] = currentspeed;
-        result[3] =carresult[3];
+        result[3] = carresult[3];
         return result;
 
     }
@@ -443,7 +444,7 @@ public class TheoreticalEnergyEfficientAlgorithm implements PathAlgorithm {
                 //1) RPM
                 //2) Torque
                 //3) SFC
-                if (motoresult[0] != -1) {
+                if (motoresult[0] > 0) {
                     carresult = motoresult;
                     result[0] += deltatimeacel;
                     double enginepower = PhysicsCalculus.calcEnginePower(carresult[2], carresult[1]);
@@ -452,7 +453,7 @@ public class TheoreticalEnergyEfficientAlgorithm implements PathAlgorithm {
                     result[3] += PhysicsCalculus.calcFuelComsumption(carresult[3], enginepower, deltatimeacel);
                 }
 
-                if (motoresult[0] == -1) {
+                if (motoresult[0] < 0) {
                     currentspeed++;
                     result[2] = currentspeed;
                     braking = false;
@@ -485,7 +486,7 @@ public class TheoreticalEnergyEfficientAlgorithm implements PathAlgorithm {
     private static double[] calcBrakingSegmentEletric(Section section, Segment seg, VehicleElectric car, double initialvelocity, double maximumvelocity, double acceleration, boolean isLastSegment) {
         double[] result = new double[RESULTS_SIZE];
         double[] carresult = new double[4];
-        double[] brakingresult = {0, 0, 0,0};
+        double[] brakingresult = {0, 0, 0, 0};
         double currentspeed = initialvelocity;
         //Results
         //0) Time (s)
@@ -589,13 +590,13 @@ public class TheoreticalEnergyEfficientAlgorithm implements PathAlgorithm {
             //1) RPM
             //2) Torque
             //3) SFC
-            if (motoresult[0] != -1) {
+            if (motoresult[0] > 0) {
                 double enginepower = PhysicsCalculus.calcEnginePower(motoresult[2], motoresult[1]);
                 result[2] += (enginepower * deltatimeaccel);
                 result[3] += PhysicsCalculus.calcFuelComsumption(motoresult[3], enginepower, deltatimeaccel);
             }
 
-            if (motoresult[0] == -1) {
+            if (motoresult[0] < 0) {
                 break;
             }
         }
@@ -605,7 +606,7 @@ public class TheoreticalEnergyEfficientAlgorithm implements PathAlgorithm {
     }
 
     private static double[] calcBrakingLastSegmentEletric(Section section, Segment seg, Vehicle car, double initialVelocity, double acceleration) {
-        double result[] = {0, 0, 0,0};
+        double result[] = {0, 0, 0, 0};
         //0) Time        
         //1) Distance
         //2) Energy
@@ -672,6 +673,3 @@ public class TheoreticalEnergyEfficientAlgorithm implements PathAlgorithm {
     }
 
 }
-
-
-
