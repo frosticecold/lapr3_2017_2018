@@ -323,7 +323,7 @@ public class FastestPathAlgorithmTest {
         assertEquals(result.getDistance(), 33.7d, 0.5);
         assertEquals(result.getTravelTime(), 1516.5, 1);
         assertEquals(result.getCost(), 0, 0.5);
-        assertEquals(result.getEnergy(), (1.95 * Math.pow(10, 7)), (0.1 * Math.pow(10, 7)));
+        assertEquals(result.getEnergy(), (5.994 * Math.pow(10,7)), (0.1 * Math.pow(10,7)));
         assertEquals(result.getAlgorithmType(), "Fastest Path");
     }
 
@@ -343,7 +343,7 @@ public class FastestPathAlgorithmTest {
         assertEquals(result.getDistance(), 54.2d, 0.5);
         assertEquals(result.getTravelTime(), 2439.0, 1);
         assertEquals(result.getCost(), 0, 0.5);
-        assertEquals(result.getEnergy(), (2.96 * Math.pow(10, 7)), (0.1 * Math.pow(10, 7)));
+        assertEquals(result.getEnergy(), (5.994 * Math.pow(10, 7)), (0.1 * Math.pow(10, 7)));
         assertEquals(result.getAlgorithmType(), "Fastest Path");
     }
 }

@@ -320,7 +320,7 @@ public class EnergySavingModeAlgorithmTest {
         assertEquals(result.getDistance(), 33.7d, 0.5);
         assertEquals(result.getTravelTime(), 1946.86, 1);
         assertEquals(result.getCost(), 0, 0.5);
-        assertEquals(result.getEnergy(), (4.03 * Math.pow(10, 7)), (0.1 * Math.pow(10, 7)));
+        assertEquals(result.getEnergy(), (1.414 * Math.pow(10, 8)), (0.1 * Math.pow(10, 8)));
         assertEquals(result.getAlgorithmType(), "Energy Saving Mode Algorithm");
     }
 

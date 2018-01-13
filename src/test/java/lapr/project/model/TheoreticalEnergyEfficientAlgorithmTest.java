@@ -561,7 +561,7 @@ public class TheoreticalEnergyEfficientAlgorithmTest {
         assertEquals(result.getDistance(), 33.7d, 0.5);
         assertEquals(result.getTravelTime(), 1544.3299956194226, 1);
         assertEquals(result.getCost(), 0, 0.5);
-        assertEquals(result.getEnergy(), (5.35 * Math.pow(10, 7)), (0.1 * Math.pow(10, 7)));
+        assertEquals(result.getEnergy(), (1.629 * Math.pow(10, 8)), (0.1 * Math.pow(10, 8)));
         assertEquals(result.getAlgorithmType(), "Theoretical Most Energy Efficient Path");
     }
 
@@ -581,7 +581,7 @@ public class TheoreticalEnergyEfficientAlgorithmTest {
         assertEquals(result.getDistance(), 74, 0.5);
         assertEquals(result.getTravelTime(), 3663.57, 1);
         assertEquals(result.getCost(), 0, 0.5);
-        assertEquals(result.getEnergy(), (4.50 * Math.pow(10, 8)), (0.1 * Math.pow(10, 7)));
+        assertEquals(result.getEnergy(), (3.59 * Math.pow(10, 8)), (0.1 * Math.pow(10, 8)));
         assertEquals(result.getAlgorithmType(), "Theoretical Most Energy Efficient Path");
     }
 

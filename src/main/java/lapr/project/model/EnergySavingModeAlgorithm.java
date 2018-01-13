@@ -116,11 +116,16 @@ public class EnergySavingModeAlgorithm implements PathAlgorithm {
 //                        fuelcomsumption[kAdj]=results[3];
 //                    }
 //                }
+                double energySection = results[1];
+
+                if (vehicle instanceof VehicleCombustion) {
+                    energySection = PhysicsCalculus.calcEnergySpentPerGramOfFuel(vehicle, results[3]);
+                }
                 if (results[0] > 0) {
-                    if (!visited[kAdj] && energy[kAdj] > (energy[kOrg] + results[1])) {
+                    if (!visited[kAdj] && energy[kAdj] > (energy[kOrg] + energySection)) {
                         time[kAdj] = time[kOrg] + results[0];
                         pathKeys[kAdj] = kOrg;
-                        energy[kAdj] = energy[kOrg] + results[1];
+                        energy[kAdj] = energy[kOrg] + energySection;
                         velocity[kAdj] = results[2];
                         fuelcomsumption[kAdj] = fuelcomsumption[kOrg] + results[3];
                     }

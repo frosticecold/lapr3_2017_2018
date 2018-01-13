@@ -16,7 +16,6 @@ public class FastestPathAlgorithm implements PathAlgorithm {
 //    private static final int MAX_THROTTLE = 0;
 //    private static final int MED_THROTTLE = 1;
 //    private static final int MIN_THROTTLE = 2;
-
     @Override
     public AlgorithmResults bestPath(Graph<Junction, Section> graph, Junction start, Junction end, Vehicle v, double acceleration) {
 
@@ -87,10 +86,15 @@ public class FastestPathAlgorithm implements PathAlgorithm {
                 //1) Work
                 //2) SFC
                 double results[] = calcFastestTime(section, vehicle);
+                double energySection = results[1];
+                if (vehicle instanceof VehicleCombustion) {
+                    energySection = PhysicsCalculus.calcEnergySpentPerGramOfFuel(vehicle, results[2]);
+                }
                 if (!visited[kAdj] && time[kAdj] > (time[kOrg] + results[0])) {
                     time[kAdj] = time[kOrg] + results[0];
                     pathKeys[kAdj] = kOrg;
-                    energy[kAdj] = energy[kAdj] + results[1];
+                    //energy[kAdj] = energy[kAdj] + results[1];
+                    energy[kAdj] = energy[kAdj] + energySection;
                     //velocity[kAjd] = result[1];
                     sfc[kAdj] = sfc[kOrg] + results[2];
                 }
@@ -244,7 +248,6 @@ public class FastestPathAlgorithm implements PathAlgorithm {
 //
 //        return results;
 //    }
-
 //    private static int convertThrottle(final int i) {
 //        int throttle = 0;
 //        switch (i) {
