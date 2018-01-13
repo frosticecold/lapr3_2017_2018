@@ -76,6 +76,7 @@ public class CreateProjectUI extends JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Create New Project");
+        setResizable(false);
 
         labelTitle.setText("Project title:");
 

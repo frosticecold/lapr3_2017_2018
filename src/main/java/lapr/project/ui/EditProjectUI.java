@@ -77,6 +77,7 @@ public class EditProjectUI extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Edit Project");
+        setResizable(false);
 
         jl_name.setText("Name:");
 

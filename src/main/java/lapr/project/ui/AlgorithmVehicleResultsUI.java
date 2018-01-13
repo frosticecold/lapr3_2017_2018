@@ -105,6 +105,7 @@ public class AlgorithmVehicleResultsUI extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Results");
+        setResizable(false);
 
         closeBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/return_icon.png"))); // NOI18N
         closeBtn.setText("Close");

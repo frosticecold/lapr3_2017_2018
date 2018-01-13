@@ -81,6 +81,7 @@ public class VehicleComparisonUI extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Vehicle Comparison");
+        setResizable(false);
 
         jScrollPane1.setViewportView(projectVehicleJList);
 
