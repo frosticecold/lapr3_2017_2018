@@ -5,7 +5,6 @@
  */
 package lapr.project.model;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -307,7 +306,7 @@ public class EnergySavingModeAlgorithmTest {
     @Test
     public void testBestPath() {
         System.out.println("bestPath");
-        
+
         Junction start = new Junction("n0");
         Junction end = new Junction("n3");
         Vehicle v = vh1;
