@@ -294,7 +294,7 @@ public class AlgorithmVehicleResultsUI extends javax.swing.JDialog {
             distanceTextfield.setText(String.valueOf(listAlgorithms.get(vehicleCombobox.getSelectedIndex()).getDistance()) + " km");
             traveltimeTextfield.setText(String.valueOf(listAlgorithms.get(vehicleCombobox.getSelectedIndex()).getTravelTime()) + " seg");
             costTextfield.setText(String.valueOf(listAlgorithms.get(vehicleCombobox.getSelectedIndex()).getCost()) + " €");
-            energyTextfield.setText(String.format("%.3f J", listAlgorithms.get(vehicleCombobox.getSelectedIndex()).getEnergy()));
+            energyTextfield.setText(String.format("%.3f MJ", UnitConversion.convertJoulesToMegaJoules(listAlgorithms.get(vehicleCombobox.getSelectedIndex()).getEnergy())));
             algorithmTextfield.setText(listAlgorithms.get(vehicleCombobox.getSelectedIndex()).getAlgorithmType());
             String finalPath = "";
             for (Section section : listAlgorithms.get(vehicleCombobox.getSelectedIndex()).getSectionPath()) {
@@ -341,17 +341,18 @@ public class AlgorithmVehicleResultsUI extends javax.swing.JDialog {
     }//GEN-LAST:event_exportBtnActionPerformed
 
     private void convertBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_convertBtnActionPerformed
-        button =controller.checkConvertBtn(button);
+        button = controller.checkConvertBtn(button);
         if (button) {
+            double grams = listAlgorithms.get(vehicleCombobox.getSelectedIndex()).getFuelGrams();
             double energy = listAlgorithms.get(vehicleCombobox.getSelectedIndex()).getEnergy();
             String fuel = listAlgorithms.get(vehicleCombobox.getSelectedIndex()).getVehicle().getFuel();
             if (!fuel.equalsIgnoreCase("electric")) {
-                energyTextfield.setText(String.format("%.3f Litres ", UnitConversion.convertJoulesToLitres(fuel, energy)));
+                energyTextfield.setText(String.format("%.3f Litres ", UnitConversion.convertGramsOfFuelToLiters(fuel, grams)));
             } else {
-                energyTextfield.setText(String.format("%.3f MJ", UnitConversion.convertJoulesToLitres(fuel, energy)));
+                energyTextfield.setText(String.format("%.3f MJ", UnitConversion.convertJoulesToMegaJoules(energy)));
             }
         } else {
-            energyTextfield.setText(String.format("%.3f J", listAlgorithms.get(vehicleCombobox.getSelectedIndex()).getEnergy()));
+            energyTextfield.setText(String.format("%.3f MJ", UnitConversion.convertJoulesToMegaJoules(listAlgorithms.get(vehicleCombobox.getSelectedIndex()).getEnergy())));
         }
     }//GEN-LAST:event_convertBtnActionPerformed
 

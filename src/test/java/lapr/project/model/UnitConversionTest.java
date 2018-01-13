@@ -39,6 +39,17 @@ public class UnitConversionTest {
     }
 
     /**
+     * Test of convertSecondstoHoursMinSec
+     */
+    @Test
+    public void testConvertSecondstoHoursMinSec() {
+        double seconds = 3710;
+        String text = UnitConversion.convertSecondstoHoursMinSec(seconds);
+        assertEquals("01:01:50", text);
+
+    }
+
+    /**
      * Test of convertKilometersToMeters method, of class UnitConversion.
      */
     @Test
@@ -154,7 +165,7 @@ public class UnitConversionTest {
         double expResult = 10.0;
         double result = UnitConversion.convertToPretendedUnity(number, pretended);
         assertEquals(expResult, result, 0.0);
-        
+
         number = "10 km";
         pretended = "km";
         expResult = 11.0;
@@ -166,7 +177,7 @@ public class UnitConversionTest {
         expResult = 10000.0;
         result = UnitConversion.convertToPretendedUnity(number, pretended);
         assertEquals(expResult, result, 0.0);
-        
+
         number = "10 km";
         pretended = "m";
         expResult = 1231.0;
@@ -178,7 +189,7 @@ public class UnitConversionTest {
         expResult = 1000000.0;
         result = UnitConversion.convertToPretendedUnity(number, pretended);
         assertEquals(expResult, result, 0.0);
-        
+
         number = "10 km";
         pretended = "cm";
         expResult = 11.0;
@@ -190,7 +201,7 @@ public class UnitConversionTest {
         expResult = 100.0;
         result = UnitConversion.convertToPretendedUnity(number, pretended);
         assertEquals(expResult, result, 0.0);
-        
+
         number = "100 m";
         pretended = "m";
         expResult = 500.0;
@@ -202,7 +213,7 @@ public class UnitConversionTest {
         expResult = 0.1;
         result = UnitConversion.convertToPretendedUnity(number, pretended);
         assertEquals(expResult, result, 0.0);
-        
+
         number = "100 m";
         pretended = "km";
         expResult = 2.1;
@@ -214,139 +225,139 @@ public class UnitConversionTest {
         expResult = 10000.0;
         result = UnitConversion.convertToPretendedUnity(number, pretended);
         assertEquals(expResult, result, 0.0);
-        
+
         number = "100 m";
         pretended = "cm";
         expResult = 10700.0;
         result = UnitConversion.convertToPretendedUnity(number, pretended);
         assertNotEquals(expResult, result, 0.0);
-        
+
         number = "1000 cm";
         pretended = "cm";
         expResult = 1000.0;
         result = UnitConversion.convertToPretendedUnity(number, pretended);
         assertEquals(expResult, result, 0.0);
-        
+
         number = "1000 cm";
         pretended = "cm";
         expResult = 7000.0;
         result = UnitConversion.convertToPretendedUnity(number, pretended);
         assertNotEquals(expResult, result, 0.0);
-        
+
         number = "1000 cm";
         pretended = "m";
         expResult = 10.0;
         result = UnitConversion.convertToPretendedUnity(number, pretended);
         assertEquals(expResult, result, 0.0);
-        
+
         number = "1000 cm";
         pretended = "m";
         expResult = 670.0;
         result = UnitConversion.convertToPretendedUnity(number, pretended);
         assertNotEquals(expResult, result, 0.0);
-        
+
         number = "1000 cm";
         pretended = "km";
         expResult = 0.01;
         result = UnitConversion.convertToPretendedUnity(number, pretended);
         assertEquals(expResult, result, 0.0);
-        
+
         number = "1000 cm";
         pretended = "km";
         expResult = 6.01;
         result = UnitConversion.convertToPretendedUnity(number, pretended);
         assertNotEquals(expResult, result, 0.0);
-        
+
         number = "100 kg";
         pretended = "kg";
         expResult = 100.0;
         result = UnitConversion.convertToPretendedUnity(number, pretended);
         assertEquals(expResult, result, 0.0);
-        
+
         number = "100 kg";
         pretended = "kg";
         expResult = 700.0;
         result = UnitConversion.convertToPretendedUnity(number, pretended);
         assertNotEquals(expResult, result, 0.0);
-        
+
         number = "100 kg";
         pretended = "g";
         expResult = 100000.0;
         result = UnitConversion.convertToPretendedUnity(number, pretended);
         assertEquals(expResult, result, 0.0);
-        
+
         number = "100 kg";
         pretended = "g";
         expResult = 150000.0;
         result = UnitConversion.convertToPretendedUnity(number, pretended);
         assertNotEquals(expResult, result, 0.0);
-        
+
         number = "100 g";
         pretended = "g";
         expResult = 100.0;
         result = UnitConversion.convertToPretendedUnity(number, pretended);
         assertEquals(expResult, result, 0.0);
-        
+
         number = "100 g";
         pretended = "g";
         expResult = 160.0;
         result = UnitConversion.convertToPretendedUnity(number, pretended);
         assertNotEquals(expResult, result, 0.0);
-        
+
         number = "100 g";
         pretended = "kg";
         expResult = 0.1;
         result = UnitConversion.convertToPretendedUnity(number, pretended);
         assertEquals(expResult, result, 0.0);
-        
+
         number = "100 g";
         pretended = "kg";
         expResult = 0.17;
         result = UnitConversion.convertToPretendedUnity(number, pretended);
         assertNotEquals(expResult, result, 0.0);
-        
+
         number = "100 m/s";
         pretended = "m/s";
         expResult = 100.0;
         result = UnitConversion.convertToPretendedUnity(number, pretended);
         assertEquals(expResult, result, 0.0);
-        
+
         number = "100 m/s";
         pretended = "m/s";
         expResult = 170.0;
         result = UnitConversion.convertToPretendedUnity(number, pretended);
         assertNotEquals(expResult, result, 0.0);
-        
+
         number = "100 m/s";
         pretended = "km/h";
         expResult = 360.0;
         result = UnitConversion.convertToPretendedUnity(number, pretended);
         assertEquals(expResult, result, 0.0);
-        
+
         number = "100 m/s";
         pretended = "km/h";
         expResult = 370.0;
         result = UnitConversion.convertToPretendedUnity(number, pretended);
         assertNotEquals(expResult, result, 0.0);
-        
+
         number = "100 km/h";
         pretended = "km/h";
         expResult = 100.0;
         result = UnitConversion.convertToPretendedUnity(number, pretended);
         assertEquals(expResult, result, 0.0);
-        
+
         number = "100 km/h";
         pretended = "km/h";
         expResult = 108.0;
         result = UnitConversion.convertToPretendedUnity(number, pretended);
         assertNotEquals(expResult, result, 0.0);
-        
+
         number = "100 km/h";
         pretended = "m/s";
         expResult = 27.7777778;
         result = UnitConversion.convertToPretendedUnity(number, pretended);
         assertEquals(expResult, result, 0.0);
-        
+
         number = "100 km/h";
         pretended = "m/s";
         expResult = 28.7777778;

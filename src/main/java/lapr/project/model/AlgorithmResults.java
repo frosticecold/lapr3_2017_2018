@@ -214,14 +214,16 @@ public class AlgorithmResults {
         //sb.append("<h1>Fastest Path Results</h1>");
         sb.append("<table>\n");
         sb.append("\t<tr><th>Vehicle</th><th>Vehicle</th><th>Travel Time</th><th>Consumed Energy</th><th>Cost</th><th>Consumption</th></tr>\n");
-
+        
+        double liters = UnitConversion.convertGramsOfFuelToLiters(vehicle.getFuel(), fuelGrams);
+        double lper100 = UnitConversion.convertLitersToLiterPer100KM(liters, distance);
         sb.append("<tr>"
                 + "<td>").append(this.algorithmType).append("</td>"
                 + "<td>").append(this.vehicle.getName()).append("</td>"
                 + "<td>").append(UnitConversion.convertSecondstoHoursMinSec(this.travelTime)).append(" h</td>"
                 + "<td>").append(String.format("%.2f", UnitConversion.convertJoulesToMegaJoules(energy))).append(" MJ</td>"
                 + "<td>").append(new DecimalFormat("#.##").format(this.cost)).append(" €</td>"
-                + "<td>").append(new DecimalFormat("#.##").format(UnitConversion.convertJoulesToLitres(vehicle.getFuel(), energy))).append(" liters/100km</td>");
+                + "<td>").append(new DecimalFormat("#.##").format(lper100)).append(" liters/100km</td>");
         sb.append("</tr>\n");
         sb.append("</table>\n");
         sb.append("<h2> </h2>");
