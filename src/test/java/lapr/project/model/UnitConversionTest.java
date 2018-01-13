@@ -46,7 +46,48 @@ public class UnitConversionTest {
         double seconds = 3710;
         String text = UnitConversion.convertSecondstoHoursMinSec(seconds);
         assertEquals("01:01:50", text);
+    }
 
+    /**
+     * Test of convertGramsOfFuelToLiters
+     */
+    @Test
+    public void testConvertGramsOfFuelToLiters() {
+        double grams = 1000;
+        double liters = UnitConversion.convertGramsOfFuelToLiters("gasoline", grams);
+        assertEquals(1.324, liters, 0.05);
+
+        liters = UnitConversion.convertGramsOfFuelToLiters("diesel", grams);
+        assertEquals(1.20, liters, 0.05);
+
+    }
+
+    /**
+     * Test of convertLitersToLiterPer100KM
+     */
+    @Test
+    public void testConvertLitersToLiterPer100KM() {
+        double liters = 1;
+        double distance = -1;
+        double per100 = UnitConversion.convertLitersToLiterPer100KM(liters, distance);
+        assertEquals(-1, per100, 0.05);
+
+        liters = 5;
+        distance = 30;
+        per100 = UnitConversion.convertLitersToLiterPer100KM(liters, distance);
+        assertEquals(16.6, per100, 0.1);
+
+    }
+    
+    /**
+     * Test convertJoulesToKilowattHour
+     */
+    
+    public void testConvertJoulesToKilowattHour(){
+        
+        double energyJoule = Math.pow(10, 6);
+        double kwh = UnitConversion.convertJoulesToKilowattHour(energyJoule);
+        assertEquals(0.27,kwh,0.05);
     }
 
     /**
