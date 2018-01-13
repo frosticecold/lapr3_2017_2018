@@ -192,7 +192,7 @@ public class GearboxTest {
 
     @Test
     public void testGetLastGear(){
-        int gear_index=Integer.MIN_VALUE;
+       // int gear_index=Integer.MIN_VALUE;
         
         Gear g1 = new Gear(1, 2.3);
         Gear g2 = new Gear(2, 3.3);
