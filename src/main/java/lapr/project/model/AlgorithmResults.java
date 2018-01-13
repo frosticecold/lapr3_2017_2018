@@ -182,7 +182,7 @@ public class AlgorithmResults {
             if (fuelGrams > 0) {
                 double liters = UnitConversion.convertGramsOfFuelToLiters(vehicle.getFuel(), fuelGrams);
                 double km100 = UnitConversion.convertLitersToLiterPer100KM(liters, distance);
-                sb.append(("\nFuel liters:")).append(new DecimalFormat("#.##").format(liters)).append((" (l)"));
+                sb.append(("\nFuel used:")).append(new DecimalFormat("#.##").format(liters)).append((" liters"));
                 sb.append("\nConsumption:").append(new DecimalFormat("#.##").format(km100)).append(" liters/100km");
             }
         } else {
@@ -202,37 +202,68 @@ public class AlgorithmResults {
      * @return Textual description of the object.
      */
     public String toStringHTML() {
+
         StringBuilder sb = new StringBuilder();
 
         StringBuilder path = new StringBuilder();
         int i = 1;
         for (Section section : sectionpath) {
-            path.append(section.toStringHTML() + "\n").append("Section " + i + ":");
+            path.append(("Section " + i + ":")).append(section.toStringHTML() + "\n");
             i++;
         }
 
-        //sb.append("<h1>Fastest Path Results</h1>");
-        sb.append("<table>\n");
-        sb.append("\t<tr><th>Vehicle</th><th>Vehicle</th><th>Travel Time</th><th>Consumed Energy</th><th>Cost</th><th>Consumption</th></tr>\n");
-        
-        double liters = UnitConversion.convertGramsOfFuelToLiters(vehicle.getFuel(), fuelGrams);
-        double lper100 = UnitConversion.convertLitersToLiterPer100KM(liters, distance);
-        sb.append("<tr>"
-                + "<td>").append(this.algorithmType).append("</td>"
-                + "<td>").append(this.vehicle.getName()).append("</td>"
-                + "<td>").append(UnitConversion.convertSecondstoHoursMinSec(this.travelTime)).append(" h</td>"
-                + "<td>").append(String.format("%.2f", UnitConversion.convertJoulesToMegaJoules(energy))).append(" MJ</td>"
-                + "<td>").append(new DecimalFormat("#.##").format(this.cost)).append(" €</td>"
-                + "<td>").append(new DecimalFormat("#.##").format(lper100)).append(" liters/100km</td>");
-        sb.append("</tr>\n");
-        sb.append("</table>\n");
-        sb.append("<h2> </h2>");
-        sb.append("<table>\n");
-        sb.append("\t<tr><th>Path</th></tr>\n");
-        sb.append("<tr>"
-                + "<td>").append(path).append("</td>");
-        sb.append("</tr>\n");
-        sb.append("</table>");
+        if (vehicle instanceof VehicleCombustion) {
+            double liters = UnitConversion.convertGramsOfFuelToLiters(vehicle.getFuel(), fuelGrams);
+            double km100 = UnitConversion.convertLitersToLiterPer100KM(liters, distance);
+
+            sb.append("<table>\n");
+            sb.append("\t<tr><th>Algorithm</th><th>Vehicle</th><th>Travel Time</th><th>Distance</th><th>Consumed Energy</th><th>Cost</th><th>Fuel Used</th><th>Consumption</th></tr>\n");
+
+            sb.append("<tr>"
+                    + "<td>").append(this.algorithmType).append("</td>"
+                    + "<td>").append(this.vehicle.getName()).append("</td>"
+                    + "<td>").append(UnitConversion.convertSecondstoHoursMinSec(this.travelTime)).append(" h</td>"
+                    + "<td>").append(new DecimalFormat("#.##").format(this.distance)).append(" km</td>"
+                    + "<td>").append(String.format("%.2f", UnitConversion.convertJoulesToMegaJoules(energy))).append(" MJ</td>"
+                    + "<td>").append(new DecimalFormat("#.##").format(this.cost)).append(" €</td>"
+                    + "<td>").append(new DecimalFormat("#.##").format(liters)).append(" liters"
+                    + "<td>").append(new DecimalFormat("#.##").format(km100)).append(" liters/100km</td>");
+            sb.append("</tr>\n");
+            sb.append("</table>\n");
+            sb.append("<h2> </h2>");
+            sb.append("<table>\n");
+            sb.append("\t<tr><th>Path</th></tr>\n");
+            sb.append("<tr>"
+                    + "<td>").append(path).append("</td>");
+            sb.append("</tr>\n");
+            sb.append("</table>");
+        }
+
+        if (vehicle instanceof VehicleElectric) {
+            double kwh = UnitConversion.convertJoulesToKilowattHour(energy);
+            sb.append("<table>\n");
+            sb.append("\t<tr><th>Algorithm</th><th>Vehicle</th><th>Travel Time</th><th>Distance</th><th>Consumed Energy</th><th>Cost</th><th>Consumption</th></tr>\n");
+
+            sb.append("<tr>"
+                    + "<td>").append(this.algorithmType).append("</td>"
+                    + "<td>").append(this.vehicle.getName()).append("</td>"
+                    + "<td>").append(UnitConversion.convertSecondstoHoursMinSec(this.travelTime)).append(" h</td>"
+                    + "<td>").append(new DecimalFormat("#.##").format(this.distance)).append(" km</td>"
+                    + "<td>").append(String.format("%.2f", UnitConversion.convertJoulesToMegaJoules(energy))).append(" MJ</td>"
+                    + "<td>").append(new DecimalFormat("#.##").format(this.cost)).append(" €</td>"
+                    + "<td>").append(new DecimalFormat("#.##").format(kwh)).append(" kw/h</td>");
+            sb.append("</tr>\n");
+            sb.append("</table>\n");
+            sb.append("<h2> </h2>");
+            sb.append("<table>\n");
+            sb.append("\t<tr><th>Path</th></tr>\n");
+            sb.append("<tr>"
+                    + "<td>").append(path).append("</td>");
+            sb.append("</tr>\n");
+            sb.append("</table>");
+
+        }
+
         return sb.toString();
     }
 

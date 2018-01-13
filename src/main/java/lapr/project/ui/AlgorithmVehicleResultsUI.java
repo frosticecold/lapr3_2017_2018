@@ -292,7 +292,7 @@ public class AlgorithmVehicleResultsUI extends javax.swing.JDialog {
             vehicleTextfield.setText(listAlgorithms.get(vehicleCombobox.getSelectedIndex()).getVehicle().getName());
             totalweightTextField.setText(String.valueOf(listAlgorithms.get(vehicleCombobox.getSelectedIndex()).getVehicle().getTotalWeight()) + " kg");
             distanceTextfield.setText(String.valueOf(listAlgorithms.get(vehicleCombobox.getSelectedIndex()).getDistance()) + " km");
-            traveltimeTextfield.setText(String.valueOf(listAlgorithms.get(vehicleCombobox.getSelectedIndex()).getTravelTime()) + " seg");
+            traveltimeTextfield.setText(String.valueOf(UnitConversion.convertSecondstoHoursMinSec(listAlgorithms.get(vehicleCombobox.getSelectedIndex()).getTravelTime())) + " h");
             costTextfield.setText(String.valueOf(listAlgorithms.get(vehicleCombobox.getSelectedIndex()).getCost()) + " €");
             energyTextfield.setText(String.format("%.3f MJ", UnitConversion.convertJoulesToMegaJoules(listAlgorithms.get(vehicleCombobox.getSelectedIndex()).getEnergy())));
             algorithmTextfield.setText(listAlgorithms.get(vehicleCombobox.getSelectedIndex()).getAlgorithmType());
