@@ -48,6 +48,8 @@ public class TheoreticalEnergyEfficientAlgorithmTest {
     Graph<Junction, Section> roadNetwork;
 
     Vehicle vh1;
+    
+    VehicleElectric eletricCar;
 
     @Before
     public void setUp() {
@@ -304,11 +306,25 @@ public class TheoreticalEnergyEfficientAlgorithmTest {
         project.addSection(section1);
         project.addSection(section2);
         project.addSection(section3);
+
     }
 
     @After
     public void tearDown() {
     }
+    
+//    private void createEletricCar(){
+//        eletricCar.setName("EletricDummy");
+//        eletricCar.setDescription("Electric Dummy teste vehicle");
+//        eletricCar.setVehicleClass(1);
+//        eletricCar.setMotorization("electric");
+//        eletricCar.setMass(1400);
+//        eletricCar.setMaxLoad(420);
+//        eletricCar.setDragCoefficient(0.31);
+//    
+//    
+//    
+//    }
 
     /**
      * Test of shortestPath method, of class TheoreticalEnergyEfficientPath.

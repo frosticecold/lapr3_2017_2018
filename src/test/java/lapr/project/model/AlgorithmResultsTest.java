@@ -394,16 +394,39 @@ public class AlgorithmResultsTest {
         }
 
         //sb.append("<h1>Fastest Path Results</h1>");
+//        sb.append("<table>\n");
+//        sb.append("\t<tr><th>Vehicle</th><th>Vehicle</th><th>Travel Time</th><th>Consumed Energy</th><th>Cost</th><th>Consumption</th></tr>\n");
+//
+//        sb.append("<tr>"
+//                + "<td>").append(instance.getAlgorithmType()).append("</td>"
+//                + "<td>").append(this.vehicle.getName()).append("</td>"
+//                + "<td>").append(UnitConversion.convertSecondstoHoursMinSec(instance.getTravelTime())).append(" h</td>"
+//                + "<td>").append(String.format("%.2f", UnitConversion.convertJoulesToMegaJoules(instance.getEnergy()))).append(" MJ</td>"
+//                + "<td>").append(new DecimalFormat("#.##").format(instance.getCost())).append(" €</td>"
+//                + "<td>").append(new DecimalFormat("#.##").format(UnitConversion.convertJoulesToLitres(vehicle.getFuel(), instance.getEnergy()))).append(" liters/100km</td>");
+//        sb.append("</tr>\n");
+//        sb.append("</table>\n");
+//        sb.append("<h2> </h2>");
+//        sb.append("<table>\n");
+//        sb.append("\t<tr><th>Path</th></tr>\n");
+//        sb.append("<tr>"
+//                + "<td>").append(path).append("</td>");
+//        sb.append("</tr>\n");
+//        sb.append("</table>");
+//        
+//        
         sb.append("<table>\n");
         sb.append("\t<tr><th>Vehicle</th><th>Vehicle</th><th>Travel Time</th><th>Consumed Energy</th><th>Cost</th><th>Consumption</th></tr>\n");
-
+        
+        double liters = UnitConversion.convertGramsOfFuelToLiters(vehicle.getFuel(), instance.getFuelGrams());
+        double lper100 = UnitConversion.convertLitersToLiterPer100KM(liters, instance.getDistance());
         sb.append("<tr>"
                 + "<td>").append(instance.getAlgorithmType()).append("</td>"
                 + "<td>").append(this.vehicle.getName()).append("</td>"
                 + "<td>").append(UnitConversion.convertSecondstoHoursMinSec(instance.getTravelTime())).append(" h</td>"
                 + "<td>").append(String.format("%.2f", UnitConversion.convertJoulesToMegaJoules(instance.getEnergy()))).append(" MJ</td>"
                 + "<td>").append(new DecimalFormat("#.##").format(instance.getCost())).append(" €</td>"
-                + "<td>").append(new DecimalFormat("#.##").format(UnitConversion.convertJoulesToLitres(vehicle.getFuel(), instance.getEnergy()))).append(" liters/100km</td>");
+                + "<td>").append(new DecimalFormat("#.##").format(lper100)).append(" liters/100km</td>");
         sb.append("</tr>\n");
         sb.append("</table>\n");
         sb.append("<h2> </h2>");
@@ -413,6 +436,7 @@ public class AlgorithmResultsTest {
                 + "<td>").append(path).append("</td>");
         sb.append("</tr>\n");
         sb.append("</table>");
+        
 
         String expResult = sb.toString();
         String result = instance.toStringHTML();
