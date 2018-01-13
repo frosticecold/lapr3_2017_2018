@@ -15,9 +15,9 @@ import lapr.project.model.FastestPathAlgorithm;
 import lapr.project.model.PathAlgorithm;
 
 import lapr.project.model.AlgorithmResults;
+import lapr.project.model.EnergySavingModeAlgorithm;
 
 import lapr.project.model.TheoreticalEnergyEfficientAlgorithm;
-import lapr.project.model.EnergySavingModeAlgorithm;
 import lapr.project.utils.Session;
 
 /**
